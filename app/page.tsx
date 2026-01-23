@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import BlockRenderer from "@/components/BlockRenderer";
 import { ContentBlock } from "@/types/blocks";
 
@@ -55,7 +55,7 @@ async function getBlocks(): Promise<ContentBlock[]> {
       return MOCK_HOMEPAGE_BLOCKS;
     }
 
-    const supabase = createClient();
+    const supabase = await createClient();
     const { data, error } = await supabase
       .from('blocks')
       .select('*')
@@ -72,7 +72,7 @@ async function getBlocks(): Promise<ContentBlock[]> {
     }
 
     // Map Supabase data to ContentBlock type
-    return data.map(block => ({
+    return data.map((block: any) => ({
       id: block.id,
       type: block.type as any, // Cast to specific block type enum
       data: block.data as any
