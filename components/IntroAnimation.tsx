@@ -55,7 +55,7 @@ const IntroAnimation = () => {
                 ref={textRef}
                 className="text-4xl md:text-6xl font-bold text-white tracking-tighter opacity-0 translate-y-10"
             >
-                VINUS SPREAD
+                VINUSPREAD
             </h1>
         </div>
     );

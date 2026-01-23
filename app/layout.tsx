@@ -15,7 +15,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 // });
 
 export const metadata: Metadata = {
-  title: "VINUS SPREAD",
+  title: "VINUSPREAD",
   description: "Modern Digital Experience",
 };
 

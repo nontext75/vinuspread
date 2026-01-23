@@ -47,7 +47,7 @@ const Footer = () => {
 
             <div className="max-w-7xl mx-auto w-full mt-24 flex flex-col md:flex-row justify-between items-end border-t border-slate-900 pt-8 gap-4">
                 <p className="text-slate-500 text-sm">
-                    © {new Date().getFullYear()} VINUS SPREAD. All rights reserved.
+                    © {new Date().getFullYear()} VINUSPREAD. All rights reserved.
                 </p>
                 <p className="text-slate-600 text-xs">
                     Designed & Developed by VINUS Tech.

@@ -8,7 +8,7 @@ const MOCK_HOMEPAGE_BLOCKS: ContentBlock[] = [
     id: "hero-1",
     type: "hero",
     data: {
-      title: "VINUS SPREAD",
+      title: "VINUSPREAD",
       subtitle: "Redefining Digital Experiences through Technology & Design",
     },
   },

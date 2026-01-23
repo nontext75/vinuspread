@@ -37,7 +37,7 @@ const Header = () => {
         >
             <div className="flex items-center justify-between max-w-7xl mx-auto">
                 <Link href="/" className="text-xl font-bold tracking-tighter text-white z-50 mix-blend-difference">
-                    VINUS SPREAD
+                    VINUSPREAD
                 </Link>
 
                 <nav className="hidden md:flex items-center gap-8">
