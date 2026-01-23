@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designer Portfolio</title>
+    <meta name="description" content="Premium Interactive Design Portfolio">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+    <div class="transition-overlay"></div>
+
+    <header class="header">
+        <div class="logo">PORTFOLIO.</div>
+        <nav class="nav">
+            <a href="#work" class="nav-link">Work</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </nav>
+        <button class="menu-toggle" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <div class="mobile-menu">
+        <nav class="mobile-nav">
+            <a href="#work" class="mobile-link">Work</a>
+            <a href="#about" class="mobile-link">About</a>
+            <a href="#contact" class="mobile-link">Contact</a>
+        </nav>
+    </div>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="hero-content" data-speed="0.5">
+                <h1 class="hero-title">
+                    <div class="line">Creative</div>
+                    <div class="line">Visual</div>
+                    <div class="line">Experience</div>
+                </h1>
+                <p class="hero-subtitle">Creating digital experiences that matter.</p>
+                <div class="scroll-indicator">
+                    <span>SCROLL</span>
+                </div>
+            </div>
+            <div class="hero-bg"></div>
+        </section>
+
+        <section class="work" id="work">
+            <div class="container">
+                <h2 class="section-title">Selected Works</h2>
+                <div class="gallery">
+                    <a href="detail.html" class="gallery-item">
+                        <div class="gallery-image" style="background-color: #2a2a2a;">
+                            <!-- Ideally real images, using colored blocks for now -->
+                        </div>
+                        <div class="gallery-info">
+                            <h3>Brand Identity</h3>
+                            <p>Rebranding / 2025</p>
+                        </div>
+                    </a>
+                    <a href="detail.html" class="gallery-item">
+                        <div class="gallery-image" style="background-color: #333;"></div>
+                        <div class="gallery-info">
+                            <h3>Web Experience</h3>
+                            <p>UI/UX Design / 2024</p>
+                        </div>
+                    </a>
+                    <a href="detail.html" class="gallery-item">
+                        <div class="gallery-image" style="background-color: #1f1f1f;"></div>
+                        <div class="gallery-info">
+                            <h3>Mobile App</h3>
+                            <p>Product Design / 2024</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="about" id="about">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <p class="about-text">
+                    I am a multidisciplinary designer focusing on digital experiences. <br>
+                    I combine aesthetics with functionality to create memorable designs.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" id="contact">
+        <div class="container">
+            <h2 class="footer-title">Let's Talk</h2>
+            <a href="mailto:hello@example.com" class="email-link">hello@example.com</a>
+            <p class="copyright">&copy; 2026 Design Portfolio.</p>
+        </div>
+    </footer>
+
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
