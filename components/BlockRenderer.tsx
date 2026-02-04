@@ -3,6 +3,7 @@ import { ContentBlock } from '@/types/blocks';
 import HeroBlock from '@/components/blocks/HeroBlock';
 import StickySplitBlock from '@/components/blocks/StickySplitBlock';
 import GridGalleryBlock from '@/components/blocks/GridGalleryBlock';
+import HorizontalGalleryBlock from '@/components/blocks/HorizontalGalleryBlock';
 import InteractiveVisualBlock from '@/components/visuals/InteractiveVisualBlock';
 
 interface BlockRendererProps {
@@ -22,6 +23,8 @@ const BlockRenderer: React.FC<BlockRendererProps> = ({ blocks }) => {
                         return <StickySplitBlock key={block.id} data={block.data as any} />;
                     case 'grid_gallery':
                         return <GridGalleryBlock key={block.id} data={block.data as any} />;
+                    case 'horizontal_gallery':
+                        return <HorizontalGalleryBlock key={block.id} data={block.data as any} />;
                     case 'interactive_visual':
                         return <InteractiveVisualBlock key={block.id} data={block.data as any} />;
                     default:

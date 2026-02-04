@@ -35,7 +35,7 @@ const HeroBlock: React.FC<HeroBlockProps> = ({ data }) => {
     return (
         <section
             ref={containerRef}
-            className="relative min-h-screen flex flex-col justify-center items-start overflow-hidden px-6 md:px-12"
+            className="relative min-h-[120vh] flex flex-col justify-center items-start overflow-hidden px-6 md:px-12"
         >
             {/* Background Visual Area - Using GeometricBackground for tuned physics/camera */}
             <GeometricBackground mode={visualMode} />

@@ -1,4 +1,4 @@
-export type BlockType = 'hero' | 'sticky_split' | 'grid_gallery' | 'interactive_visual';
+export type BlockType = 'hero' | 'sticky_split' | 'grid_gallery' | 'horizontal_gallery' | 'interactive_visual';
 
 export interface BlockData {
     [key: string]: any;
@@ -23,15 +23,37 @@ export interface StickySplitBlockData extends BlockData {
     scroll_content: {
         type: 'image' | 'text' | 'video';
         src?: string;
-        text?: string;
+        text?: string; // Legacy/Simple
+        // Structured Bilingual Text
+        title?: string;
+        description_en?: string;
+        description_ko?: string;
+    }[];
+}
+
+export interface HorizontalGalleryBlockData extends BlockData {
+    title: string;          // Section Title (e.g. PURPOSEFUL SPACES)
+    view_all_link?: string;
+    items: {
+        src: string;
+        alt: string;
+        title: string;      // Project Title (e.g. GENESIS SPACE)
+        category: string;   // Project Category (e.g. SPACE)
+        year: string;       // Project Year (e.g. 2023)
     }[];
 }
 
 export interface GridGalleryBlockData extends BlockData {
+    title?: string; // Section Title (e.g. PURPOSEFUL SPACES)
+    view_all_link?: string;
     images: {
         src: string;
         alt: string;
-        span?: number; // Col span (1 or 2)
+        span?: number;
+        // New Metadata for Reference Design
+        title?: string;     // e.g. GENESIS SPACE
+        category?: string;  // e.g. WEBSITE
+        year?: string;      // e.g. 2023
     }[];
 }
 

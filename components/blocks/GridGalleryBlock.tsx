@@ -10,8 +10,8 @@ interface GridGalleryBlockProps {
 
 const GridGalleryBlock: React.FC<GridGalleryBlockProps> = ({ data }) => {
     return (
-        <section className="px-4 py-20 bg-slate-50">
-            <div className="container mx-auto">
+        <section className="w-full px-6 md:px-12 lg:px-24 py-32 bg-slate-50/5">
+            <div className="w-full">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px] md:auto-rows-[400px]">
                     {data.images.map((img, index) => (
                         <motion.div
