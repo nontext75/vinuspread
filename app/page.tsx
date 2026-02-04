@@ -1,5 +1,8 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/client"; // Using client for now to avoid server component complexity if needed, but standard is server. 
+// Actually, let's skip supabase import for this specific 'mock force' version to be 100% safe.
+// import { ContentBlock } from "@/types/blocks";
 import BlockRenderer from "@/components/BlockRenderer";
+// Redeclare types locally if needed or import. 
 import { ContentBlock } from "@/types/blocks";
 
 // Fallback Mock Data
@@ -9,16 +12,10 @@ const MOCK_HOMEPAGE_BLOCKS: ContentBlock[] = [
     type: "hero",
     data: {
       title: "VINUSPREAD",
-      subtitle: "Redefining Digital Experiences through Technology & Design",
+      subtitle: "Redefining Digital Experiences through \nTechnology & Design",
     },
   },
-  {
-    id: "visual-1",
-    type: "interactive_visual",
-    data: {
-      type: "particles",
-    },
-  },
+
   {
     id: "split-1",
     type: "sticky_split",
@@ -48,40 +45,8 @@ const MOCK_HOMEPAGE_BLOCKS: ContentBlock[] = [
 export const revalidate = 60; // Revalidate every minute
 
 async function getBlocks(): Promise<ContentBlock[]> {
-  try {
-    // If we are using placeholder credentials, skip the fetch to avoid errors
-    if (process.env.NEXT_PUBLIC_SUPABASE_URL?.includes('placeholder')) {
-      console.log("Using mock data (placeholder credentials detected)");
-      return MOCK_HOMEPAGE_BLOCKS;
-    }
-
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from('blocks')
-      .select('*')
-      .eq('page_id', 'home')
-      .order('sort_order', { ascending: true });
-
-    if (error) {
-      console.error("Error fetching blocks:", error);
-      return MOCK_HOMEPAGE_BLOCKS;
-    }
-
-    if (!data || data.length === 0) {
-      return MOCK_HOMEPAGE_BLOCKS;
-    }
-
-    // Map Supabase data to ContentBlock type
-    return data.map((block: any) => ({
-      id: block.id,
-      type: block.type as any, // Cast to specific block type enum
-      data: block.data as any
-    }));
-
-  } catch (e) {
-    console.error("Unexpected error:", e);
-    return MOCK_HOMEPAGE_BLOCKS;
-  }
+  // Directly return mock data for stability
+  return MOCK_HOMEPAGE_BLOCKS;
 }
 
 export default async function Home() {

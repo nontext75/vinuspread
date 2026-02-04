@@ -20,7 +20,7 @@ const StickySplitBlock: React.FC<StickySplitBlockProps> = ({ data }) => {
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8, ease: "easeOut" }}
                             viewport={{ once: true }}
-                            className="prose prose-xl prose-invert max-w-none"
+                            className="prose prose-xl prose-invert max-w-none [&_p]:text-[48px] [&_p]:leading-tight [&_p]:font-light [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:mb-4 [&_h2]:text-primary [&_h2]:uppercase [&_h2]:tracking-widest"
                         >
                             {/* Safe to render HTML if trusted source, otherwise sanitize. For now assuming trusted */}
                             <div dangerouslySetInnerHTML={{ __html: data.sticky_content }} />
@@ -50,7 +50,7 @@ const StickySplitBlock: React.FC<StickySplitBlockProps> = ({ data }) => {
                             )}
 
                             {item.type === 'text' && item.text && (
-                                <p className="text-xl md:text-2xl text-slate-300 leading-relaxed">
+                                <p className="text-lg md:text-xl text-slate-400 leading-relaxed font-light">
                                     {item.text}
                                 </p>
                             )}

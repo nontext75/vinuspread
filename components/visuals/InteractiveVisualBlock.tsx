@@ -1,115 +1,29 @@
 "use client";
 
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { InteractiveVisualBlockData } from '@/types/blocks';
+import GeometricBackground from './GeometricBackground';
+import { cn } from '@/lib/utils'; // Import cn
 
 interface InteractiveVisualBlockProps {
     data: InteractiveVisualBlockData;
 }
 
 const InteractiveVisualBlock: React.FC<InteractiveVisualBlockProps> = ({ data }) => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        let animationFrameId: number;
-        let particles: { x: number; y: number; vx: number; vy: number; size: number }[] = [];
-        const particleCount = 100;
-
-        const resize = () => {
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-            initParticles();
-        };
-
-        const initParticles = () => {
-            particles = [];
-            for (let i = 0; i < particleCount; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 1,
-                    vy: (Math.random() - 0.5) * 1,
-                    size: Math.random() * 2 + 1
-                });
-            }
-        };
-
-        const draw = (mouse: { x: number; y: number }) => {
-            if (!ctx) return;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-
-            particles.forEach(p => {
-                // Mouse interaction
-                const dx = mouse.x - p.x;
-                const dy = mouse.y - p.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                const forceRange = 100;
-
-                if (dist < forceRange) {
-                    const angle = Math.atan2(dy, dx);
-                    const force = (forceRange - dist) / forceRange;
-                    p.vx -= Math.cos(angle) * force * 0.5;
-                    p.vy -= Math.sin(angle) * force * 0.5;
-                }
-
-                p.x += p.vx;
-                p.y += p.vy;
-
-                // Friction
-                p.vx *= 0.99;
-                p.vy *= 0.99;
-
-                // Bounds
-                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fill();
-            });
-
-            animationFrameId = requestAnimationFrame(() => draw(mouse));
-        };
-
-        window.addEventListener('resize', resize);
-
-        // Track mouse
-        let mouse = { x: -1000, y: -1000 };
-        const handleMouseMove = (e: MouseEvent) => {
-            const rect = canvas.getBoundingClientRect();
-            mouse.x = e.clientX - rect.left;
-            mouse.y = e.clientY - rect.top;
-        };
-        canvas.addEventListener('mousemove', handleMouseMove);
-
-        resize();
-        draw(mouse);
-
-        return () => {
-            window.removeEventListener('resize', resize);
-            canvas.removeEventListener('mousemove', handleMouseMove);
-            cancelAnimationFrame(animationFrameId);
-        };
-    }, []);
+    const [visualMode, setVisualMode] = React.useState<'galaxy' | 'orbit'>('galaxy');
 
     return (
-        <section className="relative w-full h-[600px] bg-slate-950 overflow-hidden my-10">
-            <canvas
-                ref={canvasRef}
-                className="w-full h-full"
-            />
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <span className="text-slate-500 text-sm tracking-widest uppercase border px-4 py-2 border-slate-800 rounded-full">
-                    Interactive Visual Area
-                </span>
-            </div>
+        <section className="relative w-full h-[600px] bg-slate-950 overflow-hidden my-10 border-y border-white/10 group">
+            <GeometricBackground mode={visualMode} />
+
+            {/* Visual Toggle Button */}
+            <button
+                onClick={() => setVisualMode(prev => prev === 'galaxy' ? 'orbit' : 'galaxy')}
+                className="absolute bottom-6 right-6 md:right-12 z-20 flex items-center gap-2 px-4 py-2 text-[10px] font-bold tracking-widest uppercase text-white/50 hover:text-white border border-white/10 hover:border-white/40 rounded-full transition-all duration-300 backdrop-blur-md hover:bg-white/5"
+            >
+                <span className={cn("w-2 h-2 rounded-full transition-colors", visualMode === 'galaxy' ? "bg-primary" : "bg-white/20")} />
+                {visualMode === 'galaxy' ? 'Switch to Orbit' : 'Switch to Sphere'}
+            </button>
         </section>
     );
 };

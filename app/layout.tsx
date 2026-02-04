@@ -1,22 +1,19 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import localFont from "next/font/local";
+import { Outfit } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import IntroAnimation from "@/components/IntroAnimation";
+import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-// const pretendard = localFont({
-//   src: "../public/fonts/PretendardVariable.woff2",
-//   variable: "--font-pretendard",
-//   display: "swap",
-// });
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  weight: ["300", "400", "600", "800"]
+});
 
 export const metadata: Metadata = {
-  title: "VINUSPREAD",
-  description: "Modern Digital Experience",
+  title: "VINUSPREAD | Digital Experience",
+  description: "Redefining digital experiences through technology & design.",
 };
 
 export default function RootLayout({
@@ -25,13 +22,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body className={cn(
-        "min-h-screen bg-slate-900 font-sans antialiased text-slate-50 selection:bg-rose-500 selection:text-white",
-        inter.variable
+        "min-h-screen bg-background font-sans antialiased text-foreground selection:bg-primary selection:text-white overflow-x-hidden",
+        outfit.variable
       )}>
         <Header />
-        <main className="flex-grow pt-20">
+        <main className="flex-grow">
           {children}
         </main>
         <Footer />
