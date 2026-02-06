@@ -175,7 +175,12 @@ export default function WorkDetailPage() {
                                            prose-p:text-zinc-500 prose-p:font-light prose-p:leading-relaxed prose-p:mb-12
                                            prose-headings:text-white prose-headings:tracking-tighter prose-headings:font-black
                                            prose-strong:text-white prose-strong:font-bold"
-                                dangerouslySetInnerHTML={{ __html: project.content }}
+                                dangerouslySetInnerHTML={{
+                                    __html: project.content.replace(
+                                        /src="https?:\/\/vinus\.co\.kr\/([^"]+)"/g,
+                                        (match, path) => `src="/api/proxy-image?url=${encodeURIComponent('https://vinus.co.kr/' + path)}"`
+                                    )
+                                }}
                             />
                         ) : (
                             <div className="space-y-24">

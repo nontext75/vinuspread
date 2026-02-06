@@ -30,7 +30,7 @@ export default function AdminLinksPage() {
             icon: <Layout className="text-purple-500" size={20} />,
             links: [
                 { name: "Ref v1: Cinematic Narrative", url: "/work/reference" },
-                { name: "Ref v2: Editorial Minimal", url: "/work/reference-2" },
+                { name: "Ref v2: Modular Narrative", url: "/work/reference-2" },
                 { name: "Ref v3: Tech-Noir Immersive", url: "/work/reference-3" },
             ]
         },

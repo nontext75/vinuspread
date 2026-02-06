@@ -1,176 +1,169 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { ArrowLeft, Plus, MoveRight } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { ArrowLeft, ArrowUpRight, Plus } from 'lucide-react';
 import Link from 'next/link';
 
 /**
- * 🧞‍♀️ Jinni's Note (Version 2: Editorial Minimal): 
- * 오빠, 이번에는 조금 더 정갈하고 잡지 같은(Editorial) 느낌의 레이아웃을 가져왔어요.
- * 첫 번째 버전이 '영화' 같았다면, 이 버전은 '프리미엄 매거진' 같은 느낌이에요.
+ * 🧞‍♀️ Jinni's Note (Version 2: Modular Narrative - Baunfire Style): 
+ * 오빠, 이번에는 우리 메인 시스템의 'Baunfire' 스타일과 완벽하게 조화를 이루는 구조예요.
+ * 스티키(Sticky) 레이아웃과 큼직한 타이포그래피, 그리고 모듈형 그리드를 사용해서 
+ * 기존 시스템과 이질감 없이 아주 프리미엄한 느낌을 줍니다!
  */
 
 export default function WorkReferenceTwoPage() {
+    const { scrollYProgress } = useScroll();
+
     return (
-        <main className="bg-[#0a0a0a] text-white min-h-screen font-sans selection:bg-white selection:text-black">
+        <main className="bg-black text-white min-h-screen font-sans selection:bg-white selection:text-black">
 
-            {/* 1. Minimalist Header
-                - 의도: 여백의 미를 살려 브랜드의 고결함을 강조합니다.
+            {/* 1. Immersive Sticky Hero
+                - 기존 시스템의 '모던 슬레이트' 감성을 유지하면서 텍스트가 위로 올라오는 방식입니다.
             */}
-            <header className="pt-40 pb-20 px-6 md:px-12 max-w-[1920px] mx-auto border-b border-white/5">
-                <div className="flex flex-col md:flex-row justify-between items-end gap-12">
-                    <div className="space-y-6">
+            <section className="relative h-[120vh] w-full">
+                <div className="sticky top-0 h-screen w-full overflow-hidden">
+                    <img
+                        src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=2560"
+                        alt="Hero"
+                        className="w-full h-full object-cover grayscale brightness-50"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black" />
+
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
                         <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className="flex items-center gap-3 text-zinc-500"
+                            initial={{ opacity: 0, scale: 1.1 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                            className="space-y-6"
                         >
-                            <span className="text-[10px] font-mono tracking-widest uppercase">Portfolio v.2</span>
-                            <div className="w-12 h-px bg-zinc-800" />
+                            <h1 className="text-7xl md:text-[14rem] font-black tracking-tighter leading-none uppercase">
+                                MODERN <br /> SLATE
+                            </h1>
+                            <p className="text-sm md:text-xl font-light tracking-[0.5em] text-zinc-400 uppercase">
+                                Automotive Experience Design
+                            </p>
                         </motion.div>
-                        <motion.h1
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8 }}
-                            className="text-6xl md:text-9xl font-light tracking-tight leading-none"
-                        >
-                            Editorial <br />
-                            <span className="font-serif italic pl-12 md:pl-24">Aesthetics</span>
-                        </motion.h1>
                     </div>
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.5 }}
-                        className="max-w-xs text-right space-y-4"
-                    >
-                        <p className="text-sm text-zinc-400 font-light leading-relaxed">
-                            우리는 복잡함을 거부하고 본질에 집중합니다.
-                            여백은 낭비가 아니라, 메시지가 숨 쉬는 공간입니다.
+                </div>
+            </section>
+
+            {/* 2. Structured Narrative (Sticky Left)
+                - 의도: 왼쪽에는 고정된 텍스트, 오른쪽에는 흘러가는 이미지를 배치하여 읽기 편안한 정보 전달을 유도합니다.
+            */}
+            <section className="relative px-6 md:px-12 max-w-[1920px] mx-auto py-40">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+                    {/* Sticky Column */}
+                    <div className="lg:sticky lg:top-40 h-fit space-y-12">
+                        <div className="space-y-4">
+                            <span className="text-[10px] font-black text-zinc-600 uppercase tracking-[0.3em]">01 / Narrative</span>
+                            <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-none">
+                                THE <br /> ARCHITECTURE <br /> OF SPEED
+                            </h2>
+                        </div>
+                        <p className="text-zinc-500 text-lg md:text-xl leading-relaxed font-light max-w-md">
+                            우리는 속도라는 추상적인 개념을 디지털 아키텍처로 변환했습니다.
+                            사용자가 앱을 켜는 순간부터 목적지에 도착하기까지, 모든 순간이 유기적으로 연결되도록 설계되었습니다.
                         </p>
-                        <div className="text-[10px] font-bold tracking-widest uppercase underline underline-offset-8">
-                            Concept 2025
+                        <div className="grid grid-cols-2 gap-8 py-8 border-t border-white/10">
+                            <div>
+                                <h4 className="text-[9px] font-bold text-zinc-700 uppercase mb-2">Service</h4>
+                                <p className="text-sm font-bold uppercase tracking-tight">HMI Design</p>
+                            </div>
+                            <div>
+                                <h4 className="text-[9px] font-bold text-zinc-700 uppercase mb-2">Duration</h4>
+                                <p className="text-sm font-bold uppercase tracking-tight">6 Months</p>
+                            </div>
                         </div>
-                    </motion.div>
-                </div>
-            </header>
+                    </div>
 
-            {/* 2. Side-Scrolling or Wide Storytelling
-                - 의도: 시각적 긴장감을 조절하는 변칙적인 레이아웃입니다.
-            */}
-            <section className="py-40">
-                <div className="px-6 md:px-12 max-w-[1920px] mx-auto">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
-                        {/* Sticky Info Sidebar */}
-                        <aside className="lg:col-span-3 space-y-20 lg:sticky lg:top-40 h-fit">
-                            <div className="space-y-4">
-                                <h4 className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Outline</h4>
-                                <p className="text-zinc-400 text-sm leading-loose font-light">
-                                    이 섹션은 이미지와 함께 설명이 따라가는 'Sticky' 방식이에요.
-                                    사용자가 스크롤 하는 동안 왼쪽의 텍스트가 고정되어 정보를 계속 전달하죠.
-                                </p>
-                            </div>
-                            <div className="space-y-8">
-                                <Plus size={24} className="text-zinc-700" />
-                                <div className="space-y-2">
-                                    <span className="block text-[10px] font-bold uppercase">Photography</span>
-                                    <span className="block text-xl font-light">Unsplash Studio</span>
-                                </div>
-                                <div className="space-y-2">
-                                    <span className="block text-[10px] font-bold uppercase">Typography</span>
-                                    <span className="block text-xl font-light">Inter Variable</span>
-                                </div>
-                            </div>
-                        </aside>
-
-                        {/* Content Images */}
-                        <div className="lg:col-span-9 space-y-40">
-                            <motion.div
-                                initial={{ opacity: 0, y: 50 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                className="aspect-[16/10] bg-zinc-900 overflow-hidden"
-                            >
-                                <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?q=80&w=2067" className="w-full h-full object-cover" />
-                            </motion.div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    viewport={{ once: true }}
-                                    className="aspect-[4/5] bg-zinc-900"
-                                >
-                                    <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=2070" className="w-full h-full object-cover grayscale" />
-                                </motion.div>
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    viewport={{ once: true }}
-                                    className="aspect-[4/5] bg-zinc-900 md:mt-24"
-                                >
-                                    <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070" className="w-full h-full object-cover" />
-                                </motion.div>
-                            </div>
-
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                whileInView={{ opacity: 1 }}
-                                className="aspect-[21/9] bg-zinc-900"
-                            >
-                                <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=2070" className="w-full h-full object-cover" />
-                            </motion.div>
-                        </div>
+                    {/* Scrolling Column */}
+                    <div className="space-y-40">
+                        <motion.div
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="aspect-[4/5] bg-zinc-900 border border-white/5"
+                        >
+                            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2070" className="w-full h-full object-cover" />
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="aspect-[16/9] bg-zinc-900 border border-white/5"
+                        >
+                            <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=2070" className="w-full h-full object-cover grayscale" />
+                        </motion.div>
                     </div>
                 </div>
             </section>
 
-            {/* 3. Quote Section
-                - 의도: 프로젝트의 철학이나 클라이언트 피드백을 강조합니다.
+            {/* 3. High-Impact Full-Width Module
+                - 의도: 맥락 사이의 분위기를 환기시키는 대형 이미지 모듈입니다.
             */}
-            <section className="py-60 bg-white text-black">
-                <div className="max-w-5xl mx-auto px-6 text-center space-y-12">
-                    <span className="text-[10px] font-black uppercase tracking-[0.5em] opacity-40">Design Philosophy</span>
-                    <h2 className="text-4xl md:text-7xl font-light tracking-tight leading-tight">
-                        "좋은 디자인은 눈에 띄는 것이 아니라, <br />
-                        <span className="font-serif italic">기억되는 것이다."</span>
-                    </h2>
+            <section className="py-20">
+                <div className="w-full aspect-[21/9] bg-zinc-950 overflow-hidden relative group">
+                    <img
+                        src="https://images.unsplash.com/photo-1542282088-fe8426682e8f?q=80&w=2560"
+                        alt="Wide Visual"
+                        className="w-full h-full object-cover grayscale opacity-50 transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <h3 className="text-4xl md:text-8xl font-black tracking-[0.2em] uppercase opacity-20 pointer-events-none group-hover:opacity-10 transition-opacity">
+                            PRECISION
+                        </h3>
+                    </div>
                 </div>
             </section>
 
-            {/* 4. Details Gallery
-                - 의도: 변칙적인 크기의 그리드로 시각적 재미를 줍니다.
+            {/* 4. Feature Grid (Modular Card Style)
+                - 의도: 개별 기능이나 하이라이트를 카드 형태로 보여줍니다 (기존 PhysicsCard 감성 활용).
             */}
             <section className="py-40 px-6 md:px-12 max-w-[1920px] mx-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                    <div className="lg:col-span-2 aspect-video bg-zinc-900">
-                        <img src="https://images.unsplash.com/photo-1487014679447-9f8336841d58?q=80&w=2000" className="w-full h-full object-cover" />
-                    </div>
-                    <div className="aspect-square bg-zinc-900">
-                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000" className="w-full h-full object-cover grayscale" />
-                    </div>
-                    <div className="aspect-square bg-zinc-900">
-                        <img src="https://images.unsplash.com/photo-1522542550221-31fd19255a08?q=80&w=1000" className="w-full h-full object-cover" />
-                    </div>
+                <div className="flex flex-col md:flex-row justify-between items-baseline mb-20 gap-8">
+                    <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase">SYSTEM HIGHLIGHTS</h2>
+                    <p className="text-zinc-500 font-light max-w-sm">주요 인터랙션과 디자인 시스템의 핵심 컴포넌트들을 소개합니다.</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    {[
+                        { title: 'Dynamic HUD', img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000' },
+                        { title: 'Fluid Navigation', img: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1000' },
+                        { title: 'Smart Cockpit', img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000' }
+                    ].map((item, i) => (
+                        <div key={i} className="group space-y-6">
+                            <div className="aspect-[4/5] bg-zinc-900 border border-white/10 overflow-hidden rounded-sm relative">
+                                <img src={item.img} className="w-full h-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-110" />
+                                <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <Plus className="text-white bg-black/50 p-2 rounded-full backdrop-blur-sm" size={40} />
+                                </div>
+                            </div>
+                            <h4 className="text-xl font-bold uppercase tracking-tight">{item.title}</h4>
+                        </div>
+                    ))}
                 </div>
             </section>
 
-            {/* 5. Minimal CTA
-                - 의도: 여백을 극대화하여 깔끔한 마무리를 지향합니다.
+            {/* 5. Baunfire Conclusion CTA
+                - 의도: 이탈 방지 및 다음 여정으로의 강력한 유도 (Full-screen CTA).
             */}
-            <section className="py-80 px-6 text-center">
-                <Link href="/work" className="group space-y-8 block">
-                    <span className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Next Story</span>
-                    <h2 className="text-5xl md:text-[8rem] font-light tracking-tighter uppercase group-hover:tracking-widest transition-all duration-1000">
-                        Character <br />
-                        <span className="font-serif italic">YOMO</span>
-                    </h2>
-                    <div className="flex justify-center pt-12">
-                        <div className="w-20 h-20 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
-                            <MoveRight size={32} />
+            <section className="py-60 bg-white text-black text-center px-6">
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    className="space-y-12"
+                >
+                    <span className="text-[10px] font-black uppercase tracking-[1em] opacity-40">Ready to build?</span>
+                    <Link href="/work" className="block group">
+                        <h2 className="text-6xl md:text-[12rem] font-black tracking-[0.05em] leading-none uppercase transition-all duration-500 group-hover:tracking-tighter">
+                            NEXT <br /> PROJECT
+                        </h2>
+                        <div className="mt-20 inline-flex items-center gap-6 border-b-2 border-black pb-4 group-hover:translate-x-4 transition-transform">
+                            <span className="text-2xl font-black uppercase tracking-widest italic">Go Explore</span>
+                            <ArrowUpRight size={40} strokeWidth={3} />
                         </div>
-                    </div>
-                </Link>
+                    </Link>
+                </motion.div>
             </section>
 
         </main>

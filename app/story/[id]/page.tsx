@@ -1,12 +1,59 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Tag } from 'lucide-react';
 import { useParams } from 'next/navigation';
+import { createClient } from '@/lib/supabase/client';
+import { Database } from '@/types/database';
+
+type Story = Database['public']['Tables']['stories']['Row'];
 
 export default function StoryDetailPage() {
-    const params = useParams(); // In real app, fetch data based on params.id
+    const { id } = useParams();
+    const [story, setStory] = useState<Story | null>(null);
+    const [loading, setLoading] = useState(true);
+    const supabase = createClient();
+
+    useEffect(() => {
+        const fetchStory = async () => {
+            const storyId = Array.isArray(id) ? id[0] : id;
+            if (!storyId) return;
+
+            const { data, error } = await supabase
+                .from('stories')
+                .select('*')
+                .eq('id', storyId)
+                .single();
+
+            if (error) {
+                console.error('Error fetching story:', error);
+            } else {
+                setStory(data);
+            }
+            setLoading(false);
+        };
+
+        fetchStory();
+    }, [id]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-black flex items-center justify-center">
+                <div className="text-white font-mono text-sm animate-pulse tracking-widest">LOADING STORY...</div>
+            </div>
+        );
+    }
+
+    if (!story) {
+        return (
+            <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white">
+                <h1 className="text-4xl font-bold mb-4">Story Not Found</h1>
+                <Link href="/story" className="text-zinc-500 hover:text-white transition-colors">Back to Stories</Link>
+            </div>
+        );
+    }
 
     return (
         <main className="bg-black min-h-screen text-white pt-32 pb-20">
@@ -28,11 +75,11 @@ export default function StoryDetailPage() {
                     >
                         <span className="flex items-center gap-2">
                             <Tag size={14} />
-                            INSIGHT
+                            {story.category || 'INSIGHT'}
                         </span>
                         <span className="flex items-center gap-2">
                             <Calendar size={14} />
-                            2024.01.15
+                            {new Date(story.created_at).toLocaleDateString()}
                         </span>
                     </motion.div>
 
@@ -42,7 +89,7 @@ export default function StoryDetailPage() {
                         transition={{ delay: 0.1 }}
                         className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight mb-8"
                     >
-                        Defining the New Digital Luxury in Automotive
+                        {story.title}
                     </motion.h1>
 
                     <motion.div
@@ -52,8 +99,8 @@ export default function StoryDetailPage() {
                         className="w-full aspect-[16/9] bg-neutral-900 overflow-hidden mb-12"
                     >
                         <img
-                            src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2000"
-                            alt="Cover"
+                            src={story.image || 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2000'}
+                            alt={story.title}
                             className="w-full h-full object-cover"
                         />
                     </motion.div>
@@ -65,24 +112,13 @@ export default function StoryDetailPage() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 }}
                     className="prose prose-invert prose-lg md:prose-xl max-w-none font-light text-gray-300"
-                >
-                    <p>
-                        In an era where digital touchpoints often precede physical interaction, the definition of luxury in the automotive sector is shifting. It is no longer just about the leather stitching or the engine roar; it is about the fluidity of the interface, the responsiveness of the configurator, and the immersion of the brand story online.
-                    </p>
-                    <p>
-                        At VINUSPREAD, we believe that digital luxury is defined by **frictionless elegance**. Just as a car door should close with a reassuring thud, a website should load with a perceptible smoothness. Animations should not distract but guide. Typography should breathe.
-                    </p>
-                    <h3>The Role of Motion</h3>
-                    <p>
-                        Motion design is the new chrome. It catches the eye and conveys quality. However, unlike chrome, it serves a functional purpose. It explains spatial relationships, provides feedback, and creates a sense of continuity.
-                    </p>
-                    <blockquote>
-                        "Luxury is attention to detail, originality, exclusivity and above all, quality." - Angelo Bonati
-                    </blockquote>
-                    <p>
-                        We apply this philosophy to every pixel. From the micro-interaction of a button hover to the macro-transition between pages, every moment is an opportunity to reinforce the brand's premium standing.
-                    </p>
-                </motion.div>
+                    dangerouslySetInnerHTML={{
+                        __html: (story.content || '').replace(
+                            /src="https?:\/\/vinus\.co\.kr\/([^"]+)"/g,
+                            (match, path) => `src="/api/proxy-image?url=${encodeURIComponent('https://vinus.co.kr/' + path)}"`
+                        )
+                    }}
+                />
             </article>
         </main>
     );

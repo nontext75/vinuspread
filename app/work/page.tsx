@@ -127,7 +127,9 @@ export default function WorkPage() {
                                             {/* Image Container */}
                                             <div className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-900 mb-6 border border-white/5 transition-colors duration-500 group-hover:border-white/20">
                                                 <img
-                                                    src={project.image || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000'}
+                                                    src={project.image?.startsWith('http://vinus.co.kr')
+                                                        ? `/api/proxy-image?url=${encodeURIComponent(project.image)}`
+                                                        : (project.image || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000')}
                                                     alt={project.title}
                                                     className="w-full h-full object-cover transition-all duration-700 ease-out grayscale group-hover:grayscale-0 group-hover:scale-105"
                                                 />
