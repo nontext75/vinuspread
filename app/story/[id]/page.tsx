@@ -99,7 +99,9 @@ export default function StoryDetailPage() {
                         className="w-full aspect-[16/9] bg-neutral-900 overflow-hidden mb-12"
                     >
                         <img
-                            src={story.image || 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2000'}
+                            src={story.image?.includes('vinus.co.kr')
+                                ? `/api/proxy-image?url=${encodeURIComponent(story.image)}`
+                                : (story.image || 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000')}
                             alt={story.title}
                             className="w-full h-full object-cover"
                         />
@@ -114,8 +116,8 @@ export default function StoryDetailPage() {
                     className="prose prose-invert prose-lg md:prose-xl max-w-none font-light text-gray-300"
                     dangerouslySetInnerHTML={{
                         __html: (story.content || '').replace(
-                            /src="https?:\/\/vinus\.co\.kr\/([^"]+)"/g,
-                            (match, path) => `src="/api/proxy-image?url=${encodeURIComponent('https://vinus.co.kr/' + path)}"`
+                            /src="(https?:\/\/(?:www\.)?vinus\.co\.kr\/[^"]+)"/g,
+                            (match, url) => `src="/api/proxy-image?url=${encodeURIComponent(url)}"`
                         )
                     }}
                 />

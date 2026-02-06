@@ -176,9 +176,9 @@ export default function WorkDetailPage() {
                                            prose-headings:text-white prose-headings:tracking-tighter prose-headings:font-black
                                            prose-strong:text-white prose-strong:font-bold"
                                 dangerouslySetInnerHTML={{
-                                    __html: project.content.replace(
-                                        /src="https?:\/\/vinus\.co\.kr\/([^"]+)"/g,
-                                        (match, path) => `src="/api/proxy-image?url=${encodeURIComponent('https://vinus.co.kr/' + path)}"`
+                                    __html: (project.content || '').replace(
+                                        /src="(https?:\/\/(?:www\.)?vinus\.co\.kr\/[^"]+)"/g,
+                                        (match, url) => `src="/api/proxy-image?url=${encodeURIComponent(url)}"`
                                     )
                                 }}
                             />
