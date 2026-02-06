@@ -85,7 +85,7 @@ export default function StoryPage() {
                                     {/* Image */}
                                     <div className="relative w-full aspect-[16/9] overflow-hidden bg-neutral-900 mb-8">
                                         <img
-                                            src={story.image?.startsWith('http://vinus.co.kr')
+                                            src={story.image?.includes('vinus.co.kr')
                                                 ? `/api/proxy-image?url=${encodeURIComponent(story.image)}`
                                                 : (story.image || 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000')}
                                             alt={story.title}

@@ -33,6 +33,7 @@ export default function AdminLinksPage() {
                 { name: "Ref v2: Modular Narrative", url: "/work/reference-2" },
                 { name: "Ref v3: Dark Immersive", url: "/work/reference-3" },
                 { name: "Ref v4: Grid Narrative", url: "/work/reference-4" },
+                { name: "Ref v5: High-End Essence", url: "/work/reference-5" },
             ]
         },
         {
