@@ -31,7 +31,7 @@ export default function AdminLinksPage() {
             links: [
                 { name: "Ref v1: Cinematic Narrative", url: "/work/reference" },
                 { name: "Ref v2: Modular Narrative", url: "/work/reference-2" },
-                { name: "Ref v3: Tech-Noir Immersive", url: "/work/reference-3" },
+                { name: "Ref v3: Dark Immersive", url: "/work/reference-3" },
             ]
         },
         {
