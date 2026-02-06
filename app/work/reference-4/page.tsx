@@ -102,9 +102,29 @@ export default function WorkReferenceFourPage() {
                 </div>
             </section>
 
-            {/* 4. Design System Breakdown (Modular Grid)
-                - 의도: 프로젝트의 짜임새를 보여주는 핵심 섹션입니다.
+            {/* 4. Visual Depth (New Section)
+                - 의도: 프로젝트의 시각적 풍성함을 더하기 위한 풀스크릿 그리드 섹션입니다.
             */}
+            <section className="py-20 px-6 md:px-12 bg-black">
+                <div className="max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 h-[600px] md:h-[1000px]">
+                    <div className="md:col-span-2 overflow-hidden border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?q=80&w=2070" className="w-full h-full object-cover transition-transform duration-1000 hover:scale-110" alt="Detail 1" />
+                    </div>
+                    <div className="grid grid-rows-2 gap-4">
+                        <div className="overflow-hidden border border-white/5">
+                            <img src="https://images.unsplash.com/photo-1551288049-bbbda536339a?q=80&w=1000" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" alt="Detail 2" />
+                        </div>
+                        <div className="overflow-hidden border border-white/5">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000" className="w-full h-full object-cover" alt="Detail 3" />
+                        </div>
+                    </div>
+                    <div className="overflow-hidden border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1000" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" alt="Detail 4" />
+                    </div>
+                </div>
+            </section>
+
+            {/* 5. Design System Breakdown (Modular Grid) */}
             <section className="py-40 bg-white text-black px-6 md:px-12">
                 <div className="max-w-[1920px] mx-auto space-y-24">
                     <div className="flex flex-col md:flex-row justify-between items-end gap-8">
@@ -118,6 +138,15 @@ export default function WorkReferenceFourPage() {
                                 <span className="text-[10px] font-bold text-zinc-400 uppercase mb-2 block">Grid</span>
                                 <p className="text-xl font-black uppercase">Modular 12</p>
                             </div>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-24">
+                        <div className="aspect-video bg-zinc-100 border border-black/5 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=2000" className="w-full h-full object-cover" alt="Interface 1" />
+                        </div>
+                        <div className="aspect-video bg-zinc-100 border border-black/5 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1581291417006-0da85119424d?q=80&w=2000" className="w-full h-full object-cover" alt="Interface 2" />
                         </div>
                     </div>
 
