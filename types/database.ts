@@ -72,6 +72,78 @@ export interface Database {
                     created_at?: string
                 }
                 Relationships: []
+            },
+            stories: {
+                Row: {
+                    id: string
+                    title: string
+                    excerpt: string | null
+                    category: 'NEWS' | 'INSIGHT' | 'CULTURE' | null
+                    image: string | null
+                    content: string | null
+                    status: 'draft' | 'published' | null
+                    created_at: string
+                    views: number | null
+                }
+                Insert: {
+                    id?: string
+                    title: string
+                    excerpt?: string | null
+                    category?: 'NEWS' | 'INSIGHT' | 'CULTURE' | null
+                    image?: string | null
+                    content?: string | null
+                    status?: 'draft' | 'published' | null
+                    created_at?: string
+                    views?: number | null
+                }
+                Update: {
+                    id?: string
+                    title?: string
+                    excerpt?: string | null
+                    category?: 'NEWS' | 'INSIGHT' | 'CULTURE' | null
+                    image?: string | null
+                    content?: string | null
+                    status?: 'draft' | 'published' | null
+                    created_at?: string
+                    views?: number | null
+                }
+                Relationships: []
+            },
+            projects: {
+                Row: {
+                    id: string
+                    title: string
+                    category: 'WEB' | 'MOBILE' | 'CHARACTER' | 'PDP' | null
+                    year: string | null
+                    image: string | null
+                    description: string | null
+                    content: string | null
+                    sort_order: number | null
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    title: string
+                    category?: 'WEB' | 'MOBILE' | 'BRANDING' | 'ETC' | null
+                    year?: string | null
+                    image?: string | null
+                    description?: string | null
+                    content?: string | null
+                    sort_order?: number | null
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    title?: string
+                    category?: 'WEB' | 'MOBILE' | 'BRANDING' | 'ETC' | null
+                    year?: string | null
+                    image?: string | null
+                    description?: string | null
+                    content?: string | null
+                    sort_order?: number | null
+                    created_at?: string
+                }
+                Relationships: []
             }
         }
         Views: {

@@ -1,4 +1,4 @@
-export type BlockType = 'hero' | 'sticky_split' | 'grid_gallery' | 'horizontal_gallery' | 'interactive_visual';
+export type BlockType = 'hero' | 'sticky_split' | 'grid_gallery' | 'horizontal_gallery' | 'interactive_visual' | 'stacking_cards' | 'service_accordion';
 
 export interface BlockData {
     [key: string]: any;
@@ -19,7 +19,15 @@ export interface HeroBlockData extends BlockData {
 }
 
 export interface StickySplitBlockData extends BlockData {
+    theme?: 'dark' | 'light';
+    layout?: 'split' | 'background'; // New layout mode
+    containerMode?: 'sticky' | 'relative';
     sticky_content: string; // Markdown or HTML
+    values_list?: {
+        title: string;
+        subtitle: string;
+        description: string;
+    }[];
     scroll_content: {
         type: 'image' | 'text' | 'video';
         src?: string;
@@ -40,6 +48,7 @@ export interface HorizontalGalleryBlockData extends BlockData {
         title: string;      // Project Title (e.g. GENESIS SPACE)
         category: string;   // Project Category (e.g. SPACE)
         year: string;       // Project Year (e.g. 2023)
+        link?: string;
     }[];
 }
 
@@ -59,4 +68,26 @@ export interface GridGalleryBlockData extends BlockData {
 
 export interface InteractiveVisualBlockData extends BlockData {
     type: 'particles' | 'distortion' | 'wave';
+}
+
+export interface StackingCardsBlockData extends BlockData {
+    title: string;
+    description: string;
+    cards: {
+        title: string;
+        subtitle: string;
+        description: string;
+        src: string; // Image URL
+    }[];
+}
+
+export interface ServiceAccordionBlockData extends BlockData {
+    title: string;
+    subtitle: string;
+    services: {
+        id: string;
+        title: string;
+        description: string;
+        src: string; // Hover Image
+    }[];
 }

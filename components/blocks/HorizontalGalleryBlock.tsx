@@ -11,110 +11,114 @@ interface HorizontalGalleryBlockProps {
 }
 
 const HorizontalGalleryBlock: React.FC<HorizontalGalleryBlockProps> = ({ data }) => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const scrollRef = useRef<HTMLDivElement>(null);
+    const targetRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start end", "end start"]
+        target: targetRef,
     });
-    const { scrollXProgress } = useScroll({ container: scrollRef });
 
-    // Parallax effect for the section header (optional)
-    const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
+    // Determine width for horizontal scroll
+    // Mocking ~4000px scrollable width or dynamic based on items. 
+    // Ideally, we'd use a measured width, but for now we'll estimate based on item count.
+    // 15 items * 25vw + gaps ~= 400vw width roughly.
+    // Transform scrollY (vertical) to x (horizontal).
+    const x = useTransform(scrollYProgress, [0, 1], ["0%", "-85%"]);
 
     return (
-        <section ref={containerRef} className="w-full py-48 md:py-64 overflow-hidden bg-background relative">
-            {/* Header */}
-            <div className="container px-6 md:px-12 mx-auto mb-16 flex items-end justify-between border-b border-foreground/10 pb-8">
-                <motion.h2
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-4xl md:text-6xl font-black tracking-tight uppercase"
-                >
-                    {data.title}
-                </motion.h2>
+        <section ref={targetRef} className="relative h-[500vh] bg-neutral-950 z-10"> {/* 500vh scroll track, Opaque BG to hide stars */}
+            <div className="sticky top-0 flex h-screen items-center overflow-hidden">
 
-                {data.view_all_link && (
-                    <Link
-                        href={data.view_all_link}
-                        className="group flex items-center gap-2 text-sm md:text-base font-medium tracking-widest uppercase hover:text-muted-foreground transition-colors mb-2"
-                    >
-                        View All
-                        <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                    </Link>
-                )}
-            </div>
-
-            {/* Horizontal Scroll Content */}
-            <div className="relative w-full group">
-                {/* Custom Cursor Hint (Optional, sophisticated add-on) */}
-                <div className="absolute top-4 right-12 z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <span className="text-[10px] uppercase tracking-widest text-muted-foreground bg-background/80 px-2 py-1 rounded-full border border-foreground/10 backdrop-blur-sm">
-                        Drag to Explore
-                    </span>
+                {/* Header Overlay (Optional, stationary or moves slightly) */}
+                {/* Header Overlay - Positioned to match StickySplitBlock (Section 3) */}
+                <div className="absolute top-32 left-6 md:left-12 z-20 pointer-events-none">
+                    <p className="text-xl md:text-2xl font-bold mb-4 tracking-tighter text-muted-foreground">
+                        Selected Works ({data.items.length})
+                    </p>
+                    <h2 className="text-5xl md:text-7xl lg:text-9xl font-black tracking-tight leading-[0.9] uppercase text-foreground">
+                        {data.title}
+                    </h2>
                 </div>
 
+                {/* Horizontal Scrolling Track */}
                 <motion.div
-                    ref={scrollRef}
-                    className="flex gap-8 px-6 md:px-12 overflow-x-auto pb-12 cursor-grab active:cursor-grabbing scrollbar-hide"
-                    drag="x"
-                    dragConstraints={containerRef}
-                    style={{ overflowX: 'auto', display: 'flex', scrollbarWidth: 'none', msOverflowStyle: 'none' }} // Ensure scrollbar is hidden
+                    style={{ x }}
+                    className="flex gap-12 px-12 md:px-24 w-max h-[60vh] items-center"
                 >
-                    <style jsx global>{`
-                        .scrollbar-hide::-webkit-scrollbar {
-                            display: none;
-                        }
-                    `}</style>
+                    {/* Intro Spacer to push first item past the header title area */}
+                    <div className="w-[10vw]" />
 
-                    {data.items.map((item, index) => (
-                        <motion.div
-                            key={index}
-                            className="flex-none w-[80vw] md:w-[45vw] lg:w-[30vw] group/item"
-                            initial={{ opacity: 0, x: 50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ delay: index * 0.1, duration: 0.6 }}
-                            viewport={{ once: true }}
-                        >
-                            {/* Image Container */}
-                            <div className="relative aspect-[4/3] overflow-hidden bg-muted mb-6">
-                                <img
-                                    src={item.src}
-                                    alt={item.title}
-                                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-item-hover:scale-105"
-                                />
-                                <div className="absolute inset-0 bg-black/0 group-item-hover:bg-black/10 transition-colors duration-500" />
-                            </div>
+                    {data.items.map((item, index) => {
+                        const Wrapper = item.link ? Link : React.Fragment;
+                        const wrapperProps = item.link ? { href: item.link, className: "h-full block" } : {};
 
-                            {/* Metadata */}
-                            <div className="flex flex-col gap-1 border-t border-foreground/10 pt-4 transition-colors group-item-hover:border-foreground/50">
-                                <div className="flex justify-between items-baseline">
-                                    <h3 className="text-xl md:text-2xl font-bold uppercase tracking-tight group-item-hover:text-primary transition-colors">
+                        // If Link, we need to handle the structure carefully.
+                        // Actually, easiest is to wrap the inner content
+                        const content = (
+                            <div
+                                key={index}
+                                className="relative h-full aspect-[3/4] md:aspect-[4/5] flex-shrink-0 flex flex-col group overflow-hidden cursor-pointer"
+                            >
+                                {/* Image with Unfurl Animation - sliding up mask or scale */}
+                                <motion.div
+                                    initial={{ clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)" }}
+                                    whileInView={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
+                                    transition={{ duration: 0.8, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                                    viewport={{ once: true, margin: "-10%" }}
+                                    className="w-full flex-1 relative overflow-hidden bg-muted"
+                                >
+                                    <img
+                                        src={item.src}
+                                        alt={item.title}
+                                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                                    />
+                                </motion.div>
+
+                                {/* Title & Category - Always Visible Below Image */}
+                                <div className="mt-4 flex flex-col justify-start">
+                                    <h3 className="text-foreground text-2xl font-bold uppercase tracking-tight leading-none mb-1 group-hover:text-muted-foreground transition-colors">
                                         {item.title}
                                     </h3>
-                                    <span className="text-sm font-medium text-muted-foreground">
-                                        {item.year}
+                                    <span className="text-muted-foreground/60 text-sm font-medium uppercase tracking-wider">
+                                        {item.category} — {item.year}
                                     </span>
                                 </div>
-                                <span className="text-xs md:text-sm font-medium text-muted-foreground uppercase tracking-wider">
-                                    {item.category}
-                                </span>
+
+                                {/* Number Indicator - Floating Top Left (Optional, keep or remove? User didn't complain, keeping it style-wise) */}
+                                <div className="absolute top-2 left-2 text-xs font-bold text-white/50 z-10 mix-blend-difference">
+                                    {(index + 1).toString().padStart(2, '0')}
+                                </div>
                             </div>
-                        </motion.div>
-                    ))}
+                        );
 
-                    {/* Padding right to allow scrolling to end */}
-                    <div className="flex-none w-12" />
+                        return item.link ? (
+                            <Link key={index} href={item.link} className='h-full block'>
+                                {content}
+                            </Link>
+                        ) : (
+                            <React.Fragment key={index}>
+                                {content}
+                            </React.Fragment>
+                        );
+
+                    })}
+
+                    {/* View All Projects Card - Append at the end */}
+                    {data.view_all_link && (
+                        <Link href={data.view_all_link} className="h-full block group/viewall">
+                            <div className="relative h-full aspect-[3/4] md:aspect-[4/5] flex-shrink-0 flex flex-col items-center justify-center bg-white/5 border border-white/10 hover:bg-white hover:border-transparent transition-all duration-500 cursor-pointer overflow-hidden">
+                                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover/viewall:opacity-100 transition-opacity duration-500" />
+
+                                <div className="relative z-10 flex flex-col items-center gap-6">
+                                    <div className="w-16 h-16 rounded-full border border-white/30 group-hover/viewall:border-black/20 flex items-center justify-center transition-colors duration-500">
+                                        <ArrowRight className="w-6 h-6 text-white group-hover/viewall:text-black transition-colors duration-500" />
+                                    </div>
+                                    <span className="text-3xl md:text-4xl font-black uppercase text-center leading-none text-white group-hover/viewall:text-black transition-colors duration-500">
+                                        View<br />All<br />Projects
+                                    </span>
+                                </div>
+                            </div>
+                        </Link>
+                    )}
                 </motion.div>
-
-                {/* Custom Progress Bar */}
-                <div className="absolute bottom-0 left-6 right-6 md:left-12 md:right-12 h-[1px] bg-foreground/10 mt-8">
-                    <motion.div
-                        className="h-full bg-foreground origin-left"
-                        style={{ scaleX: scrollXProgress }}
-                    />
-                </div>
             </div>
         </section>
     );

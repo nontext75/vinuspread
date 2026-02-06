@@ -15,27 +15,15 @@ interface HeroBlockProps {
 const HeroBlock: React.FC<HeroBlockProps> = ({ data }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
-    const [visualMode, setVisualMode] = React.useState<'galaxy' | 'orbit'>('galaxy');
+    const [visualMode, setVisualMode] = React.useState<'galaxy' | 'orbit' | 'debris'>('galaxy');
 
-    useEffect(() => {
-        // Basic GSAP entrance animation
-        const ctx = gsap.context(() => {
-            gsap.from(titleRef.current, {
-                y: 100,
-                opacity: 0,
-                duration: 1.5,
-                ease: "power4.out",
-                delay: 0.2
-            });
-        }, containerRef);
-
-        return () => ctx.revert();
-    }, []);
+    // Removed GSAP animation in favor of Framer Motion Variants (User Request)
+    // useEffect(() => { ... gsap ... }, []);
 
     return (
         <section
             ref={containerRef}
-            className="relative min-h-[120vh] flex flex-col justify-center items-start overflow-hidden px-6 md:px-12"
+            className="sticky top-0 z-0 h-screen flex flex-col justify-center items-start overflow-hidden px-6 md:px-12"
         >
             {/* Background Visual Area - Using GeometricBackground for tuned physics/camera */}
             <GeometricBackground mode={visualMode} />
@@ -65,24 +53,33 @@ const HeroBlock: React.FC<HeroBlockProps> = ({ data }) => {
                 >
                     Orbit
                 </button>
+                <div className="w-[1px] h-4 bg-white/20" /> {/* Seperator */}
+                <button
+                    onClick={() => setVisualMode('debris')}
+                    className={cn(
+                        "text-xs font-bold tracking-widest uppercase transition-all duration-300",
+                        visualMode === 'debris'
+                            ? "text-white opacity-100 scale-110"
+                            : "text-white/40 hover:text-white/80"
+                    )}
+                >
+                    Debris
+                </button>
             </div>
 
             <div className="z-10 text-left max-w-7xl w-full pointer-events-none">
                 <h1
                     ref={titleRef}
-                    className="text-[10vw] leading-[0.85] font-black tracking-tighter mb-8 uppercase mix-blend-difference text-white"
+                    className="text-[10vw] leading-[0.9] font-black tracking-tighter mb-8 uppercase mix-blend-difference text-white py-4 overflow-visible"
                 >
                     {data.title}
                 </h1>
                 {data.subtitle && (
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.8, duration: 0.8 }}
+                    <p
                         className="text-2xl md:text-4xl text-white font-light max-w-4xl tracking-wide whitespace-pre-line"
                     >
                         {data.subtitle}
-                    </motion.p>
+                    </p>
                 )}
             </div>
 

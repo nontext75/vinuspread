@@ -19,47 +19,48 @@ const MOCK_HOMEPAGE_BLOCKS: ContentBlock[] = [
     id: "philosophy",
     type: "sticky_split",
     data: {
+      theme: 'dark',
+      // layout: 'background', // Reverted as per user request: "Don't use background mode"
       sticky_content: `
-        <h2 class="text-xl md:text-2xl font-bold mb-8 tracking-tighter text-muted-foreground">Essential Values</h2>
+        <h2 class="text-xl md:text-2xl font-bold mb-8 tracking-tighter text-white/60">Essential Values</h2>
         <p class="text-5xl md:text-7xl lg:text-9xl leading-[1.0] text-foreground mb-6 font-black tracking-tight" style="word-break: keep-all;">
-          NO BOUNDARY<br/>CREATIVE
+          SPREAD<br/>THE BEAUTIFUL<br/>THINGS
         </p>
         <p class="text-base text-muted-foreground font-light tracking-wide mb-24">
           우리는 고객의 본질적 가치에 집중하고 아름다움을 더합니다.<br/>
           빠르게 변하는 시대 속에서도 변하지 않는 가치에 주목하며,<br/>
           한계를 뛰어넘는 구조적 아름다움을 만듭니다.
         </p>
-
-        <div class="space-y-16">
-          <div>
-            <h3 class="text-3xl md:text-4xl font-semibold mb-4">Think</h3>
-            <p class="text-xl md:text-2xl mb-2 font-light">Establish common goals with clients and contemplate together.</p>
-            <p class="text-sm text-muted-foreground font-light">고객과 공통된 목표를 설정하고 고민하며, 다양한 선택 속에서 최선의 방법을 제시합니다.</p>
-          </div>
-          <div>
-            <h3 class="text-3xl md:text-4xl font-semibold mb-4">Mind</h3>
-            <p class="text-xl md:text-2xl mb-2 font-light">Recreating new values suited to the purpose.</p>
-            <p class="text-sm text-muted-foreground font-light">우리가 만든 가치가 어제보다 더 아름다운 오늘을 만듭니다. 목적에 맞는 새로운 가치로 재창조합니다.</p>
-          </div>
-          <div>
-            <h3 class="text-3xl md:text-4xl font-semibold mb-4">Behavior</h3>
-            <p class="text-xl md:text-2xl mb-2 font-light">Constantly exploring and experimenting without stopping.</p>
-            <p class="text-sm text-muted-foreground font-light">멈추지 않고 끊임없이 탐구하고 실험합니다. 본질적인 가치를 표현하려는 즐거운 고민을 즐깁니다.</p>
-          </div>
-        </div>
       `,
+      values_list: [
+        {
+          title: "THINK", // Uppercase to match Section 3 style
+          subtitle: "Establish common goals with clients and contemplate together.",
+          description: "고객과 공통된 목표를 설정하고 고민하며, 다양한 선택 속에서 최선의 방법을 제시합니다."
+        },
+        {
+          title: "MIND",
+          subtitle: "Recreating new values suited to the purpose.",
+          description: "우리가 만든 가치가 어제보다 더 아름다운 오늘을 만듭니다. 목적에 맞는 새로운 가치로 재창조합니다."
+        },
+        {
+          title: "BEHAVIOR",
+          subtitle: "Constantly exploring and experimenting without stopping.",
+          description: "멈추지 않고 끊임없이 탐구하고 실험합니다. 본질적인 가치를 표현하려는 즐거운 고민을 즐깁니다."
+        }
+      ],
       scroll_content: [
         {
           type: 'image',
-          src: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070'
+          src: 'https://images.unsplash.com/photo-1486718448742-163732cd1544?q=80&w=2000' // THINK: Structural Realism (Architecture)
         },
         {
           type: 'image',
-          src: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964'
+          src: 'https://images.unsplash.com/photo-1519817650390-64a93db3d648?q=80&w=2000' // MIND: Depth & Inner Core (Spiral)
         },
         {
           type: 'image',
-          src: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1974'
+          src: 'https://images.unsplash.com/photo-1492571350019-22de08371fd3?q=80&w=2000' // BEHAVIOR: Kinetic Energy (Light Motion)
         }
       ]
     }
@@ -68,45 +69,40 @@ const MOCK_HOMEPAGE_BLOCKS: ContentBlock[] = [
     id: "business-fields",
     type: "sticky_split",
     data: {
+      theme: 'light',
+      layout: 'background', // Reverted: Background mode restore
       sticky_content: `
-        <h2 class="text-xl md:text-2xl font-bold mb-8 tracking-tighter text-muted-foreground">Field of Business</h2>
-        <p class="text-5xl md:text-7xl lg:text-9xl leading-[1.0] text-foreground mb-6 font-black tracking-tight" style="word-break: keep-all;">
-          SPREAD<br/>THE BEAUTIFUL<br/>THINGS
+        <h2 class="text-xl md:text-2xl font-bold mb-8 tracking-tighter text-white/60">Field of Business</h2>
+        <p class="text-5xl md:text-7xl lg:text-9xl leading-[1.0] mb-6 font-black tracking-tight" style="word-break: keep-all;">
+          NO BOUNDARY<br/>CREATIVE
         </p>
-        <p class="text-base text-muted-foreground font-light tracking-wide">
+        <p class="text-base text-slate-600 font-light tracking-wide">
           우리는 시각적 디자인의 다양한 분야를 다루며,<br/>
           물리적 경계 없는 최고의 결과물을 공유합니다.
         </p>
       `,
-      scroll_content: [
+      values_list: [
         {
-          type: 'text',
-          title: 'Website',
-          description_en: 'Developing unified web & mobile UI/UX platforms for successful online business.',
-          description_ko: '통일된 경험의 웹 & 모바일 UI/UX 플랫폼 개발. 자체 CMS를 통한 빠르고 안정적인 서비스 구축.'
+          title: "Website",
+          subtitle: "Developing unified web & mobileUI/UX platforms \nfor successful online business.",
+          description: "통일된 경험의 웹 & 모바일 UI/UX 플랫폼 개발."
         },
         {
-          type: 'text',
-          title: 'Application',
-          description_en: 'Creating optimized layouts and efficient interactions for high-quality apps.',
-          description_ko: 'iOS, Android, Windows 환경의 최적화된 어플리케이션 UI 제작. 디바이스 간 동일한 경험 제공.'
+          title: "MOBILE APP",
+          subtitle: "Creating optimized layouts and efficient interactions \nfor high-quality apps. iOS, Android, Windows",
+          description: " 환경에 최적화된 어플리케이션."
         },
         {
-          type: 'image',
-          src: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070'
-        },
-        {
-          type: 'text',
-          title: 'Character & Branding',
-          description_en: 'Developing unique characters and sustainable brand strategies.',
-          description_ko: '유머러스하고 개성 있는 캐릭터 개발 및 지속 가능한 브랜드 전략 제시.'
-        },
-        {
-          type: 'text',
-          title: 'Editorial',
-          description_en: 'Creating various visual design elements based on marketing strategies.',
-          description_ko: '마케팅 전략에 따른 시각적 디자인 요소 제작 및 경쟁력 강화.'
+          title: "Branding",
+          subtitle: "Building strong brand identities that resonate \nwith your target audience. ",
+          description: "브랜드의 핵심 가치를 시각화하여 강력한 인상을 남깁니다."
         }
+      ],
+      items: [], // No items array needed for sticky split? Ah it uses scroll_content
+      scroll_content: [
+        { type: 'image', src: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000' }, // 1. Tech Blue (Network/Globe)
+        { type: 'image', src: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=2000' }, // 2. Dark Abstract (Smoother/Darker)
+        { type: 'image', src: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2000' }  // 3. Hardware/Chip (Dark)
       ]
     }
   },
@@ -114,43 +110,114 @@ const MOCK_HOMEPAGE_BLOCKS: ContentBlock[] = [
     id: "portfolio-gallery",
     type: "horizontal_gallery",
     data: {
-      title: "PURPOSEFUL SPACES",
+      title: "MAJOR WORKS",
       view_all_link: "/portfolio",
       items: [
         {
-          src: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2301",
-          alt: "Corporate Office Design",
-          title: "GENESIS SPACE",
-          category: "SPACE",
+          src: "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000",
+          alt: "Genesis X Gran Berlinetta",
+          title: "GENESIS X CONCEPT",
+          category: "Automotive",
+          year: "2024",
+          link: "/work/genesis-x"
+        },
+        {
+          src: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000",
+          alt: "MIH Website",
+          title: "MIH WEBSITE",
+          category: "Website",
           year: "2023"
         },
         {
-          src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2370",
-          alt: "Skyscraper Architecture",
-          title: "HYUNDAI MOTORSTUDIO",
-          category: "EXHIBITION",
+          src: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000",
+          alt: "Budongsan 114",
+          title: "BUDONGSAN 114",
+          category: "Website",
           year: "2022"
         },
         {
-          src: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070",
-          alt: "Tech Hub",
-          title: "KIA BRAND IDENTITY",
-          category: "BRANDING",
+          src: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2000",
+          alt: "Samsung Galaxy",
+          title: "SAMSUNG GALAXY",
+          category: "Interactive",
+          year: "2023"
+        },
+        {
+          src: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2000",
+          alt: "Hyundai Motor",
+          title: "HYUNDAI MOTOR",
+          category: "Campaign",
+          year: "2023"
+        },
+        {
+          src: "https://images.unsplash.com/photo-1545235617-9465d2a55698?q=80&w=2000",
+          alt: "LG Signature",
+          title: "LG SIGNATURE",
+          category: "Luxury",
+          year: "2022"
+        },
+        {
+          src: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?q=80&w=2000",
+          alt: "Hankook Tire",
+          title: "HANKOOK TIRE",
+          category: "Global",
+          year: "2022"
+        },
+        {
+          src: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2000",
+          alt: "Nike Korea",
+          title: "NIKE KOREA",
+          category: "Retail",
+          year: "2022"
+        },
+        {
+          src: "https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?q=80&w=2000",
+          alt: "Gentle Monster",
+          title: "GENTLE MONSTER",
+          category: "Fashion",
           year: "2021"
         },
         {
-          src: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2370",
-          alt: "Digital Experience",
-          title: "SAMSUNG GALAXY STUDIO",
-          category: "INTERACTIVE",
-          year: "2023"
+          src: "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=2000",
+          alt: "KakaoBank",
+          title: "KAKAOBANK",
+          category: "Finance",
+          year: "2021"
         },
         {
-          src: "https://images.unsplash.com/photo-1531973576160-7125cd663d86?q=80&w=2370",
-          alt: "Luxury Kitchen",
-          title: "LG SIGNATURE KITCHEN",
-          category: "WEBSITE",
-          year: "2022"
+          src: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=2000",
+          alt: "Naver Map",
+          title: "NAVER MAP",
+          category: "Platform",
+          year: "2021"
+        },
+        {
+          src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2000",
+          alt: "SK Telecom",
+          title: "SK TELECOM",
+          category: "Service",
+          year: "2020"
+        },
+        {
+          src: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2000",
+          alt: "Coupang Eats",
+          title: "COUPANG EATS",
+          category: "App",
+          year: "2020"
+        },
+        {
+          src: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2000",
+          alt: "Woowa Bros",
+          title: "WOOWA BROS",
+          category: "Corporate",
+          year: "2020"
+        },
+        {
+          src: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=2000",
+          alt: "Toss",
+          title: "TOSS",
+          category: "Fintech",
+          year: "2019"
         }
       ]
     }

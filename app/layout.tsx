@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import "./globals.css";
 import { cn } from "@/lib/utils";
+import PerformanceGuard from "@/components/ui/PerformanceGuard";
+import SiteLayout from "@/components/SiteLayout";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -27,11 +28,11 @@ export default function RootLayout({
         "min-h-screen bg-background font-sans antialiased text-foreground selection:bg-primary selection:text-white overflow-x-hidden",
         outfit.variable
       )}>
-        <Header />
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Footer />
+        <PerformanceGuard>
+          <SiteLayout>
+            {children}
+          </SiteLayout>
+        </PerformanceGuard>
       </body>
     </html>
   );
