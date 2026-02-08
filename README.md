@@ -1,3 +1,9 @@
+# Vinus Renewal Project (Handover Phase)
+
+> **🚧 IMPORTANT FOR DEVELOPERS / AI AGENTS:**
+> Please read [DEVELOPER_NOTES.md](./DEVELOPER_NOTES.md) **FIRST** for critical database connection settings and handover instructions.
+> The `.env` file requires specific manual configuration (Supabase Pooler credentials) which are documented in that file.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
