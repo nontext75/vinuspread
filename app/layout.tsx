@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
-import "./globals.css";
+
 import { cn } from "@/lib/utils";
 import PerformanceGuard from "@/components/ui/PerformanceGuard";
 import SiteLayout from "@/components/SiteLayout";

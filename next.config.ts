@@ -1,3 +1,4 @@
+import { withPayload } from '@payloadcms/next/withPayload';
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -9,8 +10,9 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      // Allow loading images from local Supabase/Payload if needed (though they act as external usually)
     ],
   },
 };
 
-export default nextConfig;
+export default withPayload(nextConfig);

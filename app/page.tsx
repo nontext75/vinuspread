@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/client"; // Using client for now to avoid server component complexity if needed, but standard is server. 
+
 // Actually, let's skip supabase import for this specific 'mock force' version to be 100% safe.
 // import { ContentBlock } from "@/types/blocks";
 import BlockRenderer from "@/components/BlockRenderer";
@@ -112,123 +112,62 @@ const MOCK_HOMEPAGE_BLOCKS: ContentBlock[] = [
     data: {
       title: "MAJOR WORKS",
       view_all_link: "/portfolio",
-      items: [
-        {
-          src: "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000",
-          alt: "Genesis X Gran Berlinetta",
-          title: "GENESIS X CONCEPT",
-          category: "Automotive",
-          year: "2024",
-          link: "/work/genesis-x"
-        },
-        {
-          src: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000",
-          alt: "MIH Website",
-          title: "MIH WEBSITE",
-          category: "Website",
-          year: "2023"
-        },
-        {
-          src: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000",
-          alt: "Budongsan 114",
-          title: "BUDONGSAN 114",
-          category: "Website",
-          year: "2022"
-        },
-        {
-          src: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2000",
-          alt: "Samsung Galaxy",
-          title: "SAMSUNG GALAXY",
-          category: "Interactive",
-          year: "2023"
-        },
-        {
-          src: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2000",
-          alt: "Hyundai Motor",
-          title: "HYUNDAI MOTOR",
-          category: "Campaign",
-          year: "2023"
-        },
-        {
-          src: "https://images.unsplash.com/photo-1545235617-9465d2a55698?q=80&w=2000",
-          alt: "LG Signature",
-          title: "LG SIGNATURE",
-          category: "Luxury",
-          year: "2022"
-        },
-        {
-          src: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?q=80&w=2000",
-          alt: "Hankook Tire",
-          title: "HANKOOK TIRE",
-          category: "Global",
-          year: "2022"
-        },
-        {
-          src: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2000",
-          alt: "Nike Korea",
-          title: "NIKE KOREA",
-          category: "Retail",
-          year: "2022"
-        },
-        {
-          src: "https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?q=80&w=2000",
-          alt: "Gentle Monster",
-          title: "GENTLE MONSTER",
-          category: "Fashion",
-          year: "2021"
-        },
-        {
-          src: "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=2000",
-          alt: "KakaoBank",
-          title: "KAKAOBANK",
-          category: "Finance",
-          year: "2021"
-        },
-        {
-          src: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=2000",
-          alt: "Naver Map",
-          title: "NAVER MAP",
-          category: "Platform",
-          year: "2021"
-        },
-        {
-          src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2000",
-          alt: "SK Telecom",
-          title: "SK TELECOM",
-          category: "Service",
-          year: "2020"
-        },
-        {
-          src: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2000",
-          alt: "Coupang Eats",
-          title: "COUPANG EATS",
-          category: "App",
-          year: "2020"
-        },
-        {
-          src: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2000",
-          alt: "Woowa Bros",
-          title: "WOOWA BROS",
-          category: "Corporate",
-          year: "2020"
-        },
-        {
-          src: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=2000",
-          alt: "Toss",
-          title: "TOSS",
-          category: "Fintech",
-          year: "2019"
-        }
-      ]
+      items: []
     }
   },
 ];
 
-export const revalidate = 60; // Revalidate every minute
+export const revalidate = 0; // Force dynamic render for debugging
+
+import { createClient } from '@supabase/supabase-js';
+
+// ... (imports)
 
 async function getBlocks(): Promise<ContentBlock[]> {
-  // Directly return mock data for stability
-  return MOCK_HOMEPAGE_BLOCKS;
+  // 1. Initialize Supabase Client (Direct REST API)
+  // This bypasses the DB port 5432 blockage by using HTTPS port 443
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+
+  // 2. Fetch Projects via REST
+  const { data: projects, error } = await supabase
+    .from('projects')
+    .select('*')
+    .order('sort_order', { ascending: true })
+    .limit(100);
+
+  if (error) {
+    console.error("Supabase REST Error:", error);
+    return []; // Return empty if API fails, no mock data
+  }
+
+  // 3. Map to Gallery Items
+  const realProjectItems = (projects || []).map((project: any) => ({
+    src: project.image || '/placeholder.jpg',
+    alt: project.title,
+    title: project.title,
+    category: project.category || 'Project',
+    year: project.year || new Date().getFullYear().toString(),
+    link: `/work/${project.id}`,
+  }));
+
+  // 4. Inject into Mock Blocks
+  const blocks = MOCK_HOMEPAGE_BLOCKS.map(block => {
+    if (block.id === 'portfolio-gallery' && block.data) {
+      return {
+        ...block,
+        data: {
+          ...block.data,
+          items: realProjectItems.length > 0 ? realProjectItems : [], // Empty if no real data
+        }
+      };
+    }
+    return block;
+  });
+
+  return blocks;
 }
 
 export default async function Home() {
