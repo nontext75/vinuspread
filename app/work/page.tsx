@@ -115,46 +115,50 @@ export default function WorkPage() {
 
                             {/* Grid */}
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-24">
-                                {items.map((project, idx) => (
-                                    <Link key={project.id} href={`/work/${project.id}`} className="block">
-                                        <motion.div
-                                            initial={{ opacity: 0, y: 50 }}
-                                            whileInView={{ opacity: 1, y: 0 }}
-                                            viewport={{ once: true, margin: "-10%" }}
-                                            transition={{ duration: 0.8, delay: idx * 0.1 }}
-                                            className="group relative"
-                                        >
-                                            {/* Image Container */}
-                                            <div className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-900 mb-6 border border-white/5 transition-colors duration-500 group-hover:border-white/20">
-                                                <img
-                                                    src={project.image?.includes('vinus.co.kr')
-                                                        ? `/api/proxy-image?url=${encodeURIComponent(project.image)}`
-                                                        : (project.image || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000')}
-                                                    alt={project.title}
-                                                    className="w-full h-full object-cover transition-all duration-700 ease-out grayscale group-hover:grayscale-0 group-hover:scale-105"
-                                                />
-                                                {/* Overlay (Subtle) */}
-                                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
+                                {items.map((project, idx) => {
+                                    const projectLink = `/work/${project.id}`;
 
-                                                {/* Hover Icon (Clean) */}
-                                                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0 bg-white text-black rounded-full p-2">
-                                                    <ArrowUpRight size={20} />
-                                                </div>
-                                            </div>
+                                    return (
+                                        <Link key={project.id} href={projectLink} className="block">
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 50 }}
+                                                whileInView={{ opacity: 1, y: 0 }}
+                                                viewport={{ once: true, margin: "-10%" }}
+                                                transition={{ duration: 0.8, delay: idx * 0.1 }}
+                                                className="group relative"
+                                            >
+                                                {/* Image Container */}
+                                                <div className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-900 mb-6 border border-white/5 transition-colors duration-500 group-hover:border-white/20">
+                                                    <img
+                                                        src={project.image?.includes('vinus.co.kr')
+                                                            ? `/api/proxy-image?url=${encodeURIComponent(project.image)}`
+                                                            : (project.image || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000')}
+                                                        alt={project.title}
+                                                        className="w-full h-full object-cover transition-all duration-700 ease-out grayscale group-hover:grayscale-0 group-hover:scale-105"
+                                                    />
+                                                    {/* Overlay (Subtle) */}
+                                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
 
-                                            {/* Info */}
-                                            <div className="flex flex-col gap-2">
-                                                <div className="flex justify-between items-start border-b border-white/10 pb-4 mb-2 group-hover:border-white/40 transition-colors duration-300">
-                                                    <h3 className="text-xl md:text-2xl font-bold tracking-tight uppercase">{project.title}</h3>
-                                                    <span className="text-[10px] font-mono opacity-50 border border-white/20 px-2 py-0.5 rounded-full">{project.year}</span>
+                                                    {/* Hover Icon (Clean) */}
+                                                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0 bg-white text-black rounded-full p-2">
+                                                        <ArrowUpRight size={20} />
+                                                    </div>
                                                 </div>
-                                                <p className="text-xs md:text-sm text-gray-500 font-light max-w-md line-clamp-2 leading-relaxed">
-                                                    {project.description}
-                                                </p>
-                                            </div>
-                                        </motion.div>
-                                    </Link>
-                                ))}
+
+                                                {/* Info */}
+                                                <div className="flex flex-col gap-2">
+                                                    <div className="flex justify-between items-start border-b border-white/10 pb-4 mb-2 group-hover:border-white/40 transition-colors duration-300">
+                                                        <h3 className="text-xl md:text-2xl font-bold tracking-tight uppercase">{project.title}</h3>
+                                                        <span className="text-[10px] font-mono opacity-50 border border-white/20 px-2 py-0.5 rounded-full">{project.year}</span>
+                                                    </div>
+                                                    <p className="text-xs md:text-sm text-gray-500 font-light max-w-md line-clamp-2 leading-relaxed">
+                                                        {project.description}
+                                                    </p>
+                                                </div>
+                                            </motion.div>
+                                        </Link>
+                                    );
+                                })}
                             </div>
                         </section>
                     )

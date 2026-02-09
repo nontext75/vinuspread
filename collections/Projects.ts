@@ -19,6 +19,10 @@ export const Projects: CollectionConfig = {
             type: 'text',
         },
         {
+            name: 'client',
+            type: 'text',
+        },
+        {
             name: 'year',
             type: 'text',
         },

@@ -2,8 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowUpRight, PenTool } from 'lucide-react';
-import LevitatingObject from '@/components/ui/LevitatingObject';
+import { ArrowUpRight, PenTool, Plus, ArrowRight } from 'lucide-react';
 
 import { createClient } from '@/lib/supabase/client';
 import { Database } from '@/types/database';
@@ -34,34 +33,22 @@ export default function StoryPage() {
 
         fetchStories();
     }, []);
+
     return (
-        <main className="bg-black min-h-screen text-white pt-32 pb-20">
-            {/* Page Header */}
-            <section className="px-6 md:px-12 mb-20 relative">
-                <div className="flex justify-between items-end mb-8">
-                    <motion.h1
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="text-7xl md:text-9xl font-black tracking-tighter"
-                    >
-                        STORY
-                    </motion.h1>
+        <main className="bg-black min-h-screen text-white pt-48 pb-20 relative overflow-hidden">
+            {/* Background Grain/Texture */}
+            <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
-                    {/* Write Button (For Admin/User) */}
-                    <Link href="/story/write">
-                        <motion.button
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.5 }}
-                            className="hidden md:flex items-center gap-2 px-6 py-3 border border-white/20 rounded-full hover:bg-white hover:text-black transition-colors"
-                        >
-                            <PenTool size={18} />
-                            <span className="text-sm font-bold uppercase tracking-widest">Write Story</span>
-                        </motion.button>
-                    </Link>
-                </div>
-
+            {/* Page Header - Synchronized with WORK page */}
+            <section className="px-6 md:px-12 mb-20 relative z-10">
+                <motion.h1
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="text-7xl md:text-9xl font-black tracking-tighter mb-8"
+                >
+                    STORY
+                </motion.h1>
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -70,67 +57,61 @@ export default function StoryPage() {
                 />
             </section>
 
-            {/* Story Grid */}
-            <section className="px-6 md:px-12">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24">
+            {/* Story List - Minimalist Horizontal Layout */}
+            <section className="px-6 md:px-12 relative z-10 w-full max-w-[1920px] mx-auto min-h-[50vh]">
+                <div className="flex flex-col border-t border-white/5">
                     {stories.map((story, idx) => (
                         <Link key={story.id} href={`/story/${story.id}`} className="block group">
                             <motion.article
-                                initial={{ opacity: 0, y: 50 }}
+                                initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: "-10%" }}
-                                transition={{ duration: 0.8, delay: idx * 0.1 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: idx * 0.05 }}
+                                className="flex flex-col md:flex-row md:items-center justify-between py-12 md:py-16 border-b border-white/10 group-hover:border-white/40 transition-all duration-500"
                             >
-                                <LevitatingObject className="h-full">
-                                    {/* Image */}
-                                    <div className="relative w-full aspect-[16/9] overflow-hidden bg-neutral-900 mb-8">
-                                        <img
-                                            src={story.image?.includes('vinus.co.kr')
-                                                ? `/api/proxy-image?url=${encodeURIComponent(story.image)}`
-                                                : (story.image || 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000')}
-                                            alt={story.title}
-                                            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                                        />
-                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
+                                <div className="flex flex-col md:flex-row md:items-baseline gap-4 md:gap-12">
+                                    <span className="text-[10px] font-mono text-zinc-600 block order-2 md:order-1 tracking-widest uppercase">
+                                        [{String(idx + 1).padStart(2, '0')}] — {new Date(story.created_at).getFullYear()}
+                                    </span>
+                                    <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase group-hover:translate-x-4 transition-transform duration-500 order-1 md:order-2">
+                                        {story.title}
+                                    </h2>
+                                </div>
 
-                                        <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full">
-                                            <span className="text-xs font-mono font-bold text-white">{story.category}</span>
-                                        </div>
-                                    </div>
-
-                                    {/* Content */}
-                                    <div className="flex flex-col gap-4">
-                                        <div className="flex justify-between items-baseline border-b border-white/10 pb-4 group-hover:border-white/50 transition-colors">
-                                            <span className="text-sm font-mono text-gray-500">
-                                                {new Date(story.created_at).toLocaleDateString()}
-                                            </span>
-                                            <ArrowUpRight size={20} className="opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                                        </div>
-
-                                        <h2 className="text-3xl md:text-4xl font-bold tracking-tight leading-tight group-hover:text-gray-300 transition-colors">
-                                            {story.title}
-                                        </h2>
-
-                                        <p className="text-gray-400 font-light leading-relaxed line-clamp-2">
+                                <div className="flex items-center justify-between md:justify-end gap-12 mt-8 md:mt-0">
+                                    <div className="hidden lg:block max-w-sm">
+                                        <p className="text-zinc-500 font-light text-sm line-clamp-1 italic">
                                             {story.excerpt}
                                         </p>
                                     </div>
-                                </LevitatingObject>
+                                    <div className="flex items-center gap-6">
+                                        <span className="px-2 py-0.5 border border-white/20 text-[9px] font-black uppercase tracking-widest text-zinc-400 group-hover:text-white transition-colors duration-300 rounded-full">
+                                            {story.category || 'INSIGHT'}
+                                        </span>
+                                        <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+                                            <ArrowUpRight size={20} />
+                                        </div>
+                                    </div>
+                                </div>
                             </motion.article>
                         </Link>
                     ))}
+
                     {loading && (
-                        <div className="col-span-1 md:col-span-2 text-center py-20 text-gray-500 font-mono animate-pulse">
-                            Loading stories...
+                        <div className="py-20 text-center text-zinc-500 font-mono text-xs tracking-widest animate-pulse">
+                            COLLECTING ARCHIVES...
                         </div>
                     )}
+
                     {!loading && stories.length === 0 && (
-                        <div className="col-span-1 md:col-span-2 text-center py-20 text-gray-500 font-mono">
-                            No stories found.
+                        <div className="py-20 text-center text-zinc-700 border border-white/5 border-dashed rounded-lg mt-12">
+                            <span className="text-xs uppercase tracking-[0.5em] font-bold">No stories found in the vault</span>
                         </div>
                     )}
                 </div>
             </section>
+
+            <div className="h-40" />
         </main>
     );
 }

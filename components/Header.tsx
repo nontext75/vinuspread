@@ -33,9 +33,8 @@ export default function Header() {
                 {/* Desktop Nav */}
                 <nav className="hidden md:flex gap-10 items-center mix-blend-difference text-white">
                     {['Work', 'Agency', 'Story'].map((item) => {
-                        let href = `#${item.toLowerCase()}`;
-                        if (item === 'Work') href = '/work';
-                        if (item === 'Story') href = '/story';
+                        let href = `/${item.toLowerCase()}`;
+                        if (item === 'Agency') href = '/#agency'; // Keep anchor if it sits on homepage
 
                         return (
                             <Link
@@ -67,9 +66,8 @@ export default function Header() {
                 menuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
             )}>
                 {['Work', 'Agency', 'Story'].map((item, i) => {
-                    let href = `#${item.toLowerCase()}`;
-                    if (item === 'Work') href = '/work';
-                    if (item === 'Story') href = '/story';
+                    let href = `/${item.toLowerCase()}`;
+                    if (item === 'Agency') href = '/#agency';
 
                     return (
                         <Link

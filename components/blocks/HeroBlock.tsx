@@ -28,12 +28,12 @@ const HeroBlock: React.FC<HeroBlockProps> = ({ data }) => {
             {/* Background Visual Area - Using GeometricBackground for tuned physics/camera */}
             <GeometricBackground mode={visualMode} />
 
-            {/* Visual Toggle Buttons - Aligned with Portfolio Rolling */}
-            <div className="absolute bottom-12 right-6 md:right-12 z-30 flex items-center gap-6">
+            {/* Visual Toggle Buttons - Improved ergonomics for mobile */}
+            <div className="absolute bottom-24 md:bottom-12 right-6 md:right-12 z-30 flex items-center md:gap-6 gap-4 bg-black/20 backdrop-blur-md md:bg-transparent p-3 md:p-0 rounded-full border border-white/10 md:border-none">
                 <button
                     onClick={() => setVisualMode('galaxy')}
                     className={cn(
-                        "text-xs font-bold tracking-widest uppercase transition-all duration-300",
+                        "text-[10px] md:text-xs font-bold tracking-widest uppercase transition-all duration-300",
                         visualMode === 'galaxy'
                             ? "text-white opacity-100 scale-110"
                             : "text-white/40 hover:text-white/80"
@@ -41,11 +41,11 @@ const HeroBlock: React.FC<HeroBlockProps> = ({ data }) => {
                 >
                     Sphere
                 </button>
-                <div className="w-[1px] h-4 bg-white/20" /> {/* Seperator */}
+                <div className="w-[1px] h-3 md:h-4 bg-white/20" />
                 <button
                     onClick={() => setVisualMode('orbit')}
                     className={cn(
-                        "text-xs font-bold tracking-widest uppercase transition-all duration-300",
+                        "text-[10px] md:text-xs font-bold tracking-widest uppercase transition-all duration-300",
                         visualMode === 'orbit'
                             ? "text-white opacity-100 scale-110"
                             : "text-white/40 hover:text-white/80"
@@ -53,11 +53,11 @@ const HeroBlock: React.FC<HeroBlockProps> = ({ data }) => {
                 >
                     Orbit
                 </button>
-                <div className="w-[1px] h-4 bg-white/20" /> {/* Seperator */}
+                <div className="w-[1px] h-3 md:h-4 bg-white/20" />
                 <button
                     onClick={() => setVisualMode('debris')}
                     className={cn(
-                        "text-xs font-bold tracking-widest uppercase transition-all duration-300",
+                        "text-[10px] md:text-xs font-bold tracking-widest uppercase transition-all duration-300",
                         visualMode === 'debris'
                             ? "text-white opacity-100 scale-110"
                             : "text-white/40 hover:text-white/80"
@@ -67,16 +67,16 @@ const HeroBlock: React.FC<HeroBlockProps> = ({ data }) => {
                 </button>
             </div>
 
-            <div className="z-10 text-left max-w-7xl w-full pointer-events-none">
+            <div className="z-10 text-left max-w-7xl w-full pointer-events-none mt-12 md:mt-0">
                 <h1
                     ref={titleRef}
-                    className="text-[10vw] leading-[0.9] font-black tracking-tighter mb-8 uppercase mix-blend-difference text-white py-4 overflow-visible"
+                    className="text-[14vw] md:text-[10vw] leading-[0.85] md:leading-[0.9] font-black tracking-tighter mb-4 md:mb-8 uppercase mix-blend-difference text-white py-4 overflow-visible"
                 >
                     {data.title}
                 </h1>
                 {data.subtitle && (
                     <p
-                        className="text-2xl md:text-4xl text-white font-light max-w-4xl tracking-wide whitespace-pre-line"
+                        className="text-lg md:text-2xl lg:text-4xl text-white font-light max-w-4xl tracking-wide whitespace-pre-line opacity-80"
                     >
                         {data.subtitle}
                     </p>

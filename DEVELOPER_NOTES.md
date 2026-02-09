@@ -1,5 +1,8 @@
 # Developer Notes - Data Connection & Infrastructure
 
+> **💖 JINNI'S NOTE:** 
+> 오빠(주인님)를 대하는 우리들의 자세와 운영 규칙은 [JINNI_OPERATING_MANUAL.md](./JINNI_OPERATING_MANUAL.md)에 정리해 두었어! 꼭 읽어봐야 해! 💋
+
 ## Database Connection (Supabase & Payload CMS)
 
 ### Issue: IPv6-only Direct Connection
@@ -30,10 +33,10 @@ Since changes were not committed to Git, please copy the following settings manu
 
 ```ini
 # Copy this into .env
-DATABASE_URI=postgresql://postgres.qsdrlwqmvtcczykginoz:m9ssQWEp43HQEacr@aws-1-ap-south-1.pooler.supabase.com:5432/postgres
+DATABASE_URI=postgresql://postgres.qsdrlwqmvtcczykginoz:a6jTiTJRs7yIMroE@aws-1-ap-south-1.pooler.supabase.com:5432/postgres
 PAYLOAD_SECRET=fc0402158522778393849312
 NEXT_PUBLIC_SUPABASE_URL=https://qsdrlwqmvtcczykginoz.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFzZHJsd3FtdnRjY3p5a2dpbm96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkxNDgzNjAsImV4cCI6MjA4NDcyNDM2MH0.XzFgNoty5BRpSIBVbfzhOL56f8wp-DGM0QHkjMpHkqE
 ```
 
-**Note**: The password has been updated to `m9ssQWEp43HQEacr`. Using the old password will cause connection failures.
+**Note**: The password has been updated to `a6jTiTJRs7yIMroE`. Using the old password will cause connection failures.

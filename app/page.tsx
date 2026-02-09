@@ -1,11 +1,15 @@
+'use client';
 
-// Actually, let's skip supabase import for this specific 'mock force' version to be 100% safe.
-// import { ContentBlock } from "@/types/blocks";
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { Calendar } from 'lucide-react';
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import BlockRenderer from "@/components/BlockRenderer";
-// Redeclare types locally if needed or import. 
 import { ContentBlock } from "@/types/blocks";
+import { createClient } from '@supabase/supabase-js';
 
-// Fallback Mock Data
+// Mock data and other logic...
 const MOCK_HOMEPAGE_BLOCKS: ContentBlock[] = [
   {
     id: "hero-1",
@@ -20,7 +24,6 @@ const MOCK_HOMEPAGE_BLOCKS: ContentBlock[] = [
     type: "sticky_split",
     data: {
       theme: 'dark',
-      // layout: 'background', // Reverted as per user request: "Don't use background mode"
       sticky_content: `
         <h2 class="text-xl md:text-2xl font-bold mb-8 tracking-tighter text-white/60">Essential Values</h2>
         <p class="text-5xl md:text-7xl lg:text-9xl leading-[1.0] text-foreground mb-6 font-black tracking-tight" style="word-break: keep-all;">
@@ -34,7 +37,7 @@ const MOCK_HOMEPAGE_BLOCKS: ContentBlock[] = [
       `,
       values_list: [
         {
-          title: "THINK", // Uppercase to match Section 3 style
+          title: "THINK",
           subtitle: "Establish common goals with clients and contemplate together.",
           description: "고객과 공통된 목표를 설정하고 고민하며, 다양한 선택 속에서 최선의 방법을 제시합니다."
         },
@@ -50,18 +53,9 @@ const MOCK_HOMEPAGE_BLOCKS: ContentBlock[] = [
         }
       ],
       scroll_content: [
-        {
-          type: 'image',
-          src: 'https://images.unsplash.com/photo-1486718448742-163732cd1544?q=80&w=2000' // THINK: Structural Realism (Architecture)
-        },
-        {
-          type: 'image',
-          src: 'https://images.unsplash.com/photo-1519817650390-64a93db3d648?q=80&w=2000' // MIND: Depth & Inner Core (Spiral)
-        },
-        {
-          type: 'image',
-          src: 'https://images.unsplash.com/photo-1492571350019-22de08371fd3?q=80&w=2000' // BEHAVIOR: Kinetic Energy (Light Motion)
-        }
+        { type: 'image', src: 'https://images.unsplash.com/photo-1486718448742-163732cd1544?q=80&w=2000' },
+        { type: 'image', src: 'https://images.unsplash.com/photo-1519817650390-64a93db3d648?q=80&w=2000' },
+        { type: 'image', src: 'https://images.unsplash.com/photo-1492571350019-22de08371fd3?q=80&w=2000' }
       ]
     }
   },
@@ -70,7 +64,7 @@ const MOCK_HOMEPAGE_BLOCKS: ContentBlock[] = [
     type: "sticky_split",
     data: {
       theme: 'light',
-      layout: 'background', // Reverted: Background mode restore
+      layout: 'background',
       sticky_content: `
         <h2 class="text-xl md:text-2xl font-bold mb-8 tracking-tighter text-white/60">Field of Business</h2>
         <p class="text-5xl md:text-7xl lg:text-9xl leading-[1.0] mb-6 font-black tracking-tight" style="word-break: keep-all;">
@@ -98,11 +92,10 @@ const MOCK_HOMEPAGE_BLOCKS: ContentBlock[] = [
           description: "브랜드의 핵심 가치를 시각화하여 강력한 인상을 남깁니다."
         }
       ],
-      items: [], // No items array needed for sticky split? Ah it uses scroll_content
       scroll_content: [
-        { type: 'image', src: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000' }, // 1. Tech Blue (Network/Globe)
-        { type: 'image', src: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=2000' }, // 2. Dark Abstract (Smoother/Darker)
-        { type: 'image', src: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2000' }  // 3. Hardware/Chip (Dark)
+        { type: 'image', src: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000' },
+        { type: 'image', src: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=2000' },
+        { type: 'image', src: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2000' }
       ]
     }
   },
@@ -111,70 +104,65 @@ const MOCK_HOMEPAGE_BLOCKS: ContentBlock[] = [
     type: "horizontal_gallery",
     data: {
       title: "MAJOR WORKS",
-      view_all_link: "/portfolio",
+      view_all_link: "/work",
       items: []
     }
   },
 ];
 
-export const revalidate = 0; // Force dynamic render for debugging
+export default function Home() {
+  const [blocks, setBlocks] = useState<ContentBlock[]>(MOCK_HOMEPAGE_BLOCKS);
 
-import { createClient } from '@supabase/supabase-js';
+  useEffect(() => {
+    async function loadData() {
+      const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      );
 
-// ... (imports)
+      try {
+        const { data: dbBlocks, error: blocksError } = await supabase
+          .from('blocks')
+          .select('*')
+          .order('sort_order', { ascending: true });
 
-async function getBlocks(): Promise<ContentBlock[]> {
-  // 1. Initialize Supabase Client (Direct REST API)
-  // This bypasses the DB port 5432 blockage by using HTTPS port 443
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+        let finalBlocks = (dbBlocks && dbBlocks.length > 0)
+          ? dbBlocks.map(b => ({ id: b.id, type: b.type, data: b.data } as ContentBlock))
+          : [...MOCK_HOMEPAGE_BLOCKS];
 
-  // 2. Fetch Projects via REST
-  const { data: projects, error } = await supabase
-    .from('projects')
-    .select('*')
-    .order('sort_order', { ascending: true })
-    .limit(100);
+        const { data: projects } = await supabase
+          .from('projects')
+          .select('*')
+          .order('sort_order', { ascending: true })
+          .limit(10);
 
-  if (error) {
-    console.error("Supabase REST Error:", error);
-    return []; // Return empty if API fails, no mock data
-  }
+        if (projects && projects.length > 0) {
+          const projectItems = projects.map(p => ({
+            src: p.image || '/placeholder.jpg',
+            alt: p.title || 'Untitled',
+            title: p.title || 'Untitled',
+            category: p.category || 'Project',
+            year: p.year || '2024',
+            link: `/work/${p.id}`,
+          }));
 
-  // 3. Map to Gallery Items
-  const realProjectItems = (projects || []).map((project: any) => ({
-    src: project.image || '/placeholder.jpg',
-    alt: project.title,
-    title: project.title,
-    category: project.category || 'Project',
-    year: project.year || new Date().getFullYear().toString(),
-    link: `/work/${project.id}`,
-  }));
-
-  // 4. Inject into Mock Blocks
-  const blocks = MOCK_HOMEPAGE_BLOCKS.map(block => {
-    if (block.id === 'portfolio-gallery' && block.data) {
-      return {
-        ...block,
-        data: {
-          ...block.data,
-          items: realProjectItems.length > 0 ? realProjectItems : [], // Empty if no real data
+          finalBlocks = finalBlocks.map(b => {
+            if (b.type === 'horizontal_gallery') {
+              return { ...b, data: { ...b.data, items: projectItems } };
+            }
+            return b;
+          });
         }
-      };
+        setBlocks(finalBlocks);
+      } catch (err) {
+        console.error("Home Data Load Error:", err);
+      }
     }
-    return block;
-  });
-
-  return blocks;
-}
-
-export default async function Home() {
-  const blocks = await getBlocks();
+    loadData();
+  }, []);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
+    <main className="min-h-screen bg-black text-white">
       <BlockRenderer blocks={blocks} />
     </main>
   );

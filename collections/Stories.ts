@@ -39,5 +39,12 @@ export const Stories: CollectionConfig = {
             ],
             defaultValue: 'draft',
         },
+        {
+            name: 'publishedDate',
+            type: 'date',
+            admin: {
+                position: 'sidebar',
+            }
+        },
     ],
 };

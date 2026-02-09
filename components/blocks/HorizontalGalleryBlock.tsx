@@ -24,7 +24,7 @@ const HorizontalGalleryBlock: React.FC<HorizontalGalleryBlockProps> = ({ data })
     const x = useTransform(scrollYProgress, [0, 1], ["0%", "-85%"]);
 
     return (
-        <section ref={targetRef} className="relative h-[500vh] bg-neutral-950 z-10"> {/* 500vh scroll track, Opaque BG to hide stars */}
+        <section ref={targetRef} className="relative h-[600vh] bg-neutral-950 z-10"> {/* Increased scroll height for smoother feel */}
             <div className="sticky top-0 flex h-screen items-center overflow-hidden">
 
                 {/* Header Overlay (Optional, stationary or moves slightly) */}
@@ -41,7 +41,7 @@ const HorizontalGalleryBlock: React.FC<HorizontalGalleryBlockProps> = ({ data })
                 {/* Horizontal Scrolling Track */}
                 <motion.div
                     style={{ x }}
-                    className="flex gap-12 px-12 md:px-24 w-max h-[60vh] items-center"
+                    className="flex gap-6 md:gap-12 px-6 md:px-24 w-max h-[50vh] md:h-[60vh] items-center"
                 >
                     {/* Intro Spacer to push first item past the header title area */}
                     <div className="w-[10vw]" />
@@ -68,7 +68,7 @@ const HorizontalGalleryBlock: React.FC<HorizontalGalleryBlockProps> = ({ data })
                                     <img
                                         src={item.src}
                                         alt={item.title}
-                                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out"
                                     />
                                 </motion.div>
 

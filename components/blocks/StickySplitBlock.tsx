@@ -180,9 +180,9 @@ const ScrollItemImage = ({ index, totalItems, scrollYProgress, img, isLight, isB
     const rotateReverse = useTransform(scrollYProgress, [start, end], [360, 240]);
 
     const layoutStyles = [
-        "w-[40vw] h-[40vw] md:w-[28vw] md:h-[28vw] absolute left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2 z-20",
-        "w-[35vw] h-[35vw] md:w-[26vw] md:h-[26vw] absolute left-[40%] top-[48%] -translate-x-1/2 -translate-y-1/2 z-10",
-        "w-[42vw] h-[42vw] md:w-[30vw] md:h-[30vw] absolute left-[60%] top-[52%] -translate-x-1/2 -translate-y-1/2 z-30"
+        "w-[70vw] h-[70vw] md:w-[28vw] md:h-[28vw] absolute left-[50%] top-[45%] md:top-[50%] -translate-x-1/2 -translate-y-1/2 z-20",
+        "w-[60vw] h-[60vw] md:w-[26vw] md:h-[26vw] absolute left-[40%] top-[43%] md:top-[48%] -translate-x-1/2 -translate-y-1/2 z-10",
+        "w-[75vw] h-[75vw] md:w-[30vw] md:h-[30vw] absolute left-[60%] top-[47%] md:top-[52%] -translate-x-1/2 -translate-y-1/2 z-30"
     ];
 
     const currentStyle = isBackgroundMode
@@ -293,9 +293,9 @@ const StickySplitBlock: React.FC<StickySplitBlockProps> = ({ data }) => {
                         <img
                             src="https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=2670"
                             alt="Atmosphere"
-                            className="w-full h-full object-cover opacity-60"
+                            className="w-full h-full object-cover opacity-40 md:opacity-60 scale-110"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/50 to-black z-10" />
+                        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/20 to-black z-10" />
                     </div>
                 )}
 
@@ -333,26 +333,28 @@ const StickySplitBlock: React.FC<StickySplitBlockProps> = ({ data }) => {
                     </div>
                 )}
 
-                {/* Left Column: Layout FIX -> Centered (Restored) */}
-                <div className={`w-full h-full flex flex-col px-6 md:px-12 relative z-10 lg:w-1/2 justify-center`}>
+                {/* Left Column - Content */}
+                <div className={`w-full h-[40vh] lg:h-full flex flex-col px-6 md:px-12 relative z-10 lg:w-1/2 justify-end lg:justify-center pb-8 lg:pb-0`}>
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1.0, delay: 0.5, ease: "easeOut" }}
                         viewport={{ once: true }}
-                        className={`relative z-30 pointer-events-none ${isBackgroundMode ? 'text-white' : ''}`}
+                        className={`relative z-30 pointer-events-none ${isBackgroundMode ? 'text-white' : ''} max-w-xl lg:max-w-none`}
                     >
                         <div
                             className={`
                                 ${isBackgroundMode ? "[&_*]:text-white! [&_p]:text-white/90!" : ""}
                                 [&_p.text-5xl]:bg-gradient-to-b [&_p.text-5xl]:from-white [&_p.text-5xl]:to-white/20 [&_p.text-5xl]:text-transparent [&_p.text-5xl]:bg-clip-text
+                                [&_p.text-5xl]:text-4xl [&_p.text-5xl]:md:text-7xl [&_p.text-5xl]:lg:text-9xl
                             `}
                             dangerouslySetInnerHTML={{ __html: data.sticky_content }}
                         />
                     </motion.div>
                 </div>
 
-                <div className={`w-full h-full pointer-events-none lg:w-1/2 flex flex-col pt-0 px-12 relative z-10 justify-center`}>
+                {/* Right Column - Sliding Values */}
+                <div className={`w-full h-[60vh] lg:h-full pointer-events-none lg:w-1/2 flex flex-col pt-0 px-6 md:px-12 relative z-10 justify-start lg:justify-center`}>
                     <div className="relative w-full h-full flex items-center">
                         {data.values_list.map((value, idx) => (
                             <ScrollItem

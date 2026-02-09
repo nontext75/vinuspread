@@ -119,28 +119,31 @@ export interface Database {
                     description: string | null
                     content: string | null
                     sort_order: number | null
+                    reference_version: string | null
                     created_at: string
                 }
                 Insert: {
                     id?: string
                     title: string
-                    category?: 'WEB' | 'MOBILE' | 'BRANDING' | 'ETC' | null
+                    category?: 'WEB' | 'MOBILE' | 'CHARACTER' | 'PDP' | null
                     year?: string | null
                     image?: string | null
                     description?: string | null
                     content?: string | null
                     sort_order?: number | null
+                    reference_version?: string | null
                     created_at?: string
                 }
                 Update: {
                     id?: string
                     title?: string
-                    category?: 'WEB' | 'MOBILE' | 'BRANDING' | 'ETC' | null
+                    category?: 'WEB' | 'MOBILE' | 'CHARACTER' | 'PDP' | null
                     year?: string | null
                     image?: string | null
                     description?: string | null
                     content?: string | null
                     sort_order?: number | null
+                    reference_version?: string | null
                     created_at?: string
                 }
                 Relationships: []

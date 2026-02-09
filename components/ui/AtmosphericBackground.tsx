@@ -41,10 +41,6 @@ export default function AtmosphericBackground() {
     // Slower dots (Background)
     const y2 = useTransform(scrollY, [0, 1000], [0, -100]);
 
-    useEffect(() => {
-        setPageHeight(document.body.scrollHeight);
-    }, []);
-
     return (
         <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-neutral-950">
             {/* Atmospheric Layer */}
@@ -61,17 +57,16 @@ export default function AtmosphericBackground() {
 
             {/* Parallax Stars/Dots Layer 1 (Slow) */}
             <motion.div style={{ y: y2 }} className="absolute inset-0">
-                {/* Randomly generated subtle stars */}
-                {[...Array(15)].map((_, i) => (
+                {stars.slow.map((star, i) => (
                     <div
                         key={`star-slow-${i}`}
-                        className="absolute bg-white rounded-full opacity-20"
+                        className="absolute bg-white rounded-full"
                         style={{
-                            top: `${Math.random() * 100}%`,
-                            left: `${Math.random() * 100}%`,
-                            width: `${Math.random() * 2 + 1}px`,
-                            height: `${Math.random() * 2 + 1}px`,
-                            opacity: Math.random() * 0.3 + 0.1
+                            top: star.top,
+                            left: star.left,
+                            width: `${star.size}px`,
+                            height: `${star.size}px`,
+                            opacity: star.opacity
                         }}
                     />
                 ))}
@@ -79,16 +74,16 @@ export default function AtmosphericBackground() {
 
             {/* Parallax Stars/Dots Layer 2 (Fast) */}
             <motion.div style={{ y: y1 }} className="absolute inset-0">
-                {[...Array(20)].map((_, i) => (
+                {stars.fast.map((star, i) => (
                     <div
                         key={`star-fast-${i}`}
-                        className="absolute bg-white rounded-full opacity-30"
+                        className="absolute bg-white rounded-full"
                         style={{
-                            top: `${Math.random() * 100}%`,
-                            left: `${Math.random() * 100}%`,
-                            width: `${Math.random() * 1.5 + 0.5}px`,
-                            height: `${Math.random() * 1.5 + 0.5}px`,
-                            opacity: Math.random() * 0.4 + 0.1
+                            top: star.top,
+                            left: star.left,
+                            width: `${star.size}px`,
+                            height: `${star.size}px`,
+                            opacity: star.opacity
                         }}
                     />
                 ))}

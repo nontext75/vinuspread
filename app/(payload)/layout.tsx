@@ -10,14 +10,16 @@ type Args = {
     children: React.ReactNode;
 };
 
-const Layout = ({ children }: Args) => (
-    <RootLayout
-        config={config}
-        importMap={importMap}
-        serverFunction={handleServerFunctions({ config, importMap })}
-    >
-        {children}
-    </RootLayout>
-);
+const Layout = async ({ children }: Args) => {
+    return (
+        <RootLayout
+            config={config}
+            importMap={importMap}
+            serverFunction={handleServerFunctions as any}
+        >
+            {children}
+        </RootLayout>
+    );
+};
 
 export default Layout;

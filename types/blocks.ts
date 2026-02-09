@@ -1,4 +1,17 @@
-export type BlockType = 'hero' | 'sticky_split' | 'grid_gallery' | 'horizontal_gallery' | 'interactive_visual' | 'stacking_cards' | 'service_accordion';
+export type BlockType =
+    | 'hero'
+    | 'sticky_split'
+    | 'grid_gallery'
+    | 'horizontal_gallery'
+    | 'interactive_visual'
+    | 'stacking_cards'
+    | 'service_accordion'
+    // Project Specific Blocks
+    | 'project_intro'
+    | 'text_section'
+    | 'image_grid'
+    | 'comparison_slider'
+    | 'project_specs';
 
 export interface BlockData {
     [key: string]: any;
@@ -8,6 +21,46 @@ export interface ContentBlock {
     id: string;
     type: BlockType;
     data: BlockData;
+}
+
+// ... (existing interfaces)
+
+export interface ProjectIntroBlockData extends BlockData {
+    title: string;
+    description: string;
+    client?: string;
+    year?: string;
+    category?: string;
+    role?: string;
+}
+
+export interface TextSectionBlockData extends BlockData {
+    title?: string;
+    content: string; // Markdown or HTML
+    alignment?: 'left' | 'center' | 'right';
+}
+
+export interface ImageGridBlockData extends BlockData {
+    layout: 'grid' | 'masonry' | 'carousel' | 'full';
+    images: {
+        src: string;
+        alt?: string;
+        caption?: string;
+    }[];
+}
+
+export interface ComparisonSliderBlockData extends BlockData {
+    before: string;
+    after: string;
+    label_before?: string;
+    label_after?: string;
+}
+
+export interface ProjectSpecsBlockData extends BlockData {
+    specs: {
+        label: string;
+        value: string;
+    }[];
 }
 
 // Specific Block Data Interfaces
