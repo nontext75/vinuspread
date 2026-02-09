@@ -68,24 +68,21 @@ export default function AgencyPage() {
             <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
             {/* 1. Hero Section */}
-            <section className="px-6 md:px-12 mb-40 relative z-10">
+            <section className="px-6 md:px-12 mb-20 relative z-10">
                 <div className="max-w-[1920px] mx-auto">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
+                    <motion.h1
+                        initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                        className="space-y-4"
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="text-7xl md:text-9xl font-black tracking-tighter mb-8"
                     >
-                        <span className="text-zinc-500 font-bold uppercase tracking-[0.5em] text-[10px]">About Our DNA</span>
-                        <h1 className="text-7xl md:text-[12rem] font-black tracking-tighter leading-[0.8] mb-12">
-                            AGENCY
-                        </h1>
-                    </motion.div>
+                        AGENCY
+                    </motion.h1>
                     <motion.div
-                        initial={{ scaleX: 0 }}
-                        animate={{ scaleX: 1 }}
-                        transition={{ duration: 1.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                        className="w-full h-[1px] bg-white/20 origin-left"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                        className="w-full h-[1px] bg-white/20 mb-12"
                     />
                 </div>
             </section>
