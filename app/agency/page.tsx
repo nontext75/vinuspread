@@ -106,9 +106,11 @@ export default function AgencyPage() {
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8 }}
-                            className="text-4xl md:text-6xl font-black tracking-tighter leading-[1.1] mb-12 italic"
+                            className="text-4xl md:text-7xl font-black tracking-tighter leading-[1.0] mb-12 italic uppercase"
                         >
-                            우리는 고객의 본질적 가치에 집중하고 아름다움을 더합니다.
+                            We focus on <br />
+                            Essential <br />
+                            Values.
                         </motion.p>
                         <motion.p
                             initial={{ opacity: 0 }}
@@ -177,15 +179,15 @@ export default function AgencyPage() {
                             </h2>
                             <div className="w-24 h-px bg-white/20" />
                             <p className="text-3xl font-light text-zinc-400 italic">
-                                "아름다운 바이러스를 <br /> 세상에 퍼뜨립니다."
+                                "Spreading Beautiful <br /> Viruses to the World."
                             </p>
                         </motion.div>
 
                         <div className="grid grid-cols-1 gap-12">
                             {[
-                                { k: 'VENUS', v: '아름다움을', symbol: '🌸' },
-                                { k: 'VIRUS', v: '전염시키고', symbol: '✨' },
-                                { k: 'SPREAD', v: '퍼뜨리다', symbol: '💨' }
+                                { k: 'VENUS', v: 'BEAUTY', symbol: '🌸' },
+                                { k: 'VIRUS', v: 'INFECT', symbol: '✨' },
+                                { k: 'SPREAD', v: 'DISTRIBUTE', symbol: '💨' }
                             ].map((item, idx) => (
                                 <motion.div
                                     key={item.k}
@@ -264,8 +266,8 @@ export default function AgencyPage() {
                                 CLIENTS.
                             </motion.h2>
                             <p className="text-2xl md:text-3xl font-light text-zinc-500 leading-snug max-w-3xl border-l-[3px] border-white/10 pl-8">
-                                새로운 가치는 사람과 사람의 연결로 시작됩니다. <br />
-                                우리는 사람의 마음을 움직이는 일을 합니다.
+                                Connect values between people. <br />
+                                We move people's hearts.
                             </p>
                         </div>
                         <div className="flex flex-col items-end">
