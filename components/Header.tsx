@@ -34,7 +34,7 @@ export default function Header() {
                 <nav className="hidden md:flex gap-10 items-center mix-blend-difference text-white">
                     {['Work', 'Agency', 'Story'].map((item) => {
                         let href = `/${item.toLowerCase()}`;
-                        if (item === 'Agency') href = '/#agency'; // Keep anchor if it sits on homepage
+                        if (item === 'Agency') href = '/agency';
 
                         return (
                             <Link
@@ -67,7 +67,7 @@ export default function Header() {
             )}>
                 {['Work', 'Agency', 'Story'].map((item, i) => {
                     let href = `/${item.toLowerCase()}`;
-                    if (item === 'Agency') href = '/#agency';
+                    if (item === 'Agency') href = '/agency';
 
                     return (
                         <Link
