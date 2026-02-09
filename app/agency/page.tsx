@@ -103,7 +103,7 @@ export default function AgencyPage() {
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8 }}
-                            className="text-4xl md:text-7xl font-black tracking-tighter leading-[1.0] mb-12 italic uppercase"
+                            className="text-4xl md:text-7xl font-black tracking-tighter leading-[1.0] mb-12 uppercase"
                         >
                             We focus on <br />
                             Essential <br />
@@ -175,7 +175,7 @@ export default function AgencyPage() {
                                 SPREAD THE <br /> BEAUTIFUL <br /> THINGS
                             </h2>
                             <div className="w-24 h-px bg-white/20" />
-                            <p className="text-3xl font-light text-zinc-400 italic">
+                            <p className="text-3xl font-light text-zinc-400">
                                 "Spreading Beautiful <br /> Viruses to the World."
                             </p>
                         </motion.div>
@@ -258,7 +258,7 @@ export default function AgencyPage() {
                             <motion.h2
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                className="text-6xl md:text-[8rem] font-black tracking-tighter leading-none italic"
+                                className="text-6xl md:text-[8rem] font-black tracking-tighter leading-none"
                             >
                                 CLIENTS.
                             </motion.h2>
