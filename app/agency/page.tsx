@@ -119,9 +119,9 @@ export default function AgencyPage() {
 
                     <div className="flex-1 grid grid-cols-1 gap-32">
                         {[
-                            { title: 'THINK', subtitle: '관찰하고 고민하는 통찰력', desc: '고객과 공통된 목표를 설정하고 고민합니다. 다양한 선택의 결정을 통해 최선의 방법을 제시합니다.', img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200' },
-                            { title: 'MIND', subtitle: '가치를 창조하는 마음', desc: '목적에 맞는 새로운 가치로 재창조합니다. 우리가 만든 가치가 어제보다 더 아름다운 오늘을 만듭니다.', img: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1200' },
-                            { title: 'BEHAVIOR', subtitle: '두려움 없는 탐험과 실험', desc: '멈추지 않고 끊임없이 탐구하고 실험합니다. 본질적인 가치를 표현하려는 즐거운 고민을 즐깁니다.', img: 'https://images.unsplash.com/photo-1522071823991-b1ae5e6a3048?q=80&w=1200' }
+                            { title: 'THINK', subtitle: 'Insight through observation', desc: '고객과 공통된 목표를 설정하고 고민합니다. 다양한 선택의 결정을 통해 최선의 방법을 제시합니다.', img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200' },
+                            { title: 'MIND', subtitle: 'Heart that creates value', desc: '목적에 맞는 새로운 가치로 재창조합니다. 우리가 만든 가치가 어제보다 더 아름다운 오늘을 만듭니다.', img: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1200' },
+                            { title: 'BEHAVIOR', subtitle: 'Fearless journey and experiment', desc: '멈추지 않고 끊임없이 탐구하고 실험합니다. 본질적인 가치를 표현하려는 즐거운 고민을 즐깁니다.', img: 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200' }
                         ].map((val, idx) => (
                             <motion.div
                                 key={val.title}
