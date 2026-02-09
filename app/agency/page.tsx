@@ -69,22 +69,20 @@ export default function AgencyPage() {
 
             {/* 1. Hero Section */}
             <section className="px-6 md:px-12 mb-20 relative z-10">
-                <div className="max-w-[1920px] mx-auto">
-                    <motion.h1
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="text-7xl md:text-9xl font-black tracking-tighter mb-8"
-                    >
-                        AGENCY
-                    </motion.h1>
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        className="w-full h-[1px] bg-white/20 mb-12"
-                    />
-                </div>
+                <motion.h1
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="text-7xl md:text-9xl font-black tracking-tighter mb-8"
+                >
+                    AGENCY
+                </motion.h1>
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    className="w-full h-[1px] bg-white/20 mb-12"
+                />
             </section>
 
             {/* 2. Philosophy: Essential Values */}
@@ -155,11 +153,21 @@ export default function AgencyPage() {
 
             {/* 3. Identity: Spread the Beautiful Things */}
             <section className="relative py-80 bg-zinc-950 overflow-hidden">
+                {/* Large Background Image */}
+                <div className="absolute inset-0 z-0">
+                    <img
+                        src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000"
+                        alt="Background"
+                        className="w-full h-full object-cover grayscale opacity-10"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
+                </div>
+
                 <motion.div
                     initial={{ x: '10%' }}
                     whileInView={{ x: '-10%' }}
                     transition={{ duration: 20, repeat: Infinity, repeatType: 'reverse', ease: 'linear' }}
-                    className="absolute inset-0 flex items-center justify-center whitespace-nowrap text-[30rem] font-black text-white/[0.02] leading-none select-none pointer-events-none"
+                    className="absolute inset-0 flex items-center justify-center whitespace-nowrap text-[30rem] font-black text-white/[0.02] leading-none select-none pointer-events-none z-0"
                 >
                     VINUSPREAD VINUSPREAD VINUSPREAD
                 </motion.div>
@@ -180,27 +188,39 @@ export default function AgencyPage() {
                             </p>
                         </motion.div>
 
-                        <div className="grid grid-cols-1 gap-12">
-                            {[
-                                { k: 'VENUS', v: 'BEAUTY', symbol: '🌸' },
-                                { k: 'VIRUS', v: 'INFECT', symbol: '✨' },
-                                { k: 'SPREAD', v: 'DISTRIBUTE', symbol: '💨' }
-                            ].map((item, idx) => (
-                                <motion.div
-                                    key={item.k}
-                                    initial={{ opacity: 0, x: 50 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: idx * 0.2 }}
-                                    className="flex items-center gap-12 group p-12 border border-white/5 bg-zinc-900/50 backdrop-blur-xl hover:border-white/20 transition-all duration-500 rounded-sm"
-                                >
-                                    <span className="text-4xl">{item.symbol}</span>
-                                    <div>
-                                        <h3 className="text-3xl font-black tracking-widest uppercase mb-2 group-hover:text-zinc-200">{item.k}</h3>
-                                        <p className="text-zinc-500 font-bold uppercase tracking-[0.3em] text-xs">{item.v}</p>
-                                    </div>
-                                    <ArrowUpRight className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity" size={24} />
-                                </motion.div>
-                            ))}
+                        <div className="relative">
+                            {/* Circular Decorative Image */}
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+                                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                                transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                                className="absolute -top-40 -right-20 w-80 h-80 rounded-full overflow-hidden border border-white/10 hidden xl:block z-0"
+                            >
+                                <img src="https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=800" className="w-full h-full object-cover grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-1000" alt="Decor" />
+                            </motion.div>
+
+                            <div className="grid grid-cols-1 gap-12 relative z-10">
+                                {[
+                                    { k: 'VENUS', v: 'BEAUTY', symbol: '🌸' },
+                                    { k: 'VIRUS', v: 'INFECT', symbol: '✨' },
+                                    { k: 'SPREAD', v: 'DISTRIBUTE', symbol: '💨' }
+                                ].map((item, idx) => (
+                                    <motion.div
+                                        key={item.k}
+                                        initial={{ opacity: 0, x: 50 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: idx * 0.2 }}
+                                        className="flex items-center gap-12 group p-12 border border-white/5 bg-black/40 backdrop-blur-xl hover:border-white/20 transition-all duration-500 rounded-sm"
+                                    >
+                                        <span className="text-4xl">{item.symbol}</span>
+                                        <div>
+                                            <h3 className="text-3xl font-black tracking-widest uppercase mb-2 group-hover:text-zinc-200">{item.k}</h3>
+                                            <p className="text-zinc-500 font-bold uppercase tracking-[0.3em] text-xs">{item.v}</p>
+                                        </div>
+                                        <ArrowUpRight className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity" size={24} />
+                                    </motion.div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
