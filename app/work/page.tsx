@@ -60,7 +60,7 @@ export default function WorkPage() {
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="text-7xl md:text-9xl font-black tracking-tighter mb-8"
+                    className="text-8xl md:text-[140px] font-black tracking-tighter mb-8 leading-[0.8]"
                 >
                     OUR WORK
                 </motion.h1>

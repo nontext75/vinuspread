@@ -80,7 +80,7 @@ export default function StoryPage() {
 
                                 <div className="flex items-center justify-between md:justify-end gap-12 mt-8 md:mt-0">
                                     <div className="hidden lg:block max-w-sm">
-                                        <p className="text-zinc-500 font-light text-sm line-clamp-1 italic">
+                                        <p className="text-zinc-500 font-light text-sm line-clamp-1">
                                             {story.excerpt}
                                         </p>
                                     </div>

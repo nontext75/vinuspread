@@ -32,7 +32,7 @@ export default function Header() {
 
                 {/* Desktop Nav */}
                 <nav className="hidden md:flex gap-10 items-center mix-blend-difference text-white">
-                    {['Work', 'Agency', 'Story'].map((item) => {
+                    {['Agency', 'Work', 'Story', 'Lab'].map((item) => {
                         let href = `/${item.toLowerCase()}`;
                         if (item === 'Agency') href = '/agency';
 

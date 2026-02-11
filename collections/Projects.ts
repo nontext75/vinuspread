@@ -32,10 +32,9 @@ export const Projects: CollectionConfig = {
         },
         {
             name: 'image',
-            type: 'text',
-            admin: {
-                description: 'Legacy image URL from vinus.co.kr or relative path',
-            },
+            type: 'upload',
+            relationTo: 'media',
+            required: false,
         },
         {
             name: 'content',
@@ -46,16 +45,33 @@ export const Projects: CollectionConfig = {
             type: 'number',
         },
         {
+            name: 'motion_type',
+            type: 'select',
+            defaultValue: 'slide-up',
+            options: [
+                { label: 'Fade In', value: 'fade' },
+                { label: 'Slide Up', value: 'slide-up' },
+                { label: 'Edge Reveal', value: 'reveal' },
+                { label: 'Zoom In', value: 'zoom' },
+                { label: 'None', value: 'none' },
+            ],
+            admin: {
+                description: '요소들이 등장할 때의 애니메이션 스타일을 선택하세요.',
+            }
+        },
+        {
             name: 'reference_version',
             type: 'select',
             options: [
-                { label: 'v1: Ideal Structure', value: 'v1' },
-                { label: 'v2: Modular Narrative', value: 'v2' },
-                { label: 'v3: Dark Immersive', value: 'v3' },
-                { label: 'v4: Grid Narrative', value: 'v4' },
-                { label: 'v5: High-End Essence', value: 'v5' },
+                { label: 'Final v1: Editorial Narrative', value: 'final-1' },
+                { label: 'Final v2: Technical Essence', value: 'final-2' },
+                { label: 'Legacy v1: Cinematic Narrative', value: 'v1' },
+                { label: 'Legacy v2: Modular Narrative', value: 'v2' },
+                { label: 'Legacy v3: Dark Immersive', value: 'v3' },
+                { label: 'Legacy v4: Grid Narrative', value: 'v4' },
+                { label: 'Legacy v5: High-End Essence', value: 'v5' },
             ],
-            defaultValue: 'v5',
+            defaultValue: 'final-1',
         }
     ],
 };

@@ -24,7 +24,9 @@ export const Stories: CollectionConfig = {
         },
         {
             name: 'image',
-            type: 'text',
+            type: 'upload',
+            relationTo: 'media',
+            required: false,
         },
         {
             name: 'content',

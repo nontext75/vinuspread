@@ -125,7 +125,7 @@ export const TemplateV1: React.FC<TemplateProps> = ({ project }) => {
                 <ProjectBriefInfo project={project} />
                 <div className="max-w-4xl mx-auto py-20">
                     <ContentRenderer content={project.content} />
-                    {!project.content && <p className="text-2xl text-zinc-400 font-light leading-relaxed italic">{project.description || 'No description available.'}</p>}
+                    {!project.content && <p className="text-2xl text-zinc-400 font-light leading-relaxed">{project.description || 'No description available.'}</p>}
                 </div>
             </section>
         </main>
@@ -214,7 +214,7 @@ export const TemplateV3: React.FC<TemplateProps> = ({ project }) => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.8, duration: 1 }}
-                        className="text-zinc-500 text-lg max-w-xl mx-auto font-light leading-relaxed italic"
+                        className="text-zinc-500 text-lg max-w-xl mx-auto font-light leading-relaxed"
                     >
                         {project.description || 'No description available.'}
                     </motion.p>
@@ -265,7 +265,7 @@ export const TemplateV4: React.FC<TemplateProps> = ({ project }) => {
                         </motion.h1>
                     </div>
                     <div className="md:col-span-4 pb-4">
-                        <p className="text-zinc-500 text-lg font-light leading-relaxed uppercase tracking-tighter italic">
+                        <p className="text-zinc-500 text-lg font-light leading-relaxed uppercase tracking-tighter">
                             {project.description || 'No description available.'}
                         </p>
                     </div>

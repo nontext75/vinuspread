@@ -72,14 +72,14 @@ export interface Database {
                     created_at?: string
                 }
                 Relationships: []
-            },
+            }
             stories: {
                 Row: {
                     id: string
                     title: string
                     excerpt: string | null
                     category: 'NEWS' | 'INSIGHT' | 'CULTURE' | null
-                    image: string | null
+                    image: any | null
                     content: string | null
                     status: 'draft' | 'published' | null
                     created_at: string
@@ -90,7 +90,7 @@ export interface Database {
                     title: string
                     excerpt?: string | null
                     category?: 'NEWS' | 'INSIGHT' | 'CULTURE' | null
-                    image?: string | null
+                    image?: any | null
                     content?: string | null
                     status?: 'draft' | 'published' | null
                     created_at?: string
@@ -108,7 +108,7 @@ export interface Database {
                     views?: number | null
                 }
                 Relationships: []
-            },
+            }
             projects: {
                 Row: {
                     id: string
@@ -120,6 +120,7 @@ export interface Database {
                     content: string | null
                     sort_order: number | null
                     reference_version: string | null
+                    motion_type: string | null
                     created_at: string
                 }
                 Insert: {
@@ -144,6 +145,48 @@ export interface Database {
                     content?: string | null
                     sort_order?: number | null
                     reference_version?: string | null
+                    created_at?: string
+                }
+                Relationships: []
+            }
+            lab_items: {
+                Row: {
+                    id: string
+                    title: string
+                    category: 'watchface' | 'emoticon' | 'icons' | 'etc'
+                    thumbnail: string | null
+                    detail_image: string | null
+                    description: string | null
+                    download_count: number | null
+                    like_count: number | null
+                    talk_count: number | null
+                    download_url: string | null
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    title: string
+                    category: 'watchface' | 'emoticon' | 'icons' | 'etc'
+                    thumbnail?: string | null
+                    detail_image?: string | null
+                    description?: string | null
+                    download_count?: number | null
+                    like_count?: number | null
+                    talk_count?: number | null
+                    download_url?: string | null
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    title?: string
+                    category?: 'watchface' | 'emoticon' | 'icons' | 'etc'
+                    thumbnail?: string | null
+                    detail_image?: string | null
+                    description?: string | null
+                    download_count?: number | null
+                    like_count?: number | null
+                    talk_count?: number | null
+                    download_url?: string | null
                     created_at?: string
                 }
                 Relationships: []

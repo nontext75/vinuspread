@@ -98,6 +98,17 @@ export default function StoryDetailPage() {
         );
     }
 
+    // Helper for image URL
+    const getStoryImageUrl = (image: any) => {
+        if (!image) return 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000';
+        if (typeof image === 'string') {
+            if (image.includes('vinus.co.kr')) return `/api/proxy-image?url=${encodeURIComponent(image)}`;
+            return image;
+        }
+        if (image.url) return image.url;
+        return 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000';
+    };
+
     return (
         <main className="bg-black min-h-screen text-white selection:bg-white selection:text-black overflow-x-hidden">
             {/* Minimal Reading Progress Bar (Fixed at very top, fits below GNB if needed) */}
@@ -120,9 +131,7 @@ export default function StoryDetailPage() {
                     className="absolute inset-0 z-0"
                 >
                     <img
-                        src={story.image?.includes('vinus.co.kr')
-                            ? `/api/proxy-image?url=${encodeURIComponent(story.image)}`
-                            : (story.image || 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000')}
+                        src={getStoryImageUrl(story.image)}
                         alt=""
                         className="w-[110%] h-[110%] -left-[5%] -top-[5%] object-cover grayscale brightness-[0.3] scale-110"
                     />
@@ -160,7 +169,7 @@ export default function StoryDetailPage() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1, duration: 1.5 }}
-                        className="text-xl md:text-3xl text-zinc-400 font-light max-w-3xl mx-auto leading-tight italic tracking-tight"
+                        className="text-xl md:text-3xl text-zinc-400 font-light max-w-3xl mx-auto leading-tight tracking-tight"
                     >
                         "{story.excerpt}"
                     </motion.p>

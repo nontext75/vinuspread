@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
+import "./fonts.css";
 import "./globals.css";
 
 import { cn } from "@/lib/utils";
@@ -9,7 +10,7 @@ import SiteLayout from "@/components/SiteLayout";
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
-  weight: ["300", "400", "600", "800"]
+  weight: ["300", "400", "500", "600", "700", "800"]
 });
 
 export const metadata: Metadata = {

@@ -26,8 +26,17 @@ export default function AdminLinksPage() {
             ]
         },
         {
-            title: "Design References (Templates)",
-            icon: <Layout className="text-purple-500" size={20} />,
+            title: "Design References (Condensed)",
+            icon: <Layout className="text-pink-500" size={20} />,
+            links: [
+                { name: "Final v1: Editorial Narrative", url: "/work/reference-final-1" },
+                { name: "Final v2: Technical Essence", url: "/work/reference-final-2" },
+                { name: "Final v3: Ultimate Master", url: "/work/reference-final-3" },
+            ]
+        },
+        {
+            title: "Legacy Design Refs",
+            icon: <Layout className="text-zinc-500" size={20} />,
             links: [
                 { name: "Ref v1: Cinematic Narrative", url: "/work/reference" },
                 { name: "Ref v2: Modular Narrative", url: "/work/reference-2" },
