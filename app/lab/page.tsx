@@ -1,165 +1,53 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Search } from 'lucide-react';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import LabItemCard from '@/components/lab/LabItemCard';
+import { LAB_ITEMS, LabItem } from '@/lib/mock/lab-items'; // Shared Mock Data
 
 const CATEGORIES = [
     { label: 'ALL', value: 'all' },
-    { label: 'WATCH FACE', value: 'watchface' },
-    { label: 'EMOTICON', value: 'emoticon' },
-    { label: 'ICONS', value: 'icons' },
-    { label: 'ETC', value: 'etc' },
+    { label: 'Watchface', value: 'watchface' },
+    { label: 'Emoticon', value: 'emoticon' },
+    { label: 'Icon', value: 'icons' },
+    { label: 'Experiment', value: 'experiment' },
 ];
 
 export default function LabPage() {
     const [activeCategory, setActiveCategory] = useState('all');
-    const [items, setItems] = useState<any[]>([]);
+    const [items, setItems] = useState<LabItem[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const supabase = createClient();
 
     useEffect(() => {
-        const fetchItems = async () => {
+        const loadItems = async () => {
             setLoading(true);
-            let query = supabase.from('lab_items').select('*');
+
+            let filtered = LAB_ITEMS;
 
             if (activeCategory !== 'all') {
-                query = query.eq('category', activeCategory as any);
+                filtered = filtered.filter(item => item.category === activeCategory || (activeCategory === 'video' && item.type === 'video') || (activeCategory === 'experiment' && item.type === 'experiment'));
             }
 
-            const { data, error } = await query;
-
-            if (error || !data || data.length === 0) {
-                console.log('Using Mock Data for LAB');
-                // FALLBACK MOCK DATA - Expanded for full grid look
-                const MOCK_ITEMS = [
-                    {
-                        id: 'mock-1',
-                        title: 'ECLIPSE WATCH FACE',
-                        category: 'watchface',
-                        thumbnail: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=1000',
-                        description: 'Minimalist dark mode watch face for Galaxy Watch & Pixel Watch.',
-                        download_count: 1242,
-                        like_count: 350,
-                        talk_count: 42,
-                        created_at: new Date().toISOString()
-                    },
-                    {
-                        id: 'mock-2',
-                        title: 'NEON ICONS PACK',
-                        category: 'icons',
-                        thumbnail: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1000',
-                        description: 'Cyberpunk aesthetic system icons for Windows & macOS.',
-                        download_count: 890,
-                        like_count: 210,
-                        talk_count: 15,
-                        created_at: new Date().toISOString()
-                    },
-                    {
-                        id: 'mock-3',
-                        title: '3D EMOTICON SET',
-                        category: 'emoticon',
-                        thumbnail: 'https://images.unsplash.com/photo-1534644107580-3a4dbd494a95?auto=format&fit=crop&q=80&w=1000',
-                        description: 'High-gloss 3D rendered emoticons for social apps.',
-                        download_count: 3200,
-                        like_count: 850,
-                        talk_count: 120,
-                        created_at: new Date().toISOString()
-                    },
-                    {
-                        id: 'mock-4',
-                        title: 'RETRO OS THEME',
-                        category: 'etc',
-                        thumbnail: 'https://images.unsplash.com/photo-1614741118881-1e42ea2401d2?auto=format&fit=crop&q=80&w=1000',
-                        description: 'Windows 95 style retro theme for modern web dashboards.',
-                        download_count: 560,
-                        like_count: 130,
-                        talk_count: 8,
-                        created_at: new Date().toISOString()
-                    },
-                    {
-                        id: 'mock-5',
-                        title: 'CHRONO DIAL',
-                        category: 'watchface',
-                        thumbnail: 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&q=80&w=1000',
-                        description: 'Luxury analog style digital watch face.',
-                        download_count: 1800,
-                        like_count: 420,
-                        talk_count: 55,
-                        created_at: new Date().toISOString()
-                    },
-                    {
-                        id: 'mock-6',
-                        title: 'GLAMPING ICON SET',
-                        category: 'icons',
-                        thumbnail: 'https://images.unsplash.com/photo-1504280506541-aca1cd12e211?auto=format&fit=crop&q=80&w=1000',
-                        description: 'Outdoor and camping vector icons line pack.',
-                        download_count: 450,
-                        like_count: 90,
-                        talk_count: 12,
-                        created_at: new Date().toISOString()
-                    },
-                    {
-                        id: 'mock-7',
-                        title: 'FUTURE UI KIT',
-                        category: 'etc',
-                        thumbnail: 'https://images.unsplash.com/photo-1481487484168-9b930d55208d?auto=format&fit=crop&q=80&w=1000',
-                        description: 'Generative design UI components for React.',
-                        download_count: 2100,
-                        like_count: 560,
-                        talk_count: 89,
-                        created_at: new Date().toISOString()
-                    },
-                    {
-                        id: 'mock-8',
-                        title: 'GLASS MORPHISM',
-                        category: 'icons',
-                        thumbnail: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1000',
-                        description: 'Frosted glass effect icon pack.',
-                        download_count: 1560,
-                        like_count: 340,
-                        talk_count: 22,
-                        created_at: new Date().toISOString()
-                    },
-                    {
-                        id: 'mock-9',
-                        title: 'PIXEL ART AVATARS',
-                        category: 'emoticon',
-                        thumbnail: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=1000',
-                        description: 'Generated pixel art avatars for profiles.',
-                        download_count: 980,
-                        like_count: 230,
-                        talk_count: 45,
-                        created_at: new Date().toISOString()
-                    }
-                ];
-
-                if (activeCategory === 'all') {
-                    setItems(MOCK_ITEMS);
-                } else {
-                    setItems(MOCK_ITEMS.filter(item => item.category === activeCategory));
-                }
-            } else {
-                setItems(data || []);
+            if (searchTerm) {
+                filtered = filtered.filter(item => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
             }
+
+            setItems(filtered);
             setLoading(false);
         };
 
-        fetchItems();
-    }, [activeCategory]);
-
-    const filteredItems = items.filter(item =>
-        item.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+        loadItems();
+    }, [activeCategory, searchTerm]);
 
     return (
-        <main className="bg-black min-h-screen text-white pt-48 pb-20">
-            {/* Page Header */}
-            <section className="px-6 md:px-12 mb-20">
+        <div className="min-h-screen bg-black text-white pt-32 pb-20">
+            {/* Page Header (Full Width) */}
+            <section className="px-6 md:px-12 mb-20 w-full">
                 <motion.h1
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -222,28 +110,45 @@ export default function LabPage() {
                 </div>
             </section>
 
-            {/* Grid */}
-            <section className="px-6 md:px-12 w-full max-w-[1920px] mx-auto min-h-[50vh]">
-                {loading ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-24 animate-pulse">
-                        {[1, 2, 3].map(i => (
-                            <div key={i} className="aspect-[4/3] bg-zinc-900 border border-white/5" />
-                        ))}
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-24">
-                        {filteredItems.map((item, index) => (
-                            <LabItemCard key={item.id} item={item} index={index} />
-                        ))}
+            <div className="max-w-[1800px] mx-auto px-6 md:px-12">
+                {/* Grid Layout Engine */}
+                <AnimatePresence mode='wait'>
+                    <motion.div
+                        key={activeCategory}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.5 }}
+                        className={`grid gap-8 md:gap-12 ${activeCategory === 'watchface' || activeCategory === 'icons'
+                            ? 'grid-cols-2 md:grid-cols-4 lg:grid-cols-5' // Dense Grid for assets
+                            : 'grid-cols-1 md:grid-cols-3 lg:grid-cols-4' // Standard Mixed Grid
+                            }`}
+                    >
+                        {items.map((item, index) => {
+                            // Determine Grid Spans based on 'size' prop
+                            let spanClass = "col-span-1 row-span-1";
 
-                        {filteredItems.length === 0 && !loading && (
-                            <div className="col-span-full py-20 text-center text-zinc-600 font-mono text-sm uppercase tracking-widest">
-                                No Assets Found.
-                            </div>
-                        )}
+                            // Only apply dynamic spans in 'ALL' or 'EXPERIMENT' modes
+                            if (activeCategory === 'all' || activeCategory === 'experiment' || activeCategory === 'video') {
+                                if (item.size === 'wide') spanClass = "md:col-span-2 col-span-1";
+                                if (item.size === 'large') spanClass = "md:col-span-2 md:row-span-2 col-span-1";
+                            }
+
+                            return (
+                                <div key={item.id} className={spanClass}>
+                                    <LabItemCard item={item} index={index} />
+                                </div>
+                            );
+                        })}
+                    </motion.div>
+                </AnimatePresence>
+
+                {items.length === 0 && !loading && (
+                    <div className="py-20 text-center text-zinc-500">
+                        No items found in the lab.
                     </div>
                 )}
-            </section>
-        </main>
+            </div>
+        </div>
     );
 }

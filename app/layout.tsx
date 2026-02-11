@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Outfit } from "next/font/google"; // [REVERT] Removed Jua
 import "./fonts.css";
 import "./globals.css";
 

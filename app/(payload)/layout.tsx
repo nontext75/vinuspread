@@ -2,7 +2,7 @@ import config from '@/payload.config';
 import { RootLayout } from '@payloadcms/next/layouts';
 import { handleServerFunctions } from '@payloadcms/next/layouts';
 import React from 'react';
-import { importMap } from './admin/importMap';
+import { importMap } from './importMap';
 
 import './custom.css';
 
@@ -11,6 +11,16 @@ type Args = {
 };
 
 const Layout = async ({ children }: Args) => {
+    const importMap = [
+      {
+        name: '@payloadcms/next',
+        path: './node_modules/@payloadcms/next/dist/',
+      },
+      {
+        name: '@payloadcms/ui',
+        path: './node_modules/@payloadcms/ui/dist/',
+      }
+    ];
     return (
         <RootLayout
             config={config}
