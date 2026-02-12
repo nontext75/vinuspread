@@ -3,7 +3,7 @@ const https = require('https');
 
 // Using a known reliable ink drop video from a codepen asset
 // This is typically hosted on cdn.pixabay or similar but accessible
-const url = "https://assets.codepen.io/1462889/ink-drop.mp4";
+const url = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"; // Reliable MDN sample
 const file = fs.createWriteStream("public/videos/ink_spread.mp4");
 
 const options = {

@@ -19,7 +19,18 @@ async function cleanup() {
     else console.log('Deleted dummy projects successfully.');
 
     // 2. Clear existing blocks
-    await supabase.from('blocks').delete().not('id', 'is', null);
+    try {
+        const { error: delError } = await supabase.from('blocks').delete().not('id', 'is', null);
+        if (delError) {
+            if (delError.code === '42P01') { // undefined_table
+                console.log("Table 'blocks' does not exist. Skipping deletion.");
+            } else {
+                console.error('Error deleting blocks:', delError);
+            }
+        }
+    } catch (e) {
+        console.log("Exception deleting blocks:", e.message);
+    }
 
     // 3. Insert Homepage Blocks
     const homepageBlocks = [
@@ -126,9 +137,23 @@ async function cleanup() {
         }
     ];
 
-    const { error: insError } = await supabase
-        .from('blocks')
-        .insert(homepageBlocks);
+    try {
+        const { error: insError } = await supabase
+            .from('blocks')
+            .insert(homepageBlocks);
+
+        if (insError) {
+            if (insError.code === '42P01') {
+                console.log("Table 'blocks' does not exist. Skipping insertion.");
+            } else {
+                console.error('Error inserting blocks:', insError);
+            }
+        } else {
+            console.log('Inserted homepage blocks successfully.');
+        }
+    } catch (e) {
+        console.log("Exception inserting blocks:", e.message);
+    }
 
     if (insError) console.error('Error inserting blocks:', insError);
     else console.log('Inserted homepage blocks successfully.');

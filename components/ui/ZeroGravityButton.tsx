@@ -1,16 +1,19 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion, HTMLMotionProps } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 interface ZeroGravityButtonProps extends HTMLMotionProps<"button"> {
     children: React.ReactNode;
     className?: string;
+    gravityMode?: 'pull' | 'push' | 'orbital';
+    intensity?: number;
 }
 
-export default function ZeroGravityButton({ children, className, onClick, ...props }: ZeroGravityButtonProps) {
+export default function ZeroGravityButton({ children, className, onClick, gravityMode = 'push', intensity = 50, ...props }: ZeroGravityButtonProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [isGravityActive, setIsGravityActive] = useState(false);
 
     // Ripple Logic
     const ripples = useRef<{ x: number; y: number; radius: number; opacity: number }[]>([]);
