@@ -345,7 +345,7 @@ const StickySplitBlock: React.FC<StickySplitBlockProps> = ({ data }) => {
                         <div
                             className={`
                                 ${isBackgroundMode ? "[&_*]:text-white! [&_p]:text-white/90!" : ""}
-                                [&_p.text-5xl]:bg-gradient-to-b [&_p.text-5xl]:from-white [&_p.text-5xl]:to-white/20 [&_p.text-5xl]:text-transparent [&_p.text-5xl]:bg-clip-text
+                                [&_p.text-5xl]:text-white
                                 [&_p.text-5xl]:text-4xl [&_p.text-5xl]:md:text-7xl [&_p.text-5xl]:lg:text-9xl
                             `}
                             dangerouslySetInnerHTML={{ __html: data.sticky_content }}
