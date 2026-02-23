@@ -11,6 +11,16 @@ interface GeometricBackgroundProps {
 }
 
 const GeometricBackground: React.FC<GeometricBackgroundProps> = ({ mode }) => {
+    const [mounted, setMounted] = React.useState(false);
+
+    React.useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) {
+        return <div className="absolute inset-0 w-full h-full -z-10 bg-[#02040a]" />;
+    }
+
     return (
         <div className="absolute inset-0 w-full h-full -z-10 bg-[#02040a]">
             {/* eventSource allows interaction even if Canvas is covered by other DOM elements */}
