@@ -95,10 +95,12 @@ void main() {
 
 const DataRipple = ({
     numRingsMultiplier = 1.0,
-    baseSpacingMultiplier = 1.0
+    baseSpacingMultiplier = 1.0,
+    sensitivityMultiplier = 1.0
 }: {
     numRingsMultiplier?: number;
     baseSpacingMultiplier?: number;
+    sensitivityMultiplier?: number;
 }) => {
     const pointsRef = useRef<THREE.Points>(null);
     const materialRef = useRef<THREE.ShaderMaterial>(null);
@@ -181,9 +183,10 @@ const DataRipple = ({
         const currentMouse = new THREE.Vector2(pointer.x, pointer.y);
         const distanceMoved = currentMouse.distanceTo(prevMouse.current);
 
-        // Spike the target velocity when moved, cap it at a max value (e.g., 1.0)
+        // Spike the target velocity when moved, cap it at a max value
+        // Multiply by the user's sensitivity slider to increase/decrease the effect
         if (distanceMoved > 0.001) {
-            targetVelocity.current = Math.min(targetVelocity.current + distanceMoved * 10, 1.0);
+            targetVelocity.current = Math.min(targetVelocity.current + (distanceMoved * 20 * sensitivityMultiplier), 2.0);
         }
 
         // Gradually decay the velocity back to 0 (calm water)
@@ -198,8 +201,8 @@ const DataRipple = ({
         // Map pointer to world coordinates (roughly)
         uniforms.uMouse.value.set(pointer.x * 20, pointer.y * -20);
 
-        // Fixed static tilt as requested by user - no overall movement or parallax
-        pointsRef.current.rotation.x = Math.PI / 2.5;
+        // Fixed static tilt as requested by user - tilted even further back (Math.PI / 2.15 is nearly flat)
+        pointsRef.current.rotation.x = Math.PI / 2.15;
         pointsRef.current.rotation.y = 0;
         pointsRef.current.rotation.z = 0;
     });
@@ -231,10 +234,11 @@ const DataRipple = ({
 const DebrisScene = () => {
     const [density, setDensity] = React.useState(1.0);     // Controls numRingsMultiplier
     const [spread, setSpread] = React.useState(1.0);       // Controls baseSpacingMultiplier
+    const [sensitivity, setSensitivity] = React.useState(1.0); // Controls hover intensity
 
     return (
         <group>
-            <DataRipple numRingsMultiplier={density} baseSpacingMultiplier={spread} />
+            <DataRipple numRingsMultiplier={density} baseSpacingMultiplier={spread} sensitivityMultiplier={sensitivity} />
 
             {/* HTML Overlay for Sliders */}
             <Html as="div" prepend fullscreen style={{ pointerEvents: 'none' }}>
@@ -262,6 +266,19 @@ const DebrisScene = () => {
                             min="0.5" max="3.0" step="0.05"
                             value={spread}
                             onChange={(e) => setSpread(parseFloat(e.target.value))}
+                            className="w-full accent-white"
+                        />
+                    </div>
+                    <div>
+                        <div className="flex justify-between mb-2">
+                            <label className="text-xs font-mono text-white/60 tracking-wider">HOVER SENSITIVITY</label>
+                            <span className="text-xs font-mono">{sensitivity.toFixed(2)}x</span>
+                        </div>
+                        <input
+                            type="range"
+                            min="0.0" max="3.0" step="0.1"
+                            value={sensitivity}
+                            onChange={(e) => setSensitivity(parseFloat(e.target.value))}
                             className="w-full accent-white"
                         />
                     </div>
