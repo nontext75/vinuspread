@@ -24,19 +24,28 @@ void main() {
     // 1. Ambient Calm Ripple (Water Drop / Pond Ripple effect)
     // A smooth rolling wave that decays smoothly towards the outer edges
     // Massively reduced mouse influence to keep it elegant and calm
-    float dynamicAmplitude = 0.6 + (uMouseVelocity * 0.5); // Gentle baseline, very slight increase on hover
-    float dynamicFrequency = 3.0; // Wavelength
-    float dynamicSpeed = 1.5 + (uMouseVelocity * 0.5); // Speed barely increases on hover
+    float dynamicAmplitude = 0.5 + (uMouseVelocity * 0.4); // Gentle baseline
+    
+    // Create an angle-based phase shift so the wave doesn't pulse in a perfect, rigid circle
+    float angle = atan(pos.z, pos.x);
+    float phaseOffset = sin(angle * 3.0) * 0.5; // Breaks the perfect symmetry
+    
+    // Primary ripple (radiating outward)
+    float ripple1 = sin((-centerDist * 2.5) + (uTime * 1.2) + phaseOffset) * dynamicAmplitude;
+    
+    // Secondary, slightly faster/tighter ripple to create natural "interference" (like real water)
+    float ripple2 = sin((-centerDist * 3.8) + (uTime * 1.8) - phaseOffset) * (dynamicAmplitude * 0.5);
     
     // The wave height diminishes exponentially the further out it goes
-    float distanceDecay = exp(-centerDist * 0.15); 
+    float distanceDecay = exp(-centerDist * 0.12); 
     
-    float ripple = sin(-centerDist * dynamicFrequency + uTime * dynamicSpeed) * dynamicAmplitude * distanceDecay;
+    // Combine the waves for a more chaotic, organic liquid surface
+    float combinedRipple = (ripple1 + ripple2) * distanceDecay;
     
-    // 2. Secondary slow standing wave (gives the water a natural "breathing" body)
-    float wave = cos(pos.x * 0.5 + uTime * 0.5) * 0.3;
+    // 2. Slow underlying swell (gives the entire body of water a slow breath)
+    float swell = cos(pos.x * 0.4 + uTime * 0.3) * 0.2 + sin(pos.z * 0.4 + uTime * 0.2) * 0.2;
 
-    pos.y = ripple + wave;
+    pos.y = combinedRipple + swell;
     
     vPos = pos; 
     
@@ -113,7 +122,16 @@ const DataRipple = ({
         for (let i = 1; i <= numRings; i++) {
             // Exponential curve: rings are very close at low 'i', and spread out at high 'i'
             // lowered the power slightly so they don't spread too thin at the edges
-            const radius = Math.pow(i, 1.25) * baseSpacing;
+            let radius = Math.pow(i, 1.25) * baseSpacing;
+
+            // Organic Clustering (The user's request)
+            // Use a sine wave over the index to push some rings closer together and others further apart
+            // This breaks the artificial "speaker cone" look and creates natural bands of density
+            const clusterFactor = Math.sin(i * 0.4) * (baseSpacing * 2.0);
+            radius += clusterFactor;
+
+            // Prevent negative radii near the center due to the cluster factor
+            radius = Math.max(radius, baseSpacing * i * 0.5);
 
             // Circumference of the current ring
             const circumference = 2 * Math.PI * radius;
