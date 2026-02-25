@@ -17,26 +17,30 @@ void main() {
     vec3 pos = position;
     
     // Distance from the exact center (origin)
-    float dist = length(pos.xz);
+    float centerDist = length(pos.xz);
     
-    // 1. Primary Ripple (Sharper, more frequent waves like the reference)
-    // Using abs(sin) creates a sharper "V" shape at the valleys and rounded peaks
-    float ripple = sin(-dist * 2.0 + uTime * 3.0) * 2.5;
-    
-    // 2. Secondary slow standing wave (reduced influence)
-    float wave = cos(pos.x * 0.5 + uTime * 1.0) * 0.5;
-
-    // 3. Mouse Interaction (Direct repel effect based on distance)
+    // Distance from the mouse
     float mouseDist = length(pos.xz - uMouse);
-    float repel = smoothstep(12.0, 0.0, mouseDist) * 3.5; // Pushes points UP when mouse is near
+    
+    // 1. Mouse-driven Ripple (Interactive Water Drop Effect)
+    // The ripple originates from the mouse position. 
+    // smoothstep creates a localized area of effect so the whole scene doesn't go crazy
+    float impactArea = 1.0 - smoothstep(0.0, 20.0, mouseDist);
+    
+    // Calculate the wave pattern radiating from the mouse
+    // Using a tight sin wave that decays over distance
+    float interactiveRipple = sin(-mouseDist * 2.5 + uTime * 6.0) * 3.0 * impactArea;
+    
+    // 2. Subtle ambient breathing (so it's not completely dead when mouse is still)
+    float ambientWave = sin(-centerDist * 0.5 + uTime * 1.0) * 0.3;
 
-    pos.y = ripple + wave + repel;
+    pos.y = interactiveRipple + ambientWave;
     
     vPos = pos; 
     
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
     
-    gl_PointSize = (800.0 / -mvPosition.z); 
+    gl_PointSize = (1000.0 / -mvPosition.z); 
     gl_Position = projectionMatrix * mvPosition;
 }
 `;
@@ -85,17 +89,17 @@ const DataRipple = () => {
     const { positions } = useMemo(() => {
         // Number of concentric rings
         // Increase total rings to compensate for denser core
-        const numRings = isMobile ? 40 : 80;
+        const numRings = isMobile ? 80 : 150;
 
-        // Base spacing multiplier
-        const baseSpacing = 0.15;
+        // Base spacing multiplier - tightened significantly to form a solid "plate"
+        const baseSpacing = 0.08;
 
         const posArray: number[] = [];
 
         for (let i = 1; i <= numRings; i++) {
             // Exponential curve: rings are very close at low 'i', and spread out at high 'i'
-            // power of 1.4 gives a nice visible density gradient without blowing out the edges too fast
-            const radius = Math.pow(i, 1.4) * baseSpacing;
+            // lowered the power slightly so they don't spread too thin at the edges
+            const radius = Math.pow(i, 1.25) * baseSpacing;
 
             // Circumference of the current ring
             const circumference = 2 * Math.PI * radius;
@@ -103,7 +107,8 @@ const DataRipple = () => {
             // To maintain consistent spacing between dots visually,
             // the number of dots on a ring should be proportional to its circumference.
             // Adjust the denominator to change dot density along the ring
-            const numDotsOnRing = Math.floor(circumference / 0.6);
+            // 0.3 means dots are packed twice as tight as before
+            const numDotsOnRing = Math.floor(circumference / 0.3);
 
             for (let j = 0; j < numDotsOnRing; j++) {
                 // Angle for this specific dot
@@ -142,9 +147,9 @@ const DataRipple = () => {
         pointsRef.current.rotation.y = state.clock.getElapsedTime() * 0.03;
 
         // Subtle tilt based on mouse position to give parallax feel
-        // Exaggerated influence
-        const targetRotX = Math.PI / 3 - (pointer.y * Math.PI) / 8; // Base tilt is PI/3
-        const targetRotZ = (pointer.x * Math.PI) / 8;
+        // Flattened tilt heavily to look like a plate/liquid surface
+        const targetRotX = Math.PI / 2.5 - (pointer.y * Math.PI) / 10; // Flatter base tilt
+        const targetRotZ = (pointer.x * Math.PI) / 10;
 
         pointsRef.current.rotation.x = THREE.MathUtils.lerp(pointsRef.current.rotation.x, targetRotX, 0.05);
         pointsRef.current.rotation.z = THREE.MathUtils.lerp(pointsRef.current.rotation.z, targetRotZ, 0.05);
