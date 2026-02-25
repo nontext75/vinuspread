@@ -24,17 +24,18 @@ void main() {
     // 1. Ambient Calm Ripple (Water Drop / Pond Ripple effect)
     // A smooth rolling wave that decays smoothly towards the outer edges
     // Massively reduced mouse influence to keep it elegant and calm
-    float dynamicAmplitude = 0.5 + (uMouseVelocity * 0.4); // Gentle baseline
+    float dynamicAmplitude = 0.5 + (uMouseVelocity * 0.6); // Gentle baseline
+    float dynamicSpeed = 1.0 + (uMouseVelocity * 1.5); // Speed increases visibly on hover
     
     // Create an angle-based phase shift so the wave doesn't pulse in a perfect, rigid circle
     float angle = atan(pos.z, pos.x);
     float phaseOffset = sin(angle * 3.0) * 0.5; // Breaks the perfect symmetry
     
     // Primary ripple (radiating outward)
-    float ripple1 = sin((-centerDist * 2.5) + (uTime * 1.2) + phaseOffset) * dynamicAmplitude;
+    float ripple1 = sin((-centerDist * 2.5) + (uTime * 1.2 * dynamicSpeed) + phaseOffset) * dynamicAmplitude;
     
     // Secondary, slightly faster/tighter ripple to create natural "interference" (like real water)
-    float ripple2 = sin((-centerDist * 3.8) + (uTime * 1.8) - phaseOffset) * (dynamicAmplitude * 0.5);
+    float ripple2 = sin((-centerDist * 3.8) + (uTime * 1.8 * dynamicSpeed) - phaseOffset) * (dynamicAmplitude * 0.5);
     
     // The wave height diminishes exponentially the further out it goes
     float distanceDecay = exp(-centerDist * 0.12); 
@@ -184,9 +185,9 @@ const DataRipple = ({
         const distanceMoved = currentMouse.distanceTo(prevMouse.current);
 
         // Spike the target velocity when moved, cap it at a max value
-        // Multiply by the user's sensitivity slider to increase/decrease the effect
-        if (distanceMoved > 0.001) {
-            targetVelocity.current = Math.min(targetVelocity.current + (distanceMoved * 20 * sensitivityMultiplier), 2.0);
+        // Lowered distance threshold significantly so even small mouse movements trigger the ripple
+        if (distanceMoved > 0.0001) {
+            targetVelocity.current = Math.min(targetVelocity.current + (distanceMoved * 50 * sensitivityMultiplier), 3.0);
         }
 
         // Gradually decay the velocity back to 0 (calm water)
