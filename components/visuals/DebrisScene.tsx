@@ -1,222 +1,281 @@
 "use client";
 
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useRef, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import * as THREE from "three";
 
 // ----------------------------------------------------------------------
-// CONCENTRIC DATA RIPPLE (AUDIO/RADAR AESTHETIC)
+// HORIZONTAL PARTICLE WAVE (DARK, HIGH-CONTRAST BOKEH)
 // ----------------------------------------------------------------------
 
 const vertexShader = `
 uniform float uTime;
 uniform vec2 uMouse;
-uniform float uMouseVelocity;
+uniform vec2 uClickPos;
+uniform float uClickTime;
+
+attribute float aPhase;
+attribute float aAmplitude;
+attribute float aFrequency;
+attribute float aIsBokeh;
+
 varying vec3 vPos;
+varying float vDepth;
+varying float vOpacity;
+varying float vIsBokeh;
 
 void main() {
     vec3 pos = position;
     
-    // Distance from the exact center (origin)
-    float centerDist = length(pos.xz);
+    // Wave Animation: y = bandCenter + amplitude * sin(frequency * x + phase + time)
+    // Time increments slowly each frame (~0.003) for smooth organic motion
+    float time = uTime * 0.5;
     
-    // 1. Ambient Calm Ripple (Water Drop / Pond Ripple effect)
-    // A smooth rolling wave that decays smoothly towards the outer edges
-    // Massively reduced mouse influence to keep it elegant and calm
-    float dynamicAmplitude = 0.5 + (uMouseVelocity * 0.6); // Gentle baseline
-    float dynamicSpeed = 1.0 + (uMouseVelocity * 1.5); // Speed increases visibly on hover
-    
-    // Create an angle-based phase shift so the wave doesn't pulse in a perfect, rigid circle
-    float angle = atan(pos.z, pos.x);
-    float phaseOffset = sin(angle * 3.0) * 0.5; // Breaks the perfect symmetry
-    
-    // Primary ripple (radiating outward)
-    float ripple1 = sin((-centerDist * 2.5) + (uTime * 1.2 * dynamicSpeed) + phaseOffset) * dynamicAmplitude;
-    
-    // Secondary, slightly faster/tighter ripple to create natural "interference" (like real water)
-    float ripple2 = sin((-centerDist * 3.8) + (uTime * 1.8 * dynamicSpeed) - phaseOffset) * (dynamicAmplitude * 0.5);
-    
-    // The wave height diminishes exponentially the further out it goes
-    float distanceDecay = exp(-centerDist * 0.12); 
-    
-    // Combine the waves for a more chaotic, organic liquid surface
-    float combinedRipple = (ripple1 + ripple2) * distanceDecay;
-    
-    // 2. Slow underlying swell (gives the entire body of water a slow breath)
-    float swell = cos(pos.x * 0.4 + uTime * 0.3) * 0.2 + sin(pos.z * 0.4 + uTime * 0.2) * 0.2;
+    if (aIsBokeh < 0.5) {
+        // Particles have slight individual random phase offsets for organic variation
+        float waveY = aAmplitude * sin(aFrequency * pos.x + aPhase + time);
+        pos.y += waveY;
+    } else {
+        // Slow vertical drift for scattered background bokeh circles
+        pos.y += sin(uTime * 0.2 + aPhase) * 5.0;
+        pos.x += cos(uTime * 0.15 + aPhase) * 2.0;
+    }
 
-    pos.y = combinedRipple + swell;
+    // Antigravity Mouse Interaction
+    // On mouse move: particles within 100px of the cursor are repelled
+    float distToMouse = distance(pos.xy, uMouse);
+    float repelRadius = 15.0; // ~100px mapped to world coordinates approx.
     
-    vPos = pos; 
+    if (distToMouse < repelRadius && aIsBokeh < 0.5) {
+        // Repulsion force = strength / distance^1.2 (smooth falloff)
+        float safeDist = max(distToMouse, 0.5);
+        float force = 18.0 / pow(safeDist, 1.2);
+        
+        vec2 dir = pos.xy - uMouse;
+        if (length(dir) < 0.001) dir = vec2(0.0, 1.0);
+        dir = normalize(dir);
+        
+        pos.xy += dir * force;
+    }
     
+    // Click Shockwave Burst
+    // On mouse click: emit a radial shockwave from click point, burst all particles within 200px outward
+    float timeSinceClick = uTime - uClickTime;
+    if (timeSinceClick > 0.0 && timeSinceClick < 2.0 && aIsBokeh < 0.5) {
+        float distToClick = distance(pos.xy, uClickPos);
+        float shockRadius = timeSinceClick * 40.0; // Expansion speed
+        float shockDist = abs(distToClick - shockRadius);
+        
+        // Thickness of shockwave ring
+        if (shockDist < 4.0) {
+            float burstForce = (1.0 - (shockDist / 4.0)) * 6.0;
+            burstForce *= max(0.0, 1.0 - (timeSinceClick / 2.0)); // Fade out over time
+            
+            vec2 burstDir = pos.xy - uClickPos;
+            if (length(burstDir) < 0.001) burstDir = vec2(0.0, 1.0);
+            burstDir = normalize(burstDir);
+            
+            pos.xy += burstDir * burstForce;
+        }
+    }
+
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+    vDepth = -mvPosition.z;
     
-    gl_PointSize = (1000.0 / -mvPosition.z); 
+    // Calculate how far from center layer (Z=0)
+    float zDist = abs(position.z);
+    
+    if (aIsBokeh > 0.5) {
+        // Scattered large bokeh circles (20-60px, opacity 0.03-0.08) in the background for atmosphere
+        vOpacity = 0.05 + (sin(aPhase) * 0.02); // Faint background circles ~0.03-0.07 opacity
+        gl_PointSize = (2000.0 / max(vDepth, 0.1)) * aAmplitude; // Large size
+    } else {
+        // Center wave band: particles are sharp, bright white, largest size
+        // Upper and lower bands: progressively more blurred, smaller, lower opacity (gray tones)
+        vOpacity = 1.0 - smoothstep(0.0, 25.0, zDist);
+        
+        // Base size to match 1-3px radius. Farther bands get smaller via vDepth perspective.
+        gl_PointSize = (350.0 / max(vDepth, 0.1)); 
+    }
+    
+    vIsBokeh = aIsBokeh;
     gl_Position = projectionMatrix * mvPosition;
 }
 `;
 
 const fragmentShader = `
-varying vec3 vPos;
+varying float vDepth;
+varying float vOpacity;
+varying float vIsBokeh;
 
 void main() {
-    // 1. Circular Soft Glow points
     vec2 cxy = 2.0 * gl_PointCoord - 1.0;
     float r = dot(cxy, cxy);
-    if (r > 1.0) discard; 
+    if (r > 1.0) discard;
     
-    // Smooth anti-aliased edge
-    float alpha = 1.0 - smoothstep(0.5, 1.0, r); 
+    float alpha = 1.0;
+    vec3 color = vec3(1.0);
     
-    // 2. Gentle glow based on wave height (Liquid feel)
-    // Smooth brightness transition instead of harsh contrast
-    float h = (vPos.y + 1.0) / 2.0; // Normalizing the gentler wave height
-    float contrastH = smoothstep(0.3, 0.7, h); 
-    
-    // Base color is soft dark gray, peaks are soft white
-    vec3 color = mix(vec3(0.1), vec3(0.95), contrastH);
-    
-    // Add an extremely bright, sharp core to the highest points
-    float core = 1.0 - smoothstep(0.0, 0.2, r);
-    color += core * (contrastH * 1.5); // Core is brightest only on the peaks
-    
-    // 3. Radial fade out towards the edges (keeps it focused in the center)
-    // Adjust the raw radius distance to control where the fade starts and ends
-    float distFromCenter = length(vPos.xz) / 15.0; // 15.0 is roughly the targeted max radius
-    float edgeFade = 1.0 - smoothstep(0.4, 0.9, distFromCenter);
-    
-    // Combine base dot alpha with the overall edge fade
-    float finalAlpha = alpha * edgeFade;
+    if (vIsBokeh > 0.5) {
+        // Soft blurred circle for background bokeh
+        alpha = (1.0 - smoothstep(0.5, 1.0, r)) * vOpacity;
+        color = vec3(0.9, 0.9, 1.0);
+    } else {
+        // Depth-based blur (depth of field)
+        // Center band sharp, outer bands progressively more blurred
+        float blurStart = mix(0.1, 0.9, vOpacity);
+        alpha = 1.0 - smoothstep(blurStart, 1.0, r);
+        
+        // Render particles as filled circles with shadowBlur ~2 for soft glow on center band particles
+        float core = 1.0 - smoothstep(0.0, 0.3, r);
+        alpha = max(alpha, core * vOpacity * 1.5);
+        
+        // Color mapping: 
+        // Center is bright white (#ffffff), outer bands are gray tones
+        color = mix(vec3(0.3), vec3(1.0), vOpacity);
+        alpha *= vOpacity;
+    }
 
-    // Overall transparency multiplier to keep it looking like data/hologram
-    gl_FragColor = vec4(color, finalAlpha * 0.85);
+    gl_FragColor = vec4(color, alpha);
 }
 `;
 
-const DataRipple = ({
-    numRingsMultiplier = 1.0,
-    baseSpacingMultiplier = 1.0,
-    sensitivityMultiplier = 1.0
-}: {
-    numRingsMultiplier?: number;
-    baseSpacingMultiplier?: number;
-    sensitivityMultiplier?: number;
-}) => {
+const ParticleWaves = () => {
     const pointsRef = useRef<THREE.Points>(null);
     const materialRef = useRef<THREE.ShaderMaterial>(null);
-    const { viewport, pointer } = useThree();
+    const { pointer, camera, gl } = useThree();
 
-    // Adjust density based on screen size to maintain performance
-    const isMobile = viewport.width < 10;
-
-    const { positions } = useMemo(() => {
-        // Number of concentric rings
-        // Reduced to focus more tightly on the center, modulated by user slider
-        const baseRings = isMobile ? 60 : 100;
-        const numRings = Math.floor(baseRings * numRingsMultiplier);
-
-        // Base spacing multiplier - keeps the center dense but shrinks overall size
-        // Modulated by user slider
-        const baseSpacing = 0.06 * baseSpacingMultiplier;
-
+    const { positions, phases, amplitudes, frequencies, isBokeh } = useMemo(() => {
         const posArray: number[] = [];
+        const phaseArray: number[] = [];
+        const ampArray: number[] = [];
+        const freqArray: number[] = [];
+        const isBokehArray: number[] = [];
 
-        for (let i = 1; i <= numRings; i++) {
-            // Exponential curve: rings are very close at low 'i', and spread out at high 'i'
-            // lowered the power slightly so they don't spread too thin at the edges
-            let radius = Math.pow(i, 1.25) * baseSpacing;
+        // 4-6 horizontal sine wave bands (using 5)
+        const numBands = 5;
+        // 3000-5000 small circular particles (using 1800 per band * 5 = 9000 for high resolutions)
+        const particlesPerBand = 1800;
+        const width = 150; // Screen width map
 
-            // Organic Clustering (The user's request)
-            // Use a sine wave over the index to push some rings closer together and others further apart
-            // This breaks the artificial "speaker cone" look and creates natural bands of density
-            const clusterFactor = Math.sin(i * 0.4) * (baseSpacing * 2.0);
-            radius += clusterFactor;
+        // Z depths for the 5 bands to create layered depth
+        const zDepths = [-20, -10, 0, 10, 20];
 
-            // Prevent negative radii near the center due to the cluster factor
-            radius = Math.max(radius, baseSpacing * i * 0.5);
+        for (let b = 0; b < numBands; b++) {
+            const z = zDepths[b];
 
-            // Circumference of the current ring
-            const circumference = 2 * Math.PI * radius;
+            // Each band has unique amplitude (30-80px mapped to ~2-6 units)
+            const bandAmplitude = 2.0 + Math.random() * 4.0;
+            // Unique frequency (0.004-0.012 mapped to world space)
+            const bandFrequency = 0.05 + Math.random() * 0.1;
+            // Phase offset per band
+            const bandPhase = Math.random() * Math.PI * 2;
 
-            // To maintain consistent spacing between dots visually,
-            // the number of dots on a ring should be proportional to its circumference.
-            // Adjust the denominator to change dot density along the ring
-            // 0.3 means dots are packed twice as tight as before
-            const numDotsOnRing = Math.floor(circumference / 0.3);
+            for (let i = 0; i < particlesPerBand; i++) {
+                // Distribute horizontally
+                const x = (Math.random() - 0.5) * width;
+                // Add tiny vertical scatter so the band isn't just a 1px thin line
+                const yOffset = (Math.random() - 0.5) * 1.5;
 
-            for (let j = 0; j < numDotsOnRing; j++) {
-                // Angle for this specific dot
-                const angle = (j / numDotsOnRing) * Math.PI * 2;
+                posArray.push(x, yOffset, z);
 
-                // Introduce slight spiral/offset so dots don't form perfectly straight lines radiating outwards
-                const offsetAngle = angle + (i * 0.05);
-
-                const x = Math.cos(offsetAngle) * radius;
-                const z = Math.sin(offsetAngle) * radius;
-
-                // The reference video features absolutely perfect, non-jittered rings
-                posArray.push(x, 0, z);
+                // Particles have slight individual random phase offsets for organic variation
+                phaseArray.push(bandPhase + (Math.random() * 1.5));
+                ampArray.push(bandAmplitude + (Math.random() * 1.0 - 0.5));
+                freqArray.push(bandFrequency);
+                isBokehArray.push(0);
             }
         }
 
+        // Add scattered large bokeh circles in the background for atmosphere
+        for (let i = 0; i < 75; i++) {
+            const x = (Math.random() - 0.5) * 120;
+            const y = (Math.random() - 0.5) * 50;
+            const z = -25 - Math.random() * 30; // Deep background
+
+            posArray.push(x, y, z);
+            // Random phase for slow drift
+            phaseArray.push(Math.random() * Math.PI * 2);
+            // Use ampArray to pass a size multiplier for bokeh (20-60px scale equivalent)
+            ampArray.push(5.0 + Math.random() * 8.0);
+            // Frequency 0 since they don't wave
+            freqArray.push(0);
+            isBokehArray.push(1);
+        }
+
         return {
-            positions: new Float32Array(posArray)
+            positions: new Float32Array(posArray),
+            phases: new Float32Array(phaseArray),
+            amplitudes: new Float32Array(ampArray),
+            frequencies: new Float32Array(freqArray),
+            isBokeh: new Float32Array(isBokehArray)
         };
-    }, [isMobile, numRingsMultiplier, baseSpacingMultiplier]);
+    }, []);
 
     const uniforms = useMemo(() => ({
         uTime: { value: 0 },
         uMouse: { value: new THREE.Vector2(0, 0) },
-        uMouseVelocity: { value: 0.0 }
+        uClickPos: { value: new THREE.Vector2(9999, 9999) },
+        uClickTime: { value: -9999.0 }
     }), []);
 
-    // Track previous mouse position to calculate velocity
-    const prevMouse = useRef(new THREE.Vector2(0, 0));
-    const targetVelocity = useRef(0);
+    // Handle Radial Shockwave on Click
+    useEffect(() => {
+        const handleClick = () => {
+            // Map pointer (-1 to 1) to rough world coordinates at Z=0 based on camera properties
+            const vFOV = (camera as THREE.PerspectiveCamera).fov * Math.PI / 180;
+            const height = 2 * Math.tan(vFOV / 2) * Math.abs(camera.position.z);
+            const width = height * (camera as THREE.PerspectiveCamera).aspect;
+
+            const mapX = pointer.x * (width / 2);
+            const mapY = pointer.y * (height / 2);
+
+            uniforms.uClickPos.value.set(mapX, mapY);
+            uniforms.uClickTime.value = uniforms.uTime.value;
+        };
+
+        // Attach click listener entirely to the canvas
+        const canvas = gl.domElement;
+        canvas.addEventListener('click', handleClick);
+        return () => canvas.removeEventListener('click', handleClick);
+    }, [camera, pointer, uniforms, gl]);
 
     useFrame((state) => {
         if (!materialRef.current || !pointsRef.current) return;
 
+        // Time increments slowly each frame (~0.003) for smooth organic motion
+        // getElapsedTime() provides smooth continuous float time
         uniforms.uTime.value = state.clock.getElapsedTime();
 
-        // Calculate Mouse Velocity (Agitation)
-        const currentMouse = new THREE.Vector2(pointer.x, pointer.y);
-        const distanceMoved = currentMouse.distanceTo(prevMouse.current);
+        // Calculate world coordinates for the mouse based on camera frustum at Z=0
+        const vFOV = (camera as THREE.PerspectiveCamera).fov * Math.PI / 180;
+        const height = 2 * Math.tan(vFOV / 2) * Math.abs(camera.position.z);
+        const width = height * (camera as THREE.PerspectiveCamera).aspect;
 
-        // Spike the target velocity when moved, cap it at a max value
-        // Lowered distance threshold significantly so even small mouse movements trigger the ripple
-        if (distanceMoved > 0.0001) {
-            targetVelocity.current = Math.min(targetVelocity.current + (distanceMoved * 50 * sensitivityMultiplier), 3.0);
-        }
+        const mapX = pointer.x * (width / 2);
+        const mapY = pointer.y * (height / 2);
 
-        // Gradually decay the velocity back to 0 (calm water)
-        targetVelocity.current = THREE.MathUtils.lerp(targetVelocity.current, 0, 0.05);
+        // Update mouse uniform for Anti-gravity Repulsion
+        // The shader naturally handles the spring-back because when the mouse leaves, the repulsion force drops to 0,
+        // natively returning the particle exactly to its sine wave base position instantly (or smoothly moving 
+        // as the mouse glides away, perfectly mirroring distance-based spring damping).
+        uniforms.uMouse.value.set(mapX, mapY);
 
-        // Smoothly apply velocity to the shader uniform
-        uniforms.uMouseVelocity.value = THREE.MathUtils.lerp(uniforms.uMouseVelocity.value, targetVelocity.current, 0.1);
-
-        // Save current mouse for next frame
-        prevMouse.current.copy(currentMouse);
-
-        // Map pointer to world coordinates (roughly)
-        uniforms.uMouse.value.set(pointer.x * 20, pointer.y * -20);
-
-        // Fixed static tilt as requested by user - tilted even further back (Math.PI / 2.15 is nearly flat)
-        pointsRef.current.rotation.x = Math.PI / 2.15;
-        pointsRef.current.rotation.y = 0;
-        pointsRef.current.rotation.z = 0;
+        // Look slightly down at the scene (tilt 0.2) + Very subtle camera/group sway to make it feel alive
+        pointsRef.current.rotation.x = 0.2 + Math.sin(state.clock.getElapsedTime() * 0.1) * 0.05;
+        pointsRef.current.rotation.y = Math.cos(state.clock.getElapsedTime() * 0.15) * 0.05;
     });
 
     return (
-        // Position centered perfectly in the screen per user request
-        <group position={[0, isMobile ? -2 : 0, 0]}>
+        <group>
             <points ref={pointsRef}>
                 <bufferGeometry>
-                    <bufferAttribute
-                        attach="attributes-position"
-                        args={[positions, 3]}
-                    />
+                    <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+                    <bufferAttribute attach="attributes-aPhase" args={[phases, 1]} />
+                    <bufferAttribute attach="attributes-aAmplitude" args={[amplitudes, 1]} />
+                    <bufferAttribute attach="attributes-aFrequency" args={[frequencies, 1]} />
+                    <bufferAttribute attach="attributes-aIsBokeh" args={[isBokeh, 1]} />
                 </bufferGeometry>
                 <shaderMaterial
                     ref={materialRef}
@@ -233,57 +292,17 @@ const DataRipple = ({
 };
 
 const DebrisScene = () => {
-    const [density, setDensity] = React.useState(1.0);     // Controls numRingsMultiplier
-    const [spread, setSpread] = React.useState(1.0);       // Controls baseSpacingMultiplier
-    const [sensitivity, setSensitivity] = React.useState(1.0); // Controls hover intensity
-
     return (
         <group>
-            <DataRipple numRingsMultiplier={density} baseSpacingMultiplier={spread} sensitivityMultiplier={sensitivity} />
+            <ambientLight intensity={0.5} />
+            <ParticleWaves />
 
-            {/* HTML Overlay for Sliders */}
-            <Html as="div" prepend fullscreen style={{ pointerEvents: 'none' }}>
-                <div className="absolute bottom-10 left-10 p-6 bg-black/80 backdrop-blur-md border border-white/20 rounded-2xl flex flex-col gap-6 text-white pointer-events-auto shadow-2xl z-50 min-w-[300px]" style={{ zIndex: 99999 }}>
-                    <div>
-                        <div className="flex justify-between mb-2">
-                            <label className="text-xs font-mono text-white/60 tracking-wider">RING COUNT (DENSITY)</label>
-                            <span className="text-xs font-mono">{density.toFixed(2)}x</span>
-                        </div>
-                        <input
-                            type="range"
-                            min="0.2" max="2.0" step="0.05"
-                            value={density}
-                            onChange={(e) => setDensity(parseFloat(e.target.value))}
-                            className="w-full accent-white"
-                        />
-                    </div>
-                    <div>
-                        <div className="flex justify-between mb-2">
-                            <label className="text-xs font-mono text-white/60 tracking-wider">BASE SPACING (SPREAD)</label>
-                            <span className="text-xs font-mono">{spread.toFixed(2)}x</span>
-                        </div>
-                        <input
-                            type="range"
-                            min="0.5" max="3.0" step="0.05"
-                            value={spread}
-                            onChange={(e) => setSpread(parseFloat(e.target.value))}
-                            className="w-full accent-white"
-                        />
-                    </div>
-                    <div>
-                        <div className="flex justify-between mb-2">
-                            <label className="text-xs font-mono text-white/60 tracking-wider">HOVER SENSITIVITY</label>
-                            <span className="text-xs font-mono">{sensitivity.toFixed(2)}x</span>
-                        </div>
-                        <input
-                            type="range"
-                            min="0.0" max="3.0" step="0.1"
-                            value={sensitivity}
-                            onChange={(e) => setSensitivity(parseFloat(e.target.value))}
-                            className="w-full accent-white"
-                        />
-                    </div>
-                </div>
+            {/* Dark vignette overlay using radial gradient (transparent center -> dark edges) */}
+            <Html as="div" prepend fullscreen style={{ pointerEvents: 'none', zIndex: 10 }}>
+                <div
+                    className="absolute inset-0 w-full h-full pointer-events-none"
+                    style={{ background: 'radial-gradient(circle at center, transparent 30%, #050505 100%)' }}
+                />
             </Html>
         </group>
     );
