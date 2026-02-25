@@ -21,14 +21,16 @@ void main() {
     // Distance from the exact center (origin)
     float centerDist = length(pos.xz);
     
-    // 1. Ambient Calm Ripple (Always radiating from center)
-    // Low amplitude when still.
-    // The frequency and amplitude increase significantly based on mouse velocity.
-    float dynamicAmplitude = 0.5 + (uMouseVelocity * 2.5); // Ranges from 0.5 (calm) to ~3.0 (agitated)
-    float dynamicFrequency = 2.0; // Keep the rings consistent
-    float dynamicSpeed = 1.0 + (uMouseVelocity * 4.0);
+    // 1. Ambient Calm Ripple (Water Drop / Pond Ripple effect)
+    // A smooth rolling wave that decays smoothly towards the outer edges
+    float dynamicAmplitude = 0.6 + (uMouseVelocity * 2.0); // Gentle baseline
+    float dynamicFrequency = 3.0; // Wavelength
+    float dynamicSpeed = 1.5 + (uMouseVelocity * 2.5);
     
-    float ripple = abs(sin(-centerDist * dynamicFrequency + uTime * dynamicSpeed)) * dynamicAmplitude;
+    // The wave height diminishes exponentially the further out it goes
+    float distanceDecay = exp(-centerDist * 0.15); 
+    
+    float ripple = sin(-centerDist * dynamicFrequency + uTime * dynamicSpeed) * dynamicAmplitude * distanceDecay;
     
     // 2. Secondary slow standing wave (gives the water a natural "breathing" body)
     float wave = cos(pos.x * 0.5 + uTime * 0.5) * 0.3;
@@ -56,17 +58,13 @@ void main() {
     // Smooth anti-aliased edge
     float alpha = 1.0 - smoothstep(0.5, 1.0, r); 
     
-    // 2. Monochrome brightness based on wave height
-    // Peaks are brighter white, valleys drop off sharply to dark gray/black
-    float h = (vPos.y + 3.0) / 6.0;
-    h = clamp(h, 0.0, 1.0);
+    // 2. Gentle glow based on wave height (Liquid feel)
+    // Smooth brightness transition instead of harsh contrast
+    float h = (vPos.y + 1.0) / 2.0; // Normalizing the gentler wave height
+    float contrastH = smoothstep(0.3, 0.7, h); 
     
-    // Sharpen the contrast significantly
-    float contrastH = smoothstep(0.4, 0.9, h);
-    
-    vec3 baseColor = vec3(0.05); // Very dark gray for valleys
-    vec3 peakColor = vec3(1.0);  // Pure bright white for peaks
-    vec3 color = mix(baseColor, peakColor, contrastH);
+    // Base color is soft dark gray, peaks are soft white
+    vec3 color = mix(vec3(0.1), vec3(0.95), contrastH);
     
     // Add an extremely bright, sharp core to the highest points
     float core = 1.0 - smoothstep(0.0, 0.2, r);
