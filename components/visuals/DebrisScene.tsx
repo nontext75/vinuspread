@@ -11,6 +11,7 @@ import * as THREE from "three";
 const vertexShader = `
 uniform float uTime;
 uniform vec2 uMouse;
+uniform float uMouseVelocity;
 varying vec3 vPos;
 
 void main() {
@@ -19,22 +20,19 @@ void main() {
     // Distance from the exact center (origin)
     float centerDist = length(pos.xz);
     
-    // Distance from the mouse
-    float mouseDist = length(pos.xz - uMouse);
+    // 1. Ambient Calm Ripple (Always radiating from center)
+    // Low amplitude when still.
+    // The frequency and amplitude increase significantly based on mouse velocity.
+    float dynamicAmplitude = 0.5 + (uMouseVelocity * 2.5); // Ranges from 0.5 (calm) to ~3.0 (agitated)
+    float dynamicFrequency = 2.0; // Keep the rings consistent
+    float dynamicSpeed = 1.0 + (uMouseVelocity * 4.0);
     
-    // 1. Mouse-driven Ripple (Interactive Water Drop Effect)
-    // The ripple originates from the mouse position. 
-    // smoothstep creates a localized area of effect so the whole scene doesn't go crazy
-    float impactArea = 1.0 - smoothstep(0.0, 20.0, mouseDist);
+    float ripple = abs(sin(-centerDist * dynamicFrequency + uTime * dynamicSpeed)) * dynamicAmplitude;
     
-    // Calculate the wave pattern radiating from the mouse
-    // Using a tight sin wave that decays over distance
-    float interactiveRipple = sin(-mouseDist * 2.5 + uTime * 6.0) * 3.0 * impactArea;
-    
-    // 2. Subtle ambient breathing (so it's not completely dead when mouse is still)
-    float ambientWave = sin(-centerDist * 0.5 + uTime * 1.0) * 0.3;
+    // 2. Secondary slow standing wave (gives the water a natural "breathing" body)
+    float wave = cos(pos.x * 0.5 + uTime * 0.5) * 0.3;
 
-    pos.y = interactiveRipple + ambientWave;
+    pos.y = ripple + wave;
     
     vPos = pos; 
     
@@ -133,14 +131,37 @@ const DataRipple = () => {
     const uniforms = useMemo(() => ({
         uTime: { value: 0 },
         uMouse: { value: new THREE.Vector2(0, 0) },
+        uMouseVelocity: { value: 0.0 }
     }), []);
+
+    // Track previous mouse position to calculate velocity
+    const prevMouse = useRef(new THREE.Vector2(0, 0));
+    const targetVelocity = useRef(0);
 
     useFrame((state) => {
         if (!materialRef.current || !pointsRef.current) return;
 
         uniforms.uTime.value = state.clock.getElapsedTime();
 
-        // Map pointer to world coordinates (roughly) for the shader
+        // Calculate Mouse Velocity (Agitation)
+        const currentMouse = new THREE.Vector2(pointer.x, pointer.y);
+        const distanceMoved = currentMouse.distanceTo(prevMouse.current);
+
+        // Spike the target velocity when moved, cap it at a max value (e.g., 1.0)
+        if (distanceMoved > 0.001) {
+            targetVelocity.current = Math.min(targetVelocity.current + distanceMoved * 10, 1.0);
+        }
+
+        // Gradually decay the velocity back to 0 (calm water)
+        targetVelocity.current = THREE.MathUtils.lerp(targetVelocity.current, 0, 0.05);
+
+        // Smoothly apply velocity to the shader uniform
+        uniforms.uMouseVelocity.value = THREE.MathUtils.lerp(uniforms.uMouseVelocity.value, targetVelocity.current, 0.1);
+
+        // Save current mouse for next frame
+        prevMouse.current.copy(currentMouse);
+
+        // Map pointer to world coordinates (roughly)
         uniforms.uMouse.value.set(pointer.x * 20, pointer.y * -20);
 
         // Very slow, majestic overarching rotation
