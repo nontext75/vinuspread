@@ -17,6 +17,17 @@ const HeroBlock: React.FC<HeroBlockProps> = ({ data }) => {
     const titleRef = useRef<HTMLHeadingElement>(null);
     const [visualMode, setVisualMode] = React.useState<'galaxy' | 'orbit' | 'debris'>('galaxy');
 
+    // Toggle global background stars based on visual mode
+    useEffect(() => {
+        if (typeof document !== 'undefined') {
+            if (visualMode === 'debris') {
+                document.body.classList.add('hide-stars');
+            } else {
+                document.body.classList.remove('hide-stars');
+            }
+        }
+    }, [visualMode]);
+
     // Removed GSAP animation in favor of Framer Motion Variants (User Request)
     // useEffect(() => { ... gsap ... }, []);
 

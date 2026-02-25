@@ -56,7 +56,7 @@ export default function AtmosphericBackground() {
             </motion.div>
 
             {/* Parallax Stars/Dots Layer 1 (Slow) */}
-            <motion.div style={{ y: y2 }} className="absolute inset-0">
+            <motion.div style={{ y: y2 }} className="absolute inset-0 atmospheric-stars">
                 {stars.slow.map((star, i) => (
                     <div
                         key={`star-slow-${i}`}
@@ -73,7 +73,7 @@ export default function AtmosphericBackground() {
             </motion.div>
 
             {/* Parallax Stars/Dots Layer 2 (Fast) */}
-            <motion.div style={{ y: y1 }} className="absolute inset-0">
+            <motion.div style={{ y: y1 }} className="absolute inset-0 atmospheric-stars">
                 {stars.fast.map((star, i) => (
                     <div
                         key={`star-fast-${i}`}

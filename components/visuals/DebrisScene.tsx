@@ -91,7 +91,6 @@ void main() {
 `;
 
 const fragmentShader = `
-#extension GL_OES_standard_derivatives : enable
 uniform float uTime;
 varying vec3 vWorldPosition;
 varying vec3 vLocalPosition;
