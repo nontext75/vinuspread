@@ -23,9 +23,10 @@ void main() {
     
     // 1. Ambient Calm Ripple (Water Drop / Pond Ripple effect)
     // A smooth rolling wave that decays smoothly towards the outer edges
-    float dynamicAmplitude = 0.6 + (uMouseVelocity * 2.0); // Gentle baseline
+    // Massively reduced mouse influence to keep it elegant and calm
+    float dynamicAmplitude = 0.6 + (uMouseVelocity * 0.5); // Gentle baseline, very slight increase on hover
     float dynamicFrequency = 3.0; // Wavelength
-    float dynamicSpeed = 1.5 + (uMouseVelocity * 2.5);
+    float dynamicSpeed = 1.5 + (uMouseVelocity * 0.5); // Speed barely increases on hover
     
     // The wave height diminishes exponentially the further out it goes
     float distanceDecay = exp(-centerDist * 0.15); 
