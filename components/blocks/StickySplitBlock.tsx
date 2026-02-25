@@ -73,8 +73,8 @@ const DenseWireframeTorus = ({ className }: { className?: string }) => {
     const paths = useMemo(() => {
         const elements = [];
         // Longitudinal rings (circling the hole)
-        for (let i = 0; i < 48; i++) { // Increased 24 -> 48
-            const rotation = i * 7.5;
+        for (let i = 0; i < 12; i++) { // Reduced 48 -> 12 for performance
+            const rotation = i * 30;
             elements.push(
                 <ellipse key={`ring-${i}`} cx="50" cy="50" rx="42" ry="12"
                     transform={`rotate(${rotation} 50 50)`}
@@ -82,9 +82,9 @@ const DenseWireframeTorus = ({ className }: { className?: string }) => {
             );
         }
         // Latitudinal rings (concentric)
-        for (let j = 0; j < 12; j++) { // Increased 6 -> 12
-            const rx = 15 + (j * 2.5);
-            const ry = 5 + (j * 1);
+        for (let j = 0; j < 4; j++) { // Reduced 12 -> 4 for performance
+            const rx = 15 + (j * 7.5);
+            const ry = 5 + (j * 3);
             elements.push(
                 <ellipse key={`conc-${j}`} cx="50" cy="50" rx={rx} ry={ry}
                     className="opacity-30" vectorEffect="non-scaling-stroke" />
@@ -105,15 +105,15 @@ const DenseWireframeCone = ({ className }: { className?: string }) => {
     const paths = useMemo(() => {
         const elements = [];
         // Vertical Meridians
-        for (let i = 0; i < 40; i++) { // Increased 20 -> 40
-            const xBase = 5 + (i * 2.25); // Dense spread
+        for (let i = 0; i < 12; i++) { // Reduced 40 -> 12 for performance
+            const xBase = 5 + (i * 7.5);
             elements.push(
                 <line key={`v-${i}`} x1="50" y1="5" x2={xBase} y2="95" className="opacity-30" vectorEffect="non-scaling-stroke" />
             );
         }
         // Horizontal Parallels
-        for (let j = 0; j < 30; j++) { // Increased 15 -> 30
-            const y = 95 - (j * 3);
+        for (let j = 0; j < 10; j++) { // Reduced 30 -> 10 for performance
+            const y = 95 - (j * 9);
             const width = 45 * (y / 95);
             const height = 12 * (y / 95);
             elements.push(
@@ -206,7 +206,7 @@ const ScrollItemImage = ({ index, totalItems, scrollYProgress, img, isLight, isB
                     {/* Element A: Big Wireframe Ring (Dense Torus) */}
                     <motion.div
                         style={{ rotate: rotate, y: debrisY_Slow }}
-                        className="absolute inset-[-40%] z-0 text-white mix-blend-plus-lighter"
+                        className="absolute inset-[-40%] z-0 text-white will-change-transform"
                     >
                         <DenseWireframeTorus className="w-full h-full" />
                     </motion.div>
@@ -214,7 +214,7 @@ const ScrollItemImage = ({ index, totalItems, scrollYProgress, img, isLight, isB
                     {/* Element B: Floating Geometric (Dense Cone/Icosa) */}
                     <motion.div
                         style={{ y: debrisY_Fast, x: 50, rotate: rotateReverse }}
-                        className="absolute -right-16 md:-right-32 top-0 w-32 h-32 md:w-64 md:h-64 z-0 text-cyan-200 mix-blend-screen"
+                        className="absolute -right-16 md:-right-32 top-0 w-32 h-32 md:w-64 md:h-64 z-0 text-cyan-200 opacity-60 will-change-transform"
                     >
                         {index % 2 === 0 ? <DenseWireframeCone className="w-full h-full" /> : <DenseWireframeIcosa className="w-full h-full" />}
                     </motion.div>
@@ -222,7 +222,7 @@ const ScrollItemImage = ({ index, totalItems, scrollYProgress, img, isLight, isB
                     {/* Element C: Small Satellite - Counter movement */}
                     <motion.div
                         style={{ y: debrisY_Reverse, x: -40 }}
-                        className="absolute -left-4 md:-left-10 bottom-4 md:bottom-10 w-20 h-20 md:w-32 md:h-32 z-30 text-purple-300 mix-blend-screen"
+                        className="absolute -left-4 md:-left-10 bottom-4 md:bottom-10 w-20 h-20 md:w-32 md:h-32 z-30 text-purple-300 opacity-60 will-change-transform"
                     >
                         <DenseWireframeIcosa className="w-full h-full" />
                     </motion.div>
@@ -267,8 +267,9 @@ const StickySplitBlock: React.FC<StickySplitBlockProps> = ({ data }) => {
     const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
 
     // Physics tuned for an optimal balance of responsiveness and smoothness
+    // Increased stiffness and damping to prevent long-tail physics calculations that cause stutter
     const smoothProgress = useSpring(scrollYProgress, {
-        stiffness: 100, damping: 30, restDelta: 0.001
+        stiffness: 200, damping: 40, restDelta: 0.001
     });
 
     const itemCount = data.values_list?.length || 0;
@@ -301,7 +302,7 @@ const StickySplitBlock: React.FC<StickySplitBlockProps> = ({ data }) => {
 
                 {/* Floating Images Layer */}
                 {!isBackgroundMode && images.map((img, idx) => (
-                    <div key={idx} className="absolute inset-0 w-full h-full pointer-events-none z-20 mix-blend-screen">
+                    <div key={idx} className="absolute inset-0 w-full h-full pointer-events-none z-20 will-change-transform">
                         <ScrollItemImage
                             index={idx}
                             totalItems={itemCount}
