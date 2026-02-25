@@ -10,6 +10,7 @@ import * as THREE from "three";
 
 const vertexShader = `
 uniform float uTime;
+uniform vec2 uMouse;
 varying vec3 vPos;
 
 void main() {
