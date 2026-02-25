@@ -66,7 +66,7 @@ export default function AtmosphericBackground() {
 
             {/* Parallax Stars/Dots Layer 1 (Slow) */}
             <motion.div style={{ y: y2, opacity: isVisible ? 1 : 0 }} className="absolute inset-0 atmospheric-stars transition-opacity duration-700 ease-in-out">
-                {stars.slow.map((star, i) => (
+                {isVisible && stars.slow.map((star, i) => (
                     <div
                         key={`star-slow-${i}`}
                         className="absolute bg-white rounded-full"
@@ -83,7 +83,7 @@ export default function AtmosphericBackground() {
 
             {/* Parallax Stars/Dots Layer 2 (Fast) */}
             <motion.div style={{ y: y1, opacity: isVisible ? 1 : 0 }} className="absolute inset-0 atmospheric-stars transition-opacity duration-700 ease-in-out">
-                {stars.fast.map((star, i) => (
+                {isVisible && stars.fast.map((star, i) => (
                     <div
                         key={`star-fast-${i}`}
                         className="absolute bg-white rounded-full"

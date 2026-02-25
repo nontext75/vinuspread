@@ -16,19 +16,15 @@ varying vec3 vPos;
 void main() {
     vec3 pos = position;
     
-    // Distance from the exact center (origin)
-    float dist = length(pos.xz);
-    
     // 1. Primary Ripple 
-    float ripple = sin(-dist * 1.5 + uTime * 2.5) * 6.0;
+    float ripple = sin(-dist * 1.5 + uTime * 2.5) * 2.5;
     
     // 2. Secondary slow standing wave
-    float wave = sin(pos.x * 0.4 + uTime * 1.5) * 1.5 + cos(pos.z * 0.3 + uTime * 1.0) * 1.5;
+    float wave = sin(pos.x * 0.4 + uTime * 1.5) * 0.8 + cos(pos.z * 0.3 + uTime * 1.0) * 0.8;
 
     // 3. Mouse Interaction (Direct repel effect based on distance)
-    // uMouse is mapped roughly from -10 to 10 in world space
     float mouseDist = length(pos.xz - uMouse);
-    float repel = smoothstep(12.0, 0.0, mouseDist) * 8.0; // Pushes points UP when mouse is near
+    float repel = smoothstep(12.0, 0.0, mouseDist) * 3.5; // Pushes points UP when mouse is near
 
     pos.y = ripple + wave + repel;
     
@@ -36,7 +32,7 @@ void main() {
     
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
     
-    gl_PointSize = (3000.0 / -mvPosition.z); 
+    gl_PointSize = (1500.0 / -mvPosition.z); 
     gl_Position = projectionMatrix * mvPosition;
 }
 `;
@@ -52,8 +48,8 @@ void main() {
     
     float alpha = 1.0 - smoothstep(0.3, 1.0, r); 
     
-    // 2. Normalize height for coloring (approx -6 to 6)
-    float h = (vPos.y + 6.0) / 12.0;
+    // 2. Normalize height for coloring (approx -3 to 3 based on new amplitudes)
+    float h = (vPos.y + 3.0) / 6.0;
     h = clamp(h, 0.0, 1.0);
     
     // 3. Vibrant Diverse Color Palette

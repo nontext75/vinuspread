@@ -3,7 +3,6 @@
 import { usePathname } from 'next/navigation';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import AtmosphericBackground from "@/components/ui/AtmosphericBackground";
 import CursorParticleSystem from "@/components/ui/CursorParticleSystem";
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
@@ -19,7 +18,6 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         <>
             {isHome && (
                 <>
-                    <AtmosphericBackground />
                     <CursorParticleSystem />
                 </>
             )}
