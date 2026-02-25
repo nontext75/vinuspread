@@ -2,6 +2,7 @@
 
 import React, { useMemo, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
+import { Html } from "@react-three/drei";
 import * as THREE from "three";
 
 // ----------------------------------------------------------------------
@@ -84,7 +85,13 @@ void main() {
 }
 `;
 
-const DataRipple = () => {
+const DataRipple = ({
+    numRingsMultiplier = 1.0,
+    baseSpacingMultiplier = 1.0
+}: {
+    numRingsMultiplier?: number;
+    baseSpacingMultiplier?: number;
+}) => {
     const pointsRef = useRef<THREE.Points>(null);
     const materialRef = useRef<THREE.ShaderMaterial>(null);
     const { viewport, pointer } = useThree();
@@ -94,11 +101,13 @@ const DataRipple = () => {
 
     const { positions } = useMemo(() => {
         // Number of concentric rings
-        // Reduced to focus more tightly on the center
-        const numRings = isMobile ? 60 : 100;
+        // Reduced to focus more tightly on the center, modulated by user slider
+        const baseRings = isMobile ? 60 : 100;
+        const numRings = Math.floor(baseRings * numRingsMultiplier);
 
         // Base spacing multiplier - keeps the center dense but shrinks overall size
-        const baseSpacing = 0.06;
+        // Modulated by user slider
+        const baseSpacing = 0.06 * baseSpacingMultiplier;
 
         const posArray: number[] = [];
 
@@ -134,7 +143,7 @@ const DataRipple = () => {
         return {
             positions: new Float32Array(posArray)
         };
-    }, [isMobile]);
+    }, [isMobile, numRingsMultiplier, baseSpacingMultiplier]);
 
     const uniforms = useMemo(() => ({
         uTime: { value: 0 },
@@ -172,16 +181,10 @@ const DataRipple = () => {
         // Map pointer to world coordinates (roughly)
         uniforms.uMouse.value.set(pointer.x * 20, pointer.y * -20);
 
-        // Very slow, majestic overarching rotation
-        pointsRef.current.rotation.y = state.clock.getElapsedTime() * 0.03;
-
-        // Subtle tilt based on mouse position to give parallax feel
-        // Restored a deeper 3D tilt so it looks like a plate resting on a table, not a flat wall
-        const targetRotX = Math.PI / 3 - (pointer.y * Math.PI) / 8; // Deeper tilt
-        const targetRotZ = (pointer.x * Math.PI) / 10;
-
-        pointsRef.current.rotation.x = THREE.MathUtils.lerp(pointsRef.current.rotation.x, targetRotX, 0.05);
-        pointsRef.current.rotation.z = THREE.MathUtils.lerp(pointsRef.current.rotation.z, targetRotZ, 0.05);
+        // Fixed static tilt as requested by user - no overall movement or parallax
+        pointsRef.current.rotation.x = Math.PI / 2.5;
+        pointsRef.current.rotation.y = 0;
+        pointsRef.current.rotation.z = 0;
     });
 
     return (
@@ -209,9 +212,44 @@ const DataRipple = () => {
 };
 
 const DebrisScene = () => {
+    const [density, setDensity] = React.useState(1.0);     // Controls numRingsMultiplier
+    const [spread, setSpread] = React.useState(1.0);       // Controls baseSpacingMultiplier
+
     return (
         <group>
-            <DataRipple />
+            <DataRipple numRingsMultiplier={density} baseSpacingMultiplier={spread} />
+
+            {/* HTML Overlay for Sliders */}
+            <Html as="div" prepend fullscreen style={{ pointerEvents: 'none' }}>
+                <div className="absolute bottom-10 left-10 p-6 bg-black/80 backdrop-blur-md border border-white/20 rounded-2xl flex flex-col gap-6 text-white pointer-events-auto shadow-2xl z-50 min-w-[300px]" style={{ zIndex: 99999 }}>
+                    <div>
+                        <div className="flex justify-between mb-2">
+                            <label className="text-xs font-mono text-white/60 tracking-wider">RING COUNT (DENSITY)</label>
+                            <span className="text-xs font-mono">{density.toFixed(2)}x</span>
+                        </div>
+                        <input
+                            type="range"
+                            min="0.2" max="2.0" step="0.05"
+                            value={density}
+                            onChange={(e) => setDensity(parseFloat(e.target.value))}
+                            className="w-full accent-white"
+                        />
+                    </div>
+                    <div>
+                        <div className="flex justify-between mb-2">
+                            <label className="text-xs font-mono text-white/60 tracking-wider">BASE SPACING (SPREAD)</label>
+                            <span className="text-xs font-mono">{spread.toFixed(2)}x</span>
+                        </div>
+                        <input
+                            type="range"
+                            min="0.5" max="3.0" step="0.05"
+                            value={spread}
+                            onChange={(e) => setSpread(parseFloat(e.target.value))}
+                            className="w-full accent-white"
+                        />
+                    </div>
+                </div>
+            </Html>
         </group>
     );
 };
