@@ -133,7 +133,9 @@
 /* Hide atmospheric stars globally for specific visuals (e.g., Debris Mode) */
 body.hide-stars .atmospheric-stars {
   opacity: 0 !important;
-  transition: opacity 0.5s ease-out;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  display: none !important;
 }
 
 .atmospheric-stars {

@@ -22,10 +22,10 @@ void main() {
     
     // 1. Primary Ripple (moves outward from center)
     // The negative dist makes the wave travel outwards from the center.
-    float ripple = sin(-dist * 1.5 + uTime * 2.5) * 0.5;
+    float ripple = sin(-dist * 1.2 + uTime * 2.5) * 1.5;
     
     // 2. Secondary slow standing wave for an organic, slightly chaotic feel
-    float wave = sin(pos.x * 0.6 + uTime * 1.2) * 0.15 + cos(pos.z * 0.4 + uTime * 0.8) * 0.15;
+    float wave = sin(pos.x * 0.4 + uTime * 1.5) * 0.4 + cos(pos.z * 0.3 + uTime * 1.0) * 0.4;
     
     // 3. Mouse Interaction (Subtle depression where the mouse hovers over the plane)
     // Convert UV to rough world space for mouse interaction
@@ -40,7 +40,8 @@ void main() {
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
     
     // Perspective scale for point size (closer dots are larger)
-    gl_PointSize = (30.0 / -mvPosition.z); 
+    // Increased significantly from 30.0 to 1200.0 so they are clearly visible
+    gl_PointSize = (1200.0 / -mvPosition.z); 
     gl_Position = projectionMatrix * mvPosition;
 }
 `;
@@ -60,8 +61,8 @@ void main() {
     float alpha = 1.0 - smoothstep(0.3, 1.0, r); 
     
     // 2. Color gradient based on the wave elevation (Y height)
-    // Mapping elevation approx -0.8 to 0.8
-    float mixFactor = smoothstep(-0.4, 0.4, vElevation);
+    // Mapping elevation approx -2.0 to 2.0
+    float mixFactor = smoothstep(-1.5, 1.5, vElevation);
     
     vec3 color = mix(uColorBase, uColorHighlight, mixFactor);
     
@@ -129,8 +130,9 @@ const DataRipple = () => {
         pointsRef.current.rotation.y = state.clock.getElapsedTime() * 0.03;
 
         // Subtle tilt based on mouse position to give parallax feel
-        const targetRotX = Math.PI / 3 - (pointer.y * Math.PI) / 24; // Base tilt is PI/3
-        const targetRotZ = (pointer.x * Math.PI) / 24;
+        // Exaggerated influence
+        const targetRotX = Math.PI / 3 - (pointer.y * Math.PI) / 8; // Base tilt is PI/3
+        const targetRotZ = (pointer.x * Math.PI) / 8;
 
         pointsRef.current.rotation.x = THREE.MathUtils.lerp(pointsRef.current.rotation.x, targetRotX, 0.05);
         pointsRef.current.rotation.z = THREE.MathUtils.lerp(pointsRef.current.rotation.z, targetRotZ, 0.05);
@@ -144,9 +146,7 @@ const DataRipple = () => {
                 <bufferGeometry>
                     <bufferAttribute
                         attach="attributes-position"
-                        count={positions.length / 3}
-                        array={positions}
-                        itemSize={3}
+                        args={[positions, 3]}
                     />
                 </bufferGeometry>
                 <shaderMaterial
