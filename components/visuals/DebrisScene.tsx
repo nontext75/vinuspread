@@ -10,9 +10,7 @@ import * as THREE from "three";
 
 const vertexShader = `
 uniform float uTime;
-uniform vec2 uMouse;
-
-varying float vElevation;
+varying vec3 vPos;
 
 void main() {
     vec3 pos = position;
@@ -20,59 +18,59 @@ void main() {
     // Distance from the exact center (origin)
     float dist = length(pos.xz);
     
-    // 1. Primary Ripple (moves outward from center)
-    // The negative dist makes the wave travel outwards from the center.
-    // Extremely exaggerated multiplier (5.0) to counteract the flat FOV compression 
-    float ripple = sin(-dist * 1.5 + uTime * 2.5) * 5.0;
+    // 1. Primary Ripple 
+    float ripple = sin(-dist * 1.5 + uTime * 2.5) * 6.0;
     
-    // 2. Secondary slow standing wave for an organic, slightly chaotic feel
-    float wave = sin(pos.x * 0.4 + uTime * 1.5) * 1.2 + cos(pos.z * 0.3 + uTime * 1.0) * 1.2;
-    
-    // 3. Mouse Interaction (Subtle depression where the mouse hovers over the plane)
-    // Convert UV to rough world space for mouse interaction
-    float mouseInfluence = 0.0;
-    // Since camera is looking from Z=200 down to Z=0, UV/Mouse coordinates can be mapped to XY plane,
-    // which corresponds to heavily rotated XZ plane. We will use a simplified uniform for this.
+    // 2. Secondary slow standing wave
+    float wave = sin(pos.x * 0.4 + uTime * 1.5) * 1.5 + cos(pos.z * 0.3 + uTime * 1.0) * 1.5;
 
-    pos.y = ripple + wave;
+    // 3. Mouse Interaction (Direct repel effect based on distance)
+    // uMouse is mapped roughly from -10 to 10 in world space
+    float mouseDist = length(pos.xz - uMouse);
+    float repel = smoothstep(12.0, 0.0, mouseDist) * 8.0; // Pushes points UP when mouse is near
+
+    pos.y = ripple + wave + repel;
     
-    vElevation = pos.y; // Pass elevation to fragment for color coding
+    vPos = pos; 
     
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
     
-    // Perspective scale for point size (closer dots are larger)
-    // Increased significantly from 30.0 to 3000.0 so they look like distinct glowing spheres
     gl_PointSize = (3000.0 / -mvPosition.z); 
     gl_Position = projectionMatrix * mvPosition;
 }
 `;
 
 const fragmentShader = `
-uniform vec3 uColorBase;
-uniform vec3 uColorHighlight;
-varying float vElevation;
+varying vec3 vPos;
 
 void main() {
-    // 1. Make the points perfectly circular with a soft glow edge
+    // 1. Circular Soft Glow points
     vec2 cxy = 2.0 * gl_PointCoord - 1.0;
     float r = dot(cxy, cxy);
-    if (r > 1.0) discard; // Crop to circle
+    if (r > 1.0) discard; 
     
-    // Very soft glowing edge
     float alpha = 1.0 - smoothstep(0.3, 1.0, r); 
     
-    // 2. Color gradient based on the wave elevation (Y height)
-    // Mapping elevation approx -6.0 to 6.0 based on new 5.0x amplitude
-    float mixFactor = smoothstep(-4.5, 4.5, vElevation);
+    // 2. Normalize height for coloring (approx -6 to 6)
+    float h = (vPos.y + 6.0) / 12.0;
+    h = clamp(h, 0.0, 1.0);
     
-    vec3 color = mix(uColorBase, uColorHighlight, mixFactor);
+    // 3. Vibrant Diverse Color Palette
+    vec3 c1 = vec3(0.0, 0.7, 1.0); // Neon Cyan (Lowest valleys)
+    vec3 c2 = vec3(0.5, 0.0, 1.0); // Deep Purple
+    vec3 c3 = vec3(1.0, 0.0, 0.5); // Hot Pink
+    vec3 c4 = vec3(1.0, 0.8, 0.0); // Electric Yellow (Highest peaks)
     
-    // Add bright white core to dots (highest points get slightly brighter cores)
+    // Multi-stop gradient calculation
+    vec3 color = mix(c1, c2, smoothstep(0.0, 0.33, h));
+    color = mix(color, c3, smoothstep(0.33, 0.66, h));
+    color = mix(color, c4, smoothstep(0.66, 1.0, h));
+    
+    // Core Brightness
     float core = 1.0 - smoothstep(0.0, 0.2, r);
-    color += core * (mixFactor * 0.5 + 0.2); 
+    color += core * 0.6; 
     
-    // Multiply alpha by baseline transparency to keep it looking like data
-    gl_FragColor = vec4(color, alpha * 0.85);
+    gl_FragColor = vec4(color, alpha * 0.95);
 }
 `;
 
@@ -118,14 +116,15 @@ const DataRipple = () => {
     const uniforms = useMemo(() => ({
         uTime: { value: 0 },
         uMouse: { value: new THREE.Vector2(0, 0) },
-        uColorBase: { value: new THREE.Color("#16324f") },       // Deep muted navy/cyan
-        uColorHighlight: { value: new THREE.Color("#99e6ff") }   // Bright glowing cyan/white, matching the reference
     }), []);
 
     useFrame((state) => {
         if (!materialRef.current || !pointsRef.current) return;
 
         uniforms.uTime.value = state.clock.getElapsedTime();
+
+        // Map pointer to world coordinates (roughly) for the shader
+        uniforms.uMouse.value.set(pointer.x * 20, pointer.y * -20);
 
         // Very slow, majestic overarching rotation
         pointsRef.current.rotation.y = state.clock.getElapsedTime() * 0.03;
