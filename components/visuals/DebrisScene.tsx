@@ -71,8 +71,16 @@ void main() {
     float core = 1.0 - smoothstep(0.0, 0.2, r);
     color += core * (contrastH * 1.5); // Core is brightest only on the peaks
     
+    // 3. Radial fade out towards the edges (keeps it focused in the center)
+    // Adjust the raw radius distance to control where the fade starts and ends
+    float distFromCenter = length(vPos.xz) / 15.0; // 15.0 is roughly the targeted max radius
+    float edgeFade = 1.0 - smoothstep(0.4, 0.9, distFromCenter);
+    
+    // Combine base dot alpha with the overall edge fade
+    float finalAlpha = alpha * edgeFade;
+
     // Overall transparency multiplier to keep it looking like data/hologram
-    gl_FragColor = vec4(color, alpha * 0.8);
+    gl_FragColor = vec4(color, finalAlpha * 0.85);
 }
 `;
 
@@ -86,11 +94,11 @@ const DataRipple = () => {
 
     const { positions } = useMemo(() => {
         // Number of concentric rings
-        // Increase total rings to compensate for denser core
-        const numRings = isMobile ? 80 : 150;
+        // Reduced to focus more tightly on the center
+        const numRings = isMobile ? 60 : 100;
 
-        // Base spacing multiplier - tightened significantly to form a solid "plate"
-        const baseSpacing = 0.08;
+        // Base spacing multiplier - keeps the center dense but shrinks overall size
+        const baseSpacing = 0.06;
 
         const posArray: number[] = [];
 
@@ -168,8 +176,8 @@ const DataRipple = () => {
         pointsRef.current.rotation.y = state.clock.getElapsedTime() * 0.03;
 
         // Subtle tilt based on mouse position to give parallax feel
-        // Flattened tilt heavily to look like a plate/liquid surface
-        const targetRotX = Math.PI / 2.5 - (pointer.y * Math.PI) / 10; // Flatter base tilt
+        // Restored a deeper 3D tilt so it looks like a plate resting on a table, not a flat wall
+        const targetRotX = Math.PI / 3 - (pointer.y * Math.PI) / 8; // Deeper tilt
         const targetRotZ = (pointer.x * Math.PI) / 10;
 
         pointsRef.current.rotation.x = THREE.MathUtils.lerp(pointsRef.current.rotation.x, targetRotX, 0.05);

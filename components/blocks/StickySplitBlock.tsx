@@ -267,9 +267,9 @@ const StickySplitBlock: React.FC<StickySplitBlockProps> = ({ data }) => {
     const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
 
     // Physics tuned for an optimal balance of responsiveness and smoothness
-    // Increased stiffness and damping to prevent long-tail physics calculations that cause stutter
+    // Softened stiffness and damping to remove "catchy/stiff" (딱딱 걸리는) feeling
     const smoothProgress = useSpring(scrollYProgress, {
-        stiffness: 200, damping: 40, restDelta: 0.001
+        stiffness: 50, damping: 20, mass: 1, restDelta: 0.001
     });
 
     const itemCount = data.values_list?.length || 0;
