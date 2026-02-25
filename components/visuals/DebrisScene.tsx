@@ -35,7 +35,7 @@ void main() {
     
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
     
-    gl_PointSize = (1500.0 / -mvPosition.z); 
+    gl_PointSize = (800.0 / -mvPosition.z); 
     gl_Position = projectionMatrix * mvPosition;
 }
 `;
@@ -82,9 +82,9 @@ const DataRipple = () => {
 
     const { positions } = useMemo(() => {
         // Number of concentric rings
-        const numRings = isMobile ? 30 : 60;
+        const numRings = isMobile ? 25 : 45;
         // Spacing between each ring
-        const ringSpacing = 1.2;
+        const ringSpacing = 1.0;
 
         const posArray: number[] = [];
 
