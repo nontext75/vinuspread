@@ -65,94 +65,9 @@ const ScrollItem = ({
 };
 
 // ----------------------------------------------------------------------
-// 3. HYPER-DENSE WIREFRAME SHAPES (SVG COMPONENTS)
+// 3. (REMOVED) HYPER-DENSE WIREFRAME SHAPES 
+// Performance Root Cause: SVG redraws during scroll
 // ----------------------------------------------------------------------
-
-const DenseWireframeTorus = ({ className }: { className?: string }) => {
-    // Generate Torus Grid Paths - HYPER DENSITY
-    const paths = useMemo(() => {
-        const elements = [];
-        // Longitudinal rings (circling the hole)
-        for (let i = 0; i < 12; i++) { // Reduced 48 -> 12 for performance
-            const rotation = i * 30;
-            elements.push(
-                <ellipse key={`ring-${i}`} cx="50" cy="50" rx="42" ry="12"
-                    transform={`rotate(${rotation} 50 50)`}
-                    className="opacity-20" vectorEffect="non-scaling-stroke" />
-            );
-        }
-        // Latitudinal rings (concentric)
-        for (let j = 0; j < 4; j++) { // Reduced 12 -> 4 for performance
-            const rx = 15 + (j * 7.5);
-            const ry = 5 + (j * 3);
-            elements.push(
-                <ellipse key={`conc-${j}`} cx="50" cy="50" rx={rx} ry={ry}
-                    className="opacity-30" vectorEffect="non-scaling-stroke" />
-            );
-        }
-        return elements;
-    }, []);
-
-    return (
-        <svg viewBox="0 0 100 100" className={className} style={{ fill: 'none', stroke: 'currentColor', strokeWidth: 0.1 }}>
-            {paths}
-        </svg>
-    );
-};
-
-const DenseWireframeCone = ({ className }: { className?: string }) => {
-    // Generate Cone Grid Paths - HYPER DENSITY
-    const paths = useMemo(() => {
-        const elements = [];
-        // Vertical Meridians
-        for (let i = 0; i < 12; i++) { // Reduced 40 -> 12 for performance
-            const xBase = 5 + (i * 7.5);
-            elements.push(
-                <line key={`v-${i}`} x1="50" y1="5" x2={xBase} y2="95" className="opacity-30" vectorEffect="non-scaling-stroke" />
-            );
-        }
-        // Horizontal Parallels
-        for (let j = 0; j < 10; j++) { // Reduced 30 -> 10 for performance
-            const y = 95 - (j * 9);
-            const width = 45 * (y / 95);
-            const height = 12 * (y / 95);
-            elements.push(
-                <ellipse key={`h-${j}`} cx="50" cy={y} rx={width} ry={height} className="opacity-40" vectorEffect="non-scaling-stroke" />
-            );
-        }
-        return elements;
-    }, []);
-
-    return (
-        <svg viewBox="0 0 100 100" className={className} style={{ fill: 'none', stroke: 'currentColor', strokeWidth: 0.15 }}>
-            {paths}
-        </svg>
-    );
-};
-
-const DenseWireframeIcosa = ({ className }: { className?: string }) => (
-    <svg viewBox="0 0 100 100" className={className} style={{ fill: 'none', stroke: 'currentColor', strokeWidth: 0.2 }}>
-        {/* Outer Hexagon */}
-        <polygon points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" className="opacity-60" />
-        {/* Lattice Pattern filled in */}
-        {[...Array(10)].map((_, i) => (
-            <line key={`l1-${i}`} x1={5 + i * 5} y1="27.5" x2={50 + i * 5} y2="5" className="opacity-20" />
-        ))}
-        {/* Inner Connections (Triangulation) */}
-        <line x1="50" y1="5" x2="50" y2="50" className="opacity-40" />
-        <line x1="95" y1="27.5" x2="50" y2="50" className="opacity-40" />
-        <line x1="95" y1="72.5" x2="50" y2="50" className="opacity-40" />
-        <line x1="50" y1="95" x2="50" y2="50" className="opacity-40" />
-        <line x1="5" y1="72.5" x2="50" y2="50" className="opacity-40" />
-        <line x1="5" y1="27.5" x2="50" y2="50" className="opacity-40" />
-        {/* Cross connections */}
-        <line x1="27.5" y1="16" x2="72.5" y2="84" className="opacity-20" />
-        <line x1="72.5" y1="16" x2="27.5" y2="84" className="opacity-20" />
-        {/* More internal details */}
-        <circle cx="50" cy="50" r="20" className="opacity-10" />
-        <circle cx="50" cy="50" r="10" className="opacity-10" />
-    </svg>
-);
 
 // ----------------------------------------------------------------------
 // 4. MAIN IMAGE COMPONENT (WITH DEBRIS)
@@ -200,32 +115,30 @@ const ScrollItemImage = ({ index, totalItems, scrollYProgress, img, isLight, isB
             }}
             className={currentStyle}
         >
-            {/* --- 1. COMPLEX SATELLITE SYSTEM (Layered Wireframes) --- */}
+            {/* --- 1. LIGHTWEIGHT SATELLITE SYSTEM (CSS Only) --- */}
             {!isBackgroundMode && (
                 <>
-                    {/* Element A: Big Wireframe Ring (Dense Torus) */}
+                    {/* Element A: Glowing Aura */}
                     <motion.div
-                        style={{ rotate: rotate, y: debrisY_Slow }}
-                        className="absolute inset-[-40%] z-0 text-white will-change-transform"
-                    >
-                        <DenseWireframeTorus className="w-full h-full" />
-                    </motion.div>
+                        className="absolute inset-[-40%] z-0 rounded-full border border-white/10 opacity-50 will-change-transform"
+                        style={{
+                            rotate: rotate,
+                            y: debrisY_Slow,
+                            boxShadow: 'inset 0 0 50px rgba(255,255,255,0.05), 0 0 100px rgba(255,255,255,0.05)'
+                        }}
+                    />
 
-                    {/* Element B: Floating Geometric (Dense Cone/Icosa) */}
+                    {/* Element B: Floating Ring */}
                     <motion.div
                         style={{ y: debrisY_Fast, x: 50, rotate: rotateReverse }}
-                        className="absolute -right-16 md:-right-32 top-0 w-32 h-32 md:w-64 md:h-64 z-0 text-cyan-200 opacity-60 will-change-transform"
-                    >
-                        {index % 2 === 0 ? <DenseWireframeCone className="w-full h-full" /> : <DenseWireframeIcosa className="w-full h-full" />}
-                    </motion.div>
+                        className="absolute -right-16 md:-right-32 top-0 w-32 h-32 md:w-64 md:h-64 z-0 rounded-full border-[0.5px] border-cyan-200/30 border-dashed will-change-transform"
+                    />
 
-                    {/* Element C: Small Satellite - Counter movement */}
+                    {/* Element C: Small Satellite Ring */}
                     <motion.div
                         style={{ y: debrisY_Reverse, x: -40 }}
-                        className="absolute -left-4 md:-left-10 bottom-4 md:bottom-10 w-20 h-20 md:w-32 md:h-32 z-30 text-purple-300 opacity-60 will-change-transform"
-                    >
-                        <DenseWireframeIcosa className="w-full h-full" />
-                    </motion.div>
+                        className="absolute -left-4 md:-left-10 bottom-4 md:bottom-10 w-20 h-20 md:w-32 md:h-32 z-30 rounded-full border-[0.5px] border-purple-300/30 will-change-transform"
+                    />
                 </>
             )}
 
