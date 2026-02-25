@@ -1,234 +1,107 @@
 "use client";
 
-import React, { useRef, useMemo } from "react";
+import React, { useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { Icosahedron } from "@react-three/drei";
+import { Float, MeshDistortMaterial } from "@react-three/drei";
 
 // ----------------------------------------------------------------------
-// 1. SHADERS (Custom GLSL for abstract fluid shape)
-// ----------------------------------------------------------------------
-
-const vertexShader = `
-  uniform float u_time;
-  uniform vec2 u_mouse;
-  
-  varying vec2 vUv;
-  varying vec3 vNormal;
-  varying vec3 vPosition;
-
-  // Classic Perlin 3D Noise 
-  // by Stefan Gustavson
-  vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
-  vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
-
-  float cnoise(vec3 P){
-    vec3 Pi0 = floor(P); // Integer part for indexing
-    vec3 Pi1 = Pi0 + vec3(1.0); // Integer part + 1
-    Pi0 = mod(Pi0, 289.0);
-    Pi1 = mod(Pi1, 289.0);
-    vec3 Pf0 = fract(P); // Fractional part for interpolation
-    vec3 Pf1 = Pf0 - vec3(1.0); // Fractional part - 1.0
-    vec4 ix = vec4(Pi0.x, Pi1.x, Pi0.x, Pi1.x);
-    vec4 iy = vec4(Pi0.yy, Pi1.yy);
-    vec4 iz0 = Pi0.zzzz;
-    vec4 iz1 = Pi1.zzzz;
-
-    vec4 ixy = permute(permute(ix) + iy);
-    vec4 ixy0 = permute(ixy + iz0);
-    vec4 ixy1 = permute(ixy + iz1);
-
-    vec4 gx0 = ixy0 / 7.0;
-    vec4 gy0 = fract(floor(gx0) / 7.0) - 0.5;
-    gx0 = fract(gx0);
-    vec4 gz0 = vec4(0.5) - abs(gx0) - abs(gy0);
-    vec4 sz0 = step(gz0, vec4(0.0));
-    gx0 -= sz0 * (step(0.0, gx0) - 0.5);
-    gy0 -= sz0 * (step(0.0, gy0) - 0.5);
-
-    vec4 gx1 = ixy1 / 7.0;
-    vec4 gy1 = fract(floor(gx1) / 7.0) - 0.5;
-    gx1 = fract(gx1);
-    vec4 gz1 = vec4(0.5) - abs(gx1) - abs(gy1);
-    vec4 sz1 = step(gz1, vec4(0.0));
-    gx1 -= sz1 * (step(0.0, gx1) - 0.5);
-    gy1 -= sz1 * (step(0.0, gy1) - 0.5);
-
-    vec3 g000 = vec3(gx0.x,gy0.x,gz0.x);
-    vec3 g100 = vec3(gx0.y,gy0.y,gz0.y);
-    vec3 g010 = vec3(gx0.z,gy0.z,gz0.z);
-    vec3 g110 = vec3(gx0.w,gy0.w,gz0.w);
-    vec3 g001 = vec3(gx1.x,gy1.x,gz1.x);
-    vec3 g101 = vec3(gx1.y,gy1.y,gz1.y);
-    vec3 g011 = vec3(gx1.z,gy1.z,gz1.z);
-    vec3 g111 = vec3(gx1.w,gy1.w,gz1.w);
-
-    vec4 norm0 = taylorInvSqrt(vec4(dot(g000, g000), dot(g010, g010), dot(g100, g100), dot(g110, g110)));
-    g000 *= norm0.x;
-    g010 *= norm0.y;
-    g100 *= norm0.z;
-    g110 *= norm0.w;
-    vec4 norm1 = taylorInvSqrt(vec4(dot(g001, g001), dot(g011, g011), dot(g101, g101), dot(g111, g111)));
-    g001 *= norm1.x;
-    g011 *= norm1.y;
-    g101 *= norm1.z;
-    g111 *= norm1.w;
-
-    float n000 = dot(g000, Pf0);
-    float n100 = dot(g100, vec3(Pf1.x, Pf0.yz));
-    float n010 = dot(g010, vec3(Pf0.x, Pf1.y, Pf0.z));
-    float n110 = dot(g110, vec3(Pf1.xy, Pf0.z));
-    float n001 = dot(g001, vec3(Pf0.xy, Pf1.z));
-    float n101 = dot(g101, vec3(Pf1.x, Pf0.y, Pf1.z));
-    float n011 = dot(g011, vec3(Pf0.x, Pf1.yz));
-    float n111 = dot(g111, Pf1);
-
-    vec3 fade_xyz = Pf0 * Pf0 * Pf0 * (Pf0 * (Pf0 * 6.0 - 15.0) + 10.0);
-    vec4 n_z = mix(vec4(n000, n100, n010, n110), vec4(n001, n101, n011, n111), fade_xyz.z);
-    vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);
-    float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x); 
-    return 2.2 * n_xyz;
-  }
-
-  void main() {
-    vUv = uv;
-    vNormal = normal;
-
-    // Displacement by noise creating the fluid blob shape
-    // u_time modulates over time to make it crawl
-    float noise = cnoise(position * 2.0 + u_time * 0.4);
-    
-    // Add interaction by reacting to mouse uniform
-    // Bulge towards the mouse position
-    float mouseDistance = distance(uv, u_mouse);
-    float mouseInfluence = smoothstep(0.6, 0.0, mouseDistance) * 0.6;
-    
-    noise += mouseInfluence; // Add bulge where pointer is
-
-    vec3 newPosition = position + normal * (noise * 0.5);
-    vPosition = newPosition; // Pass deformed position to fragment shader
-
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
-  }
-`;
-
-const fragmentShader = `
-  uniform float u_time;
-  varying vec2 vUv;
-  varying vec3 vNormal;
-  varying vec3 vPosition;
-
-  void main() {
-    // Elegant Bright Gradients
-    vec3 colorTop = vec3(1.0, 0.4, 0.3);    // Vibrant Orange/Pink
-    vec3 colorMiddle = vec3(0.8, 0.3, 0.8); // Purple
-    vec3 colorBottom = vec3(0.3, 0.6, 1.0); // Bright Blue
-    
-    // Mix them based on the y-position and some noise from the mesh displacement
-    float mix1 = smoothstep(-1.0, 0.5, vPosition.y);
-    float mix2 = smoothstep(0.0, 1.5, vPosition.y);
-
-    vec3 gradientCol = mix(colorBottom, colorMiddle, mix1);
-    gradientCol = mix(gradientCol, colorTop, mix2);
-    
-    // Fake lighting / Shading to give it volume and that 'Cinema 4D' matte textile look
-    vec3 lightDirection = normalize(vec3(1.0, 1.0, 2.0));
-    float diff = max(dot(vNormal, lightDirection), 0.0);
-    
-    // Ambient color lift to keep shadows colorful, not pure black
-    vec3 ambient = vec3(0.1, 0.1, 0.2); 
-    
-    // Specular highlight for the 'shimmering effect'
-    vec3 viewDir = normalize(cameraPosition - vPosition);
-    vec3 halfDir = normalize(lightDirection + viewDir);
-    float spec = pow(max(dot(vNormal, halfDir), 0.0), 32.0);
-
-    vec3 finalColor = gradientCol * (diff * 0.8 + 0.4) + ambient + (spec * 0.15);
-
-    gl_FragColor = vec4(finalColor, 1.0);
-  }
-`;
-
-// ----------------------------------------------------------------------
-// 2. THE FLUID BLOB COMPONENT
+// 1. HIGH-END CINEMA 4D STYLE FLUID BLOB
 // ----------------------------------------------------------------------
 
 const FluidBlob = () => {
     const meshRef = useRef<THREE.Mesh>(null);
-    const materialRef = useRef<THREE.ShaderMaterial>(null);
-    const { pointer, viewport, camera } = useThree();
+    const { viewport, pointer } = useThree();
 
-    // Responsive sizing
-    const isMobile = viewport.width < 10; // Simple check based on threejs orthogonal space
-    const scale = isMobile ? 3 : 5;
-
-    const uniforms = useMemo(() => ({
-        u_time: { value: 0 },
-        // UV space goes 0 to 1
-        u_mouse: { value: new THREE.Vector2(0.5, 0.5) },
-    }), []);
+    // Scale responsiveness
+    const isMobile = viewport.width < 10;
+    const scale = isMobile ? 1.6 : 3.0; // Increased size slightly to make it more imposing
 
     useFrame((state) => {
-        if (!meshRef.current || !materialRef.current) return;
+        if (!meshRef.current) return;
 
-        // Advance time for noise animation
-        uniforms.u_time.value = state.clock.getElapsedTime();
+        // Gentle organic rotation to showcase all the folds and gradients
+        meshRef.current.rotation.x += 0.0015;
+        meshRef.current.rotation.y += 0.0025;
+        meshRef.current.rotation.z += 0.001;
 
-        // Map mouse pointer (-1 to 1) into UV space roughly (0 to 1)
-        // Lerp for smoothness
-        const targetX = (pointer.x + 1) / 2;
-        const targetY = (pointer.y + 1) / 2;
+        // Interaction: shift position and tilt slightly based on mouse
+        const targetX = pointer.x * 2.5;
+        const targetY = pointer.y * 2.5;
 
-        uniforms.u_mouse.value.x = THREE.MathUtils.lerp(uniforms.u_mouse.value.x, targetX, 0.05);
-        uniforms.u_mouse.value.y = THREE.MathUtils.lerp(uniforms.u_mouse.value.y, targetY, 0.05);
+        // Base X position is offset to the right on Desktop so it doesn't block the big TITLE
+        const baseX = isMobile ? 0 : 5;
 
-        // Slow rotation so the object feels alive from all angles
-        meshRef.current.rotation.y += 0.002;
-        meshRef.current.rotation.x += 0.001;
+        meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, baseX + targetX, 0.03);
+        meshRef.current.position.y = THREE.MathUtils.lerp(meshRef.current.position.y, targetY, 0.03);
 
-        // Reactive parallax tilt based on mouse position
+        // Reactive tilt
         meshRef.current.rotation.y = THREE.MathUtils.lerp(
             meshRef.current.rotation.y,
-            (pointer.x * Math.PI) / 8,
-            0.05
-        );
-        meshRef.current.rotation.x = THREE.MathUtils.lerp(
-            meshRef.current.rotation.x,
-            -(pointer.y * Math.PI) / 8,
+            meshRef.current.rotation.y + (pointer.x * Math.PI) / 12,
             0.05
         );
     });
 
     return (
-        <mesh
-            ref={meshRef}
-            scale={[scale, scale, scale]}
-            position={[isMobile ? 0 : 4, 0, 0]} // Shift slightly right on desktop
-        >
-            {/* Highly tessellated geometry so the displacement noise looks smooth */}
-            <icosahedronGeometry args={[1, 128]} />
-            <shaderMaterial
-                ref={materialRef}
-                vertexShader={vertexShader}
-                fragmentShader={fragmentShader}
-                uniforms={uniforms}
-                wireframe={false}
-                transparent={true}
-            />
-        </mesh>
+        <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
+            <mesh ref={meshRef} scale={[scale, scale, scale]}>
+                {/* 
+                    TorusKnot with a super thick tube relative to its radius creates a 
+                    tightly folded, organic "brain-like" or "cloth-like" cluster.
+                    params: radius, tube, tubularSegments, radialSegments, p, q
+                */}
+                <torusKnotGeometry args={[1.0, 0.85, 512, 128, 3, 5]} />
+
+                {/* 
+                    MeshDistortMaterial gives us the fluid Wobble 
+                    while maintaining PBR physical lighting capabilities 
+                */}
+                <MeshDistortMaterial
+                    color="#f8f9fa"       // Bright base material acts as a canvas for the colored lights
+                    roughness={0.25}      // Low roughness for a silky smooth textile/latex feel
+                    metalness={0.15}      // Slight metalness makes the deep folds catch more saturated colors
+                    distort={0.35}        // Suble wobble distortion so the knot looks like a fluid moving blob
+                    speed={1.5}           // How fast it wobbles
+                    clearcoat={1.0}       // High clearcoat for the "shimmering effect" requested
+                    clearcoatRoughness={0.3}
+                />
+            </mesh>
+        </Float>
     );
 };
 
 // ----------------------------------------------------------------------
-// 3. SCENE WRAPPER
+// 2. CINEMATIC STUDIO LIGHTING SCENE
 // ----------------------------------------------------------------------
 
 const DebrisScene = () => {
     return (
         <group>
-            {/* Environment lighting is mainly handled inside the shader, 
-                but we keep the ambient to match the space */}
-            <ambientLight intensity={0.5} />
+            {/* Soft Ambient to lift pure shadows so they don't go pitch black */}
+            <ambientLight intensity={0.6} color="#ffffff" />
+
+            {/* 
+                We "paint" the white blob with heavily saturated directional lights 
+                to create the stunning gradient effect exactly like a C4D studio render.
+                This is physically-based shading instead of a flat vertex color map.
+            */}
+
+            {/* Top Light Cluster (Vibrant Orange/Pink transitioning into the object) */}
+            <directionalLight position={[0, 10, 5]} color="#ff5000" intensity={15} />
+            <directionalLight position={[5, 8, 2]} color="#ff0066" intensity={12} />
+
+            {/* Middle Fill Lights (Purple/Magenta core) */}
+            <directionalLight position={[-6, 0, 6]} color="#a000ff" intensity={10} />
+            <directionalLight position={[6, 0, 4]} color="#cc00ff" intensity={8} />
+
+            {/* Bottom Light Cluster (Deep Sky Blue / Aqua underbelly) */}
+            <directionalLight position={[0, -10, 5]} color="#0066ff" intensity={15} />
+            <directionalLight position={[-5, -6, -2]} color="#00e5ff" intensity={12} />
+
+            {/* Subtle Backlight for rim glow (separates object from the dark background) */}
+            <directionalLight position={[0, 5, -10]} color="#ffffff" intensity={5} />
+
             <FluidBlob />
         </group>
     );
