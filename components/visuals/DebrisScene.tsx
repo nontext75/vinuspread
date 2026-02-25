@@ -16,6 +16,9 @@ varying vec3 vPos;
 void main() {
     vec3 pos = position;
     
+    // Distance from the exact center (origin)
+    float dist = length(pos.xz);
+    
     // 1. Primary Ripple 
     float ripple = sin(-dist * 1.5 + uTime * 2.5) * 2.5;
     
