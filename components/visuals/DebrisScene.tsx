@@ -91,12 +91,11 @@ void main() {
 `;
 
 const fragmentShader = `
+#extension GL_OES_standard_derivatives : enable
 uniform float uTime;
 varying vec3 vWorldPosition;
 varying vec3 vLocalPosition;
 varying vec3 vNormal; // Fallback normal
-
-#extension GL_OES_standard_derivatives : enable
 
 void main() {
     // 1. CALC TRUE NORMAL FOR GLOSSY REFLECTIONS
@@ -212,7 +211,6 @@ const FluidSculpture = () => {
                     vertexShader={vertexShader}
                     fragmentShader={fragmentShader}
                     uniforms={uniforms}
-                    extensions={{ derivatives: true }}
                     wireframe={false}
                     transparent={true}
                 />
