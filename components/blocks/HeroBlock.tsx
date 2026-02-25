@@ -17,14 +17,10 @@ const HeroBlock: React.FC<HeroBlockProps> = ({ data }) => {
     const titleRef = useRef<HTMLHeadingElement>(null);
     const [visualMode, setVisualMode] = React.useState<'galaxy' | 'orbit' | 'debris'>('galaxy');
 
-    // Toggle global background stars based on visual mode
+    // Reliable custom event for AtmosphericBackground to listen to
     useEffect(() => {
-        if (typeof document !== 'undefined') {
-            if (visualMode === 'debris') {
-                document.body.classList.add('hide-stars');
-            } else {
-                document.body.classList.remove('hide-stars');
-            }
+        if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('visualModeChanged', { detail: visualMode }));
         }
     }, [visualMode]);
 

@@ -22,10 +22,11 @@ void main() {
     
     // 1. Primary Ripple (moves outward from center)
     // The negative dist makes the wave travel outwards from the center.
-    float ripple = sin(-dist * 1.2 + uTime * 2.5) * 1.5;
+    // Extremely exaggerated multiplier (5.0) to counteract the flat FOV compression 
+    float ripple = sin(-dist * 1.5 + uTime * 2.5) * 5.0;
     
     // 2. Secondary slow standing wave for an organic, slightly chaotic feel
-    float wave = sin(pos.x * 0.4 + uTime * 1.5) * 0.4 + cos(pos.z * 0.3 + uTime * 1.0) * 0.4;
+    float wave = sin(pos.x * 0.4 + uTime * 1.5) * 1.2 + cos(pos.z * 0.3 + uTime * 1.0) * 1.2;
     
     // 3. Mouse Interaction (Subtle depression where the mouse hovers over the plane)
     // Convert UV to rough world space for mouse interaction
@@ -40,8 +41,8 @@ void main() {
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
     
     // Perspective scale for point size (closer dots are larger)
-    // Increased significantly from 30.0 to 1200.0 so they are clearly visible
-    gl_PointSize = (1200.0 / -mvPosition.z); 
+    // Increased significantly from 30.0 to 3000.0 so they look like distinct glowing spheres
+    gl_PointSize = (3000.0 / -mvPosition.z); 
     gl_Position = projectionMatrix * mvPosition;
 }
 `;
@@ -61,8 +62,8 @@ void main() {
     float alpha = 1.0 - smoothstep(0.3, 1.0, r); 
     
     // 2. Color gradient based on the wave elevation (Y height)
-    // Mapping elevation approx -2.0 to 2.0
-    float mixFactor = smoothstep(-1.5, 1.5, vElevation);
+    // Mapping elevation approx -6.0 to 6.0 based on new 5.0x amplitude
+    float mixFactor = smoothstep(-4.5, 4.5, vElevation);
     
     vec3 color = mix(uColorBase, uColorHighlight, mixFactor);
     
@@ -141,7 +142,7 @@ const DataRipple = () => {
     return (
         // Initial setup: tilted firmly so the rings lay "flat" but viewed from above-angle
         // Position shifted down slightly so it occupies the lower half of the hero well
-        <group position={[0, isMobile ? -5 : -8, 0]}>
+        <group position={[0, isMobile ? -5 : -12, 0]}>
             <points ref={pointsRef}>
                 <bufferGeometry>
                     <bufferAttribute

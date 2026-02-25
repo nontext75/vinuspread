@@ -7,9 +7,16 @@ export default function AtmosphericBackground() {
     const { scrollY } = useScroll();
     const [pageHeight, setPageHeight] = useState(1000);
     const [stars, setStars] = useState<{ slow: any[], fast: any[] }>({ slow: [], fast: [] });
+    const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
         setPageHeight(document.body.scrollHeight);
+
+        const handleModeChange = (e: any) => {
+            setIsVisible(e.detail !== 'debris');
+        };
+
+        window.addEventListener('visualModeChanged', handleModeChange);
 
         // Generate random stars on client side only to avoid hydration mismatch
         const generateStars = (count: number) => Array.from({ length: count }).map(() => ({
@@ -23,6 +30,8 @@ export default function AtmosphericBackground() {
             slow: generateStars(15),
             fast: generateStars(25) // More stars for depth
         });
+
+        return () => window.removeEventListener('visualModeChanged', handleModeChange);
     }, []);
 
     // Filter Effects
@@ -56,7 +65,7 @@ export default function AtmosphericBackground() {
             </motion.div>
 
             {/* Parallax Stars/Dots Layer 1 (Slow) */}
-            <motion.div style={{ y: y2 }} className="absolute inset-0 atmospheric-stars">
+            <motion.div style={{ y: y2, opacity: isVisible ? 1 : 0 }} className="absolute inset-0 atmospheric-stars transition-opacity duration-700 ease-in-out">
                 {stars.slow.map((star, i) => (
                     <div
                         key={`star-slow-${i}`}
@@ -73,7 +82,7 @@ export default function AtmosphericBackground() {
             </motion.div>
 
             {/* Parallax Stars/Dots Layer 2 (Fast) */}
-            <motion.div style={{ y: y1 }} className="absolute inset-0 atmospheric-stars">
+            <motion.div style={{ y: y1, opacity: isVisible ? 1 : 0 }} className="absolute inset-0 atmospheric-stars transition-opacity duration-700 ease-in-out">
                 {stars.fast.map((star, i) => (
                     <div
                         key={`star-fast-${i}`}
