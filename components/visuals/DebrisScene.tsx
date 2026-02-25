@@ -49,28 +49,26 @@ void main() {
     float r = dot(cxy, cxy);
     if (r > 1.0) discard; 
     
-    float alpha = 1.0 - smoothstep(0.3, 1.0, r); 
+    // Smooth anti-aliased edge
+    float alpha = 1.0 - smoothstep(0.5, 1.0, r); 
     
-    // 2. Normalize height for coloring (approx -3 to 3 based on new amplitudes)
-    float h = (vPos.y + 3.0) / 6.0;
+    // 2. Monochrome brightness based on wave height
+    // Peaks are brighter white, valleys are darker gray
+    float h = (vPos.y + 4.0) / 8.0;
     h = clamp(h, 0.0, 1.0);
     
-    // 3. Vibrant Diverse Color Palette
-    vec3 c1 = vec3(0.0, 0.7, 1.0); // Neon Cyan (Lowest valleys)
-    vec3 c2 = vec3(0.5, 0.0, 1.0); // Deep Purple
-    vec3 c3 = vec3(1.0, 0.0, 0.5); // Hot Pink
-    vec3 c4 = vec3(1.0, 0.8, 0.0); // Electric Yellow (Highest peaks)
+    // Base color is a dim gray, highlighting up to pure white at the peaks
+    vec3 baseColor = vec3(0.3); // Dim gray
+    vec3 peakColor = vec3(1.0); // Pure white
     
-    // Multi-stop gradient calculation
-    vec3 color = mix(c1, c2, smoothstep(0.0, 0.33, h));
-    color = mix(color, c3, smoothstep(0.33, 0.66, h));
-    color = mix(color, c4, smoothstep(0.66, 1.0, h));
+    vec3 color = mix(baseColor, peakColor, h);
     
-    // Core Brightness
+    // Add a very tight, bright core to the center of each dot
     float core = 1.0 - smoothstep(0.0, 0.2, r);
-    color += core * 0.6; 
+    color += core * 0.5;
     
-    gl_FragColor = vec4(color, alpha * 0.95);
+    // Overall transparency multiplier to keep it looking like data/hologram
+    gl_FragColor = vec4(color, alpha * 0.8);
 }
 `;
 
@@ -83,28 +81,39 @@ const DataRipple = () => {
     const isMobile = viewport.width < 10;
 
     const { positions } = useMemo(() => {
-        const posArray = [];
+        // Number of concentric rings
+        const numRings = isMobile ? 30 : 60;
+        // Spacing between each ring
+        const ringSpacing = 1.2;
 
-        const numRings = isMobile ? 50 : 90; // High number of rings for the dense look
-        const radiusStep = 0.35; // Spacing between rings
-        const baseParticlesPerRing = isMobile ? 6 : 10;
+        const posArray: number[] = [];
 
         for (let i = 1; i <= numRings; i++) {
-            const radius = i * radiusStep;
-            const pointsOnRing = Math.floor(i * baseParticlesPerRing);
+            const radius = i * ringSpacing;
 
-            for (let j = 0; j < pointsOnRing; j++) {
-                const angle = (j / pointsOnRing) * Math.PI * 2;
+            // Circumference of the current ring
+            const circumference = 2 * Math.PI * radius;
 
-                // Add a TINY bit of jitter so it looks slightly organic
-                const jitterR = radius + (Math.random() - 0.5) * 0.05;
-                const jitterA = angle + (Math.random() - 0.5) * 0.02;
+            // To maintain consistent spacing between dots visually,
+            // the number of dots on a ring should be proportional to its circumference.
+            // Adjust the denominator to change dot density along the ring
+            const numDotsOnRing = Math.floor(circumference / 0.6);
 
-                const x = Math.cos(jitterA) * jitterR;
-                const z = Math.sin(jitterA) * jitterR;
-                const y = 0; // Y is handled by the vertex shader
+            for (let j = 0; j < numDotsOnRing; j++) {
+                // Angle for this specific dot
+                const angle = (j / numDotsOnRing) * Math.PI * 2;
 
-                posArray.push(x, y, z);
+                // Introduce slight spiral/offset so dots don't form perfectly straight lines radiating outwards
+                const offsetAngle = angle + (i * 0.05);
+
+                const x = Math.cos(offsetAngle) * radius;
+                const z = Math.sin(offsetAngle) * radius;
+
+                // Add tiny amount of randomness to break up perfectly straight digital lines
+                // but keep the distinct ring structure intact
+                const jitter = (Math.random() - 0.5) * 0.15;
+
+                posArray.push(x + jitter, 0, z + jitter);
             }
         }
 
