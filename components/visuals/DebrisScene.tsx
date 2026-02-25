@@ -84,14 +84,18 @@ const DataRipple = () => {
 
     const { positions } = useMemo(() => {
         // Number of concentric rings
-        const numRings = isMobile ? 25 : 45;
-        // Spacing between each ring
-        const ringSpacing = 1.0;
+        // Increase total rings to compensate for denser core
+        const numRings = isMobile ? 40 : 80;
+
+        // Base spacing multiplier
+        const baseSpacing = 0.15;
 
         const posArray: number[] = [];
 
         for (let i = 1; i <= numRings; i++) {
-            const radius = i * ringSpacing;
+            // Exponential curve: rings are very close at low 'i', and spread out at high 'i'
+            // power of 1.4 gives a nice visible density gradient without blowing out the edges too fast
+            const radius = Math.pow(i, 1.4) * baseSpacing;
 
             // Circumference of the current ring
             const circumference = 2 * Math.PI * radius;
@@ -147,9 +151,8 @@ const DataRipple = () => {
     });
 
     return (
-        // Initial setup: tilted firmly so the rings lay "flat" but viewed from above-angle
-        // Position shifted down slightly so it occupies the lower half of the hero well
-        <group position={[0, isMobile ? -5 : -12, 0]}>
+        // Position centered perfectly in the screen per user request
+        <group position={[0, isMobile ? -2 : 0, 0]}>
             <points ref={pointsRef}>
                 <bufferGeometry>
                     <bufferAttribute
