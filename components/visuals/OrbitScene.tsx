@@ -194,7 +194,21 @@ const OrbitScene = () => {
     return (
         <group ref={sceneRef}>
             {/* Core */}
-            <Joint size={0.6} opacity={0.3} />
+            <Joint size={0.6} opacity={0.8} />
+
+            {/* ------------------------
+                MAIN CONCENTRIC RINGS (Rich core details requested by user)
+                Adding multiple rings of varying sizes, speeds, and opacities
+                ------------------------ */}
+            <Epicycle radius={1.2} speed={0.08} opacity={0.4} lineWidth={1.5} />
+            <Epicycle radius={2.4} speed={-0.05} opacity={0.15} lineWidth={1} />
+            <Epicycle radius={3.8} speed={0.12} opacity={0.25} particleCount={3} particleSize={1.5} />
+            <Epicycle radius={4.8} speed={-0.09} opacity={0.1} lineWidth={0.5} />
+            <Epicycle radius={6.2} speed={0.04} opacity={0.3} lineWidth={1} />
+            <Epicycle radius={7.5} speed={-0.06} opacity={0.15} lineWidth={0.5} />
+            <Epicycle radius={10.5} speed={0.03} opacity={0.2} particleCount={5} particleSize={2.0} />
+            <Epicycle radius={12.0} speed={-0.02} opacity={0.1} lineWidth={1.5} />
+            <Epicycle radius={14.5} speed={0.01} opacity={0.05} lineWidth={0.5} />
 
             {/* ------------------------
                 SYSTEM E: THE DEEP CHAIN (4-Levels)
