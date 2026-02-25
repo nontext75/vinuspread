@@ -19,11 +19,12 @@ void main() {
     // Distance from the exact center (origin)
     float dist = length(pos.xz);
     
-    // 1. Primary Ripple 
-    float ripple = sin(-dist * 1.5 + uTime * 2.5) * 2.5;
+    // 1. Primary Ripple (Sharper, more frequent waves like the reference)
+    // Using abs(sin) creates a sharper "V" shape at the valleys and rounded peaks
+    float ripple = sin(-dist * 2.0 + uTime * 3.0) * 2.5;
     
-    // 2. Secondary slow standing wave
-    float wave = sin(pos.x * 0.4 + uTime * 1.5) * 0.8 + cos(pos.z * 0.3 + uTime * 1.0) * 0.8;
+    // 2. Secondary slow standing wave (reduced influence)
+    float wave = cos(pos.x * 0.5 + uTime * 1.0) * 0.5;
 
     // 3. Mouse Interaction (Direct repel effect based on distance)
     float mouseDist = length(pos.xz - uMouse);
@@ -53,19 +54,20 @@ void main() {
     float alpha = 1.0 - smoothstep(0.5, 1.0, r); 
     
     // 2. Monochrome brightness based on wave height
-    // Peaks are brighter white, valleys are darker gray
-    float h = (vPos.y + 4.0) / 8.0;
+    // Peaks are brighter white, valleys drop off sharply to dark gray/black
+    float h = (vPos.y + 3.0) / 6.0;
     h = clamp(h, 0.0, 1.0);
     
-    // Base color is a dim gray, highlighting up to pure white at the peaks
-    vec3 baseColor = vec3(0.3); // Dim gray
-    vec3 peakColor = vec3(1.0); // Pure white
+    // Sharpen the contrast significantly
+    float contrastH = smoothstep(0.4, 0.9, h);
     
-    vec3 color = mix(baseColor, peakColor, h);
+    vec3 baseColor = vec3(0.05); // Very dark gray for valleys
+    vec3 peakColor = vec3(1.0);  // Pure bright white for peaks
+    vec3 color = mix(baseColor, peakColor, contrastH);
     
-    // Add a very tight, bright core to the center of each dot
+    // Add an extremely bright, sharp core to the highest points
     float core = 1.0 - smoothstep(0.0, 0.2, r);
-    color += core * 0.5;
+    color += core * (contrastH * 1.5); // Core is brightest only on the peaks
     
     // Overall transparency multiplier to keep it looking like data/hologram
     gl_FragColor = vec4(color, alpha * 0.8);
@@ -109,11 +111,8 @@ const DataRipple = () => {
                 const x = Math.cos(offsetAngle) * radius;
                 const z = Math.sin(offsetAngle) * radius;
 
-                // Add tiny amount of randomness to break up perfectly straight digital lines
-                // but keep the distinct ring structure intact
-                const jitter = (Math.random() - 0.5) * 0.15;
-
-                posArray.push(x + jitter, 0, z + jitter);
+                // The reference video features absolutely perfect, non-jittered rings
+                posArray.push(x, 0, z);
             }
         }
 
