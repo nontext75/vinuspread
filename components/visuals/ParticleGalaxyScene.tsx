@@ -330,22 +330,6 @@ const ParticleGalaxyScene = () => {
         nodeDensity={0.6} // ~25 nodes
       />
 
-      {/* 4. Ambient Debris (2D Constellations) */}
-      {Array.from({ length: 6 }).map((_, i) => { // Reduced from 12 to 6
-        const x = (Math.sin(i * 54.3) * 12);
-        const y = (Math.cos(i * 21.6) * 8);
-
-        return (
-          <NetworkDebris
-            key={`debris-2d-${i}`}
-            position={[x, y, 0]}
-            scale={0.8 + Math.random() * 0.7} // Increased size (approx 1.5x)
-            moveSpeed={0.3 + Math.random() * 0.3} // Slow drift
-            pointSize={3.0}
-            opacity={0.25} // Increased visibility
-          />
-        );
-      })}
     </group>
   );
 };

@@ -252,25 +252,6 @@ const OrbitScene = () => {
                 </OrbitBody>
             </Epicycle>
 
-            {/* ------------------------
-                BACKGROUND DENSITY RINGS (Doubling the count)
-                Filling gaps: 2.2, 5.2, 7.5, 10.5, 11.5, 14.5, 19.0, 22.0
-                ------------------------ */}
-            <Epicycle radius={2.2} speed={0.05} opacity={0.1} />
-            <Epicycle radius={5.2} speed={-0.05} opacity={0.1} lineWidth={0.5} />
-            <Epicycle radius={7.5} speed={0.02} opacity={0.08} />
-            <Epicycle radius={10.5} speed={-0.03} opacity={0.08} particleCount={4} particleSize={1.5} />
-            <Epicycle radius={11.5} speed={0.04} opacity={0.08} />
-            <Epicycle radius={14.5} speed={-0.02} opacity={0.05} lineWidth={2} />
-            <Epicycle radius={19.0} speed={0.01} opacity={0.05} />
-            <Epicycle radius={22.0} speed={-0.01} opacity={0.03} />
-
-            {/* ------------------------
-                SYSTEM D: Large Outer Ring - Background
-                ------------------------ */}
-            <Epicycle radius={13.0} speed={0.05} opacity={0.2} particleCount={20} particleSize={2.0} />
-            <Epicycle radius={18.0} speed={-0.02} opacity={0.1} />
-
         </group>
     );
 };
