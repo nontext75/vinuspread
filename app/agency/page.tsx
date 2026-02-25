@@ -94,7 +94,6 @@ export default function AgencyPage() {
                             whileInView={{ opacity: 1, x: 0 }}
                             className="text-xl font-bold text-zinc-600 uppercase tracking-widest mb-12 flex items-center gap-4"
                         >
-                            <span className="w-12 h-px bg-zinc-800" />
                             Essential Values
                         </motion.h2>
                         <motion.p
@@ -110,7 +109,7 @@ export default function AgencyPage() {
                         <motion.p
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
-                            className="text-zinc-500 font-light leading-relaxed text-lg"
+                            className="text-white font-light leading-relaxed text-lg"
                         >
                             빠르게 변하는 시대 속에서도 변하지 않는 본질의 가치에 주목하며, <br />
                             구조적 경계와 한계를 뛰어넘는 아름다운 디자인을 지향합니다.

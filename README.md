@@ -1,4 +1,4 @@
-# Vinus Renewal Project (Handover Phase)
+# Vinuspread Renewal Project (Handover Phase)
 
 > **🚧 IMPORTANT FOR DEVELOPERS / AI AGENTS:**
 > Please read [DEVELOPER_NOTES.md](./DEVELOPER_NOTES.md) **FIRST** for critical database connection settings and handover instructions.

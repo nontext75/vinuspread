@@ -49,16 +49,16 @@ const LabItemCard: React.FC<LabItemCardProps> = ({ item, index }) => {
 
                 {/* Info */}
                 <div className="flex flex-col gap-2">
-                    <div className="flex justify-between items-start border-b border-white/10 pb-4 mb-2 group-hover:border-white/40 transition-colors duration-300">
-                        <h3 className="text-xl md:text-2xl font-bold tracking-tight uppercase group-hover:text-white transition-colors">{item.title}</h3>
-                        <div className="flex gap-2">
-                            <span className="text-[10px] font-mono opacity-50 border border-white/20 px-2 py-0.5 rounded-full uppercase">
+                    <div className="flex justify-between items-center border-b border-white/10 pb-4 mb-2 group-hover:border-white/40 transition-colors duration-300">
+                        <h3 className="text-xl md:text-2xl font-bold tracking-tight uppercase group-hover:text-white transition-colors leading-none">{item.title}</h3>
+                        <div className="flex gap-2 shrink-0">
+                            <span className="text-sm font-mono opacity-50 border border-white/20 px-3 py-1.5 rounded-full uppercase flex items-center justify-center leading-none">
                                 {item.category}
                             </span>
                         </div>
                     </div>
 
-                    <div className="flex justify-between items-center text-xs text-zinc-500 font-mono uppercase">
+                    <div className="flex justify-between items-center text-sm text-zinc-500 font-mono uppercase">
                         <span>{item.description || 'Digital Asset'}</span>
                         <div className="flex gap-4">
                             <span className="flex items-center gap-1 hover:text-white transition-colors"><Download className="w-3 h-3" /> {item.download_count || 0}</span>

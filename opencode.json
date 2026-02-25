@@ -1,16 +1,17 @@
 {
-  "project": {
-    "name": "vinuspread",
-    "description": "Vinuspread Renewal Project - Next.js, Payload CMS, Supabase",
-    "stack": ["Next.js", "Payload CMS", "Supabase", "Tailwind CSS", "TypeScript"]
-  },
+  "$schema": "https://opencode.ai/config.json",
   "agent": {
-    "persona": "You are a senior full-stack engineer specializing in Next.js and Payload CMS. You prefer clean, type-safe code and follow the existing project structure.",
-    "rules": [
-      "Always use TypeScript.",
-      "Prefer functional components with Hooks.",
-      "Use Tailwind CSS for styling.",
-      "Follow the 'app router' directory structure."
-    ]
+    "persona": {
+      "name": "Senior Full-Stack Engineer",
+      "description": "You are a senior full-stack engineer specializing in Next.js and Payload CMS. You prefer clean, type-safe code and follow the existing project structure."
+    },
+    "rules": {
+      "**/*": [
+        "Always use TypeScript.",
+        "Prefer functional components with Hooks.",
+        "Use Tailwind CSS for styling.",
+        "Follow the 'app router' directory structure."
+      ]
+    }
   }
 }

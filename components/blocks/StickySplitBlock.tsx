@@ -40,13 +40,13 @@ const ScrollItem = ({
     const end = (index + 2.0) * stepSize;
 
     const opacity = useTransform(scrollYProgress, [start, start + 0.1, outPeak, end], [0, 1, 1, 0]);
-    const titleY = useTransform(scrollYProgress, [start, inPeak, outPeak, end], ["80px", "0px", "0px", "-80px"]);
-    const subY = useTransform(scrollYProgress, [start, inPeak, outPeak, end], ["120px", "0px", "0px", "-120px"]);
-    const descY = useTransform(scrollYProgress, [start, inPeak, outPeak, end], ["160px", "0px", "0px", "-160px"]);
+    const titleY = useTransform(scrollYProgress, [start, inPeak, outPeak, end], ["40px", "0px", "0px", "-80px"]);
+    const subY = useTransform(scrollYProgress, [start, inPeak, outPeak, end], ["60px", "0px", "0px", "-100px"]);
+    const descY = useTransform(scrollYProgress, [start, inPeak, outPeak, end], ["80px", "0px", "0px", "-120px"]);
 
     const textColor = isBackgroundMode ? 'text-white' : (isLight ? 'text-slate-900' : 'text-white');
-    const titleClass = "text-6xl md:text-8xl lg:text-9xl font-black mb-2 tracking-tighter leading-[0.8] uppercase opacity-80 transition-opacity duration-300 hover:opacity-100 cursor-pointer";
-    const subtitleClass = "text-2xl md:text-3xl mb-6 font-light opacity-90 tracking-wide whitespace-pre-wrap";
+    const titleClass = "text-4xl md:text-7xl lg:text-8xl xl:text-9xl font-black mb-2 md:mb-4 tracking-tighter leading-[0.9] uppercase opacity-90 transition-opacity duration-300 hover:opacity-100 cursor-pointer drop-shadow-sm";
+    const subtitleClass = "text-xl md:text-3xl mb-4 md:mb-6 font-light opacity-90 tracking-wide whitespace-pre-wrap";
 
     return (
         <motion.div
@@ -180,9 +180,9 @@ const ScrollItemImage = ({ index, totalItems, scrollYProgress, img, isLight, isB
     const rotateReverse = useTransform(scrollYProgress, [start, end], [360, 240]);
 
     const layoutStyles = [
-        "w-[70vw] h-[70vw] md:w-[28vw] md:h-[28vw] absolute left-[50%] top-[45%] md:top-[50%] -translate-x-1/2 -translate-y-1/2 z-20",
-        "w-[60vw] h-[60vw] md:w-[26vw] md:h-[26vw] absolute left-[40%] top-[43%] md:top-[48%] -translate-x-1/2 -translate-y-1/2 z-10",
-        "w-[75vw] h-[75vw] md:w-[30vw] md:h-[30vw] absolute left-[60%] top-[47%] md:top-[52%] -translate-x-1/2 -translate-y-1/2 z-30"
+        "w-[55vw] h-[55vw] md:w-[28vw] md:h-[28vw] absolute left-[50%] top-[40%] md:top-[50%] -translate-x-1/2 -translate-y-1/2 z-20",
+        "w-[45vw] h-[45vw] md:w-[26vw] md:h-[26vw] absolute left-[40%] top-[38%] md:top-[48%] -translate-x-1/2 -translate-y-1/2 z-10",
+        "w-[60vw] h-[60vw] md:w-[30vw] md:h-[30vw] absolute left-[60%] top-[42%] md:top-[52%] -translate-x-1/2 -translate-y-1/2 z-30"
     ];
 
     const currentStyle = isBackgroundMode
@@ -213,16 +213,16 @@ const ScrollItemImage = ({ index, totalItems, scrollYProgress, img, isLight, isB
 
                     {/* Element B: Floating Geometric (Dense Cone/Icosa) */}
                     <motion.div
-                        style={{ y: debrisY_Fast, x: 100, rotate: rotateReverse }}
-                        className="absolute -right-32 top-0 w-48 h-48 md:w-64 md:h-64 z-0 text-cyan-200 mix-blend-screen"
+                        style={{ y: debrisY_Fast, x: 50, rotate: rotateReverse }}
+                        className="absolute -right-16 md:-right-32 top-0 w-32 h-32 md:w-64 md:h-64 z-0 text-cyan-200 mix-blend-screen"
                     >
                         {index % 2 === 0 ? <DenseWireframeCone className="w-full h-full" /> : <DenseWireframeIcosa className="w-full h-full" />}
                     </motion.div>
 
                     {/* Element C: Small Satellite - Counter movement */}
                     <motion.div
-                        style={{ y: debrisY_Reverse, x: -80 }}
-                        className="absolute -left-10 bottom-10 w-24 h-24 md:w-32 md:h-32 z-30 text-purple-300 blend-screen"
+                        style={{ y: debrisY_Reverse, x: -40 }}
+                        className="absolute -left-4 md:-left-10 bottom-4 md:bottom-10 w-20 h-20 md:w-32 md:h-32 z-30 text-purple-300 mix-blend-screen"
                     >
                         <DenseWireframeIcosa className="w-full h-full" />
                     </motion.div>
@@ -266,9 +266,9 @@ const StickySplitBlock: React.FC<StickySplitBlockProps> = ({ data }) => {
 
     const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
 
-    // Physics tuned for "Buttery Smooth" feel
+    // Physics tuned for an optimal balance of responsiveness and smoothness
     const smoothProgress = useSpring(scrollYProgress, {
-        stiffness: 40, damping: 40, mass: 1.2, restDelta: 0.0001
+        stiffness: 100, damping: 30, restDelta: 0.001
     });
 
     const itemCount = data.values_list?.length || 0;
@@ -334,19 +334,19 @@ const StickySplitBlock: React.FC<StickySplitBlockProps> = ({ data }) => {
                 )}
 
                 {/* Left Column - Content */}
-                <div className={`w-full h-[40vh] lg:h-full flex flex-col px-6 md:px-12 relative z-10 lg:w-1/2 justify-end lg:justify-center pb-8 lg:pb-0`}>
+                <div className={`w-full h-[35vh] lg:h-full flex flex-col px-6 md:px-12 relative z-30 lg:w-1/2 justify-end lg:justify-center pb-4 lg:pb-0`}>
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1.0, delay: 0.5, ease: "easeOut" }}
                         viewport={{ once: true }}
-                        className={`relative z-30 pointer-events-none ${isBackgroundMode ? 'text-white' : ''} max-w-xl lg:max-w-none`}
+                        className={`relative w-full max-w-xl lg:max-w-none pointer-events-none ${isBackgroundMode ? 'text-white' : ''}`}
                     >
                         <div
                             className={`
                                 ${isBackgroundMode ? "[&_*]:text-white! [&_p]:text-white/90!" : ""}
-                                [&_p.text-5xl]:text-white
-                                [&_p.text-5xl]:text-4xl [&_p.text-5xl]:md:text-7xl [&_p.text-5xl]:lg:text-9xl
+                                [&_p.text-5xl]:text-white [&_p.text-5xl]:leading-[1.1] [&_p.text-5xl]:tracking-tight
+                                [&_p.text-5xl]:text-4xl [&_p.text-5xl]:md:text-6xl [&_p.text-5xl]:lg:text-8xl [&_p.text-5xl]:xl:text-9xl
                             `}
                             dangerouslySetInnerHTML={{ __html: data.sticky_content }}
                         />
@@ -354,8 +354,8 @@ const StickySplitBlock: React.FC<StickySplitBlockProps> = ({ data }) => {
                 </div>
 
                 {/* Right Column - Sliding Values */}
-                <div className={`w-full h-[60vh] lg:h-full pointer-events-none lg:w-1/2 flex flex-col pt-0 px-6 md:px-12 relative z-10 justify-start lg:justify-center`}>
-                    <div className="relative w-full h-full flex items-center">
+                <div className={`w-full h-[65vh] lg:h-full pointer-events-none lg:w-1/2 flex flex-col px-6 md:px-12 relative z-30 justify-center pb-20 lg:pb-0`}>
+                    <div className="relative w-full h-full flex items-center justify-start lg:justify-center mt-8 lg:mt-0">
                         {data.values_list.map((value, idx) => (
                             <ScrollItem
                                 key={idx}

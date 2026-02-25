@@ -45,14 +45,17 @@ export default function LabPage() {
     }, [activeCategory, searchTerm]);
 
     return (
-        <div className="min-h-screen bg-black text-white pt-32 pb-20">
+        <main className="min-h-screen bg-black text-white pt-48 pb-20 relative overflow-hidden">
+            {/* Background Grain/Texture */}
+            <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+
             {/* Page Header (Full Width) */}
-            <section className="px-6 md:px-12 mb-20 w-full">
+            <section className="px-6 md:px-12 mb-20 relative z-10 w-full">
                 <motion.h1
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="text-8xl md:text-[140px] font-black tracking-tighter mb-8 leading-[0.8] uppercase"
+                    className="text-7xl md:text-9xl font-black tracking-tighter mb-8 uppercase"
                 >
                     LAB
                 </motion.h1>
@@ -110,7 +113,7 @@ export default function LabPage() {
                 </div>
             </section>
 
-            <div className="max-w-[1800px] mx-auto px-6 md:px-12">
+            <section className="relative z-10 w-full max-w-[1920px] mx-auto px-6 md:px-12">
                 {/* Grid Layout Engine */}
                 <AnimatePresence mode='wait'>
                     <motion.div
@@ -148,7 +151,7 @@ export default function LabPage() {
                         No items found in the lab.
                     </div>
                 )}
-            </div>
-        </div>
+            </section>
+        </main>
     );
 }
