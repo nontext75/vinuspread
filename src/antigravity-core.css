@@ -1,0 +1,198 @@
+/* antigravity-core.css (The System Atom) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@layer tokens, base, components, utilities;
+
+@layer tokens {
+    :root {
+        /* Zinc Palette from design-tokens.json */
+        --zinc-50: #fafafa;
+        --zinc-100: #f4f4f5;
+        --zinc-200: #e4e4e7;
+        --zinc-300: #d4d4d8;
+        --zinc-400: #a1a1aa;
+        --zinc-500: #71717a;
+        --zinc-600: #52525b;
+        --zinc-700: #3f3f46;
+        --zinc-800: #27272a;
+        --zinc-900: #18181b;
+        --zinc-950: #09090b;
+
+        /* Brand & Accent */
+        --brand-primary: var(--zinc-950);
+        --brand-secondary: var(--zinc-500);
+        --brand-accent: #00f2ff; /* Neon Accent */
+        
+        /* Typography Scales */
+        --font-sans: 'Inter', 'Arial', sans-serif;
+        --font-mono: 'JetBrains Mono', 'Cascadia Code', 'Menlo', monospace; /* 부드러운 mono 폰트 도입 */
+        --text-xs: 12px;
+        --text-sm: 14px;
+        --text-base: 16px;
+        --text-lg: 18px;
+        --text-xl: 20px;
+        --text-2xl: 24px;
+        --text-3xl: 30px;
+        --text-4xl: 36px;
+        --text-5xl: 48px;
+        --text-6xl: 60px;
+        --text-7xl: 72px;
+        --text-8xl: 96px;
+
+        /* Radius */
+        --radius-sm: 2px;
+        --radius-md: 6px;
+        --radius-lg: 8px;
+        --radius-full: 9999px;
+
+        /* Spacing */
+        --space-1: 4px;
+        --space-2: 8px;
+        --space-3: 12px;
+        --space-4: 16px;
+        --space-6: 24px;
+        --space-8: 32px;
+        --space-12: 48px;
+        --space-16: 64px;
+
+        /* Z-axis / Elevation */
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+}
+
+@layer base {
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: var(--font-sans);
+        font-size: var(--text-base);
+        color: var(--zinc-900);
+        background-color: #ffffff;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased; /* 윈도우에서도 부드러운 렌더링 */
+        -moz-osx-font-smoothing: grayscale;   /* Mac/Linux 최적화 */
+        font-optical-sizing: auto;
+        font-feature-settings: "cv02", "cv05", "cv08", "cv09", "cv10", "cv11", "ss01", "ss03";
+        line-height: 1.5;
+        letter-spacing: -0.015em;
+    }
+}
+
+@layer components {
+    /* System Components Style Base */
+    
+    /* Badge */
+    .ag-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px 8px;
+        font-size: var(--text-xs);
+        font-weight: 500;
+        border-radius: var(--radius-full);
+        background-color: var(--zinc-100);
+        color: var(--zinc-900);
+    }
+
+    .ag-badge-success {
+        background-color: #dcfce7;
+        color: #166534;
+    }
+
+    .ag-badge-warning {
+        background-color: #fef3c7;
+        color: #92400e;
+    }
+
+    .ag-badge-error {
+        background-color: #fee2e2;
+        color: #991b1b;
+    }
+
+    /* Button */
+    .ag-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 16px;
+        border-radius: var(--radius-md);
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid var(--zinc-200);
+        background-color: #ffffff;
+    }
+
+    .ag-btn-primary {
+        background-color: var(--zinc-900);
+        color: #ffffff;
+        border-color: var(--zinc-900);
+    }
+
+    .ag-btn-secondary {
+        background-color: var(--zinc-100);
+        color: var(--zinc-900);
+    }
+
+    .ag-btn-ghost {
+        background-color: transparent;
+        border-color: transparent;
+    }
+
+    .ag-btn-sm {
+        padding: 4px 12px;
+        font-size: var(--text-xs);
+    }
+
+    .ag-btn-lg {
+        padding: 12px 24px;
+        font-size: var(--text-base);
+    }
+
+    /* Card */
+    .ag-card {
+        background-color: #ffffff;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--zinc-200);
+        overflow: hidden;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .ag-card-elevated {
+        box-shadow: var(--shadow-md);
+        border: none;
+    }
+
+    .ag-card-header {
+        padding: 16px;
+        border-bottom: 1px solid var(--zinc-100);
+    }
+
+    .ag-card-body {
+        padding: 16px;
+    }
+
+    .ag-card-footer {
+        padding: 16px;
+        border-top: 1px solid var(--zinc-100);
+    }
+}
+
+@layer utilities {
+    /* GPU Accelerated Animations */
+    .animate-float {
+        transform: translateZ(0);
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+}

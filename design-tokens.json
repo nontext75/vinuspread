@@ -1,0 +1,76 @@
+{
+  "name": "Antigravity Design Tokens",
+  "version": "2.0.0",
+  "colors": {
+    "zinc": {
+      "50": "#fafafa",
+      "100": "#f4f4f5",
+      "200": "#e4e4e7",
+      "300": "#d4d4d8",
+      "400": "#a1a1aa",
+      "500": "#71717a",
+      "600": "#52525b",
+      "700": "#3f3f46",
+      "800": "#27272a",
+      "900": "#18181b",
+      "950": "#09090b"
+    },
+    "brand": {
+      "primary": "#09090b",
+      "secondary": "#71717a",
+      "accent": "#00f2ff",
+      "danger": "#ef4444",
+      "success": "#22c55e"
+    }
+  },
+  "typography": {
+    "fonts": {
+      "sans": "Inter, Arial, sans-serif",
+      "mono": "JetBrains Mono, Cascadia Code, Menlo, monospace"
+    },
+    "weights": {
+      "regular": "400",
+      "medium": "500",
+      "semibold": "600",
+      "bold": "700"
+    },
+    "scales": {
+      "xs": "12px",
+      "sm": "14px",
+      "base": "16px",
+      "lg": "18px",
+      "xl": "20px",
+      "2xl": "24px",
+      "3xl": "30px"
+    }
+  },
+  "spacing": {
+    "1": "4px",
+    "2": "8px",
+    "3": "12px",
+    "4": "16px",
+    "6": "24px",
+    "8": "32px",
+    "12": "48px",
+    "16": "64px"
+  },
+  "radius": {
+    "none": "0",
+    "sm": "2px",
+    "base": "4px",
+    "md": "6px",
+    "lg": "8px",
+    "xl": "12px",
+    "full": "9999px"
+  },
+  "shadows": {
+    "sm": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+    "md": "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+    "lg": "0 10px 15px -3px rgba(0, 0, 0, 0.1)"
+  },
+  "layout": {
+    "sidebar-width": "260px",
+    "container-width": "1440px",
+    "header-height": "60px"
+  }
+}

@@ -1,0 +1,9 @@
+/* Vinuspread Design System Master Entry CSS (Achromatic v2.0) */
+
+@import url('./antigravity-core.css');
+@import url('./documentation-site.css');
+
+/* Global Overrides or Custom Animations if needed for Pure CSS */
+[data-theme='dark'] {
+    /* Potential future dark mode support placeholders */
+}
