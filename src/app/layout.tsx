@@ -1,29 +1,23 @@
 import type { Metadata } from "next";
-import { Elms_Sans, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const elmsSans = Elms_Sans({
-  variable: "--font-sans",
-  subsets: ["latin", "latin-ext"],
-  weight: "variable",
-  fallback: [
-    "Pretendard",
-    "Apple SD Gothic Neo",
-    "Malgun Gothic",
-    "Arial",
-    "sans-serif",
+const googleSans = localFont({
+  src: [
+    { path: "./fonts/google-sans-400.ttf", weight: "400", style: "normal" },
+    { path: "./fonts/google-sans-500.ttf", weight: "500", style: "normal" },
+    { path: "./fonts/google-sans-600.ttf", weight: "600", style: "normal" },
+    { path: "./fonts/google-sans-700.ttf", weight: "700", style: "normal" },
   ],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-google-sans",
+  display: "swap",
+  fallback: ["Arial", "sans-serif"],
 });
 
 export const metadata: Metadata = {
-  title: "디자인스튜디오 바이너스프레드",
+  title: "Exo Ape - Global Digital Design Studio",
   description:
-    "웹 개발 및 디자인 전문 스튜디오, 맞춤형 웹사이트 제작과 창의적인 디자인 솔루션 제공",
+    "Global digital design studio partnering with brands and businesses that create exceptional experiences where people live, work, and unwind.",
 };
 
 export default function RootLayout({
@@ -32,11 +26,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="ko"
-      className={`${elmsSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={`${googleSans.variable}`}>
+      <body className="font-sans antialiased bg-[#ffffff] text-[#0d0d0d]">
+        {children}
+      </body>
     </html>
   );
 }
