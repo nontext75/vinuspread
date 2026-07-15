@@ -496,13 +496,25 @@ export default function Home() {
 
       {/* 5. STUDIO / CONTINUITY */}
       <section id="studio" className="bg-white px-6 py-28 text-[#0d0d0d] md:px-16 md:py-44">
-        <div className="mx-auto flex max-w-[1280px] flex-col items-center text-center">
+        <div className="relative hidden min-h-[1180px] lg:block">
+          <div data-float="5" className="absolute -left-[5vw] -top-36 z-0 aspect-[3/4] w-[27%] overflow-hidden will-change-transform">
+            <Image src="/cloned/about_vertical.png" alt="Studio facade" fill sizes="20vw" className="object-cover" />
+          </div>
+          <div data-float="-7" className="absolute -right-[2vw] top-[17%] z-0 aspect-square w-[12%] overflow-hidden will-change-transform">
+            <Image src="/cloned/brands_vertical.png" alt="Glass architecture" fill sizes="16vw" className="object-cover" />
+          </div>
+          <div data-float="9" className="absolute bottom-[5%] left-[18%] z-0 aspect-[5/4] w-[15%] overflow-hidden will-change-transform">
+            <Image src="/cloned/project-abstract-glass.png" alt="Material study" fill sizes="18vw" className="object-cover" />
+          </div>
+          <div data-float="-5" className="absolute -bottom-[3%] -right-[4vw] z-0 aspect-[16/10] w-[32%] overflow-hidden will-change-transform">
+            <Image src="/cloned/about_img.png" alt="Architectural detail" fill sizes="23vw" className="object-cover" />
+          </div>
+
+          <div className="absolute inset-0 z-10 mx-auto flex max-w-[1320px] flex-col items-center justify-center text-center">
             <p data-reveal className="text-[clamp(3.5rem,6.5vw,8rem)] font-normal leading-[0.96]">
-              Always there.
-              <br />
-              From the first idea
-              <br />
-              to the last detail.
+              <span className="block whitespace-nowrap">Always there,</span>
+              <span className="block whitespace-nowrap">from first idea</span>
+              <span className="block whitespace-nowrap">to final detail.</span>
             </p>
 
             <p data-reveal className="mt-12 max-w-[760px] text-lg leading-[1.55] md:text-xl">
@@ -519,26 +531,36 @@ export default function Home() {
                 <ArrowUpRight className="size-5 stroke-[1.4] transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-1 group-hover:-translate-y-1" />
               </a>
             </nav>
+          </div>
         </div>
 
-        <div className="mt-28 grid grid-cols-12 gap-5 md:mt-40 md:gap-8">
-          <div data-float="5" className="relative col-span-8 aspect-[4/5] overflow-hidden will-change-transform md:col-span-5 md:col-start-1">
-            <Image
-              src="/cloned/about_vertical.png"
-              alt="VINUSPREAD studio architecture"
-              fill
-              sizes="(max-width: 768px) 68vw, 40vw"
-              className="object-cover"
-            />
+        <div className="lg:hidden">
+          <div className="mx-auto flex max-w-[760px] flex-col items-center text-center">
+            <p data-reveal className="text-[clamp(3.5rem,12vw,6rem)] font-normal leading-[0.96]">
+              <span className="block">Always there,</span>
+              <span className="block">from first idea</span>
+              <span className="block">to final detail.</span>
+            </p>
+            <p data-reveal className="mt-10 max-w-[680px] text-lg leading-[1.55]">
+              VINUSPREAD is a product management group that partners with clients from the very first idea through completion and beyond. We don&apos;t simply deliver outcomes—we help define the direction. With AI woven into our process, we bring a faster, more experimental approach backed by over 20 years of experience in UI/UX, branding, and product design.
+            </p>
+            <nav data-reveal aria-label="Studio links" className="mt-12 flex flex-wrap justify-center gap-6 text-xl font-medium">
+              <a href="#studio" className="inline-flex items-center gap-3">Explore our services <ArrowUpRight className="size-5" /></a>
+              <a href="#work" className="inline-flex items-center gap-3">See our work <ArrowUpRight className="size-5" /></a>
+            </nav>
           </div>
-          <div data-float="-8" className="relative col-span-9 col-start-4 mt-20 aspect-[5/4] overflow-hidden will-change-transform md:col-span-6 md:col-start-7 md:mt-48">
-            <Image
-              src="/cloned/about_img.png"
-              alt="Architectural detail"
-              fill
-              sizes="(max-width: 768px) 75vw, 48vw"
-              className="object-cover"
-            />
+
+          <div className="mt-24 grid grid-cols-2 gap-4">
+            {[
+              ["/cloned/about_vertical.png", "Studio facade"],
+              ["/cloned/brands_vertical.png", "Glass architecture"],
+              ["/cloned/project-abstract-glass.png", "Material study"],
+              ["/cloned/about_img.png", "Architectural detail"],
+            ].map(([src, alt], index) => (
+              <div key={src} className={`relative aspect-[4/5] overflow-hidden ${index % 2 ? "mt-12" : ""}`}>
+                <Image src={src} alt={alt} fill sizes="50vw" className="object-cover" />
+              </div>
+            ))}
           </div>
         </div>
       </section>
