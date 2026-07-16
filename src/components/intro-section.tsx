@@ -122,9 +122,7 @@ export function IntroSection() {
             }}
             className="mt-10 max-w-[760px] text-base leading-8 text-black/42 opacity-0 will-change-transform"
           >
-            바이너스프레드는 프로젝트의 기획부터 완성까지, 전 과정을 함께하는
-            프로덕트 매니지먼트 그룹입니다. 단순히 결과물을 만드는 것을 넘어,
-            브랜드가 나아갈 방향을 함께 설계합니다.
+            Vinuspread is a product management group that partners through the entire journey from project inception to final launch. We go beyond simple delivery, designing the future roadmap and long-term direction of the brand together.
           </p>
           <div
             ref={(node) => {
