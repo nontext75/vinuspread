@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Header } from "@/components/Header";
 
 const googleSans = localFont({
   src: [
@@ -28,6 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${googleSans.variable}`}>
       <body className="font-sans antialiased bg-[#ffffff] text-[#0d0d0d]">
+        <Header />
         {children}
       </body>
     </html>
