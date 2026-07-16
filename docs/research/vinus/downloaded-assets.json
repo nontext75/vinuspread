@@ -43,5 +43,60 @@
     "file": "public/cloned/project-futuristic-product.png",
     "url": "https://vinus-website.vercel.app/images/projects/futuristic_product.png",
     "bytes": 523509
+  },
+  {
+    "file": "public/vinus/work/mongdang.png",
+    "url": "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1777780514543-yh410wjkzd.png",
+    "bytes": 44171
+  },
+  {
+    "file": "public/vinus/work/shinhan-easy.jpg",
+    "url": "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1778476355571-q5kqeg1vjvf.jpg",
+    "bytes": 69433
+  },
+  {
+    "file": "public/vinus/work/crowd-oh.jpg",
+    "url": "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1778670261704-d2ijh3jedc9.jpg",
+    "bytes": 163714
+  },
+  {
+    "file": "public/vinus/work/macadamia.png",
+    "url": "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1777848603665-lwo9rdizuxe.png",
+    "bytes": 8362
+  },
+  {
+    "file": "public/vinus/work/budongsan114.jpg",
+    "url": "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1778488569231-fzmtsr8usi.jpg",
+    "bytes": 44329
+  },
+  {
+    "file": "public/vinus/work/donga-on-book.jpg",
+    "url": "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1778467520882-wqmf8uo8lj.jpg",
+    "bytes": 49854
+  },
+  {
+    "file": "public/vinus/work/aliot-brand-identity.jpg",
+    "url": "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1778722075765-c50p8rfb1qg.jpg",
+    "bytes": 49745
+  },
+  {
+    "file": "public/vinus/work/the-frame-artstore.jpg",
+    "url": "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1778838092959-ka95kva8ga.jpg",
+    "bytes": 153219
+  },
+  {
+    "file": "public/vinus/insights/brand-color.jpg",
+    "url": "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1779328079928-afddow1zl0m.jpg",
+    "bytes": 1292299
+  },
+  {
+    "file": "public/vinus/insights/design-principles.png",
+    "url": "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1779449161734-35auboas8js.png",
+    "bytes": 1968138
+  },
+  {
+    "file": "public/vinus/insights/ux-writing.png",
+    "url": "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1779346245463-05bj19obfzsk.png",
+    "bytes": 6249000
   }
 ]

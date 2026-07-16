@@ -4,54 +4,128 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import Lenis from "lenis";
-import { ArrowUpRight, Play, X, Menu } from "lucide-react";
+import { ArrowUpRight, Play, X, Menu, Compass, PanelsTopLeft, Shapes, RefreshCw } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Footer } from "@/components/Footer";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const exoApeProjects = [
+const vinuspreadProjects = [
   {
-    title: "Ottografie",
-    subtitle: "Seamless Photographic Journey",
-    src: "/cloned/project-abstract-glass.png",
+    title: "Mongdang",
+    subtitle: "Character · Brand Experience",
+    src: "/vinus/work/mongdang.png",
     aspect: "aspect-[4/5] md:aspect-[3/4]",
     widthClass: "w-full md:w-[45%]",
     parallaxSpeed: -60,
   },
   {
-    title: "Amaterasu",
-    subtitle: "Frontier Health Innovation",
-    src: "/cloned/project-nextgen-ui.png",
+    title: "Shinhan Easy",
+    subtitle: "Digital Experience · Web",
+    src: "/vinus/work/shinhan-easy.jpg",
     aspect: "aspect-[4/5] md:aspect-[16/10]",
     widthClass: "w-full md:w-[48%] md:ml-auto md:-mt-32",
     parallaxSpeed: 80,
   },
   {
-    title: "Columbia Pictures",
-    subtitle: "Celebrating a Century of Cinema",
-    src: "/cloned/project-creative-agency.png",
+    title: "Crowd OH!",
+    subtitle: "Crowdsourcing Platform · Web",
+    src: "/vinus/work/crowd-oh.jpg",
     aspect: "aspect-[4/5] md:aspect-[4/3]",
     widthClass: "w-full md:w-[42%]",
     parallaxSpeed: -50,
   },
   {
-    title: "Cambium",
-    subtitle: "Pioneering Sustainable Solutions",
-    src: "/cloned/project-tech-interface.png",
+    title: "macadamia",
+    subtitle: "Product Strategy · UX/UI · Web",
+    src: "/vinus/work/macadamia.png",
     aspect: "aspect-[4/5] md:aspect-[16/9]",
     widthClass: "w-full md:w-[52%] md:ml-auto md:-mt-20",
     parallaxSpeed: 70,
   },
+  {
+    title: "Budongsan114 Mediate BIZsolution",
+    subtitle: "Product Strategy · UX/UI · Web",
+    src: "/vinus/work/budongsan114.jpg",
+    aspect: "aspect-[4/5] md:aspect-[5/6]",
+    widthClass: "w-full md:w-[38%]",
+    parallaxSpeed: -45,
+  },
+  {
+    title: "DongA On book",
+    subtitle: "Branding · Digital Design · Web",
+    src: "/vinus/work/donga-on-book.jpg",
+    aspect: "aspect-[4/5] md:aspect-[16/10]",
+    widthClass: "w-full md:w-[58%] md:ml-auto",
+    parallaxSpeed: 65,
+  },
 ];
 
 const workLayouts = [
-  "md:col-span-7 md:col-start-1",
-  "md:col-span-5 md:col-start-8 md:mt-48",
-  "md:col-span-5 md:col-start-2 md:mt-8",
-  "md:col-span-6 md:col-start-7 md:mt-56",
+  "md:col-span-4 md:col-start-1 md:max-w-[600px] md:justify-self-start",
+  "md:col-span-3 md:col-start-6 md:mt-24 md:max-w-[460px] md:justify-self-center",
+  "md:col-span-3 md:col-start-10 md:mt-48 md:max-w-[460px] md:justify-self-end",
+  "md:col-span-3 md:col-start-1 md:mt-8 md:max-w-[460px] md:justify-self-start",
+  "md:col-span-4 md:col-start-5 md:mt-32 md:max-w-[600px] md:justify-self-center",
+  "md:col-span-3 md:col-start-10 md:mt-4 md:max-w-[460px] md:justify-self-end",
+  "md:col-span-4 md:col-start-1 md:mt-16 md:max-w-[600px] md:justify-self-start",
+  "md:col-span-3 md:col-start-6 md:mt-40 md:max-w-[460px] md:justify-self-center",
+  "md:col-span-3 md:col-start-10 md:mt-16 md:max-w-[460px] md:justify-self-end",
+  "md:col-span-4 md:col-start-5 md:mt-24 md:max-w-[600px] md:justify-self-center",
 ];
+
+const serviceAreas = [
+  { title: "Product Strategy", details: ["Discovery", "Roadmap", "AI Opportunity"], icon: Compass },
+  { title: "Experience Design", details: ["UX/UI", "Web", "App", "Interaction"], icon: PanelsTopLeft },
+  { title: "Brand Systems", details: ["Identity", "Visual Direction", "Content"], icon: Shapes },
+  { title: "Launch & Operation", details: ["CMS", "SEO", "Analytics", "Improvement"], icon: RefreshCw },
+];
+
+const clientWork = [
+  { name: "DongA On book", scope: "Branding · Digital Design · Web Development" },
+  { name: "Samyang", scope: "Digital Design · Web Development" },
+  { name: "Lotte Cinema", scope: "UX/UI Design · App Development" },
+  { name: "Samsung Electronics", scope: "Digital Design · Creative Direction" },
+  { name: "Seoul Paik Hospital", scope: "Digital Design · Web Development" },
+  { name: "Realty 114", scope: "Strategy · UX/UI Design · App Development" },
+  { name: "Macadamia", scope: "Strategy · UX/UI Design" },
+  { name: "Smart City Jungnang", scope: "Strategy · Digital Design" },
+  { name: "CJ CheilJedang", scope: "Digital Design · Creative Direction" },
+  { name: "Hankook Tire", scope: "Digital Design · Web Development" },
+  { name: "Nexon", scope: "Brand Identity · Digital Design" },
+  { name: "LG Electronics", scope: "Digital Design · UX/UI" },
+];
+
+const insights = [
+  {
+    title: "브랜드 컬러, 감으로 고르면 안 되는 이유",
+    excerpt: "컬러는 단순한 취향이 아니라 브랜드의 인식과 감정을 결정합니다. 작은 변화도 사람들이 브랜드를 받아들이는 방식 전체에 영향을 줄 수 있습니다.",
+    date: "2026.04.20",
+    image: "/vinus/insights/brand-color.jpg",
+    href: "https://vinus-website.vercel.app/story/post-1779326372529",
+  },
+  {
+    title: "디자인 원칙이 없으면 생기는 일들",
+    excerpt: "명확한 원칙이 없으면 디자인은 그때그때의 피드백과 취향에 흔들립니다. 일관된 기준은 모든 결정을 한 방향으로 움직이게 합니다.",
+    date: "2026.05.22",
+    image: "/vinus/insights/design-principles.png",
+    href: "https://vinus-website.vercel.app/story/post-1779449177212",
+  },
+  {
+    title: "UX 라이팅, 버튼 하나부터 시작하는 법",
+    excerpt: "사용자가 가장 자주 마주치는 짧은 문장부터 명확하게 설계합니다. 버튼 하나의 표현도 경험의 방향과 다음 행동을 결정합니다.",
+    date: "2026.05.01",
+    image: "/vinus/insights/ux-writing.png",
+    href: "https://vinus-website.vercel.app/story/ux-3",
+  },
+];
+
+const textActionClass =
+  "group inline-flex items-center gap-3 border-b border-current pb-1.5 text-[clamp(1.125rem,1.4vw,1.5rem)] font-normal leading-none transition-opacity duration-200 hover:opacity-55";
+
+const textActionIconClass =
+  "size-5 stroke-[1.4] transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-1 group-hover:-translate-y-1";
 
 function MagneticButton({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const btnRef = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
@@ -84,10 +158,22 @@ function MagneticButton({ children, className = "" }: { children: React.ReactNod
 export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
 
   const heroRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
   const reelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) {
+      setShowIntro(false);
+      return;
+    }
+
+    const timeout = window.setTimeout(() => setShowIntro(false), 700);
+    return () => window.clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -147,31 +233,12 @@ export default function Home() {
         );
       }
 
-      const reelBox = document.querySelector(".reel-box");
-      if (reelBox) {
-        gsap.fromTo(
-          reelBox,
-          { scale: 0.8, borderRadius: "2rem" },
-          {
-            scale: 1,
-            borderRadius: "0rem",
-            ease: "none",
-            scrollTrigger: {
-              trigger: reelRef.current,
-              start: "top bottom",
-              end: "center center",
-              scrub: true,
-            },
-          }
-        );
-      }
-
       gsap.fromTo(
         ".reel-media",
-        { scale: 1.14, yPercent: -5 },
+        { scale: 1.12, yPercent: -4 },
         {
           scale: 1,
-          yPercent: 5,
+          yPercent: 4,
           ease: "none",
           scrollTrigger: {
             trigger: reelRef.current,
@@ -267,26 +334,55 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen bg-[#ffffff] text-[#0d0d0d] font-sans antialiased selection:bg-[#0d0d0d] selection:text-[#ffffff]">
+      <AnimatePresence>
+        {showIntro && (
+          <motion.div
+            aria-hidden="true"
+            initial={{ y: 0 }}
+            exit={{ y: "-100%" }}
+            transition={{ duration: 0.85, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[#0d0d0d] text-white"
+          >
+            <div className="flex flex-col items-center gap-5">
+              <motion.span
+                initial={{ y: 18, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                className="text-xl font-medium tracking-[-0.03em] md:text-2xl"
+              >
+                vinuspread
+              </motion.span>
+              <motion.span
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ delay: 0.12, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="h-px w-28 origin-left bg-white/70"
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="pointer-events-none fixed inset-0 z-50 custom-noise opacity-[0.02]" />
 
       {/* Floating Header */}
-      <header className="fixed inset-x-0 top-0 z-40 flex h-24 items-center justify-between px-6 text-white md:px-16">
-        <a href="#" className="text-xl font-semibold tracking-tight">
-          Exo Ape
+      <header className="fixed inset-x-0 top-0 z-40 flex h-24 items-center justify-between px-6 text-white mix-blend-difference md:px-16">
+        <a href="/" className="text-xl font-semibold tracking-tight">
+          vinuspread
         </a>
 
         <div className="flex items-center gap-8">
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium tracking-tight">
-            <a href="#work" className="hover:opacity-60 transition-opacity">Work</a>
-            <a href="#studio" className="hover:opacity-60 transition-opacity">Studio</a>
-            <a href="#news" className="hover:opacity-60 transition-opacity">News</a>
-            <a href="#contact" className="hover:opacity-60 transition-opacity">Contact</a>
+            <a href="/work" className="hover:opacity-60 transition-opacity">Work</a>
+            <a href="/studio" className="hover:opacity-60 transition-opacity">Studio</a>
+            <a href="/news" className="hover:opacity-60 transition-opacity">News</a>
+            <a href="/contact" className="hover:opacity-60 transition-opacity">Contact</a>
           </nav>
 
           <MagneticButton>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="group flex items-center gap-3 rounded-full border border-white/20 bg-black/20 px-5 py-2.5 backdrop-blur-md transition-colors hover:bg-white hover:text-black"
+              className="group flex items-center gap-3 rounded-full border border-white/40 px-5 py-2.5 transition-colors hover:bg-white hover:text-black"
             >
               <span className="text-xs uppercase tracking-widest font-medium">Menu</span>
               <Menu className="size-4 transition-transform group-hover:rotate-90" />
@@ -303,19 +399,20 @@ export default function Home() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
-            className="fixed inset-0 z-50 flex flex-col justify-between bg-[#0d0d0d] p-8 md:p-24 text-[#ffffff]"
+            className="fixed inset-0 z-50 flex flex-col justify-between bg-[#0d0d0d] text-[#ffffff]"
           >
-            <div className="flex justify-between items-center">
-              <span className="text-xl font-semibold">Exo Ape</span>
+            <div className="flex h-24 shrink-0 items-center justify-between px-6 md:px-16">
+              <span className="text-xl font-semibold tracking-tight">vinuspread</span>
               <button
                 onClick={() => setMenuOpen(false)}
-                className="rounded-full border border-white/20 p-4 hover:bg-white hover:text-[#0d0d0d] transition-colors"
+                aria-label="Close menu"
+                className="flex size-10 items-center justify-center rounded-full border border-white/30 transition-colors hover:bg-white hover:text-[#0d0d0d]"
               >
-                <X className="size-6" />
+                <X className="size-5" />
               </button>
             </div>
 
-            <nav className="flex flex-col gap-6 my-auto">
+            <nav className="my-auto flex flex-col gap-6 px-6 md:px-16">
               {["Work", "Studio", "News", "Contact"].map((item, index) => (
                 <motion.div
                   key={item}
@@ -324,7 +421,7 @@ export default function Home() {
                   transition={{ delay: 0.1 + index * 0.08, duration: 0.6 }}
                 >
                   <a
-                    href={`#${item.toLowerCase()}`}
+                    href={`/${item.toLowerCase()}`}
                     onClick={() => setMenuOpen(false)}
                     className="block text-[clamp(3.5rem,9vw,8rem)] font-light leading-none uppercase hover:translate-x-4 transition-transform duration-300"
                   >
@@ -334,43 +431,55 @@ export default function Home() {
               ))}
             </nav>
 
-            <div className="flex flex-col md:flex-row justify-between gap-6 border-t border-white/10 pt-8 text-sm opacity-60">
-              <p>Digital Design Studio — Netherlands</p>
-              <a href="mailto:hello@exoape.com" className="hover:underline text-white">hello@exoape.com</a>
+            <div className="mx-6 mb-8 flex flex-col justify-between gap-6 border-t border-white/10 pt-8 text-sm opacity-60 md:mx-16 md:mb-12 md:flex-row">
+              <p>Product Management &amp; Design Studio — Seoul, Korea</p>
+              <a href="mailto:vinus@vinus.co.kr" className="hover:underline text-white">vinus@vinus.co.kr</a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* 1. HERO SECTION (Exo Ape Full-Bleed Background Image Setup) */}
-      <section ref={heroRef} className="relative min-h-[100dvh] flex flex-col justify-end px-6 pt-[calc(74vh-4px)] pb-[240px] md:px-16 md:pt-[calc(77vh-4px)] md:pb-[240px] font-sans bg-[#0d0d0d] text-white overflow-hidden">
+      {/* 1. HERO SECTION */}
+      <section ref={heroRef} className="relative min-h-[100dvh] flex flex-col justify-start px-6 pt-[28dvh] pb-[250px] md:px-16 md:pt-[29dvh] md:pb-[250px] font-sans bg-[#0d0d0d] text-white overflow-hidden">
         {/* Full Hero Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/cloned/hero_bg.png"
-            alt="Hero background"
+            src="/cloned/about_img.png"
+            alt="Bright modern architecture"
             fill
             priority
-            className="hero-background object-cover opacity-85 filter contrast-105 brightness-95 will-change-transform"
+            className="hero-background object-cover contrast-105 brightness-105 will-change-transform"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-black/20" />
         </div>
 
-        <div className="z-10 w-full max-w-[1800px] space-y-2 relative">
-          <h1 className="hero-line text-[clamp(6rem,19vw,19rem)] font-normal leading-[0.96] tracking-tighter font-sans block">
-            We design
-          </h1>
-          <h1 className="hero-line text-[clamp(6rem,19vw,19rem)] font-normal leading-[0.96] tracking-tighter font-sans block">
-            sustainable
-          </h1>
-          <h1 className="hero-line text-[clamp(6rem,19vw,19rem)] font-normal leading-[0.96] tracking-tighter font-sans block">
-            growth
-          </h1>
+        <div className="relative z-10 w-full max-w-[1800px]">
+          <div className="flex flex-col items-start gap-[90px]">
+            <p className="hero-line text-[clamp(1.125rem,1.4vw,1.5rem)] font-normal leading-[1.5] text-white">
+              <span className="block">We uncover the ideas that matter most to people and businesses.</span>
+              <span className="block">We shape them into clear, meaningful experiences built for change.</span>
+              <span className="block">We create lasting value through design that grows with you.</span>
+            </p>
 
-          <div className="mt-[128px] max-w-[1200px]">
-            <p className="text-xl md:text-2xl lg:text-3xl leading-[1.4] text-white/90 font-sans font-medium tracking-tight">
-              We design sustainable growth together with our clients.<br />
-              From brand inception through refinement and expansion — we're with you at every stage.<br />
+            <div aria-hidden="true" className="h-5 w-[120px] bg-white" />
+
+            <div>
+              <h1 className="hero-line text-[clamp(7.2rem,22.8vw,22.8rem)] font-normal leading-[0.9] tracking-tighter font-sans block">
+                We design
+              </h1>
+              <h1 className="hero-line text-[clamp(7.2rem,22.8vw,22.8rem)] font-normal leading-[0.9] tracking-tighter font-sans block">
+                sustainable
+              </h1>
+              <h1 className="hero-line text-[clamp(7.2rem,22.8vw,22.8rem)] font-normal leading-[0.9] tracking-tighter font-sans block">
+                growth
+              </h1>
+            </div>
+          </div>
+
+          <div className="mt-[128px] max-w-[1500px]">
+            <p className="text-[clamp(1.125rem,1.4vw,1.5rem)] leading-[1.5] text-white/90 font-sans font-medium tracking-tight">
+              We design sustainable growth together with our clients.<br className="hidden lg:block" />
+              From brand inception through refinement and expansion — we're with you at every stage.<br className="hidden lg:block" />
               We'll be your trusted partner.
             </p>
           </div>
@@ -380,10 +489,10 @@ export default function Home() {
               <a
                 href="#"
                 download
-                className="group inline-flex items-center gap-2 text-xl md:text-2xl font-normal border-b border-white pb-1.5 hover:opacity-60 transition-opacity text-white"
+                className={`${textActionClass} text-white`}
               >
                 <span>Download Brochure</span>
-                <ArrowUpRight className="size-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <ArrowUpRight className={textActionIconClass} />
               </a>
             </MagneticButton>
           </div>
@@ -392,7 +501,7 @@ export default function Home() {
 
       {/* 2. INTRO DESCRIPTION SECTION */}
       <section ref={introRef} className="py-32 md:py-44 px-6 md:px-16 bg-[#ffffff] border-t border-[#0d0d0d]/10">
-        <div className="max-w-[1100px] mx-auto">
+        <div className="max-w-[1300px] mx-auto">
           <p className="intro-p text-[clamp(1.8rem,3.8vw,3.6rem)] font-light leading-[1.18] tracking-tight text-[#0d0d0d] font-sans">
             We focus on our clients&apos; essential value and elevate it with beauty.
             <br />
@@ -402,23 +511,23 @@ export default function Home() {
           </p>
           <div className="mt-12">
             <a
-              href="#studio"
-              className="inline-flex items-center gap-3 text-lg font-sans font-medium border-b border-[#0d0d0d] pb-1 hover:opacity-60 transition-opacity"
+                href="/studio"
+              className={textActionClass}
             >
               The Studio
-              <ArrowUpRight className="size-5" />
+              <ArrowUpRight className={textActionIconClass} />
             </a>
           </div>
         </div>
       </section>
 
       {/* 3. FEATURED PROJECTS SECTION */}
-      <section id="work" className="py-32 px-6 md:px-16 bg-[#ffffff]">
-        <div className="max-w-[1300px] mx-auto">
-          <div className="mb-28 border-b border-[#0d0d0d]/15 pb-12">
-            <div>
-              <h2 className="font-sans text-[72px] font-normal leading-[0.9] tracking-[-0.05em] md:text-[180px]">Work</h2>
-              <p className="mt-5 max-w-[650px] font-sans text-base leading-relaxed text-[#0d0d0d]/70 md:text-lg">
+      <section id="work" className="overflow-hidden bg-[#ffffff] py-32">
+        <div>
+          <div className="mx-6 mb-28 border-b border-[#0d0d0d]/15 pb-12 md:mx-16">
+            <div className="max-w-[1680px]">
+              <h2 className="font-sans text-[clamp(3.25rem,5.8vw,7rem)] font-normal leading-[0.92] tracking-[-0.05em]">Work</h2>
+              <p className="mt-5 max-w-[900px] font-sans text-[clamp(1.125rem,1.4vw,1.5rem)] leading-[1.5] text-[#0d0d0d]/70">
                 We spread the virus of beauty throughout the world.
                 <br />
                 We believe the visual work we create will make tomorrow more beautiful than today.
@@ -426,8 +535,8 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-y-28 md:grid-cols-12 md:gap-x-8 md:gap-y-44">
-            {exoApeProjects.map((project, idx) => (
+          <div className="mx-auto grid w-full max-w-[1920px] grid-cols-1 gap-y-24 px-6 md:grid-cols-12 md:gap-x-[clamp(1.5rem,2.4vw,3.25rem)] md:gap-y-20 md:px-16">
+            {vinuspreadProjects.map((project, idx) => (
               <motion.article
                 key={project.title}
                 initial={{ opacity: 0, y: 70 }}
@@ -435,7 +544,7 @@ export default function Home() {
                 viewport={{ once: true, margin: "-12%" }}
                 whileHover={{ y: -10 }}
                 transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
-                className={`group relative will-change-transform ${workLayouts[idx]}`}
+                className={`group relative w-full will-change-transform ${workLayouts[idx]}`}
               >
                 <div data-parallax={project.parallaxSpeed} className={`relative ${project.aspect} overflow-hidden bg-[#f4f4f4]`}>
                   <Image
@@ -443,29 +552,28 @@ export default function Home() {
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover filter grayscale contrast-125 transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
+                    className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
                   />
                 </div>
 
-                <div className="mt-6 flex justify-between items-start font-sans">
+                <div className="mt-6 font-sans">
                   <div>
-                    <h3 className="text-2xl md:text-3xl font-light tracking-tight font-sans">{project.title}</h3>
+                    <h3 className="text-xl font-medium tracking-tight font-sans md:text-2xl">{project.title}</h3>
                     <p className="text-sm text-[#0d0d0d]/60 font-sans mt-1">{project.subtitle}</p>
                   </div>
-                  <span className="text-sm font-mono text-[#0d0d0d]/40">0{idx + 1}</span>
                 </div>
               </motion.article>
             ))}
           </div>
 
-          <div className="mt-28 text-center">
+          <div className="mt-36 px-6 text-center md:px-16">
             <MagneticButton>
               <a
-                href="#work"
-                className="inline-flex items-center gap-3 rounded-full border border-[#0d0d0d]/30 px-8 py-4 text-base font-sans font-medium transition-colors hover:bg-[#0d0d0d] hover:text-white"
+                href="/work"
+                className={textActionClass}
               >
                 Browse all work
-                <ArrowUpRight className="size-5" />
+                <ArrowUpRight className={textActionIconClass} />
               </a>
             </MagneticButton>
           </div>
@@ -473,12 +581,13 @@ export default function Home() {
       </section>
 
       {/* 4. WORK IN MOTION */}
-      <section ref={reelRef} className="relative overflow-hidden bg-[#0d0d0d] text-white">
-        <div className="reel-box relative aspect-[16/9] w-full overflow-hidden bg-[#1a1a1a] will-change-transform">
+      <section ref={reelRef} className="relative overflow-hidden bg-white text-white">
+        <div className="relative h-[75svh] min-h-[520px] w-full overflow-hidden md:h-[92svh] md:min-h-[720px]">
           <Image
             src="/cloned/about_img.png"
-            alt="Exo Ape Playreel background"
+            alt="vinuspread playreel background"
             fill
+            sizes="100vw"
             className="reel-media object-cover opacity-70 grayscale contrast-125 will-change-transform"
           />
           <div className="absolute inset-0 flex items-center justify-center">
@@ -495,40 +604,45 @@ export default function Home() {
       </section>
 
       {/* 5. STUDIO / CONTINUITY */}
-      <section id="studio" className="bg-white px-6 py-28 text-[#0d0d0d] md:px-16 md:py-44">
-        <div className="relative hidden min-h-[1180px] lg:block">
-          <div data-float="5" className="absolute -left-[5vw] -top-36 z-0 aspect-[3/4] w-[27%] overflow-hidden will-change-transform">
-            <Image src="/cloned/about_vertical.png" alt="Studio facade" fill sizes="20vw" className="object-cover" />
-          </div>
-          <div data-float="-7" className="absolute -right-[2vw] top-[17%] z-0 aspect-square w-[12%] overflow-hidden will-change-transform">
-            <Image src="/cloned/brands_vertical.png" alt="Glass architecture" fill sizes="16vw" className="object-cover" />
-          </div>
-          <div data-float="9" className="absolute bottom-[5%] left-[18%] z-0 aspect-[5/4] w-[15%] overflow-hidden will-change-transform">
-            <Image src="/cloned/project-abstract-glass.png" alt="Material study" fill sizes="18vw" className="object-cover" />
-          </div>
-          <div data-float="-5" className="absolute -bottom-[3%] -right-[4vw] z-0 aspect-[16/10] w-[32%] overflow-hidden will-change-transform">
-            <Image src="/cloned/about_img.png" alt="Architectural detail" fill sizes="23vw" className="object-cover" />
-          </div>
-
+      <section id="studio" className="bg-white px-6 py-20 text-[#0d0d0d] md:px-16 md:py-28">
+        <div className="relative hidden min-h-[820px] lg:block">
           <div className="absolute inset-0 z-10 mx-auto flex max-w-[1320px] flex-col items-center justify-center text-center">
-            <p data-reveal className="text-[clamp(3.5rem,6.5vw,8rem)] font-normal leading-[0.96]">
-              <span className="block whitespace-nowrap">Always there,</span>
-              <span className="block whitespace-nowrap">from first idea</span>
-              <span className="block whitespace-nowrap">to final detail.</span>
+            <h2 data-reveal className="text-[clamp(3.25rem,5.8vw,7rem)] font-normal leading-[0.92] tracking-[-0.05em]">
+              How we work
+            </h2>
+            <p data-reveal className="mx-auto mt-8 whitespace-nowrap text-center text-[clamp(2rem,3.2vw,3.75rem)] font-normal leading-[1.02] text-[#0d0d0d]/75">
+              Always there, from first idea to final detail.
             </p>
 
-            <p data-reveal className="mt-12 max-w-[760px] text-lg leading-[1.55] md:text-xl">
-              VINUSPREAD is a product management group that partners with clients from the very first idea through completion and beyond. We don&apos;t simply deliver outcomes—we help define the direction. With AI woven into our process, we bring a faster, more experimental approach backed by over 20 years of experience in UI/UX, branding, and product design.
+            <p data-reveal className="mt-8 max-w-[720px] text-base leading-[1.55] md:text-lg">
+              Vinuspread is a product management group that partners with clients from the first idea through completion and beyond. We help define the direction, using AI to work faster and more experimentally—backed by over 20 years of experience in UI/UX, branding, and product design.
             </p>
 
-            <nav data-reveal aria-label="Studio links" className="mt-14 flex flex-wrap justify-center gap-x-10 gap-y-5 text-xl font-medium md:text-2xl">
-              <a href="#studio" className="group inline-flex items-center gap-4">
-                <span className="border-b border-transparent transition-colors duration-200 group-hover:border-current">Explore our services</span>
-                <ArrowUpRight className="size-5 stroke-[1.4] transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-1 group-hover:-translate-y-1" />
+            <div data-reveal className="mt-10 grid w-full max-w-[1120px] grid-cols-4 border-y border-[#0d0d0d]/10 text-left">
+              {serviceAreas.map((service) => {
+                const ServiceIcon = service.icon;
+                return (
+                  <div key={service.title} className="border-r border-[#0d0d0d]/10 px-5 py-6 last:border-r-0">
+                    <ServiceIcon aria-hidden="true" className="size-7 stroke-[1.25] text-[#0d0d0d]/55" />
+                    <h3 className="mt-8 text-[clamp(1.125rem,1.4vw,1.5rem)] font-normal leading-[1.1]">
+                      {service.title}
+                    </h3>
+                    <p className="mt-4 text-sm uppercase leading-[1.65] text-[#0d0d0d]/65 xl:text-[15px]">
+                      {service.details.map((detail) => <span key={detail} className="block">{detail}</span>)}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+
+            <nav data-reveal aria-label="Studio links" className="mt-10 flex flex-wrap justify-center gap-x-9 gap-y-4">
+              <a href="/studio" className={textActionClass}>
+                <span>Explore our services</span>
+                <ArrowUpRight className={textActionIconClass} />
               </a>
-              <a href="#work" className="group inline-flex items-center gap-4">
-                <span className="border-b border-transparent transition-colors duration-200 group-hover:border-current">See our work</span>
-                <ArrowUpRight className="size-5 stroke-[1.4] transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-1 group-hover:-translate-y-1" />
+              <a href="/work" className={textActionClass}>
+                <span>See our work</span>
+                <ArrowUpRight className={textActionIconClass} />
               </a>
             </nav>
           </div>
@@ -536,117 +650,96 @@ export default function Home() {
 
         <div className="lg:hidden">
           <div className="mx-auto flex max-w-[760px] flex-col items-center text-center">
-            <p data-reveal className="text-[clamp(3.5rem,12vw,6rem)] font-normal leading-[0.96]">
-              <span className="block">Always there,</span>
-              <span className="block">from first idea</span>
-              <span className="block">to final detail.</span>
+            <h2 data-reveal className="text-[clamp(3.25rem,12vw,5rem)] font-normal leading-[0.92] tracking-[-0.05em]">
+              How we work
+            </h2>
+            <p data-reveal className="mx-auto mt-7 whitespace-nowrap text-center text-[clamp(1.25rem,5vw,2rem)] font-normal leading-[1.02] text-[#0d0d0d]/75">
+              Always there, from first idea to final detail.
             </p>
-            <p data-reveal className="mt-10 max-w-[680px] text-lg leading-[1.55]">
-              VINUSPREAD is a product management group that partners with clients from the very first idea through completion and beyond. We don&apos;t simply deliver outcomes—we help define the direction. With AI woven into our process, we bring a faster, more experimental approach backed by over 20 years of experience in UI/UX, branding, and product design.
+            <p data-reveal className="mt-8 max-w-[680px] text-base leading-[1.55]">
+              Vinuspread is a product management group that partners with clients from the first idea through completion and beyond. We help define the direction, using AI to work faster and more experimentally—backed by over 20 years of experience in UI/UX, branding, and product design.
             </p>
-            <nav data-reveal aria-label="Studio links" className="mt-12 flex flex-wrap justify-center gap-6 text-xl font-medium">
-              <a href="#studio" className="inline-flex items-center gap-3">Explore our services <ArrowUpRight className="size-5" /></a>
-              <a href="#work" className="inline-flex items-center gap-3">See our work <ArrowUpRight className="size-5" /></a>
+
+            <div data-reveal className="mt-9 grid w-full grid-cols-2 border-l border-t border-[#0d0d0d]/10 text-left">
+              {serviceAreas.map((service) => {
+                const ServiceIcon = service.icon;
+                return (
+                  <div key={service.title} className="border-b border-r border-[#0d0d0d]/10 px-4 py-5">
+                    <ServiceIcon aria-hidden="true" className="size-6 stroke-[1.25] text-[#0d0d0d]/55" />
+                    <h3 className="mt-6 text-base font-normal leading-[1.15]">{service.title}</h3>
+                    <p className="mt-3 text-[13px] uppercase leading-[1.65] text-[#0d0d0d]/65">
+                      {service.details.map((detail) => <span key={detail} className="block">{detail}</span>)}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+
+            <nav data-reveal aria-label="Studio links" className="mt-9 flex flex-wrap justify-center gap-6">
+              <a href="/studio" className={textActionClass}>Explore our services <ArrowUpRight className={textActionIconClass} /></a>
+              <a href="/work" className={textActionClass}>See our work <ArrowUpRight className={textActionIconClass} /></a>
             </nav>
           </div>
 
-          <div className="mt-24 grid grid-cols-2 gap-4">
-            {[
-              ["/cloned/about_vertical.png", "Studio facade"],
-              ["/cloned/brands_vertical.png", "Glass architecture"],
-              ["/cloned/project-abstract-glass.png", "Material study"],
-              ["/cloned/about_img.png", "Architectural detail"],
-            ].map(([src, alt], index) => (
-              <div key={src} className={`relative aspect-[4/5] overflow-hidden ${index % 2 ? "mt-12" : ""}`}>
-                <Image src={src} alt={alt} fill sizes="50vw" className="object-cover" />
-              </div>
-            ))}
-          </div>
         </div>
+
       </section>
 
-      {/* 6. SERVICES */}
-      <section className="bg-white px-6 pb-28 text-[#0d0d0d] md:px-16 md:pb-44">
-        <h2 data-reveal className="pb-14 text-[clamp(3.75rem,7vw,8.5rem)] font-normal leading-[0.9] tracking-[-0.06em] md:pb-20">
-          What
+      {/* 6. CLIENTS */}
+      <section aria-labelledby="clients-heading" className="bg-[#1a1a1a] px-6 py-28 text-white md:px-16 md:py-44">
+        <h2
+          id="clients-heading"
+          data-reveal
+          className="max-w-[1500px] text-[clamp(3.25rem,5.8vw,7rem)] font-normal leading-[0.92] tracking-[-0.05em]"
+        >
+          Clients we&apos;ve
           <br />
-          we manage.
+          partnered with.
         </h2>
 
-        <div className="border-t border-[#0d0d0d]/10">
-          {[
-            { title: "Product Strategy", detail: "Discovery — Roadmap — Service Structure — AI Opportunity Mapping" },
-            { title: "Experience Design", detail: "UX/UI — Web — App — Interaction" },
-            { title: "Brand Systems", detail: "Identity — Character & IP — Visual Direction — Content Rules" },
-            { title: "Launch & Operation", detail: "CMS — SEO — Analytics — Continuous Improvement" },
-          ].map((service) => (
-            <a
-              key={service.title}
+        <div className="mt-14 grid grid-cols-2 border-l border-t border-white/12 md:mt-20 md:grid-cols-4 xl:grid-cols-8">
+          {clientWork.map((client) => (
+            <div
+              key={client.name}
               data-reveal
-              href="#contact"
-              className="group grid grid-cols-1 gap-3 border-b border-[#0d0d0d]/10 py-7 transition-colors duration-200 hover:bg-[#f7f7f7] md:grid-cols-12 md:items-center md:gap-8 md:px-3 md:py-9"
+              className="flex min-h-32 flex-col justify-between border-b border-r border-white/12 p-5 md:min-h-40 xl:min-h-44"
             >
-              <h3 className="text-xl font-medium tracking-[-0.015em] md:col-span-4 md:text-2xl">
-                {service.title}
-              </h3>
-              <p className="text-xl font-normal uppercase leading-relaxed tracking-normal md:col-span-7 md:text-2xl">
-                {service.detail}
-              </p>
-              <ArrowUpRight className="hidden size-5 justify-self-end stroke-[1.3] transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-1 group-hover:-translate-y-1 md:block" />
-            </a>
+              <span className="text-[clamp(1rem,1.25vw,1.35rem)] font-medium leading-[1.05] tracking-[-0.03em] text-white/85">{client.name}</span>
+              <span className="mt-8 text-[10px] uppercase leading-[1.45] text-white/40">{client.scope}</span>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* 7. IDEAS & INSIGHTS */}
+      {/* 8. IDEAS & INSIGHTS */}
       <section id="news" className="bg-white px-6 py-28 text-[#0d0d0d] md:px-16 md:py-44">
         <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-8">
-          <div className="lg:col-span-5">
+          <div className="min-w-0 lg:col-span-5">
             <div data-reveal className="lg:sticky lg:top-32">
-              <p className="text-[clamp(4rem,7vw,8.5rem)] font-normal leading-[0.9]">
-                Ideas &amp;
-                <br />
-                Insights
-              </p>
-              <a href="#news" className="group mt-10 inline-flex items-center gap-3 text-xl font-medium">
+              <h2 className="max-w-full text-[clamp(3.25rem,5.8vw,7rem)] font-normal leading-[0.92]">
+                <span className="block whitespace-nowrap">Ideas &amp;</span>
+                <span className="block whitespace-nowrap">Insights</span>
+              </h2>
+              <a href="/news" className={`${textActionClass} mt-10`}>
                 View all stories
-                <ArrowUpRight className="size-5 stroke-[1.4] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                <ArrowUpRight className={textActionIconClass} />
               </a>
             </div>
           </div>
 
           <div className="border-t border-[#0d0d0d]/10 lg:col-span-7">
-            {[
-              {
-                title: "Why brand color should never be chosen by instinct alone",
-                excerpt: "Color is more than preference. It shapes recognition, emotion, and the way a brand is remembered across every touchpoint.",
-                date: "2026.04.20",
-                image: "/cloned/project-branding-luxury.png",
-              },
-              {
-                title: "What happens when design has no governing principle",
-                excerpt: "A clear design principle keeps every decision moving in one direction, even when teams, products, and expectations change.",
-                date: "2026.05.22",
-                image: "/cloned/project-nextgen-ui.png",
-              },
-              {
-                title: "Designing AI into the process, not onto the surface",
-                excerpt: "The strongest use of AI is rarely the most visible one. Its real value appears in how teams explore, decide, and improve.",
-                date: "2026.06.12",
-                image: "/cloned/project-tech-interface.png",
-              },
-            ].map((article) => (
+            {insights.map((article) => (
               <a
                 key={article.title}
                 data-reveal
-                href="#contact"
+                href={article.href}
                 className="group grid grid-cols-[88px_1fr] gap-6 border-b border-[#0d0d0d]/10 py-9 md:grid-cols-[120px_1fr_auto] md:items-start md:gap-9 md:py-12"
               >
                 <div className="relative size-[88px] overflow-hidden rounded-full md:size-[120px]">
                   <Image src={article.image} alt="" fill sizes="120px" className="object-cover transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-105" />
                 </div>
                 <div>
-                  <p className="mb-4 text-base font-normal uppercase">Insight · {article.date}</p>
+                  <p className="mb-4 text-sm font-normal uppercase text-[#0d0d0d]/55">Insight · {article.date}</p>
                   <h3 className="text-2xl font-medium leading-[1.15] md:text-4xl">{article.title}</h3>
                   <p className="mt-5 max-w-[680px] text-lg font-normal leading-[1.55]">{article.excerpt}</p>
                 </div>
@@ -678,12 +771,12 @@ export default function Home() {
             <div className="w-full max-w-[1280px] aspect-[16/9] relative overflow-hidden bg-zinc-900 rounded-[1rem] ring-1 ring-white/10">
               <Image
                 src="/cloned/about_img.png"
-                alt="Exo Ape Playreel"
+                alt="vinuspread playreel"
                 fill
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center p-8 text-center">
-                <p className="text-xs uppercase tracking-widest text-[#eae8e4]/60 mb-2">Exo Ape PlayReel Stream</p>
+                <p className="text-xs uppercase tracking-widest text-[#eae8e4]/60 mb-2">vinuspread PlayReel Stream</p>
                 <h3 className="text-2xl font-light max-w-[480px]">Interactive PlayReel video stream simulation.</h3>
               </div>
             </div>

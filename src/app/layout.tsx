@@ -15,7 +15,7 @@ const googleSans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Exo Ape - Global Digital Design Studio",
+  title: "vinuspread - Global Digital Design Studio",
   description:
     "Global digital design studio partnering with brands and businesses that create exceptional experiences where people live, work, and unwind.",
 };

@@ -11,6 +11,17 @@ const assets = [
   ["public/cloned/project-tech-interface.png", "https://vinus-website.vercel.app/images/projects/tech_interface.png"],
   ["public/cloned/project-branding-luxury.png", "https://vinus-website.vercel.app/images/projects/branding_luxury.png"],
   ["public/cloned/project-futuristic-product.png", "https://vinus-website.vercel.app/images/projects/futuristic_product.png"],
+  ["public/vinus/work/mongdang.png", "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1777780514543-yh410wjkzd.png"],
+  ["public/vinus/work/shinhan-easy.jpg", "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1778476355571-q5kqeg1vjvf.jpg"],
+  ["public/vinus/work/crowd-oh.jpg", "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1778670261704-d2ijh3jedc9.jpg"],
+  ["public/vinus/work/macadamia.png", "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1777848603665-lwo9rdizuxe.png"],
+  ["public/vinus/work/budongsan114.jpg", "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1778488569231-fzmtsr8usi.jpg"],
+  ["public/vinus/work/donga-on-book.jpg", "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1778467520882-wqmf8uo8lj.jpg"],
+  ["public/vinus/work/aliot-brand-identity.jpg", "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1778722075765-c50p8rfb1qg.jpg"],
+  ["public/vinus/work/the-frame-artstore.jpg", "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1778838092959-ka95kva8ga.jpg"],
+  ["public/vinus/insights/brand-color.jpg", "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1779328079928-afddow1zl0m.jpg"],
+  ["public/vinus/insights/design-principles.png", "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1779449161734-35auboas8js.png"],
+  ["public/vinus/insights/ux-writing.png", "https://ocqmywfopzlchafcijsn.supabase.co/storage/v1/object/public/media/1779346245463-05bj19obfzsk.png"],
 ];
 
 async function download(file, url) {
