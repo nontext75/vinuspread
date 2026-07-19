@@ -2,15 +2,24 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Header } from "@/components/Header";
+import { SmoothScroll } from "@/components/SmoothScroll";
 
-const googleSans = localFont({
+const instrumentSans = localFont({
   src: [
-    { path: "./fonts/google-sans-400.ttf", weight: "400", style: "normal" },
-    { path: "./fonts/google-sans-500.ttf", weight: "500", style: "normal" },
-    { path: "./fonts/google-sans-600.ttf", weight: "600", style: "normal" },
-    { path: "./fonts/google-sans-700.ttf", weight: "700", style: "normal" },
+    { path: "./fonts/instrument-sans-regular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/instrument-sans-medium.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/instrument-sans-semibold.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/instrument-sans-bold.woff2", weight: "700", style: "normal" },
   ],
-  variable: "--font-google-sans",
+  variable: "--font-instrument-sans",
+  display: "swap",
+  fallback: ["Arial", "sans-serif"],
+});
+
+const notoSansKr = localFont({
+  src: "./fonts/NotoSansKR-VF.ttf",
+  variable: "--font-noto-sans-kr",
+  weight: "100 900",
   display: "swap",
   fallback: ["Arial", "sans-serif"],
 });
@@ -27,8 +36,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${googleSans.variable}`}>
-      <body className="font-sans antialiased bg-[#ffffff] text-[#0d0d0d]">
+    <html lang="en" className={`${instrumentSans.variable} ${notoSansKr.variable}`}>
+      <body className={`${instrumentSans.className} antialiased bg-vinus-white text-vinus-ink`}>
+        <SmoothScroll />
         <Header />
         {children}
       </body>

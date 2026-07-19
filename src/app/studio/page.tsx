@@ -1,232 +1,151 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Footer } from "@/components/Footer";
+import { ClientLogoGrid } from "@/components/ClientLogoGrid";
+import { ServiceCard } from "@/components/ServiceCard";
+import { StudioPhilosophyCard } from "@/components/StudioPhilosophyCard";
+import { SubpageHero } from "@/components/SubpageHero";
+import { VisionFormula } from "@/components/VisionFormula";
 
 const philosophies = [
   {
-    tag: "think",
-    title: "Asking and Answering",
-    desc: "We deeply contemplate the essence of value. True planning starts in the process of asking questions and finding answers.",
-    img: "/cloned/about_vertical.png",
-  },
-  {
     tag: "mind",
     title: "Detailing the Value",
-    desc: "We add value in details. A difference in an unexpected, unseen place is what ultimately determines the level of completeness.",
-    img: "/cloned/about_img.png",
+    description: "We add value in details. A difference in an unexpected, unseen place is what ultimately determines the level of completeness.",
+    image: "/vinus/dummy-photo/studio-01.jpg",
+    placement: "order-2 lg:order-none min-[2200px]:col-span-5 min-[2200px]:col-start-1 min-[2200px]:row-start-1",
+    ratio: "h-auto w-full aspect-[4/3] min-[2200px]:aspect-[584/438]",
+  },
+  {
+    tag: "think",
+    title: "Asking and Answering",
+    description: "We deeply contemplate the essence of value. True planning starts in the process of asking questions and finding answers.",
+    image: "/vinus/dummy-photo/studio-02.jpg",
+    placement: "order-1 lg:order-none min-[2200px]:col-span-5 min-[2200px]:col-start-8 min-[2200px]:row-start-1",
+    ratio: "h-auto aspect-[4/5] min-[2200px]:h-[1243px] min-[2200px]:aspect-auto",
   },
   {
     tag: "behavior",
     title: "Discovering Experience",
-    desc: "We change the world by discovering experiences and practicing action. We realize the value of business to help our partners leap forward.",
-    img: "/cloned/project-abstract-glass.png",
+    description: "We change the world by discovering experiences and practicing action. We realize the value of business to help our partners leap forward.",
+    image: "/vinus/dummy-photo/studio-03.jpg",
+    placement: "order-3 lg:order-none min-[2200px]:col-span-4 min-[2200px]:col-start-3 min-[2200px]:row-start-3",
+    ratio: "h-auto aspect-[4/3] min-[2200px]:h-[592px] min-[2200px]:aspect-auto",
   },
-];
+] as const;
 
 const businessFields = [
-  {
-    title: "website",
-    description: "Designing and developing web platforms optimized for brand and business value.",
-    image: "/vinus/work/shinhan-easy.jpg",
-  },
-  {
-    title: "mobile app",
-    description: "Crafting intuitive and user-centered mobile UX/UI designs and application architectures.",
-    image: "/vinus/work/macadamia.png",
-  },
-  {
-    title: "branding",
-    description: "Building unique brand identities and cohesive visual systems that express core values.",
-    image: "/vinus/work/mongdang.png",
-  },
-];
+  { title: "Website", description: "Designing and developing web platforms optimized for brand and business value.", image: "/vinus/dummy-photo/work-02.jpg" },
+  { title: "Mobile App", description: "Crafting intuitive and user-centered mobile UX/UI designs and application architectures.", image: "/vinus/dummy-photo/work-04.jpg" },
+  { title: "Branding", description: "Building unique brand identities and cohesive visual systems that express core values.", image: "/vinus/dummy-photo/work-01.jpg" },
+] as const;
 
-const clientWork = [
-  "Samsung", "LG CNS", "Daekyo", "Koscom", "Shinhan Financial Group",
-  "KEPCO", "KT alpha", "Deloitte", "Hyundai", "NH Bank",
-  "Lotte Cinema", "Samyang", "Nexon", "Hankook Tire", "CJ CheilJedang"
-];
+const visionFormula = [
+  { label: "Venus", meaning: "Beauty" },
+  { label: "Virus", meaning: "Inspiration" },
+  { label: "Spread", meaning: "Action", tone: "dark" },
+] as const;
 
 export default function StudioPage() {
+  const reduceMotion = useReducedMotion();
+  const enter = (distance = 36) => ({ opacity: 0, y: distance });
+
   return (
-    <main className="subpage-wrapper selection:bg-[#0d0d0d] selection:text-[#faf9f6]">
-      {/* 1. HERO SECTION */}
-      <section className="subpage-header">
-        <div className="subpage-header-inner">
-          <p className="subpage-eyebrow">Studio</p>
-          <h1 className="subpage-title mt-6">
-            We elevate essential<br />value with beauty.
-          </h1>
-          <p className="subpage-description">
-            Even amidst the intense speed of a rapidly changing era, we focus on the unchanging essence of value, striving to create beautiful design that transcends structural and physical limits.
+    <main className="subpage-wrapper selection:bg-vinus-ink selection:text-vinus-paper">
+      <SubpageHero
+        eyebrow="Studio"
+        title={<><span>We elevate essential</span><br /><span>value with beauty.</span></>}
+        description="Even amidst the intense speed of a rapidly changing era, we focus on the unchanging essence of value, striving to create beautiful design that transcends structural and physical limits."
+        size="spacious"
+      />
+
+      <section className="studio-principles h-[1646px] w-full overflow-hidden border-b border-vinus-ink/10 px-[var(--space-edge)] pt-12 pb-24 md:h-auto md:overflow-visible md:py-[var(--space-section)]">
+        <div className="grid grid-cols-1 gap-16 lg:grid-cols-3 lg:gap-8 min-[2200px]:grid-cols-[repeat(12,173.333px)] min-[2200px]:grid-rows-[1491px_48px_864px] min-[2200px]:gap-x-8 min-[2200px]:gap-y-0">
+          {philosophies.map((item, index) => (
+            <StudioPhilosophyCard
+              key={item.tag}
+              tag={item.tag}
+              title={item.title}
+              description={item.description}
+              image={item.image}
+              layoutClassName={item.placement}
+              mediaClassName={item.ratio}
+              descriptionClassName={item.tag === "think" ? "min-[2200px]:max-w-none" : undefined}
+              index={index}
+            />
+          ))}
+        </div>
+      </section>
+
+      <section className="studio-vision flex h-[1156px] w-full flex-col gap-8 overflow-hidden border-b border-vinus-ink/10 px-[var(--space-edge)] py-24 md:h-auto md:overflow-visible md:gap-16 md:py-[var(--space-section)] min-[2200px]:!h-[2900px]">
+          <motion.div
+            initial={reduceMotion ? false : enter(48)}
+            animate={reduceMotion ? { opacity: 1, y: 0 } : undefined}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.28 }}
+            transition={{ duration: reduceMotion ? 0.01 : 0.75, ease: [0.23, 1, 0.32, 1] }}
+            className="flex flex-col items-start justify-start gap-8 text-left md:items-center md:justify-center md:gap-12 md:pr-12 md:text-center min-[2200px]:h-[1384px]"
+          >
+            <p className="type-label font-medium md:hidden">Our Vision</p>
+            <h2 className="type-studio-vision type-studio-vision--compact font-normal">Spread<br />the Beautiful<br />Things</h2>
+            <p className="type-lead max-w-[960px] font-normal md:type-heading">
+              We believe the visual works we create will change tomorrow&apos;s world<br className="hidden md:block" /> to be more beautiful than today.
+            </p>
+            <VisionFormula items={visionFormula} />
+          </motion.div>
+
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 64, scale: 0.985 }}
+            animate={reduceMotion ? { opacity: 1, y: 0, scale: 1 } : undefined}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.18 }}
+            transition={{ duration: reduceMotion ? 0.01 : 0.85, ease: [0.23, 1, 0.32, 1] }}
+            className="relative h-[428px] w-full overflow-hidden bg-vinus-wash md:h-auto md:aspect-[2432/939] min-[2200px]:h-[939px]"
+          >
+            <Image src="/vinus/dummy-photo/studio-wide.jpg" alt="VINUSPREAD visual perspective" fill sizes="calc(100vw - 128px)" className="object-cover" />
+          </motion.div>
+      </section>
+
+      <section className="studio-business h-[1660px] w-full overflow-hidden border-b border-vinus-ink/10 px-[var(--space-edge)] py-24 md:h-auto md:overflow-visible md:py-[var(--space-section)] min-[2200px]:!h-[1103px] min-[2200px]:overflow-hidden">
+        <div className="flex max-w-[1200px] flex-col gap-10 md:gap-6">
+          <h2 className="type-studio-business-title">Field of business</h2>
+          <p className="type-studio-business-intro max-w-[640px]">We provide optimized digital services, enabling users to interact easily and comfortably across digital touchpoints.</p>
+        </div>
+        <div className="grid grid-cols-1 gap-10 pt-10 md:grid-cols-3 md:gap-8 md:pt-16">
+          {businessFields.map((field, index) => (
+            <ServiceCard
+              key={field.title}
+              title={field.title}
+              description={field.description}
+              variant="image"
+              image={field.image}
+              imageAlt=""
+              href="/contact"
+              className="studio-business-card h-[392px] overflow-hidden border-t border-vinus-ink/10 pt-6 md:h-auto md:overflow-visible"
+              mediaClassName="aspect-[789/493]"
+              titleClassName="type-business-card-title lowercase font-medium"
+              descriptionClassName="text-vinus-ink"
+              copyClassName="md:gap-6"
+              arrowPlacement="footer"
+              animate
+              index={index}
+            />
+          ))}
+        </div>
+      </section>
+
+      <section className="studio-clients flex w-full flex-col gap-[var(--space-section)] px-[var(--space-edge)] py-24 md:py-[var(--space-section)]">
+        <div className="flex max-w-[1130px] flex-col gap-[var(--space-content)]">
+          <h2 className="type-feature font-normal">Clients &amp; Partners</h2>
+          <p className="type-heading max-w-[1040px] font-normal">
+            New value begins with the connection between people. We do work that moves people&apos;s hearts.
           </p>
         </div>
+        <ClientLogoGrid tone="light" dividers="top" mobileLimit={20} />
       </section>
 
-      {/* 2. PHILOSOPHY SECTION (think, mind, behavior) */}
-      <section className="w-full border-b border-[#0d0d0d]/10 px-6 py-20 md:px-16 md:py-24">
-        <div className="grid grid-cols-1 gap-16 md:grid-cols-12 md:gap-x-8 md:gap-y-12">
-          {philosophies.map((philo, idx) => (
-            <motion.div
-              key={philo.tag}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: idx * 0.15 }}
-              className={`group flex flex-col ${
-                idx === 0
-                  ? "md:col-span-5"
-                  : idx === 1
-                    ? "md:col-span-3 md:col-start-7 md:mt-28"
-                    : "md:col-span-4 md:col-start-9 md:mt-4"
-              }`}
-            >
-              <div className={`relative w-full overflow-hidden bg-[#eae8e4] ${idx === 0 ? "aspect-[4/5]" : "aspect-[4/3]"}`}>
-                <Image
-                  src={philo.img}
-                  alt={philo.tag}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 30vw"
-                  className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-102"
-                />
-              </div>
-              <div className="mt-6">
-                <span className="text-[var(--type-body-lg)] font-normal lowercase text-[#0d0d0d]/40">
-                  ({philo.tag})
-                </span>
-                <h3 className="mt-3 text-2xl font-medium">{philo.title}</h3>
-                <p className="mt-4 text-[var(--type-body-lg)] font-normal leading-[1.55] text-[#0d0d0d]/65">
-                  {philo.desc}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* 3. VISION SECTION (Spread the Beautiful Things) */}
-      <section className="w-full border-b border-[#0d0d0d]/10 px-6 py-20 md:px-16 md:py-28">
-        <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-12 lg:gap-8">
-          <motion.div
-            initial={{ opacity: 0, y: 56 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-10%" }}
-            transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-            className="lg:col-span-6 lg:pr-12"
-          >
-            <span className="text-xs uppercase tracking-widest text-[#0d0d0d]/50 font-medium">Our Vision</span>
-            <h2 className="text-[clamp(2.5rem,6vw,5.5rem)] font-normal leading-[0.9] tracking-[-0.05em] mt-6">
-              Spread the<br />Beautiful Things
-            </h2>
-            <p className="mt-8 max-w-[620px] text-[var(--type-body-lg)] font-normal leading-[1.55] text-[#0d0d0d]/70">
-              We believe the visual works we create will change tomorrow&apos;s world to be more beautiful than today.
-            </p>
-
-            {/* Formula / Pills */}
-            <div className="mt-12 flex flex-wrap items-center gap-3 text-sm md:text-base font-light">
-              <span className="bg-[#eae8e4] px-5 py-2.5 rounded-full text-black font-medium tracking-tight">
-                vinus <span className="text-xs font-light text-black/50 ml-1">(beauty)</span>
-              </span>
-              <span className="text-black/40">+</span>
-              <span className="bg-[#eae8e4] px-5 py-2.5 rounded-full text-black font-medium tracking-tight">
-                virus <span className="text-xs font-light text-black/50 ml-1">(inspiration)</span>
-              </span>
-              <span className="text-black/40">+</span>
-              <span className="bg-[#0d0d0d] px-5 py-2.5 rounded-full text-white font-medium tracking-tight">
-                spread <span className="text-xs font-light text-white/50 ml-1">(action)</span>
-              </span>
-            </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 80, scale: 0.97 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, margin: "-10%" }}
-            transition={{ duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
-            className="relative aspect-[4/5] w-full overflow-hidden lg:col-span-5 lg:col-start-8"
-          >
-            <Image
-              src="/cloned/brands_vertical.png"
-              alt="VINUSPREAD visual perspective"
-              fill
-              sizes="(max-width: 1024px) 100vw, 42vw"
-              className="object-cover"
-            />
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 4. BUSINESS FIELDS SECTION */}
-      <section className="w-full border-b border-[#0d0d0d]/10 px-6 py-20 md:px-16 md:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
-          <div className="lg:col-span-6">
-            <h2 className="text-xs uppercase tracking-widest text-[#0d0d0d]/50 font-medium">Field of Business</h2>
-            <p className="mt-6 max-w-[640px] text-[var(--type-body-lg)] font-normal leading-[1.55] text-[#0d0d0d]/70">
-              We provide optimized digital services, enabling users to interact easily and comfortably across digital touchpoints.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-8">
-          {businessFields.map((field, index) => (
-            <motion.div
-              key={field.title}
-              initial={{ opacity: 0, y: 54 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-8%" }}
-              transition={{ duration: 0.7, delay: index * 0.08, ease: [0.23, 1, 0.32, 1] }}
-              className="group flex flex-col border-t border-[#0d0d0d]/10 pt-5"
-            >
-              <div className="relative mb-7 aspect-[16/10] overflow-hidden bg-[#eae8e4]">
-                <Image
-                  src={field.image}
-                  alt=""
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.04]"
-                />
-              </div>
-              <div>
-                <h3 className="text-2xl font-light uppercase tracking-tight text-[#0d0d0d] font-sans">
-                  {field.title}
-                </h3>
-                <p className="mt-6 text-[var(--type-body)] font-normal leading-[1.6] text-[#0d0d0d]/65">
-                  {field.description}
-                </p>
-              </div>
-              <div className="mt-8 flex justify-end">
-                <div className="size-8 rounded-full border border-[#0d0d0d]/10 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity">
-                  <ArrowUpRight className="size-4" />
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* 5. CLIENTS SECTION */}
-      <section className="w-full px-6 py-20 md:px-16 md:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
-          <div className="lg:col-span-8">
-            <h2 className="text-xs uppercase tracking-widest text-[#0d0d0d]/50 font-medium">Client</h2>
-            <p className="mt-6 text-[clamp(1.5rem,3.2vw,3rem)] font-normal leading-[1.15] tracking-tight text-[#0d0d0d] max-w-[950px]">
-              New value begins with the connection between people. We do work that moves people&apos;s hearts.
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-10 gap-x-8 border-t border-[#0d0d0d]/10 pt-12">
-          {clientWork.map((client) => (
-            <div key={client} className="flex items-center text-sm font-medium tracking-tight text-[#0d0d0d]/60 uppercase hover:text-black transition-colors">
-              {client}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Footer */}
       <Footer />
     </main>
   );

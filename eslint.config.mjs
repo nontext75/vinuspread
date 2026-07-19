@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Captured references and visual-QA artifacts are not product source.
+    "docs/research/**",
+    "output/**",
+    ".playwright-cli/**",
   ]),
 ]);
 

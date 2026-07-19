@@ -2,287 +2,181 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { ArrowUpRight, ArrowLeft, Upload, Check } from "lucide-react";
+import { Upload } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 import { Footer } from "@/components/Footer";
-import { motion } from "framer-motion";
+import { SubpageHero } from "@/components/SubpageHero";
+import { Tag } from "@/components/ui/Tag";
+import { Button } from "@/components/ui/button";
+import { ContactInfoRow } from "@/components/ContactInfoRow";
+import { CaptionedMedia } from "@/components/CaptionedMedia";
+import { FormField, formControlClassName, formLabelClassName } from "@/components/form/FormField";
+import { FormSection } from "@/components/form/FormSection";
+
+const categories = ["Website", "Responsive Web", "Mobile Web", "Mobile App", "Branding", "Character", "Editorial & Print", "Other"] as const;
+
+const contactDetails: ReadonlyArray<{ label: string; value: string; detail: string; href?: string }> = [
+  { label: "Business enquiries", value: "vinus@vinus.co.kr", detail: "TEL 02-3661-1907 / FAX 02-3661-1906", href: "mailto:vinus@vinus.co.kr" },
+  { label: "Open positions", value: "Join our team", detail: "We are always looking for talent.", href: "mailto:vinus@vinus.co.kr?subject=Open%20Position" },
+  { label: "Korea office", value: "Suite 1202, 227 Gonghang-daero, Gangseo-gu, Seoul 07802", detail: "Seoul, Korea", href: "https://maps.google.com/?q=227+Gonghang-daero+Seoul" },
+  { label: "Business hours", value: "Monday to Friday", detail: "10:00 AM - 18:00 PM, GMT (+9)" },
+] as const;
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    companyName: "",
-    name: "",
-    phone: "",
-    email: "",
-    budget: "$5,000 - $10,000",
-    description: "",
-    file: null as File | null,
-  });
-
+  const reduceMotion = useReducedMotion();
+  const [formData, setFormData] = useState({ companyName: "", name: "", phone: "", email: "", budget: "$5,000 - $10,000", description: "", file: null as File | null });
   const [selectedCategories, setSelectedCategories] = useState<string[]>(["Website"]);
 
-  const categories = [
-    "Website", "Responsive Web", "Mobile Web", "Mobile App",
-    "Branding", "Character", "Editorial & Print", "Other"
-  ];
-
-  const handleCategoryToggle = (category: string) => {
-    if (selectedCategories.includes(category)) {
-      setSelectedCategories(selectedCategories.filter(c => c !== category));
-    } else {
-      setSelectedCategories([...selectedCategories, category]);
-    }
+  const toggleCategory = (category: string) => {
+    setSelectedCategories((current) => current.includes(category) ? current.filter((item) => item !== category) : [...current, category]);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFormData({ ...formData, file: e.target.files[0] });
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert("Thank you! Your inquiry has been submitted successfully.");
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    alert("Thank you. Your inquiry has been submitted successfully.");
   };
 
   return (
-    <main className="subpage-wrapper selection:bg-[#0d0d0d] selection:text-[#faf9f6]">
-      {/* 1. Header Section */}
-      <section className="subpage-header [&_.subpage-header-inner]:border-b-0">
-        <div className="subpage-header-inner">
-          <p className="subpage-eyebrow">Contact</p>
-          <h1 className="subpage-title mt-6">
-            Make wonderful things<br />with us.
-          </h1>
-          <div className="subpage-description">
-            Our dedication begins where the client&apos;s expectations end.<br />
-            We strive to create and share beautiful, diverse experiences together.
-          </div>
+    <main className="subpage-wrapper selection:bg-vinus-ink selection:text-vinus-paper">
+      <SubpageHero
+        eyebrow="Contact"
+        title={<><span>Make wonderful things</span><br /><span>with us.</span></>}
+        description={<><span>Our dedication begins where the client&apos;s expectations end.</span><br className="hidden md:block" /> <span>We strive to create and share beautiful, diverse experiences together.</span></>}
+        size="medium"
+        className="md:!pt-[var(--space-section)]"
+      />
+
+      <section className="flex h-[946px] w-full flex-col gap-8 overflow-hidden px-6 py-12 md:hidden">
+        <div className="relative h-[234px] w-full overflow-hidden bg-vinus-wash">
+          <Image src="/vinus/dummy-photo/contact.jpg" alt="VINUSPREAD studio environment" fill sizes="342px" className="object-cover" />
+        </div>
+        <div className="flex flex-col">
+          {contactDetails.map((item, index) => (
+            <ContactInfoRow key={`mobile-${item.label}`} {...item} index={index} divider={false} />
+          ))}
         </div>
       </section>
 
-      {/* 2. CONTACT DETAILS GRID */}
-      <section className="subpage-content !pb-24">
-        <div className="grid grid-cols-1 border-y border-[#0d0d0d]/20 lg:grid-cols-12 lg:gap-0">
+      <section className="hidden w-full px-6 pb-24 md:block md:px-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12">
           <motion.div
-            initial={{ opacity: 0, y: 36 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 32 }}
+            animate={reduceMotion ? { opacity: 1, y: 0 } : undefined}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
-            className="border-b border-[#0d0d0d]/15 py-12 lg:col-span-5 lg:h-full lg:border-b-0 lg:border-r lg:py-12 lg:pr-12"
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: reduceMotion ? 0.01 : 0.68, ease: [0.23, 1, 0.32, 1] }}
+            className="py-6 lg:col-span-5 lg:py-12 lg:pr-12"
           >
-            <div className="group relative aspect-[4/3] overflow-hidden bg-[#e8e7e3] lg:h-full lg:min-h-[660px] lg:aspect-auto">
-              <Image
-                src="/cloned/about_img.png"
-                alt="VINUSPREAD studio environment"
-                fill
-                sizes="(max-width: 1024px) 100vw, 42vw"
-                className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.035]"
-              />
-              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-black/55 to-transparent px-5 pb-5 pt-20 text-white md:px-7 md:pb-7">
-                <p className="text-sm font-semibold uppercase">Seoul, Korea</p>
-                <p className="text-sm">37.5587° N · 126.8351° E</p>
-              </div>
-            </div>
+            <CaptionedMedia
+              src="/vinus/dummy-photo/contact.jpg"
+              alt="VINUSPREAD studio environment"
+              title="Seoul, Korea"
+              meta="37.5587° N · 126.8351° E"
+              sizes="(max-width: 1023px) calc(100vw - 48px), 42vw"
+              className="aspect-[4/3] w-full lg:h-[660px] lg:aspect-auto"
+            />
           </motion.div>
 
           <div className="lg:col-span-7 lg:pl-12">
-            {[
-              { label: "Business enquiries", value: "vinus@vinus.co.kr", detail: "TEL 02-3661-1907  /  FAX 02-3661-1906", href: "mailto:vinus@vinus.co.kr" },
-              { label: "Open positions", value: "Join our team", detail: "We are always looking for talent.", href: "mailto:vinus@vinus.co.kr?subject=Open%20Position" },
-              { label: "Korea office", value: "Suite 1202, 227 Gonghang-daero, Gangseo-gu, Seoul 07802", detail: "Seoul, Korea", href: "#" },
-              { label: "Business hours", value: "Monday to Friday", detail: "10:00 AM – 18:00 PM · GMT (+9)" },
-            ].map((item, index) => (
-              <motion.div
+            {contactDetails.map((item, index) => (
+              <ContactInfoRow
                 key={item.label}
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.08, ease: [0.23, 1, 0.32, 1] }}
-                className={`grid grid-cols-1 gap-4 py-8 md:min-h-[160px] md:grid-cols-[170px_1fr_auto] md:items-baseline md:gap-8 lg:py-10 ${index < 3 ? "border-b border-[#0d0d0d]/15" : ""}`}
-              >
-                <p className="text-sm font-semibold uppercase leading-[1.35]">{item.label}</p>
-                <div>
-                  {item.href ? (
-                    <a href={item.href} className="text-xl font-medium leading-[1.35] hover:opacity-60">{item.value}</a>
-                  ) : (
-                    <p className="text-xl font-medium leading-[1.35]">{item.value}</p>
-                  )}
-                  <p className="mt-3 text-base leading-[1.45] text-[#0d0d0d]/55">{item.detail}</p>
-                </div>
-                {item.href && <ArrowUpRight className="hidden size-5 stroke-[1.2] md:block" />}
-              </motion.div>
+                {...item}
+                index={index}
+                divider={index < contactDetails.length - 1}
+              />
             ))}
           </div>
         </div>
       </section>
 
-      {/* 3. INQUIRY REGISTRATION FORM */}
-      <section className="w-full bg-[#f1f1ee] px-6 py-24 md:px-16 md:py-32">
-        <div className="mx-auto max-w-[1600px]">
-          <div className="grid grid-cols-1 gap-6 border-b border-[#0d0d0d]/20 pb-14 md:grid-cols-12 md:items-end md:pb-20">
-            <p className="text-sm font-medium uppercase md:col-span-3">Start a project</p>
-            <div className="md:col-span-8 md:col-start-5">
-              <h2 className="text-[clamp(3rem,5vw,6rem)] font-normal leading-[0.95]">
-                Tell us about<br />your next project.
-              </h2>
-              <p className="mt-7 max-w-[680px] text-lg leading-[1.55] text-[#0d0d0d]/65">
-                Share the essentials below. We&apos;ll review your request and get back to you with the right direction.
-              </p>
+      <section className="h-[1774px] w-full overflow-hidden bg-vinus-paper px-6 py-24 md:hidden">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-12">
+          <div className="flex flex-col gap-4">
+            <h2 className="type-contact-heading font-normal">Tell us about<br />your next project.</h2>
+            <p className="type-body text-vinus-ink">Share the details below so we can prepare an accurate estimate and consultation.</p>
+          </div>
+
+          <div className="flex flex-col gap-6">
+            <FormField label="Company Name" htmlFor="mobile-company-name"><input id="mobile-company-name" type="text" placeholder="Enter your company name" value={formData.companyName} onChange={(event) => setFormData({ ...formData, companyName: event.target.value })} className={formControlClassName} /></FormField>
+            <FormField label="Your Name" htmlFor="mobile-your-name" required><input id="mobile-your-name" type="text" required placeholder="Please write your name" value={formData.name} onChange={(event) => setFormData({ ...formData, name: event.target.value })} className={formControlClassName} /></FormField>
+            <FormField label="Phone Number" htmlFor="mobile-phone-number" required><input id="mobile-phone-number" type="tel" required placeholder="Please enter contactable phone number" value={formData.phone} onChange={(event) => setFormData({ ...formData, phone: event.target.value })} className={formControlClassName} /></FormField>
+            <FormField label="Email Address" htmlFor="mobile-email-address" required><input id="mobile-email-address" type="email" required placeholder="Please write your email address" value={formData.email} onChange={(event) => setFormData({ ...formData, email: event.target.value })} className={formControlClassName} /></FormField>
+            <FormField label="Project Budget" htmlFor="mobile-project-budget" required><select id="mobile-project-budget" value={formData.budget} onChange={(event) => setFormData({ ...formData, budget: event.target.value })} className={`${formControlClassName} cursor-pointer appearance-none`}><option>Under $5,000</option><option>$5,000 - $10,000</option><option>$10,000 - $30,000</option><option>Above $30,000</option></select></FormField>
+            <FormField label="Attachment" htmlFor="mobile-attachment">
+              <span className="flex h-[61px] min-w-0 items-center justify-between gap-3 border-b border-vinus-ink/35">
+                <span className="type-body min-w-0 truncate text-vinus-ink/45">{formData.file?.name ?? "Select a file to attach..."}</span>
+                <label htmlFor="mobile-attachment" className="type-body inline-flex h-11 shrink-0 cursor-pointer items-center gap-2 rounded-full border border-vinus-ink/35 px-4 py-2 font-medium"><Upload className="size-3.5" />Browse<input id="mobile-attachment" type="file" onChange={(event) => setFormData({ ...formData, file: event.target.files?.[0] ?? null })} className="hidden" /></label>
+              </span>
+            </FormField>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <p className={formLabelClassName}>Service type *</p>
+            <div className="flex flex-wrap gap-2">
+              {categories.map((category) => {
+                const selected = selectedCategories.includes(category);
+                return <Tag key={`mobile-${category}`} selected={selected} onClick={() => toggleCategory(category)}>{category}</Tag>;
+              })}
             </div>
           </div>
 
-            <form onSubmit={handleSubmit} className="mt-4">
-              {/* Inputs Grid */}
-              <div className="grid grid-cols-1 border-b border-[#0d0d0d]/20 py-14 md:grid-cols-12 md:gap-8 md:py-20">
-                <p className="mb-10 text-sm font-medium uppercase md:col-span-3 md:mb-0">01 / Essentials</p>
-                <div className="grid grid-cols-1 gap-x-12 gap-y-10 md:col-span-8 md:col-start-5 md:grid-cols-2">
-                {/* Company Name */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold uppercase text-[#0d0d0d]">Company Name</label>
-                  <input
-                    type="text"
-                    placeholder="Enter your company name"
-                    value={formData.companyName}
-                    onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                    className="w-full border-b border-[#0d0d0d]/35 bg-transparent py-4 text-lg outline-none transition-colors placeholder:text-[#0d0d0d]/35 focus:border-black"
-                  />
-                </div>
+          <FormField label="Project details" htmlFor="mobile-project-details" required className="gap-4">
+            <textarea id="mobile-project-details" required rows={5} placeholder="Tell us what you want to make, who it is for, and when you hope to launch." value={formData.description} onChange={(event) => setFormData({ ...formData, description: event.target.value })} className="type-body h-40 w-full resize-none border border-vinus-ink/35 bg-transparent p-4 outline-none placeholder:text-vinus-ink/45 focus:border-vinus-ink" />
+          </FormField>
 
-                {/* Name */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold uppercase text-[#0d0d0d]">Your Name *</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Please write your name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full border-b border-[#0d0d0d]/35 bg-transparent py-4 text-lg outline-none transition-colors placeholder:text-[#0d0d0d]/35 focus:border-black"
-                  />
-                </div>
+          <p className="type-body text-vinus-ink">By submitting this form, you agree to our privacy policy.</p>
+          <Button type="submit" size="lg" className="w-fit">Send inquiry</Button>
+        </form>
+      </section>
 
-                {/* Phone */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold uppercase text-[#0d0d0d]">Phone Number *</label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="Please enter contactable phone number"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full border-b border-[#0d0d0d]/35 bg-transparent py-4 text-lg outline-none transition-colors placeholder:text-[#0d0d0d]/35 focus:border-black"
-                  />
-                </div>
+      <section className="hidden w-full bg-vinus-paper px-6 py-16 md:block md:px-16 md:py-24">
+        <div className="mx-auto flex max-w-[1600px] flex-col gap-6">
+          <div className="grid min-h-[266px] grid-cols-1 gap-12 border-b border-vinus-ink/35 pb-[98px] pt-8 md:grid-cols-12 md:items-end md:gap-8">
+            <p className="type-body font-medium md:col-span-3">Start a project</p>
+            <div className="flex flex-col gap-6 md:col-span-8 md:col-start-5">
+              <h2 className="type-contact-heading font-normal">Tell us about<br />your next project.</h2>
+              <p className="type-lead max-w-[760px] font-normal text-vinus-ink">Share the essentials below. We&apos;ll review your request and get back to you with the right direction.</p>
+            </div>
+          </div>
 
-                {/* Email */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold uppercase text-[#0d0d0d]">Email Address *</label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="Please write your email address"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full border-b border-[#0d0d0d]/35 bg-transparent py-4 text-lg outline-none transition-colors placeholder:text-[#0d0d0d]/35 focus:border-black"
-                  />
-                </div>
+          <form onSubmit={handleSubmit}>
+            <FormSection label="01 / Essentials" contentClassName="grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-2">
+                <FormField label="Company Name" htmlFor="company-name"><input id="company-name" type="text" placeholder="Enter your company name" value={formData.companyName} onChange={(event) => setFormData({ ...formData, companyName: event.target.value })} className={formControlClassName} /></FormField>
+                <FormField label="Your Name" htmlFor="your-name" required><input id="your-name" type="text" required placeholder="Please write your name" value={formData.name} onChange={(event) => setFormData({ ...formData, name: event.target.value })} className={formControlClassName} /></FormField>
+                <FormField label="Phone Number" htmlFor="phone-number" required><input id="phone-number" type="tel" required placeholder="Please enter contactable phone number" value={formData.phone} onChange={(event) => setFormData({ ...formData, phone: event.target.value })} className={formControlClassName} /></FormField>
+                <FormField label="Email Address" htmlFor="email-address" required><input id="email-address" type="email" required placeholder="Please write your email address" value={formData.email} onChange={(event) => setFormData({ ...formData, email: event.target.value })} className={formControlClassName} /></FormField>
+                <FormField label="Project Budget" htmlFor="project-budget" required><select id="project-budget" value={formData.budget} onChange={(event) => setFormData({ ...formData, budget: event.target.value })} className={`${formControlClassName} cursor-pointer appearance-none`}><option>Under $5,000</option><option>$5,000 - $10,000</option><option>$10,000 - $30,000</option><option>Above $30,000</option></select></FormField>
+                <FormField label="Attachment" htmlFor="attachment">
+                  <span className="flex h-[61px] min-w-0 items-center justify-between gap-3 border-b border-vinus-ink/35">
+                    <span className="type-body min-w-0 truncate text-vinus-ink/45">{formData.file?.name ?? "Select a file to attach..."}</span>
+                    <label htmlFor="attachment" className="type-body inline-flex h-11 shrink-0 cursor-pointer items-center gap-2 rounded-full border border-vinus-ink/35 px-4 py-2 font-medium transition-colors duration-200 hover:bg-vinus-ink hover:text-white"><Upload className="size-3.5" />Browse<input id="attachment" type="file" onChange={(event) => setFormData({ ...formData, file: event.target.files?.[0] ?? null })} className="hidden" /></label>
+                  </span>
+                </FormField>
+            </FormSection>
 
-                {/* Budget */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold uppercase text-[#0d0d0d]">Project Budget *</label>
-                  <select
-                    value={formData.budget}
-                    onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                    className="w-full cursor-pointer appearance-none border-b border-[#0d0d0d]/35 bg-transparent py-4 text-lg outline-none transition-colors focus:border-black"
-                  >
-                    <option value="Under $5,000">Under $5,000</option>
-                    <option value="$5,000 - $10,000">$5,000 - $10,000</option>
-                    <option value="$10,000 - $30,000">$10,000 - $30,000</option>
-                    <option value="Above $30,000">Above $30,000</option>
-                  </select>
-                </div>
-
-                {/* File Upload */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold uppercase text-[#0d0d0d]">Attachment</label>
-                  <div className="relative flex items-center justify-between border-b border-[#0d0d0d]/35 py-2">
-                    <span className="max-w-[250px] truncate text-lg text-[#0d0d0d]/45">
-                      {formData.file ? formData.file.name : "Select a file to attach..."}
-                    </span>
-                    <label className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-[#0d0d0d]/25 px-4 py-2 text-sm font-medium transition-colors hover:bg-[#0d0d0d] hover:text-white">
-                      <Upload className="size-3.5" />
-                      Browse
-                      <input
-                        type="file"
-                        onChange={handleFileChange}
-                        className="hidden"
-                      />
-                    </label>
-                  </div>
-                </div>
-                </div>
-              </div>
-
-              {/* Service Type Pills */}
-              <div className="grid grid-cols-1 border-b border-[#0d0d0d]/20 py-14 md:grid-cols-12 md:gap-8 md:py-20">
-                <p className="mb-10 text-sm font-medium uppercase md:col-span-3 md:mb-0">02 / Services</p>
-                <div className="md:col-span-8 md:col-start-5">
-                <label className="mb-5 block text-sm font-semibold uppercase text-[#0d0d0d]">Select all that apply *</label>
-                <div className="flex flex-wrap gap-3">
-                  {categories.map((cat) => {
-                    const isSelected = selectedCategories.includes(cat);
-                    return (
-                      <button
-                        type="button"
-                        key={cat}
-                        onClick={() => handleCategoryToggle(cat)}
-                        className={`inline-flex items-center gap-2 rounded-full border px-5 py-3 text-base font-normal transition-all duration-200 active:scale-[0.97] ${
-                          isSelected
-                            ? "bg-[#0d0d0d] border-black text-white"
-                            : "bg-transparent border-[#0d0d0d]/15 text-[#0d0d0d] hover:border-black"
-                        }`}
-                      >
-                        {isSelected && <Check className="size-3.5" />}
-                        {cat}
-                      </button>
-                    );
+            <FormSection label="02 / Services" className="md:min-h-[349px]" contentClassName="flex min-h-[156px] flex-col gap-6">
+                <p className={formLabelClassName}>Select all that apply *</p>
+                <div className="flex flex-wrap gap-[var(--space-inline)]">
+                  {categories.map((category) => {
+                    const selected = selectedCategories.includes(category);
+                    return <Tag key={category} selected={selected} onClick={() => toggleCategory(category)}>{category}</Tag>;
                   })}
                 </div>
-                </div>
-              </div>
+            </FormSection>
 
-              {/* Description */}
-              <div className="grid grid-cols-1 border-b border-[#0d0d0d]/20 py-14 md:grid-cols-12 md:gap-8 md:py-20">
-                <p className="mb-10 text-sm font-medium uppercase md:col-span-3 md:mb-0">03 / Project brief</p>
-                <div className="flex flex-col gap-4 md:col-span-8 md:col-start-5">
-                <label className="text-sm font-semibold uppercase text-[#0d0d0d]">Project Details *</label>
-                <textarea
-                  required
-                  rows={6}
-                  placeholder="Tell us about the project goals, timeline, and any specific requirements."
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full resize-y border border-[#0d0d0d]/35 bg-white/45 p-5 text-lg outline-none transition-colors placeholder:text-[#0d0d0d]/35 focus:border-black"
-                />
-                </div>
-              </div>
+            <FormSection label="03 / Project brief">
+              <FormField label="Project Details" htmlFor="project-details" required className="gap-4" labelClassName="font-bold"><textarea id="project-details" required rows={6} placeholder="Tell us about the project goals, timeline, and any specific requirements." value={formData.description} onChange={(event) => setFormData({ ...formData, description: event.target.value })} className="type-body h-[210px] w-full resize-y border border-vinus-ink/35 bg-white/55 p-6 outline-none placeholder:text-vinus-ink/45 focus:border-vinus-ink" /></FormField>
+            </FormSection>
 
-              {/* Submit Area */}
-              <div className="grid grid-cols-1 gap-8 pt-12 md:grid-cols-12 md:items-center md:pt-16">
-                <p className="text-sm text-[#0d0d0d]/50 md:col-span-5 md:col-start-5">
-                  Your inquiry will be sent directly to our team. We do not store your personal information.
-                </p>
-                <button
-                  type="submit"
-                  className="inline-flex min-h-14 w-full items-center justify-center rounded-full bg-[#0d0d0d] px-8 py-4 text-base font-medium text-white transition-transform duration-200 hover:scale-[1.02] active:scale-[0.97] md:col-span-3 md:justify-self-end"
-                >
-                  Submit Inquiry
-                </button>
-              </div>
-            </form>
+            <div className="grid min-h-[120px] grid-cols-1 gap-8 pt-16 md:grid-cols-12 md:items-start">
+              <Button type="submit" size="lg" className="w-full md:col-span-3">Submit Inquiry</Button>
+              <p className="type-body text-vinus-ink/45 md:col-span-5 md:col-start-5 md:self-center">Your inquiry will be sent directly to our team. We do not store your personal information.</p>
+            </div>
+          </form>
         </div>
       </section>
 
-      {/* Footer */}
       <Footer />
     </main>
   );

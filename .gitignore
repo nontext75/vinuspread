@@ -29,6 +29,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+debug*.log
+server-*.log
+
+# local QA artifacts
+output/
+.playwright-cli/
+.tmp-*.png
 
 # env files (can opt-in for committing if needed)
 .env*

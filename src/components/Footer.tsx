@@ -3,6 +3,7 @@
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BrandLogo } from "@/components/BrandLogo";
 
 const socialLinks = [
   { label: "instagram", href: "https://www.instagram.com/" },
@@ -11,134 +12,165 @@ const socialLinks = [
   { label: "vinorleague", href: "#work" },
 ];
 
+function FooterUtility({ onBackToTop }: { onBackToTop: () => void }) {
+  return (
+    <div className="h-40 border-t border-white/15 px-5 md:h-[72px] md:px-16">
+      <div className="flex h-full flex-col items-start gap-4 py-5 md:flex-row md:items-center md:justify-between md:gap-0 md:py-6">
+        <Link href="/" aria-label="Vinuspread home" className="block h-6 w-[100px] shrink-0 overflow-hidden">
+          <BrandLogo tone="light" wordmarkOnly />
+        </Link>
+        <nav aria-label="Social media" className="type-body flex h-6 w-full items-center justify-between text-white/70 md:w-[1200px] md:justify-center md:gap-12">
+          {socialLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target={link.href.startsWith("http") ? "_blank" : undefined}
+              rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+              className="border-b-2 border-white/70 lowercase transition-opacity duration-200 hover:opacity-55"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+        <button type="button" onClick={onBackToTop} className="type-body h-6 w-[100px] shrink-0 text-left transition-opacity duration-200 hover:opacity-55 md:text-center">
+          Back to top
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function ContactBlock({ mobile = false }: { mobile?: boolean }) {
+  return (
+    <section className={mobile ? "flex h-[198px] w-full flex-col items-start" : "flex h-[198px] w-full flex-col items-start"}>
+      <h2 className="type-body font-medium">Contact</h2>
+      <div className={mobile ? "h-[70px] w-full pt-2" : "h-[70px] w-[540px] pt-3"}>
+        <p className={mobile ? "type-label text-white/55" : "type-body text-white/55"}>
+          We&apos;re ready to turn ideas into meaningful experiences
+          <br />
+          and begin what&apos;s next together.
+        </p>
+      </div>
+      <div className="relative h-[106px] w-full">
+        <a href="mailto:vinus@vinus.co.kr" className="type-footer-cta group absolute left-0 top-8 inline-flex h-10 w-[152px] items-center gap-3 border-b border-white pb-[7px]">
+          Contact us
+          <ArrowUpRight aria-hidden="true" className="size-5 shrink-0 stroke-[1.3] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" />
+        </a>
+      </div>
+    </section>
+  );
+}
+
+function Enquiries() {
+  return (
+    <section className="flex flex-col gap-2 md:gap-3">
+      <h2 className="type-body font-normal text-white/55">Business enquiries</h2>
+      <a href="mailto:vinus@vinus.co.kr" className="type-body hover:underline">vinus@vinus.co.kr</a>
+      <p className="type-body whitespace-nowrap text-white/55">TEL : 02-3661-1907&nbsp;&nbsp; FAX : 02-3661-1906</p>
+    </section>
+  );
+}
+
+function OpenPositions() {
+  return (
+    <section className="flex flex-col gap-2 md:gap-3">
+      <h2 className="type-body font-normal text-white/55">Open positions</h2>
+      <a href="mailto:vinus@vinus.co.kr?subject=Open%20Position" className="type-body hover:underline">vinus@vinus.co.kr</a>
+    </section>
+  );
+}
+
+function BusinessHours() {
+  return (
+    <section className="flex flex-col gap-2 md:gap-3">
+      <h2 className="type-body font-normal text-white/55">Business hours</h2>
+      <p className="type-body font-medium">Monday to Friday</p>
+      <p className="type-body text-white/55">10:00 AM – 18:00 PM GMT (+9)</p>
+    </section>
+  );
+}
+
+function KoreaOffice({ mobile = false }: { mobile?: boolean }) {
+  return (
+    <section className="flex flex-col gap-2 md:gap-3">
+      <h2 className="type-body font-normal text-white/55">Korea</h2>
+      <address className={`${mobile ? "type-label" : "type-body"} max-w-[620px] whitespace-normal not-italic`}>
+        Suite 1202, 227 Gonghang-daero, Gangseo-gu, Seoul 07802
+      </address>
+    </section>
+  );
+}
+
 export function Footer() {
   const pathname = usePathname();
-  const nextPage = pathname.startsWith("/work")
+  const nextPage = pathname === "/work"
     ? { label: "STUDIO", href: "/studio" }
-    : pathname === "/studio"
-      ? { label: "STORY", href: "/news" }
-      : pathname === "/news"
-        ? { label: "CONTACT", href: "/contact" }
-        : pathname === "/contact"
-          ? { label: "VINUSPREAD", href: "/" }
+    : pathname.startsWith("/work/")
+      ? { label: "STUDIO", href: "/studio" }
+      : pathname === "/studio"
+        ? { label: "STORY", href: "/news" }
+        : pathname.startsWith("/news")
+          ? { label: "CONTACT", href: "/contact" }
           : { label: "EXPERIENCE", href: "/work" };
 
+  const scrollToTop = () => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+  };
+
   return (
-    <footer id="contact" className="bg-[#333333] font-sans text-white">
-      <div className="px-6 pb-20 pt-20 md:px-16 lg:pb-[5.6rem] lg:pt-[6.6rem]">
-        <div className="w-full">
-          <p className="mb-7 text-sm font-medium uppercase lg:mb-6">
-            Next page
-          </p>
-
-          <Link
-            href={nextPage.href}
-            aria-label={`Go to ${nextPage.label}`}
-            className="group inline-flex max-w-full items-center gap-[clamp(1rem,2.2vw,2.8rem)]"
-          >
-            <span className="text-[clamp(3.2rem,8.8vw,9.25rem)] font-normal leading-[0.9] tracking-[-0.065em]">
-              {nextPage.label}
-            </span>
-            <ArrowRight
-              aria-hidden="true"
-              className="size-[clamp(2.3rem,4.8vw,5.8rem)] shrink-0 stroke-[1.15] transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-3 motion-reduce:transition-none"
-            />
-          </Link>
-
-          <div className="mt-20 grid grid-cols-1 gap-14 lg:mt-[5.25rem] lg:grid-cols-12 lg:gap-x-8">
-            <section aria-labelledby="footer-contact" className="lg:col-span-6">
-              <h2 id="footer-contact" className="mb-4 text-sm font-medium uppercase">
-                Contact
-              </h2>
-              <p className="max-w-[540px] text-base leading-[1.65] text-white/60">
-                We&apos;re ready to turn ideas into meaningful experiences
-                <br />
-                and begin what&apos;s next together.
-              </p>
-              <a
-                href="mailto:vinus@vinus.co.kr"
-                className="group mt-8 inline-flex items-center gap-3 border-b border-current pb-1.5 text-[clamp(1.125rem,1.4vw,1.5rem)] font-normal leading-none transition-opacity duration-200 hover:opacity-55"
-              >
-                Contact us
-                <ArrowUpRight className="size-5 stroke-[1.4] transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </a>
-            </section>
-
-            <div className="grid gap-12 sm:grid-cols-2 lg:col-span-3 lg:grid-cols-1 lg:gap-11">
-              <section aria-labelledby="business-enquiries">
-                <h2 id="business-enquiries" className="mb-3 text-sm font-normal uppercase text-white/45">
-                  Business enquiries
-                </h2>
-                <a className="text-base hover:underline" href="mailto:vinus@vinus.co.kr">
-                  vinus@vinus.co.kr
-                </a>
-                <p className="mt-2 whitespace-nowrap text-sm text-white/55">
-                  TEL : 02-3661-1907&nbsp;&nbsp; FAX : 02-3661-1906
-                </p>
-              </section>
-
-              <section aria-labelledby="open-positions">
-                <h2 id="open-positions" className="mb-3 text-sm font-normal uppercase text-white/45">
-                  Open positions
-                </h2>
-                <a className="text-base hover:underline" href="mailto:vinus@vinus.co.kr?subject=Open%20Position">
-                  vinus@vinus.co.kr
-                </a>
-              </section>
+    <footer id="contact" data-header-theme="dark" className="h-[1060px] overflow-hidden bg-vinus-charcoal font-sans text-white md:h-[732px]">
+      <div className="h-[900px] px-5 pt-16 md:hidden">
+        <div className="h-[760px] w-full">
+          <div className="flex flex-col gap-6">
+            <p className="type-body font-medium">Next page</p>
+            <Link href={nextPage.href} aria-label={`Go to ${nextPage.label}`} className="group inline-flex h-12 items-center gap-5 self-start">
+              <span className="type-footer-next font-normal">{nextPage.label}</span>
+              <ArrowRight aria-hidden="true" className="size-10 shrink-0 stroke-[1.15] transition-transform duration-200 group-hover:translate-x-2" />
+            </Link>
+          </div>
+          <div className="mt-20 h-[620px]">
+            <ContactBlock mobile />
+            <div className="mt-[18px] flex h-[188px] flex-col gap-8">
+              <Enquiries />
+              <OpenPositions />
             </div>
-
-            <div className="grid gap-12 sm:grid-cols-2 lg:col-span-3 lg:grid-cols-1 lg:gap-11">
-              <section aria-labelledby="business-hours">
-                <h2 id="business-hours" className="mb-3 text-sm font-normal uppercase text-white/45">
-                  Business hours
-                </h2>
-                <p className="text-base font-medium uppercase">Monday to Friday</p>
-                <p className="mt-2 text-sm text-white/55">10:00 AM – 18:00 PM GMT (+9)</p>
-              </section>
-
-              <section aria-labelledby="korea-office">
-                <h2 id="korea-office" className="mb-3 text-sm font-normal uppercase text-white/45">
-                  Korea
-                </h2>
-                <address className="text-base not-italic leading-relaxed">
-                  Suite 1202, 227 Gonghang-daero, Gangseo-gu, Seoul 07802
-                </address>
-              </section>
+            <div className="mt-7 flex h-[188px] flex-col gap-8">
+              <BusinessHours />
+              <KoreaOffice mobile />
             </div>
           </div>
         </div>
       </div>
 
-      <div className="border-t border-white/15 px-6 md:px-16">
-        <div className="grid w-full gap-7 py-7 text-sm lg:grid-cols-12 lg:items-center lg:py-6">
-          <a href="#" className="group w-fit font-black leading-[0.72] tracking-[-0.08em]">
-            VINUSPREAD
-            <span className="mt-1 block text-[3px] font-bold tracking-[-0.02em]">SPREAD THE BEAUTIFUL THINGS</span>
-          </a>
-
-          <nav aria-label="Social media" className="flex flex-wrap gap-x-8 gap-y-3 text-white/80 lg:col-span-6 lg:justify-center lg:gap-x-10">
-            {socialLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target={link.href.startsWith("http") ? "_blank" : undefined}
-                rel={link.href.startsWith("http") ? "noreferrer" : undefined}
-                className="relative lowercase after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-200 hover:after:origin-left hover:after:scale-x-100"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-
-          <button
-            type="button"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="w-fit uppercase transition-opacity duration-200 hover:opacity-50 active:scale-[0.97] lg:col-span-3 lg:justify-self-end"
-          >
-            Back to top
-          </button>
+      <div className="hidden h-[660px] items-center px-16 md:flex">
+        <div className="h-[464px] w-full">
+          <div className="h-12 pb-6">
+            <p className="type-body font-medium">Next page</p>
+          </div>
+          <div className="h-[134px]">
+            <Link href={nextPage.href} aria-label={`Go to ${nextPage.label}`} className="group inline-flex items-center gap-12">
+              <span className="type-footer-next font-normal">{nextPage.label}</span>
+              <ArrowRight aria-hidden="true" className="size-[92px] shrink-0 stroke-[1.15] transition-transform duration-200 group-hover:translate-x-3" />
+            </Link>
+          </div>
+          <div className="flex h-[282px] items-end">
+            <div className="grid h-[198px] w-full grid-cols-[minmax(0,1.35fr)_minmax(0,0.75fr)_minmax(0,0.75fr)] gap-8">
+              <ContactBlock />
+              <div className="flex h-[198px] flex-col justify-between">
+                <Enquiries />
+                <OpenPositions />
+              </div>
+              <div className="flex h-[198px] flex-col justify-between">
+                <BusinessHours />
+                <KoreaOffice />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+      <FooterUtility onBackToTop={scrollToTop} />
     </footer>
   );
 }

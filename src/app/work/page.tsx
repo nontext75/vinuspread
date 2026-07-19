@@ -1,250 +1,101 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import { ArrowUpRight, Grid, List as ListIcon } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Footer } from "@/components/Footer";
+import { SubpageHero } from "@/components/SubpageHero";
+import { PortfolioCard } from "@/components/PortfolioCard";
+import { PortfolioListItem } from "@/components/PortfolioListItem";
+import { PortfolioControls, type PortfolioViewMode } from "@/components/PortfolioControls";
 
 const projects = [
-  {
-    title: "Mongdang",
-    subtitle: "Brand Experience & Storytelling",
-    category: "Character",
-    image: "/vinus/work/mongdang.png",
-    href: "/work/mongdang",
-  },
-  {
-    title: "Shinhan Easy",
-    subtitle: "Digital Experience & Mobile Web",
-    category: "Web",
-    image: "/vinus/work/shinhan-easy.jpg",
-    href: "/work/shinhan-easy",
-  },
-  {
-    title: "Crowd OH!",
-    subtitle: "Crowdsourcing Platform Design",
-    category: "Web",
-    image: "/vinus/work/crowd-oh.jpg",
-    href: "/work/crowdsourcing-platform-crowd-oh",
-  },
-  {
-    title: "macadamia",
-    subtitle: "Product Strategy & UX/UI Design",
-    category: "Web",
-    image: "/vinus/work/macadamia.png",
-    href: "/work/macadamia-website",
-  },
-  {
-    title: "Budongsan114 Mediate BIZsolution",
-    subtitle: "Enterprise B2B Product Strategy",
-    category: "Web",
-    image: "/vinus/work/budongsan114.jpg",
-    href: "/work/budongsan114-mediate-bizsolution",
-  },
-  {
-    title: "Donga On book",
-    subtitle: "Branding & Digital Platform",
-    category: "Web",
-    image: "/vinus/work/donga-on-book.jpg",
-    href: "/work/donga-on-book",
-  },
-  {
-    title: "Aliot Brand Identity",
-    subtitle: "Corporate Visual Direction & Identity",
-    category: "Web",
-    image: "/vinus/work/aliot-brand-identity.jpg",
-    href: "/work/aliot-brand-identity",
-  },
-  {
-    title: "The Frame Artstore Catalogue",
-    subtitle: "Editorial Design & Branding System",
-    category: "Web",
-    image: "/vinus/work/the-frame-artstore.jpg",
-    href: "/work/the-frame-artstore-catalogue",
-  },
-];
+  { title: "Mongdang", subtitle: "Brand Experience & Storytelling", category: "Character", image: "/vinus/dummy-photo/work-01.jpg", href: "/work/mongdang" },
+  { title: "Shinhan Easy", subtitle: "Digital Experience & Mobile Web", category: "Web", image: "/vinus/dummy-photo/work-02.jpg", href: "/work/shinhan-easy" },
+  { title: "Crowd OH!", subtitle: "Crowdsourcing Platform Design", category: "Web", image: "/vinus/dummy-photo/work-03.jpg", href: "/work/crowdsourcing-platform-crowd-oh" },
+  { title: "macadamia", subtitle: "Product Strategy & UX/UI Design", category: "Web", image: "/vinus/dummy-photo/work-04.jpg", href: "/work/macadamia-website" },
+  { title: "Budongsan114 Mediate BIZsolution", subtitle: "Enterprise B2B Product Strategy", category: "Web", image: "/vinus/dummy-photo/work-05.jpg", href: "/work/budongsan114-mediate-bizsolution" },
+  { title: "Donga On book", subtitle: "Branding & Digital Platform", category: "Web", image: "/vinus/dummy-photo/work-06.jpg", href: "/work/donga-on-book" },
+  { title: "Aliot Brand Identity", subtitle: "Corporate Visual Direction & Identity", category: "Web", image: "/vinus/dummy-photo/work-07.jpg", href: "/work/aliot-brand-identity" },
+  { title: "The Frame Artstore Catalogue", subtitle: "Editorial Design & Branding System", category: "Web", image: "/vinus/dummy-photo/work-08.jpg", href: "/work/the-frame-artstore-catalogue" },
+] as const;
+
+const categories = ["All", "Web", "Character", "Branding"] as const;
+type Category = (typeof categories)[number];
 
 export default function WorkPage() {
-  const [activeFilter, setActiveFilter] = useState("All");
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
-
-  // Dynamic filter lists & counts
-  const categories = ["All", "Web", "Character", "Branding"];
-  const getCount = (cat: string) => {
-    if (cat === "All") return projects.length;
-    return projects.filter((p) => p.category.toLowerCase() === cat.toLowerCase()).length;
-  };
-
+  const reduceMotion = useReducedMotion();
+  const [activeFilter, setActiveFilter] = useState<Category>("All");
+  const [viewMode, setViewMode] = useState<PortfolioViewMode>("grid");
   const visibleProjects = activeFilter === "All"
     ? projects
-    : projects.filter((project) => project.category.toLowerCase() === activeFilter.toLowerCase());
+    : projects.filter((project) => project.category === activeFilter);
+
+  const countFor = (category: Category) => category === "All"
+    ? projects.length
+    : projects.filter((project) => project.category === category).length;
 
   return (
-    <main className="subpage-wrapper selection:bg-[#0d0d0d] selection:text-[#faf9f6]">
-      {/* 1. Header Section */}
-      <section className="subpage-header">
-        <div className="subpage-header-inner">
-          <p className="subpage-eyebrow">Experience</p>
-          <h1 className="subpage-title mt-6">
-            We Spread<br />the Beautiful Things
-          </h1>
-          <p className="subpage-description">
-            We believe the visual work we create will make tomorrow more beautiful than today.
-          </p>
-        </div>
-      </section>
+    <main className="subpage-wrapper selection:bg-vinus-ink selection:text-vinus-paper">
+      <SubpageHero
+        eyebrow="Experience"
+        title={<>We Spread<br />the Beautiful Things</>}
+        description="We believe the visual work we create will make tomorrow more beautiful than today."
+        className="max-md:min-h-[604px]"
+      />
 
-      {/* 2. Grid & List Content */}
-      <section className="subpage-content min-h-[500px]">
-        {visibleProjects.length > 0 ? (
-          viewMode === "grid" ? (
-            // Grid View: Symmetrical 4-column layout with Motto-style labels
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
-              {visibleProjects.map((project, idx) => (
-                <motion.a
-                  key={project.title}
-                  href={project.href}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-10%" }}
-                  transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-                  className="group block"
-                >
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#eae8e4] rounded-[0.25rem]">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 48vw"
-                      className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-103"
-                    />
-                  </div>
-                  <div className="mt-6 flex justify-between items-baseline border-b border-[#0d0d0d]/5 pb-4">
-                    <div className="min-w-0 pr-4">
-                      <h2 className="text-lg md:text-xl font-normal leading-tight tracking-tight truncate">
-                        {project.title}
-                      </h2>
-                      <p className="mt-1 truncate text-[var(--type-body)] font-normal text-[#0d0d0d]/55">{project.subtitle}</p>
-                    </div>
-                    <span className="text-xs uppercase tracking-wider text-[#0d0d0d]/45 shrink-0">
-                      ({project.category})
-                    </span>
-                  </div>
-                </motion.a>
-              ))}
-            </div>
-          ) : (
-            // List View: Typographic list rows with fade-out on hover and preview hover cards
-            <div className="border-t border-[#0d0d0d]/10">
-              {visibleProjects.map((project, idx) => {
-                const isHovered = hoveredIdx === idx;
-                const isAnotherHovered = hoveredIdx !== null && hoveredIdx !== idx;
-
-                return (
-                  <a
-                    key={project.title}
-                    href={project.href}
-                    onMouseEnter={() => setHoveredIdx(idx)}
-                    onMouseLeave={() => setHoveredIdx(null)}
-                    className={`relative grid grid-cols-[1fr_auto] md:grid-cols-[1fr_2fr_auto] items-center border-b border-[#0d0d0d]/10 py-8 md:py-12 transition-opacity duration-300 ${
-                      isAnotherHovered ? "opacity-25" : "opacity-100"
-                    }`}
-                  >
-                    {/* Left: Project title & subtitle */}
-                    <div>
-                      <h2 className="text-2xl md:text-4xl font-normal tracking-tight">
-                        {project.title}
-                      </h2>
-                      <p className="mt-2 text-[var(--type-body)] text-[#0d0d0d]/55">{project.subtitle}</p>
-                    </div>
-
-                    {/* Middle: Image preview revealed on hover (Desktop only) */}
-                    <div className="hidden md:flex justify-center items-center relative h-16 overflow-hidden">
-                      <AnimatePresence>
-                        {isHovered && (
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0.8, x: -30 }}
-                            animate={{ opacity: 1, scale: 1, x: 0 }}
-                            exit={{ opacity: 0, scale: 0.8, x: -30 }}
-                            transition={{ duration: 0.3, ease: "easeOut" }}
-                            className="absolute left-6 h-16 w-32 rounded overflow-hidden shadow-lg border border-[#0d0d0d]/10"
-                          >
-                            <Image
-                              src={project.image}
-                              alt=""
-                              fill
-                              sizes="128px"
-                              className="object-cover"
-                            />
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-
-                    {/* Right: Category in parentheses */}
-                    <div className="flex items-center gap-4">
-                      <span className="text-sm text-[#0d0d0d]/50 font-light">
-                        ({project.category})
-                      </span>
-                      <ArrowUpRight className="size-5 stroke-[1.2] text-[#0d0d0d]/60 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                    </div>
-                  </a>
-                );
-              })}
-            </div>
-          )
+      <section className="subpage-content flex flex-col gap-16 !pt-24 !pb-[68px] md:gap-9 md:!pt-0 md:!pb-[70px]">
+        <AnimatePresence mode="wait" initial={false}>
+        {viewMode === "grid" ? (
+          <motion.div
+            key="grid"
+            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
+            transition={{ duration: reduceMotion ? 0 : 0.22, ease: [0.23, 1, 0.32, 1] }}
+            className="flex flex-col items-start gap-12 sm:grid sm:grid-cols-2 sm:gap-x-[var(--grid-gutter)] sm:gap-y-[var(--space-content)] sm:content-start xl:grid-cols-3 2xl:grid-cols-4"
+          >
+            {visibleProjects.map((project, index) => (
+              <PortfolioCard
+                key={project.title}
+                {...project}
+                index={index}
+                animate
+                imageSizes="(max-width: 639px) calc(100vw - 48px), (max-width: 1279px) 50vw, (max-width: 1535px) 33vw, 25vw"
+                layoutClassName="w-full"
+              />
+            ))}
+          </motion.div>
         ) : (
-          <div className="flex min-h-[40vh] items-center justify-center text-center">
-            <p className="text-lg text-[#0d0d0d]/45">No projects found in this category.</p>
-          </div>
+          <motion.div
+            key="list"
+            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
+            transition={{ duration: reduceMotion ? 0 : 0.22, ease: [0.23, 1, 0.32, 1] }}
+            className="border-t border-vinus-ink/10"
+          >
+            {visibleProjects.map((project, index) => (
+              <PortfolioListItem
+                key={project.title}
+                {...project}
+                index={index}
+              />
+            ))}
+          </motion.div>
         )}
+        </AnimatePresence>
+
+        <div className="order-first flex w-full justify-start md:order-last md:justify-center">
+          <PortfolioControls
+            categories={categories}
+            activeCategory={activeFilter}
+            getCount={countFor}
+            onCategoryChange={setActiveFilter}
+            viewMode={viewMode}
+            onViewModeChange={setViewMode}
+          />
+        </div>
       </section>
-
-      {/* 3. Floating Bottom Controller (Category Filters + View Toggle) */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 bg-[#0d0d0d]/95 backdrop-blur-md text-white rounded-full px-5 py-2.5 flex items-center gap-6 shadow-2xl border border-white/10 max-w-[90vw] md:max-w-max">
-        {/* Category filters */}
-        <div className="flex items-center gap-2 border-r border-white/10 pr-6 overflow-x-auto scrollbar-none">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveFilter(cat)}
-              className={`text-xs uppercase tracking-wider px-3 py-1.5 rounded-full transition-colors whitespace-nowrap ${
-                activeFilter === cat
-                  ? "bg-white text-black font-medium"
-                  : "text-white/60 hover:text-white"
-              }`}
-            >
-              {cat} <span className="ml-0.5 text-xs opacity-50">{getCount(cat)}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* View toggle */}
-        <div className="flex items-center gap-1">
-          <button
-            onClick={() => setViewMode("grid")}
-            aria-label="Grid view"
-            className={`p-2 rounded-full transition-colors ${
-              viewMode === "grid" ? "bg-white text-black" : "text-white/60 hover:text-white"
-            }`}
-          >
-            <Grid className="size-4" />
-          </button>
-          <button
-            onClick={() => setViewMode("list")}
-            aria-label="List view"
-            className={`p-2 rounded-full transition-colors ${
-              viewMode === "list" ? "bg-white text-black" : "text-white/60 hover:text-white"
-            }`}
-          >
-            <ListIcon className="size-4" />
-          </button>
-        </div>
-      </div>
-
-      {/* Footer */}
       <Footer />
     </main>
   );

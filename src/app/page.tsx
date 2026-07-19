@@ -1,725 +1,1199 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import Lenis from "lenis";
-import { ArrowUpRight, Play, X, Menu, Compass, PanelsTopLeft, Shapes, RefreshCw } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { X } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
 import { Footer } from "@/components/Footer";
+import { ClientLogoGrid } from "@/components/ClientLogoGrid";
+import { ArrowLink } from "@/components/ui/ArrowLink";
+import { PortfolioCard } from "@/components/PortfolioCard";
+import { ServiceCard } from "@/components/ServiceCard";
+import { StoryListItem } from "@/components/StoryListItem";
+import { stories as storyEntries } from "@/lib/stories";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const vinuspreadProjects = [
+type Project = {
+  title: string;
+  subtitle: string;
+  category: string;
+  src: string;
+  slug: string;
+  layout: string;
+  mobileLayout: string;
+  speed: number;
+  mobileOnly?: boolean;
+};
+
+const projects: Project[] = [
   {
     title: "Mongdang",
-    subtitle: "Character · Brand Experience",
-    src: "/vinus/work/mongdang.png",
-    aspect: "aspect-[4/5] md:aspect-[3/4]",
-    widthClass: "w-full md:w-[45%]",
-    parallaxSpeed: -60,
+    subtitle: "Brand Experience & Storytelling",
+    category: "Character",
+    src: "/vinus/dummy-photo/work-01.jpg",
+    slug: "mongdang",
+    layout: "home-project--mongdang",
+    mobileLayout: "w-full",
+    speed: -8,
   },
   {
     title: "Shinhan Easy",
-    subtitle: "Digital Experience · Web",
-    src: "/vinus/work/shinhan-easy.jpg",
-    aspect: "aspect-[4/5] md:aspect-[16/10]",
-    widthClass: "w-full md:w-[48%] md:ml-auto md:-mt-32",
-    parallaxSpeed: 80,
+    subtitle: "Digital Experience & Mobile Web",
+    category: "Web",
+    src: "/vinus/dummy-photo/work-02.jpg",
+    slug: "shinhan-easy",
+    layout: "home-project--shinhan",
+    mobileLayout: "ml-[14%] w-[86%]",
+    speed: 10,
   },
   {
     title: "Crowd OH!",
-    subtitle: "Crowdsourcing Platform · Web",
-    src: "/vinus/work/crowd-oh.jpg",
-    aspect: "aspect-[4/5] md:aspect-[4/3]",
-    widthClass: "w-full md:w-[42%]",
-    parallaxSpeed: -50,
+    subtitle: "Crowdsourcing Platform Design",
+    category: "Web",
+    src: "/vinus/dummy-photo/work-03.jpg",
+    slug: "crowdsourcing-platform-crowd-oh",
+    layout: "home-project--crowd",
+    mobileLayout: "w-[92%]",
+    speed: -7,
   },
   {
     title: "macadamia",
-    subtitle: "Product Strategy · UX/UI · Web",
-    src: "/vinus/work/macadamia.png",
-    aspect: "aspect-[4/5] md:aspect-[16/9]",
-    widthClass: "w-full md:w-[52%] md:ml-auto md:-mt-20",
-    parallaxSpeed: 70,
+    subtitle: "Product Strategy & UX/UI Design",
+    category: "Web",
+    src: "/vinus/dummy-photo/work-04.jpg",
+    slug: "macadamia-website",
+    layout: "home-project--macadamia",
+    mobileLayout: "ml-[8%] w-[92%]",
+    speed: 8,
   },
   {
     title: "Budongsan114 Mediate BIZsolution",
     subtitle: "Product Strategy · UX/UI · Web",
-    src: "/vinus/work/budongsan114.jpg",
-    aspect: "aspect-[4/5] md:aspect-[5/6]",
-    widthClass: "w-full md:w-[38%]",
-    parallaxSpeed: -45,
+    category: "Web",
+    src: "/vinus/dummy-photo/work-05.jpg",
+    slug: "budongsan114-mediate-bizsolution",
+    layout: "home-project--budongsan",
+    mobileLayout: "ml-[20%] w-[80%]",
+    speed: -10,
+    mobileOnly: true,
   },
   {
     title: "DongA On book",
     subtitle: "Branding · Digital Design · Web",
-    src: "/vinus/work/donga-on-book.jpg",
-    aspect: "aspect-[4/5] md:aspect-[16/10]",
-    widthClass: "w-full md:w-[58%] md:ml-auto",
-    parallaxSpeed: 65,
+    category: "Web",
+    src: "/vinus/dummy-photo/work-06.jpg",
+    slug: "donga-on-book",
+    layout: "home-project--donga",
+    mobileLayout: "ml-[7%] w-[93%]",
+    speed: 7,
+    mobileOnly: true,
   },
 ];
 
-const workLayouts = [
-  "md:col-span-4 md:col-start-1 md:max-w-[600px] md:justify-self-start",
-  "md:col-span-3 md:col-start-6 md:mt-12 md:max-w-[460px] md:justify-self-center",
-  "md:col-span-3 md:col-start-10 md:mt-24 md:max-w-[460px] md:justify-self-end",
-  "md:col-span-3 md:col-start-1 md:mt-4 md:max-w-[460px] md:justify-self-start",
-  "md:col-span-4 md:col-start-5 md:mt-16 md:max-w-[600px] md:justify-self-center",
-  "md:col-span-3 md:col-start-10 md:mt-4 md:max-w-[460px] md:justify-self-end",
-  "md:col-span-4 md:col-start-1 md:mt-8 md:max-w-[600px] md:justify-self-start",
-  "md:col-span-3 md:col-start-6 md:mt-20 md:max-w-[460px] md:justify-self-center",
-  "md:col-span-3 md:col-start-10 md:mt-8 md:max-w-[460px] md:justify-self-end",
-  "md:col-span-4 md:col-start-5 md:mt-12 md:max-w-[600px] md:justify-self-center",
+const services = [
+  { title: "Product Strategy", details: ["Discovery", "Roadmap", "AI Opportunity"] },
+  { title: "Experience Design", details: ["UX/UI", "Web", "App", "Interaction"] },
+  { title: "Brand Systems", details: ["Identity", "Visual Direction", "Content"] },
+  { title: "Launch & Operation", details: ["CMS", "SEO", "Analytics", "Improvement"] },
 ];
 
-const serviceAreas = [
-  { title: "Product Strategy", details: ["Discovery", "Roadmap", "AI Opportunity"], icon: Compass },
-  { title: "Experience Design", details: ["UX/UI", "Web", "App", "Interaction"], icon: PanelsTopLeft },
-  { title: "Brand Systems", details: ["Identity", "Visual Direction", "Content"], icon: Shapes },
-  { title: "Launch & Operation", details: ["CMS", "SEO", "Analytics", "Improvement"], icon: RefreshCw },
-];
-
-const clientWork = [
-  { name: "DongA On book", scope: "Branding · Digital Design · Web Development" },
-  { name: "Samyang", scope: "Digital Design · Web Development" },
-  { name: "Lotte Cinema", scope: "UX/UI Design · App Development" },
-  { name: "Samsung Electronics", scope: "Digital Design · Creative Direction" },
-  { name: "Seoul Paik Hospital", scope: "Digital Design · Web Development" },
-  { name: "Realty 114", scope: "Strategy · UX/UI Design · App Development" },
-  { name: "Macadamia", scope: "Strategy · UX/UI Design" },
-  { name: "Smart City Jungnang", scope: "Strategy · Digital Design" },
-  { name: "CJ CheilJedang", scope: "Digital Design · Creative Direction" },
-  { name: "Hankook Tire", scope: "Digital Design · Web Development" },
-  { name: "Nexon", scope: "Brand Identity · Digital Design" },
-  { name: "LG Electronics", scope: "Digital Design · UX/UI" },
-];
-
-const insights = [
+const homeStoryContent = [
   {
     title: "Why You Shouldn't Choose Brand Colors by Instinct",
-    excerpt: "Color is not just a matter of taste; it determines the perception and emotions of your brand. Even a small change can affect the entire way people perceive your brand.",
-    date: "2026.04.20",
-    image: "/vinus/insights/brand-color.jpg",
-    href: "https://vinus-website.vercel.app/story/post-1779326372529",
+    excerpt:
+      "Color is not just a matter of taste; it determines the perception and emotions of your brand. Even a small change can affect the entire way people perceive your brand.",
   },
   {
     title: "What Happens When You Don't Have Design Principles",
-    excerpt: "Without clear principles, design sways with every piece of feedback and personal preference. Consistent standards keep all decisions moving in one direction.",
-    date: "2026.05.22",
-    image: "/vinus/insights/design-principles.png",
-    href: "https://vinus-website.vercel.app/story/post-1779449177212",
+    excerpt:
+      "Without clear principles, design sways with every piece of feedback and personal preference. Consistent standards keep all decisions moving in one direction.",
   },
   {
     title: "UX Writing: How to Start with a Single Button",
-    excerpt: "We design starting from the shortest sentences users encounter most frequently. Even the wording of a single button shapes the direction of the experience and the next action.",
-    date: "2026.05.01",
-    image: "/vinus/insights/ux-writing.png",
-    href: "https://vinus-website.vercel.app/story/ux-3",
+    excerpt:
+      "We design starting from the shortest sentences users encounter most frequently. Even the wording of a single button shapes the direction of the experience and the next action.",
   },
-];
+] as const;
 
-const textActionClass =
-  "group inline-flex items-center gap-3 border-b border-current pb-1.5 text-[clamp(1.125rem,1.4vw,1.5rem)] font-normal leading-none transition-opacity duration-200 hover:opacity-55";
+const stories = storyEntries.map((story, index) => ({
+  title: homeStoryContent[index]?.title ?? story.title,
+  excerpt: homeStoryContent[index]?.excerpt ?? story.excerpt,
+  date: story.date,
+  image: story.image,
+  href: `/news/${story.slug}`,
+}));
 
-const textActionIconClass =
-  "size-5 stroke-[1.4] transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-1 group-hover:-translate-y-1";
-
-function MagneticButton({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  const btnRef = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const btn = btnRef.current;
-    if (!btn) return;
-    const rect = btn.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    gsap.to(btn, { x: x * 0.35, y: y * 0.35, duration: 0.4, ease: "power2.out" });
-  };
-
-  const handleMouseLeave = () => {
-    const btn = btnRef.current;
-    if (!btn) return;
-    gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.4)" });
-  };
-
+function ProjectCard({ project }: { project: Project }) {
   return (
-    <div className="inline-block" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
-      {/* @ts-expect-error dynamic component ref binding */}
-      <div ref={btnRef} className={`will-change-transform ${className}`}>
-        {children}
-      </div>
-    </div>
+    <PortfolioCard
+      image={project.src}
+      imageAlt={project.title}
+      title={project.title}
+      subtitle={project.subtitle}
+      category={project.category}
+      href={`/work/${project.slug}`}
+      layoutClassName={`home-project ${project.layout} ${project.mobileLayout} ${project.mobileOnly ? "home-project--mobile-only" : ""}`}
+      mediaClassName="home-project-media"
+      imageSizes="(max-width: 767px) 92vw, (max-width: 2199px) 50vw, 1368px"
+    />
   );
 }
 
 export default function Home() {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const reelRef = useRef<HTMLElement>(null);
+  const playReelTriggerRef = useRef<HTMLButtonElement>(null);
+  const playReelDialogRef = useRef<HTMLDivElement>(null);
+  const playReelCloseRef = useRef<HTMLButtonElement>(null);
+  const reduceMotion = useReducedMotion();
   const [isPlaying, setIsPlaying] = useState(false);
-  const [showIntro, setShowIntro] = useState(true);
+  const [isPlayReelPresent, setIsPlayReelPresent] = useState(false);
+  const { scrollYProgress: reelProgress } = useScroll({
+    target: reelRef,
+    offset: ["start end", "end start"],
+  });
+  const reelImageY = useTransform(reelProgress, [0, 1], ["-12%", "12%"]);
+  const reelImageScale = useTransform(reelProgress, [0, 0.5, 1], [1.14, 1.04, 1.1]);
 
-  const heroRef = useRef<HTMLDivElement>(null);
-  const introRef = useRef<HTMLDivElement>(null);
-  const reelRef = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
 
-  useEffect(() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion) {
-      setShowIntro(false);
-      return;
-    }
+    const syncDesktopScale = () => {
+      const viewportWidth = window.innerWidth;
+      if (viewportWidth >= 1440 && viewportWidth < 2200) {
+        root.style.setProperty("--home-desktop-scale", String(viewportWidth / 2560));
+      } else {
+        root.style.removeProperty("--home-desktop-scale");
+      }
+    };
 
-    const timeout = window.setTimeout(() => setShowIntro(false), 700);
-    return () => window.clearTimeout(timeout);
+    syncDesktopScale();
+    window.addEventListener("resize", syncDesktopScale);
+    return () => window.removeEventListener("resize", syncDesktopScale);
   }, []);
 
   useEffect(() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const lenis = new Lenis({
-      lerp: reduceMotion ? 1 : 0.065,
-      orientation: "vertical",
-      smoothWheel: true,
-      wheelMultiplier: 0.9,
-      touchMultiplier: 1.1,
-      syncTouch: false,
-    });
+    if (!isPlayReelPresent) return;
 
-    const updateLenis = (time: number) => lenis.raf(time * 1000);
+    const body = document.body;
+    const previousOverflow = body.style.overflow;
+    const previousPaddingRight = body.style.paddingRight;
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const reelTrigger = playReelTriggerRef.current;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    const bodyPaddingRight = Number.parseFloat(window.getComputedStyle(body).paddingRight) || 0;
+    const focusFrame = requestAnimationFrame(() => playReelCloseRef.current?.focus({ preventScroll: true }));
 
-    lenis.on("scroll", ScrollTrigger.update);
-    gsap.ticker.add(updateLenis);
-    gsap.ticker.lagSmoothing(0, 0);
+    body.style.overflow = "hidden";
+    if (scrollbarWidth > 0) body.style.paddingRight = `${bodyPaddingRight + scrollbarWidth}px`;
 
-    const ctx = gsap.context(() => {
-      if (reduceMotion) {
-        gsap.set("[data-reveal]", { opacity: 1, y: 0 });
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setIsPlaying(false);
         return;
       }
 
-      const heroLines = gsap.utils.toArray<HTMLElement>(".hero-line");
+      if (event.key !== "Tab") return;
+
+      const focusable = Array.from(
+        playReelDialogRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ) ?? [],
+      ).filter((element) => !element.hasAttribute("disabled") && element.getAttribute("aria-hidden") !== "true");
+
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      cancelAnimationFrame(focusFrame);
+      document.removeEventListener("keydown", handleKeyDown);
+      body.style.overflow = previousOverflow;
+      body.style.paddingRight = previousPaddingRight;
+
+      const focusTarget = previousFocus && document.contains(previousFocus) ? previousFocus : reelTrigger;
+      focusTarget?.focus({ preventScroll: true });
+    };
+  }, [isPlayReelPresent]);
+
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    if (reduceMotion) {
+      gsap.set(
+        root.querySelectorAll(
+          "[data-hero-reveal], [data-reveal], [data-project-media], [data-project-image], [data-service-card], .home-hero-content, .home-portfolio-column, .home-studio-content, .home-clients, .home-story-list",
+        ),
+        { clearProps: "all" },
+      );
+      return;
+    }
+
+    const context = gsap.context(() => {
       gsap.fromTo(
-        heroLines,
-        { y: 40, opacity: 0 },
+        "[data-hero-reveal]",
+        { y: 28, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 1.2,
-          stagger: 0.15,
+          duration: 0.9,
+          stagger: 0.08,
           ease: "power3.out",
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: "top 80%",
-          },
-        }
+        },
       );
+    }, rootRef);
 
-      const introText = document.querySelector(".intro-p");
-      if (introText) {
-        gsap.fromTo(
-          introText,
-          { y: 50, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1.2,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: introRef.current,
-              start: "top 75%",
-            },
-          }
-        );
-      }
-
-      gsap.fromTo(
-        ".reel-media",
-        { scale: 1.12, yPercent: -4 },
-        {
-          scale: 1,
-          yPercent: 4,
-          ease: "none",
-          scrollTrigger: {
-            trigger: reelRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.2,
-          },
-        }
-      );
-
-      gsap.fromTo(
-        ".hero-background",
-        { yPercent: 0, scale: 1.08 },
-        {
-          yPercent: 18,
-          scale: 1.03,
-          ease: "none",
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: 1,
-          },
-        }
-      );
-
-      gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
-        gsap.fromTo(
-          element,
-          { y: 64, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.9,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: element,
-              start: "top 88%",
-              once: true,
-            },
-          }
-        );
+    const mediaQuery = gsap.matchMedia();
+    mediaQuery.add("(min-width: 768px)", () => {
+      const lenis = new Lenis({
+        lerp: 0.075,
+        smoothWheel: true,
+        wheelMultiplier: 0.74,
+        touchMultiplier: 1,
+        syncTouch: false,
       });
+      const updateLenis = (time: number) => lenis.raf(time * 1000);
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add(updateLenis);
 
-      gsap.utils.toArray<HTMLElement>("[data-float]").forEach((element) => {
-        const distance = Number(element.dataset.float || 8);
+      const desktopContext = gsap.context(() => {
+        const heroTimeline = gsap.timeline({
+          defaults: { ease: "none" },
+          scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: 1.15 },
+        });
+
+        heroTimeline
+          .fromTo("[data-hero-image]", { scale: 1.14, yPercent: -8 }, { scale: 1.04, yPercent: 18 }, 0)
+          .to(".home-hero-content", { yPercent: -14 }, 0)
+          .to(".home-hero-title span:nth-child(1)", { xPercent: -1.1 }, 0)
+          .to(".home-hero-title span:nth-child(2)", { xPercent: 0.8 }, 0)
+          .to(".home-hero-title span:nth-child(3)", { xPercent: -0.7 }, 0);
+
         gsap.fromTo(
-          element,
-          { yPercent: distance },
+          ".home-intro-copy",
+          { y: 120 },
           {
-            yPercent: -distance,
+            y: -64,
             ease: "none",
-            scrollTrigger: {
-              trigger: element.parentElement,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1.1,
-            },
-          }
+            scrollTrigger: { trigger: ".home-intro", start: "top bottom", end: "bottom top", scrub: 1.6 },
+          },
         );
-      });
 
-      const parallaxCards = gsap.utils.toArray<HTMLElement>("[data-parallax]");
-      parallaxCards.forEach((card) => {
-        const speed = parseFloat(card.getAttribute("data-parallax") || "0");
-        const distance = Math.max(-20, Math.min(20, speed / 4.5));
-        const img = card.querySelector("img");
-        if (img) {
+        gsap.fromTo(
+          ".home-portfolio-heading > div",
+          { y: 120 },
+          {
+            y: -84,
+            ease: "none",
+            scrollTrigger: { trigger: ".home-portfolio", start: "top bottom", end: "top top", scrub: 1.45 },
+          },
+        );
+
+        gsap.fromTo(
+          ".home-portfolio-column:first-child",
+          { y: 88 },
+          {
+            y: -132,
+            ease: "none",
+            scrollTrigger: { trigger: ".home-portfolio-canvas--desktop", start: "top bottom", end: "bottom top", scrub: 1.7 },
+          },
+        );
+
+        gsap.fromTo(
+          ".home-portfolio-column:last-child",
+          { y: -72 },
+          {
+            y: 124,
+            ease: "none",
+            scrollTrigger: { trigger: ".home-portfolio-canvas--desktop", start: "top bottom", end: "bottom top", scrub: 1.7 },
+          },
+        );
+
+        gsap.utils.toArray<HTMLElement>("[data-project-card]").forEach((card, index) => {
+          const image = card.querySelector<HTMLElement>("[data-project-image]");
+          if (!image) return;
+          const speed = projects[index]?.speed ?? 8;
+          const distance = Math.max(8, Math.min(16, Math.abs(speed) * 1.25));
+          const direction = Math.sign(speed || 1);
           gsap.fromTo(
-            img,
-            { yPercent: -distance, scale: 1.12 },
+            image,
+            { yPercent: direction * -distance, scale: 1.12 },
             {
-              yPercent: distance,
+              yPercent: direction * distance,
+              scale: 1.18,
               ease: "none",
-              scrollTrigger: {
-                trigger: card,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true,
-              },
-            }
+              scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: 1.65 },
+            },
           );
-        }
-      });
+        });
+
+        gsap.fromTo(
+          ".home-studio-content",
+          { y: 120 },
+          {
+            y: -96,
+            ease: "none",
+            scrollTrigger: { trigger: ".home-studio", start: "top bottom", end: "bottom top", scrub: 1.5 },
+          },
+        );
+
+        gsap.fromTo(
+          ".home-clients > *",
+          { y: 96 },
+          {
+            y: -88,
+            ease: "none",
+            stagger: 0.03,
+            scrollTrigger: { trigger: ".home-clients", start: "top bottom", end: "bottom top", scrub: 1.55 },
+          },
+        );
+
+        gsap.fromTo(
+          ".home-story-list",
+          { y: 104 },
+          {
+            y: -92,
+            ease: "none",
+            scrollTrigger: { trigger: ".home-story", start: "top bottom", end: "bottom top", scrub: 1.5 },
+          },
+        );
+
+      }, rootRef);
+
+      return () => {
+        desktopContext.revert();
+        gsap.ticker.remove(updateLenis);
+        lenis.destroy();
+      };
     });
 
     return () => {
-      ctx.revert();
-      gsap.ticker.remove(updateLenis);
-      lenis.destroy();
+      mediaQuery.revert();
+      context.revert();
     };
-  }, []);
+  }, [reduceMotion]);
 
   return (
-    <div className="relative min-h-screen bg-[#ffffff] text-[#0d0d0d] font-sans antialiased selection:bg-[#0d0d0d] selection:text-[#ffffff]">
-      <AnimatePresence>
-        {showIntro && (
-          <motion.div
-            aria-hidden="true"
-            initial={{ y: 0 }}
-            exit={{ y: "-100%" }}
-            transition={{ duration: 0.85, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[#0d0d0d] text-white"
-          >
-            <div className="flex flex-col items-center gap-5">
-              <motion.span
-                initial={{ y: 18, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                className="text-xl font-medium tracking-[-0.03em] md:text-2xl"
-              >
-                vinuspread
-              </motion.span>
-              <motion.span
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ delay: 0.12, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="h-px w-28 origin-left bg-white/70"
-              />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <div className="pointer-events-none fixed inset-0 z-50 custom-noise opacity-[0.02]" />
-
-      {/* 1. HERO SECTION */}
-      <section data-header-theme="dark" ref={heroRef} className="relative min-h-[100dvh] flex flex-col justify-start px-6 pt-[28dvh] pb-[250px] md:px-16 md:pt-[29dvh] md:pb-[250px] font-sans bg-[#0d0d0d] text-white overflow-hidden">
-        {/* Full Hero Background Image */}
-        <div className="absolute inset-0 z-0">
+    <div ref={rootRef} className="home-page relative overflow-hidden bg-white text-vinus-ink">
+      <section
+        ref={heroRef}
+        data-header-theme="dark"
+        className="home-hero relative overflow-hidden bg-vinus-ink text-white"
+      >
+        <div className="absolute inset-0">
           <Image
-            src="/cloned/about_img.png"
-            alt="Bright modern architecture"
+            src="/vinus/dummy-photo/hero.jpg"
+            alt="Modern residential architecture"
             fill
             priority
-            className="hero-background object-cover contrast-105 brightness-105 will-change-transform"
+            loading="eager"
+            sizes="100vw"
+            className="object-cover will-change-transform"
+            data-hero-image
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-black/20" />
         </div>
 
-        <div className="relative z-10 w-full max-w-[1800px]">
-          <div className="flex flex-col items-start gap-[90px]">
-            <p className="hero-line text-[clamp(1.125rem,1.4vw,1.5rem)] font-normal leading-[1.5] text-white">
+        <div className="home-hero-content relative flex flex-col items-start gap-[var(--space-section)]">
+          <div className="flex w-full flex-col items-start gap-[var(--space-section)]">
+            <p
+              data-hero-reveal
+              className="home-hero-lead type-lead w-full max-w-[720px] text-white"
+            >
               <span className="block">We uncover the ideas that matter most to people and businesses.</span>
               <span className="block">We shape them into clear, meaningful experiences built for change.</span>
               <span className="block">We create lasting value through design that grows with you.</span>
             </p>
 
-            <div aria-hidden="true" className="h-5 w-[120px] bg-white" />
+            <span data-hero-reveal aria-hidden="true" className="block h-2 w-[120px] bg-white md:h-5" />
 
-            <div>
-              <h1 className="hero-line text-[clamp(3.2rem,16vw,7.2rem)] md:text-[clamp(7.2rem,22.8vw,22.8rem)] font-normal leading-[0.9] tracking-tighter font-sans block">
-                We design
-              </h1>
-              <h1 className="hero-line text-[clamp(3.2rem,16vw,7.2rem)] md:text-[clamp(7.2rem,22.8vw,22.8rem)] font-normal leading-[0.9] tracking-tighter font-sans block">
-                sustainable
-              </h1>
-              <h1 className="hero-line text-[clamp(3.2rem,16vw,7.2rem)] md:text-[clamp(7.2rem,22.8vw,22.8rem)] font-normal leading-[0.9] tracking-tighter font-sans block">
-                growth
-              </h1>
-            </div>
+            <h1 className="home-hero-title font-normal">
+              <span data-hero-reveal className="block">We design</span>
+              <span data-hero-reveal className="block">sustainable</span>
+              <span data-hero-reveal className="block">growth</span>
+            </h1>
           </div>
 
-          <div className="mt-[128px] max-w-[1500px]">
-            <p className="text-[clamp(1.125rem,1.4vw,1.5rem)] leading-[1.5] text-white/90 font-sans font-medium tracking-tight">
-              We design sustainable growth together with our clients.<br className="hidden lg:block" />
-              From brand inception through refinement and expansion — we're with you at every stage.<br className="hidden lg:block" />
-              We'll be your trusted partner.
+          <p data-hero-reveal className="type-lead max-w-[1500px] font-normal text-white/70">
+            We design sustainable growth together with our clients.
+            <br />
+            From brand inception through refinement and expansion — we&apos;re with you at every stage.
+            <br />
+            We&apos;ll be your trusted partner.
+          </p>
+
+          <div data-hero-reveal>
+            <ArrowLink href="/contact" inverse>Download Brochure</ArrowLink>
+          </div>
+        </div>
+      </section>
+
+      <section className="home-intro relative border-t border-vinus-ink/10 bg-white">
+        <div className="home-intro-content flex flex-col items-start gap-[var(--space-content)]">
+          <p data-reveal className="home-intro-copy type-heading">
+            <span className="md:hidden">We focus on essential value and elevate it with beauty.</span>
+            <span className="md:hidden">Even as times change relentlessly, we stay grounded in what doesn&apos;t.<br />We create beautiful design that transcends structural and physical limits.</span>
+            <span className="hidden md:block">
+              We focus on essential value and<br />
+              elevate it with beauty.<br />
+              Even as times change relentlessly,<br />
+              we stay grounded in what doesn&apos;t.<br />
+              We create beautiful design that<br />
+              transcends structural and physical limits.
+            </span>
+          </p>
+          <div data-reveal>
+            <ArrowLink href="/studio">The Studio</ArrowLink>
+          </div>
+        </div>
+      </section>
+
+      <section id="work" className="home-portfolio relative bg-white">
+        <div className="home-portfolio-heading border-b border-vinus-ink/10">
+          <div className="flex max-w-[1680px] flex-col items-start gap-[var(--space-compact)]">
+            <h2 data-reveal className="type-display font-normal">Work</h2>
+            <p data-reveal className="type-lead">
+              We spread the virus of beauty throughout the world.
+              <br />
+              We believe the visual work we create will make tomorrow
+              <br />
+              more beautiful than today.
             </p>
           </div>
+        </div>
 
-          <div className="mt-[128px]">
-            <MagneticButton>
-              <a
-                href="#"
-                download
-                className={`${textActionClass} text-white`}
-              >
-                <span>Download Brochure</span>
-                <ArrowUpRight className={textActionIconClass} />
-              </a>
-            </MagneticButton>
+        <div className="home-portfolio-canvas home-portfolio-canvas--mobile">
+          {projects.map((project) => <ProjectCard key={`mobile-${project.title}`} project={project} />)}
+        </div>
+
+        <div className="home-portfolio-canvas home-portfolio-canvas--desktop">
+          <div className="home-portfolio-column">
+            {[projects[0], projects[2]].map((project) => <ProjectCard key={project.title} project={project} />)}
           </div>
+          <div className="home-portfolio-column">
+            {[projects[1], projects[3]].map((project) => <ProjectCard key={project.title} project={project} />)}
+          </div>
+        </div>
+
+        <div className="home-portfolio-cta flex justify-center" data-reveal>
+          <ArrowLink href="/work">Browse all work</ArrowLink>
         </div>
       </section>
 
-      {/* 2. INTRO DESCRIPTION SECTION */}
-      <section ref={introRef} className="py-32 md:py-44 px-6 md:px-16 bg-[#ffffff] border-t border-[#0d0d0d]/10">
-        <div className="max-w-[1300px] mx-auto">
-          <p className="intro-p text-[clamp(1.8rem,3.8vw,3.6rem)] font-light leading-[1.18] tracking-tight text-[#0d0d0d] font-sans">
-            We focus on
-            <br />
-            essential value and elevate it
-            <br />
-            with beauty.
-            <br /><br />
-            Even as times change relentlessly,
-            <br />
-            we stay grounded in what doesn&apos;t.
-            <br />
-            We create beautiful design that transcends
-            <br />
-            structural and physical limits.
-          </p>
-          <div className="mt-12">
-            <a
-                href="/studio"
-              className={textActionClass}
-            >
-              The Studio
-              <ArrowUpRight className={textActionIconClass} />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. FEATURED PROJECTS SECTION */}
-      <section id="work" className="overflow-hidden bg-[#ffffff] py-32">
-        <div>
-          <div className="mx-6 mb-20 border-b border-[#0d0d0d]/15 pb-12 md:mx-16">
-            <div className="max-w-[1680px]">
-              <h2 className="font-sans text-[clamp(3.25rem,5.8vw,7rem)] font-normal leading-[0.92] tracking-[-0.05em]">Work</h2>
-              <p className="mt-5 max-w-[900px] font-sans text-[clamp(1.125rem,1.4vw,1.5rem)] leading-[1.5] text-[#0d0d0d]/70">
-                We spread the virus of beauty throughout the world.
-                <br />
-                We believe the visual work we create will make tomorrow more beautiful than today.
-              </p>
-            </div>
-          </div>
-
-          <div className="mx-auto grid w-full max-w-[1920px] grid-cols-1 gap-y-16 px-6 md:grid-cols-12 md:gap-x-[clamp(1.5rem,2.4vw,3.25rem)] md:gap-y-12 md:px-16">
-            {vinuspreadProjects.map((project, idx) => (
-              <motion.article
-                key={project.title}
-                initial={{ opacity: 0, y: 110, scale: 0.96 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, margin: "-8%" }}
-                whileHover={{ y: -14 }}
-                transition={{ duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
-                className={`group relative w-full will-change-transform ${workLayouts[idx]}`}
-              >
-                <div data-parallax={project.parallaxSpeed} className={`relative ${project.aspect} overflow-hidden bg-[#f4f4f4]`}>
-                  <Image
-                    src={project.src}
-                    alt={project.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
-                  />
-                </div>
-
-                <div className="mt-6 font-sans">
-                  <div>
-                    <h3 className="text-xl font-medium tracking-tight font-sans md:text-2xl">{project.title}</h3>
-                    <p className="text-sm text-[#0d0d0d]/60 font-sans mt-1">{project.subtitle}</p>
-                  </div>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-
-          <div className="mt-24 px-6 text-center md:px-16">
-            <MagneticButton>
-              <a
-                href="/work"
-                className={textActionClass}
-              >
-                Browse all work
-                <ArrowUpRight className={textActionIconClass} />
-              </a>
-            </MagneticButton>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. WORK IN MOTION */}
-      <section data-header-theme="dark" ref={reelRef} className="relative overflow-hidden bg-white text-white">
-        <div className="relative h-[75svh] min-h-[520px] w-full overflow-hidden md:h-[92svh] md:min-h-[720px]">
+      <section ref={reelRef} data-header-theme="dark" className="home-reel relative overflow-hidden bg-white text-white">
+        <motion.div
+          className="absolute inset-0"
+          style={{ y: reduceMotion ? 0 : reelImageY, scale: reduceMotion ? 1 : reelImageScale }}
+        >
           <Image
-            src="/cloned/about_img.png"
-            alt="vinuspread playreel background"
+            src="/vinus/dummy-photo/hero.jpg"
+            alt="Vinuspread playreel"
             fill
             sizes="100vw"
-            className="reel-media object-cover opacity-70 grayscale contrast-125 will-change-transform"
+            className="object-cover opacity-70"
           />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <MagneticButton>
-              <button
-                onClick={() => setIsPlaying(true)}
-                className="group flex items-center justify-center size-28 rounded-full border border-white/20 bg-white/10 backdrop-blur-md transition-all hover:scale-110 hover:bg-white hover:text-[#0d0d0d]"
-              >
-                <Play className="size-9 fill-current transition-transform group-hover:scale-105" />
-              </button>
-            </MagneticButton>
-          </div>
+        </motion.div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <motion.button
+            ref={playReelTriggerRef}
+            type="button"
+            aria-label="Play Vinuspread reel"
+            aria-expanded={isPlayReelPresent}
+            aria-controls="playreel-dialog"
+            onClick={() => {
+              setIsPlayReelPresent(true);
+              setIsPlaying(true);
+            }}
+            whileHover={reduceMotion ? undefined : { scale: 1.06 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
+            className="flex size-28 items-center justify-center rounded-full border border-white/16 bg-white/55 text-white"
+          >
+            <Image src="/vinus/icons/playreel-play.svg" alt="" width={36} height={36} aria-hidden="true" />
+          </motion.button>
         </div>
       </section>
 
-      {/* 5. STUDIO / CONTINUITY */}
-      <section id="studio" className="bg-white px-6 py-20 text-[#0d0d0d] md:px-16 md:py-28">
-        <div className="relative hidden min-h-[820px] lg:block">
-          <div className="absolute inset-0 z-10 mx-auto flex max-w-[1320px] flex-col items-center justify-center text-center">
-            <h2 data-reveal className="text-[clamp(3.25rem,5.8vw,7rem)] font-normal leading-[0.92] tracking-[-0.05em]">
-              How we work
-            </h2>
-            <p data-reveal className="mx-auto mt-8 whitespace-nowrap text-center text-[clamp(2rem,3.2vw,3.75rem)] font-normal leading-[1.02] text-[#0d0d0d]/75">
+      <section id="studio" className="home-studio flex items-center justify-center bg-white px-6 md:px-16">
+        <div className="home-studio-content flex w-full max-w-[1320px] flex-col items-center gap-[var(--space-edge)] text-center">
+          <h2 data-reveal className="home-studio-title type-page font-normal">How we work</h2>
+
+          <div className="home-studio-intro flex w-full max-w-[751px] flex-col items-center gap-[var(--space-compact)]">
+            <p data-reveal className="home-studio-lead type-heading w-full">
               Always there, from first idea to final detail.
             </p>
-
-            <p data-reveal className="mt-8 max-w-[720px] text-base leading-[1.55] md:text-lg">
-              Vinuspread is a product management group that partners with clients from the first idea through completion and beyond. We help define the direction, using AI to work faster and more experimentally—backed by over 20 years of experience in UI/UX, branding, and product design.
+            <p data-reveal className="home-studio-body type-lead w-full">
+              Vinuspread is a product management group that partners with clients from the first idea through completion and beyond.
+              <br className="hidden lg:block" />
+              We help define the direction, using AI to work faster and more experimentally—backed by over 20 years of experience in
+              <br className="hidden lg:block" /> UI/UX, branding, and product design.
             </p>
-
-            <div data-reveal className="mt-10 grid w-full max-w-[1120px] grid-cols-4 border-y border-[#0d0d0d]/10 text-left">
-              {serviceAreas.map((service) => {
-                const ServiceIcon = service.icon;
-                return (
-                  <div key={service.title} className="border-r border-[#0d0d0d]/10 px-5 py-6 last:border-r-0">
-                    <ServiceIcon aria-hidden="true" className="size-7 stroke-[1.25] text-[#0d0d0d]/55" />
-                    <h3 className="mt-8 text-[clamp(1.125rem,1.4vw,1.5rem)] font-normal leading-[1.1]">
-                      {service.title}
-                    </h3>
-                    <p className="mt-4 text-sm uppercase leading-[1.65] text-[#0d0d0d]/65 xl:text-[15px]">
-                      {service.details.map((detail) => <span key={detail} className="block">{detail}</span>)}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-
-            <nav data-reveal aria-label="Studio links" className="mt-10 flex flex-wrap justify-center gap-x-9 gap-y-4">
-              <a href="/studio" className={textActionClass}>
-                <span>Explore our services</span>
-                <ArrowUpRight className={textActionIconClass} />
-              </a>
-              <a href="/work" className={textActionClass}>
-                <span>See our work</span>
-                <ArrowUpRight className={textActionIconClass} />
-              </a>
-            </nav>
-          </div>
-        </div>
-
-        <div className="lg:hidden">
-          <div className="mx-auto flex max-w-[760px] flex-col items-center text-center">
-            <h2 data-reveal className="text-[clamp(3.25rem,12vw,5rem)] font-normal leading-[0.92] tracking-[-0.05em]">
-              How we work
-            </h2>
-            <p data-reveal className="mx-auto mt-7 text-center text-[clamp(1.25rem,5vw,2rem)] font-normal leading-[1.08] text-[#0d0d0d]/75 md:whitespace-nowrap">
-              Always there, from first idea to final detail.
-            </p>
-            <p data-reveal className="mt-8 max-w-[680px] text-base leading-[1.55]">
-              Vinuspread is a product management group that partners with clients from the first idea through completion and beyond. We help define the direction, using AI to work faster and more experimentally—backed by over 20 years of experience in UI/UX, branding, and product design.
-            </p>
-
-            <div data-reveal className="mt-9 grid w-full grid-cols-2 border-l border-t border-[#0d0d0d]/10 text-left">
-              {serviceAreas.map((service) => {
-                const ServiceIcon = service.icon;
-                return (
-                  <div key={service.title} className="border-b border-r border-[#0d0d0d]/10 px-4 py-5">
-                    <ServiceIcon aria-hidden="true" className="size-6 stroke-[1.25] text-[#0d0d0d]/55" />
-                    <h3 className="mt-6 text-base font-normal leading-[1.15]">{service.title}</h3>
-                    <p className="mt-3 text-[13px] uppercase leading-[1.65] text-[#0d0d0d]/65">
-                      {service.details.map((detail) => <span key={detail} className="block">{detail}</span>)}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-
-            <nav data-reveal aria-label="Studio links" className="mt-9 flex flex-wrap justify-center gap-6">
-              <a href="/studio" className={textActionClass}>Explore our services <ArrowUpRight className={textActionIconClass} /></a>
-              <a href="/work" className={textActionClass}>See our work <ArrowUpRight className={textActionIconClass} /></a>
-            </nav>
           </div>
 
-        </div>
+          <div
+            data-service-grid
+            className="grid w-full max-w-[1120px] grid-cols-1 border-y border-vinus-ink/10 text-left sm:grid-cols-2 lg:grid-cols-4 lg:gap-[var(--space-content)]"
+          >
+            {services.map((service, index) => {
+              return (
+                <ServiceCard
+                  key={service.title}
+                  title={service.title}
+                  details={service.details}
+                  variant="icon"
+                  icon={<Image src="/vinus/icons/service-card.svg" alt="" width={28} height={28} aria-hidden="true" />}
+                  iconClassName="size-7"
+                  titleClassName="shrink-0 whitespace-nowrap"
+                  detailsClassName="shrink-0 normal-case"
+                  contentClassName="overflow-hidden"
+                  className={`home-service-card border-vinus-ink/10 ${
+                    index < services.length - 1 ? "lg:border-r" : ""
+                  } max-lg:border-b max-lg:last:border-b-0 sm:[&:nth-child(odd)]:border-r`}
+                  dataServiceCard
+                />
+              );
+            })}
+          </div>
 
+          <nav aria-label="Studio links" className="home-studio-links flex w-full max-w-[460px] flex-wrap justify-center gap-[var(--space-compact)]" data-reveal>
+            <ArrowLink href="/studio">Explore our services</ArrowLink>
+            <ArrowLink href="/work">See our work</ArrowLink>
+          </nav>
+        </div>
       </section>
 
-      {/* 6. CLIENTS */}
-      <section data-header-theme="dark" aria-labelledby="clients-heading" className="bg-[#1a1a1a] px-6 py-28 text-white md:px-16 md:py-44">
-        <h2
-          id="clients-heading"
-          data-reveal
-          className="max-w-[1500px] text-[clamp(3.25rem,5.8vw,7rem)] font-normal leading-[0.92] tracking-[-0.05em]"
-        >
+      <section
+        data-header-theme="dark"
+        aria-labelledby="clients-title"
+        className="home-clients flex flex-col gap-[var(--space-section)] bg-vinus-charcoal px-[var(--space-edge)] text-white"
+      >
+        <h2 id="clients-title" data-reveal className="type-section max-w-[1500px] font-normal">
           Clients we&apos;ve
           <br />
           partnered with.
         </h2>
-
-        <div className="mt-14 grid grid-cols-2 border-l border-t border-white/12 md:mt-20 md:grid-cols-4 xl:grid-cols-8">
-          {clientWork.map((client) => (
-            <div
-              key={client.name}
-              data-reveal
-              className="flex min-h-32 flex-col justify-between border-b border-r border-white/12 p-5 md:min-h-40 xl:min-h-44"
-            >
-              <span className="text-[clamp(1rem,1.25vw,1.35rem)] font-medium leading-[1.05] tracking-[-0.03em] text-white/85">{client.name}</span>
-              <span className="mt-8 text-sm uppercase leading-[1.45] text-white/40">{client.scope}</span>
-            </div>
-          ))}
-        </div>
+        <ClientLogoGrid tone="dark" mobileLimit={20} />
       </section>
 
-      {/* 8. IDEAS & INSIGHTS */}
-      <section id="news" className="bg-white px-6 py-28 text-[#0d0d0d] md:px-16 md:py-44">
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-8">
-          <div className="min-w-0 lg:col-span-5">
-            <div data-reveal className="lg:sticky lg:top-32">
-              <h2 className="max-w-full text-[clamp(3.25rem,5.8vw,7rem)] font-normal leading-[0.92]">
-                <span className="block whitespace-nowrap">Ideas &amp;</span>
-                <span className="block whitespace-nowrap">Insights</span>
+      <section id="news" className="home-story bg-white px-[var(--space-edge)]">
+        <div className="home-story-grid grid gap-[var(--space-section)] lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-[var(--grid-gutter)]">
+          <div>
+            <div data-reveal className="home-story-heading flex flex-col items-start gap-[var(--space-content)] lg:sticky lg:top-32">
+              <h2 className="type-page font-normal">
+                <span className="block">Ideas &amp;</span>
+                <span className="block">Insights</span>
               </h2>
-              <a href="/news" className={`${textActionClass} mt-10`}>
-                View all stories
-                <ArrowUpRight className={textActionIconClass} />
-              </a>
+              <div className="hidden lg:block">
+                <ArrowLink href="/news">View all stories</ArrowLink>
+              </div>
+              <p className="type-lead lg:hidden">Ideas and insights for building meaningful experiences.</p>
             </div>
           </div>
 
-          <div className="border-t border-[#0d0d0d]/10 lg:col-span-7">
-            {insights.map((article) => (
-              <a
-                key={article.title}
-                data-reveal
-                href={article.href}
-                className="group grid grid-cols-[88px_1fr] gap-6 border-b border-[#0d0d0d]/10 py-9 md:grid-cols-[120px_1fr_auto] md:items-start md:gap-9 md:py-12"
-              >
-                <div className="relative size-[88px] overflow-hidden rounded-full md:size-[120px]">
-                  <Image src={article.image} alt="" fill sizes="120px" className="object-cover transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-105" />
-                </div>
-                <div>
-                  <p className="mb-4 text-sm font-normal uppercase text-[#0d0d0d]/55">Insight · {article.date}</p>
-                  <h3 className="text-2xl font-medium leading-[1.15] md:text-4xl">{article.title}</h3>
-                  <p className="mt-5 max-w-[680px] text-lg font-normal leading-[1.55]">{article.excerpt}</p>
-                </div>
-                <ArrowUpRight className="hidden size-6 stroke-[1.2] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1 md:block" />
-              </a>
+          <div className="home-story-list shadow-[inset_0_1px_0_rgba(13,13,13,0.1)]">
+            {stories.map((story, index) => (
+              <StoryListItem
+                key={story.title}
+                {...story}
+                category="Insight"
+                variant="home"
+                index={index}
+              />
             ))}
           </div>
+          <div className="home-story-link lg:hidden">
+            <ArrowLink href="/news">View all stories</ArrowLink>
+          </div>
         </div>
       </section>
 
-      {/* 6. FOOTER SECTION */}
       <Footer />
 
-      {/* FULLSCREEN VIDEO MODAL */}
-      <AnimatePresence>
+      <AnimatePresence onExitComplete={() => setIsPlayReelPresent(false)}>
         {isPlaying && (
           <motion.div
-            initial={{ opacity: 0 }}
+            ref={playReelDialogRef}
+            id="playreel-dialog"
+            initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 backdrop-blur-md"
+            exit={reduceMotion ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: reduceMotion ? 0 : 0.2 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Vinuspread playreel"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-vinus-ink/95 p-6 text-white"
           >
             <button
+              ref={playReelCloseRef}
+              type="button"
+              aria-label="Close playreel"
               onClick={() => setIsPlaying(false)}
-              className="absolute top-6 right-6 rounded-full bg-white/10 p-4 hover:bg-[#eae8e4] hover:text-[#0d0d0d] transition-colors"
+              className="absolute right-6 top-6 flex size-12 items-center justify-center rounded-full border border-white/30 transition-colors duration-200 hover:bg-white hover:text-vinus-ink"
             >
-              <X className="size-6" />
+              <X className="size-5" />
             </button>
-            <div className="w-full max-w-[1280px] aspect-[16/9] relative overflow-hidden bg-zinc-900 rounded-[1rem] ring-1 ring-white/10">
-              <Image
-                src="/cloned/about_img.png"
-                alt="vinuspread playreel"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center p-8 text-center">
-                <p className="text-xs uppercase tracking-widest text-[#eae8e4]/60 mb-2">vinuspread PlayReel Stream</p>
-                <h3 className="text-2xl font-light max-w-[480px]">Interactive PlayReel video stream simulation.</h3>
+            <div className="relative aspect-video w-full max-w-[1280px] overflow-hidden">
+              <Image src="/vinus/dummy-photo/reel.jpg" alt="Vinuspread playreel" fill className="object-cover opacity-75" />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/25">
+                <p className="type-lead">Vinuspread PlayReel</p>
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      <style jsx global>{`
+        .home-hero {
+          height: 980px;
+          min-height: 0;
+          padding: 96px 24px 96px;
+        }
+
+        .home-hero-content {
+          height: 704px;
+          max-width: 1800px;
+        }
+
+        .home-hero-title {
+          font-size: 64px;
+          line-height: 64px;
+        }
+
+        .home-intro {
+          height: 720px;
+          padding: 96px 24px;
+        }
+
+        .home-intro-copy {
+          display: flex;
+          flex-direction: column;
+          gap: 40px;
+        }
+
+        .home-portfolio {
+          height: 3364px;
+          margin-bottom: 160px;
+          padding: 96px 24px;
+        }
+
+        .home-portfolio-heading {
+          border-bottom-color: transparent;
+          padding-bottom: 0;
+        }
+
+        .home-portfolio-canvas {
+          display: flex;
+          flex-direction: column;
+          gap: 48px;
+          margin-top: 64px;
+        }
+
+        .home-portfolio-canvas--desktop {
+          display: none;
+        }
+
+        .home-project-media {
+          aspect-ratio: 1 / 1;
+        }
+
+        .home-portfolio-cta {
+          margin-top: 96px;
+        }
+
+        .home-reel {
+          height: 480px;
+          min-height: 480px;
+        }
+
+        .home-studio {
+          height: 908px;
+          min-height: 0;
+          padding-top: 96px;
+          padding-bottom: 96px;
+        }
+
+        .home-clients {
+          height: 1080px;
+          padding-top: 96px;
+          padding-bottom: 96px;
+        }
+
+        .home-story {
+          height: 1484px;
+          padding-top: 96px;
+          padding-bottom: 96px;
+        }
+
+        @media (min-width: 768px) and (max-width: 1439px) {
+          .home-hero {
+            min-height: max(100dvh, 1320px);
+            padding: 220px 64px 120px;
+          }
+
+          .home-hero-title {
+            font-size: min(14.22vw, 300px);
+            line-height: 0.9;
+          }
+
+          .home-intro {
+            min-height: 876px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 96px 64px;
+          }
+
+          .home-intro-content {
+            width: min(1680px, 100%);
+          }
+
+          .home-intro-copy {
+            width: min(1480px, 100%);
+            gap: 32px;
+            font-size: 64px;
+            line-height: 72px;
+          }
+
+          .home-portfolio {
+            padding: 96px 64px;
+          }
+
+          .home-portfolio-heading {
+            border-bottom-color: rgb(13 13 13 / 0.1);
+            padding-bottom: 1px;
+          }
+
+          .home-portfolio-canvas {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            align-items: start;
+            gap: var(--space-section) var(--space-edge);
+          }
+
+          .home-portfolio-canvas--desktop {
+            display: none;
+          }
+
+          .home-project {
+            width: 100%;
+            margin-left: 0;
+          }
+
+          .home-project--mongdang {
+            grid-column: 1;
+            grid-row: 1;
+          }
+
+          .home-project--shinhan {
+            grid-column: 2;
+            grid-row: 1;
+            width: 68%;
+            justify-self: end;
+          }
+
+          .home-project--crowd {
+            grid-column: 1;
+            grid-row: 2;
+            width: 68%;
+          }
+
+          .home-project--macadamia {
+            grid-column: 2;
+            grid-row: 2;
+          }
+
+          .home-project--mobile-only {
+            display: none;
+          }
+
+          .home-reel {
+            height: min(50vw, 1280px);
+            min-height: 720px;
+          }
+
+          .home-clients {
+            padding: 160px 64px;
+          }
+
+          .home-story {
+            padding: 160px 64px;
+          }
+        }
+
+        @media (min-width: 1440px) and (max-width: 2199px) {
+          .home-page {
+            width: 2560px;
+            zoom: var(--home-desktop-scale);
+          }
+        }
+
+        @media (min-width: 1440px) {
+          .home-hero {
+            height: 2356px;
+            min-height: 0;
+            padding: 418px 64px 0;
+          }
+
+          .home-hero-content {
+            width: 1800px;
+            height: auto;
+          }
+
+          .home-hero-lead span {
+            white-space: nowrap;
+          }
+
+          .home-hero-content > div:last-child {
+            height: 45px;
+          }
+
+          .home-hero-title {
+            width: 1848px;
+            font-size: 364px;
+            line-height: 328px;
+          }
+
+          .home-hero-lead {
+            line-height: 32px;
+          }
+
+          .home-intro {
+            height: 845px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 64px;
+          }
+
+          .home-intro-content {
+            width: 1440px;
+          }
+
+          .home-intro-copy {
+            width: 1440px;
+            gap: 32px;
+            font-size: 64px;
+            line-height: 72px;
+          }
+
+          .home-portfolio {
+            height: 3151px;
+            display: flex;
+            flex-direction: column;
+            margin: 0 0 160px;
+            padding: 64px 0;
+          }
+
+          .home-portfolio-heading {
+            width: 100%;
+            height: 361px;
+            padding: 0 64px 1px;
+          }
+
+          .home-portfolio-heading p {
+            line-height: 32px;
+          }
+
+          .home-portfolio-canvas--mobile {
+            display: none;
+          }
+
+          .home-portfolio-canvas--desktop {
+            width: 100%;
+            height: 2489px;
+            display: flex;
+            flex-direction: row;
+            gap: 64px;
+            margin: 64px 0 0;
+            padding: 96px 64px 97px;
+          }
+
+          .home-portfolio-column {
+            display: flex;
+            width: 1184px;
+            height: 2296px;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 96px;
+          }
+
+          .home-project {
+            margin: 0;
+          }
+
+          .home-project--mongdang {
+            width: 1184px;
+            height: auto;
+          }
+
+          .home-project--shinhan {
+            width: 800px;
+            height: auto;
+            margin-left: auto;
+            justify-self: end;
+          }
+
+          .home-project--crowd {
+            width: 800px;
+            height: auto;
+          }
+
+          .home-project--macadamia {
+            width: 1184px;
+            height: auto;
+          }
+
+          .home-project--mobile-only {
+            display: none;
+          }
+
+          .home-portfolio-cta {
+            width: 100%;
+            margin: 64px 0 0;
+          }
+
+          .home-reel {
+            height: 1280px;
+            min-height: 0;
+          }
+
+          .home-studio {
+            height: 1080px;
+            min-height: 0;
+            padding-top: 160px;
+            padding-bottom: 160px;
+          }
+
+          .home-studio-lead {
+            font-size: 40px;
+            line-height: 48px;
+          }
+
+          .home-studio-title {
+            font-size: 120px;
+            line-height: 104px;
+          }
+
+          .home-studio-body {
+            line-height: 32px;
+          }
+
+          .home-studio-intro {
+            width: 1331px;
+            max-width: none;
+          }
+
+          [data-service-grid] {
+            height: 252px;
+            align-items: start;
+          }
+
+          .home-service-card {
+            border-right-width: 0;
+          }
+
+          .home-clients {
+            height: 976px;
+            padding: 160px 64px;
+          }
+
+          .home-story {
+            height: 1130px;
+            padding: 160px 64px;
+          }
+
+          .home-story-grid {
+            height: 810px;
+            grid-template-columns: 996px 1404px;
+          }
+
+          .home-story-row {
+            height: 270px;
+          }
+
+          .home-story-row--last {
+            height: 270px;
+          }
+
+          .home-page > footer {
+            height: 732px;
+          }
+        }
+
+        @media (max-width: 767px) {
+          .home-hero-content {
+            gap: 36px;
+          }
+
+          .home-hero-content > div:first-child {
+            gap: 32px;
+          }
+
+          .home-hero-title {
+            max-width: 100%;
+          }
+
+          .home-hero-content > div:last-child {
+            margin-top: -24px;
+          }
+
+          .home-intro-content p br:nth-of-type(5) {
+            display: none;
+          }
+
+          .home-studio {
+            align-items: flex-start;
+            justify-content: flex-start;
+          }
+
+          .home-studio-content {
+            align-items: flex-start;
+            gap: 64px;
+            text-align: left;
+          }
+
+          .home-studio-intro,
+          .home-studio-links {
+            display: none;
+          }
+
+          .home-service-card {
+            height: 105px;
+            border-bottom-width: 1px;
+          }
+
+          .home-service-card > a,
+          .home-service-card > a > div {
+            height: 100%;
+          }
+
+          .home-service-card > a > div {
+            justify-content: center;
+            gap: 0;
+            padding: 0;
+          }
+
+          .home-service-card > a > div > div:first-child {
+            display: none;
+          }
+
+          .home-service-card > a > div > div:nth-child(2) {
+            align-items: center;
+          }
+
+          .home-service-card h3 {
+            font-size: 20px;
+            line-height: 28px;
+            font-weight: 500;
+          }
+
+          .home-service-card p {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0 4px;
+            font-size: 14px;
+            line-height: 20px;
+            text-transform: none;
+          }
+
+          .home-service-card p span {
+            display: inline;
+          }
+
+          .home-service-card p span:not(:last-child)::after {
+            content: " ·";
+          }
+
+          [data-service-grid] {
+            display: flex;
+            height: 492px;
+            flex-direction: column;
+            gap: 24px;
+            border: 0;
+          }
+
+          .home-project {
+            width: 100% !important;
+            margin-left: 0 !important;
+          }
+
+          .home-portfolio-cta {
+            margin-top: 64px;
+          }
+
+          .home-clients {
+            gap: 64px;
+          }
+
+          .home-clients > div {
+            height: 720px;
+          }
+
+          .home-story-grid {
+            display: flex;
+            height: 1292px;
+            flex-direction: column;
+            gap: 64px;
+          }
+
+          .home-story-heading {
+            height: 184px;
+            gap: 24px;
+          }
+
+          .home-story-heading h2 {
+            font-size: 48px;
+            line-height: 52px;
+          }
+
+          .home-story-grid > div:nth-child(2) {
+            display: flex;
+            height: 956px;
+            flex-direction: column;
+            gap: 64px;
+            border-top: 0;
+          }
+
+          .home-story-link {
+            height: 24px;
+          }
+
+          .home-story h3 {
+            text-wrap: balance;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .home-page *,
+          .home-page *::before,
+          .home-page *::after {
+            scroll-behavior: auto !important;
+            transition-duration: 0.01ms !important;
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
-
-
-
-
