@@ -133,8 +133,7 @@ export default function ContactPage() {
       <section className="hidden w-full bg-vinus-paper px-6 py-16 md:block md:px-16 md:py-24">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-6">
           <div className="grid min-h-[266px] grid-cols-1 gap-12 border-b border-vinus-ink/35 pb-[98px] pt-8 md:grid-cols-12 md:items-end md:gap-8">
-            <p className="type-body font-medium md:col-span-3">Start a project</p>
-            <div className="flex flex-col gap-6 md:col-span-8 md:col-start-5">
+            <div className="flex flex-col gap-6 md:col-span-8 md:col-start-1">
               <h2 className="type-contact-heading font-normal">Tell us about<br />your next project.</h2>
               <p className="type-lead max-w-[760px] font-normal text-vinus-ink">Share the essentials below. We&apos;ll review your request and get back to you with the right direction.</p>
             </div>

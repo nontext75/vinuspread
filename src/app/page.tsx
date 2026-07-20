@@ -79,7 +79,6 @@ const projects: Project[] = [
     layout: "home-project--budongsan",
     mobileLayout: "ml-[20%] w-[80%]",
     speed: -10,
-    mobileOnly: true,
   },
   {
     title: "DongA On book",
@@ -90,7 +89,6 @@ const projects: Project[] = [
     layout: "home-project--donga",
     mobileLayout: "ml-[7%] w-[93%]",
     speed: 7,
-    mobileOnly: true,
   },
 ];
 
@@ -261,6 +259,26 @@ export default function Home() {
           ease: "power3.out",
         },
       );
+
+      gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element, index) => {
+        gsap.fromTo(
+          element,
+          { y: 46, opacity: 0, clipPath: "inset(0 0 18% 0)" },
+          {
+            y: 0,
+            opacity: 1,
+            clipPath: "inset(0 0 0% 0)",
+            duration: 0.9,
+            delay: (index % 3) * 0.035,
+            ease: "power4.out",
+            scrollTrigger: {
+              trigger: element,
+              start: "top 86%",
+              toggleActions: "play none none reverse",
+            },
+          },
+        );
+      });
     }, rootRef);
 
     const mediaQuery = gsap.matchMedia();
@@ -309,25 +327,32 @@ export default function Home() {
           },
         );
 
-        gsap.fromTo(
-          ".home-portfolio-column:first-child",
-          { y: 88 },
-          {
-            y: -132,
-            ease: "none",
-            scrollTrigger: { trigger: ".home-portfolio-canvas--desktop", start: "top bottom", end: "bottom top", scrub: 1.7 },
-          },
-        );
-
-        gsap.fromTo(
-          ".home-portfolio-column:last-child",
-          { y: -72 },
-          {
-            y: 124,
-            ease: "none",
-            scrollTrigger: { trigger: ".home-portfolio-canvas--desktop", start: "top bottom", end: "bottom top", scrub: 1.7 },
-          },
-        );
+        gsap.utils.toArray<HTMLElement>(".home-portfolio-canvas--desktop [data-project-card]").forEach((card, index) => {
+          gsap.fromTo(
+            card,
+            {
+              y: 220,
+              opacity: 0,
+              scale: 0.96,
+              clipPath: "inset(30% 0 0 0)",
+            },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              clipPath: "inset(0% 0 0 0)",
+              duration: 1.18,
+              delay: (index % 2) * 0.12,
+              ease: "expo.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 92%",
+                end: "top 58%",
+                toggleActions: "play none none reverse",
+              },
+            },
+          );
+        });
 
         gsap.utils.toArray<HTMLElement>("[data-project-card]").forEach((card, index) => {
           const image = card.querySelector<HTMLElement>("[data-project-image]");
@@ -346,37 +371,6 @@ export default function Home() {
             },
           );
         });
-
-        gsap.fromTo(
-          ".home-studio-content",
-          { y: 120 },
-          {
-            y: -96,
-            ease: "none",
-            scrollTrigger: { trigger: ".home-studio", start: "top bottom", end: "bottom top", scrub: 1.5 },
-          },
-        );
-
-        gsap.fromTo(
-          ".home-clients > *",
-          { y: 96 },
-          {
-            y: -88,
-            ease: "none",
-            stagger: 0.03,
-            scrollTrigger: { trigger: ".home-clients", start: "top bottom", end: "bottom top", scrub: 1.55 },
-          },
-        );
-
-        gsap.fromTo(
-          ".home-story-list",
-          { y: 104 },
-          {
-            y: -92,
-            ease: "none",
-            scrollTrigger: { trigger: ".home-story", start: "top bottom", end: "bottom top", scrub: 1.5 },
-          },
-        );
 
       }, rootRef);
 
@@ -449,7 +443,7 @@ export default function Home() {
       </section>
 
       <section className="home-intro relative border-t border-vinus-ink/10 bg-white">
-        <div className="home-intro-content flex flex-col items-start gap-[var(--space-content)]">
+        <div className="home-intro-content flex flex-col items-start gap-12 md:gap-16">
           <p data-reveal className="home-intro-copy type-heading">
             <span className="md:hidden">We focus on essential value and elevate it with beauty.</span>
             <span className="md:hidden">Even as times change relentlessly, we stay grounded in what doesn&apos;t.<br />We create beautiful design that transcends structural and physical limits.</span>
@@ -487,12 +481,7 @@ export default function Home() {
         </div>
 
         <div className="home-portfolio-canvas home-portfolio-canvas--desktop">
-          <div className="home-portfolio-column">
-            {[projects[0], projects[2]].map((project) => <ProjectCard key={project.title} project={project} />)}
-          </div>
-          <div className="home-portfolio-column">
-            {[projects[1], projects[3]].map((project) => <ProjectCard key={project.title} project={project} />)}
-          </div>
+          {projects.map((project) => <ProjectCard key={project.title} project={project} />)}
         </div>
 
         <div className="home-portfolio-cta flex justify-center" data-reveal>
@@ -535,10 +524,10 @@ export default function Home() {
       </section>
 
       <section id="studio" className="home-studio flex items-center justify-center bg-white px-6 md:px-16">
-        <div className="home-studio-content flex w-full max-w-[1320px] flex-col items-center gap-[var(--space-edge)] text-center">
+        <div className="home-studio-content flex w-full max-w-[1500px] flex-col items-start gap-16 text-left md:gap-20 xl:gap-24">
           <h2 data-reveal className="home-studio-title type-page font-normal">How we work</h2>
 
-          <div className="home-studio-intro flex w-full max-w-[751px] flex-col items-center gap-[var(--space-compact)]">
+          <div className="home-studio-intro grid w-full gap-10 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-20">
             <p data-reveal className="home-studio-lead type-heading w-full">
               Always there, from first idea to final detail.
             </p>
@@ -552,7 +541,7 @@ export default function Home() {
 
           <div
             data-service-grid
-            className="grid w-full max-w-[1120px] grid-cols-1 border-y border-vinus-ink/10 text-left sm:grid-cols-2 lg:grid-cols-4 lg:gap-[var(--space-content)]"
+            className="grid w-full max-w-[1320px] grid-cols-1 border-y border-vinus-ink/10 text-left sm:grid-cols-2 lg:grid-cols-4 lg:gap-12"
           >
             {services.map((service, index) => {
               return (
@@ -570,12 +559,14 @@ export default function Home() {
                     index < services.length - 1 ? "lg:border-r" : ""
                   } max-lg:border-b max-lg:last:border-b-0 sm:[&:nth-child(odd)]:border-r`}
                   dataServiceCard
+                  animate
+                  index={index}
                 />
               );
             })}
           </div>
 
-          <nav aria-label="Studio links" className="home-studio-links flex w-full max-w-[460px] flex-wrap justify-center gap-[var(--space-compact)]" data-reveal>
+          <nav aria-label="Studio links" className="home-studio-links flex w-full max-w-[460px] flex-wrap justify-start gap-[var(--space-compact)] pt-2 xl:pt-4" data-reveal>
             <ArrowLink href="/studio">Explore our services</ArrowLink>
             <ArrowLink href="/work">See our work</ArrowLink>
           </nav>
@@ -897,7 +888,7 @@ export default function Home() {
           }
 
           .home-portfolio {
-            height: 3151px;
+            height: auto;
             display: flex;
             flex-direction: column;
             margin: 0 0 160px;
@@ -920,47 +911,51 @@ export default function Home() {
 
           .home-portfolio-canvas--desktop {
             width: 100%;
-            height: 2489px;
-            display: flex;
-            flex-direction: row;
-            gap: 64px;
-            margin: 64px 0 0;
-            padding: 96px 64px 97px;
-          }
-
-          .home-portfolio-column {
-            display: flex;
-            width: 1184px;
-            height: 2296px;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 96px;
+            height: auto;
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            column-gap: 48px;
+            row-gap: 88px;
+            margin: 40px 0 0;
+            padding: 72px 64px 80px;
           }
 
           .home-project {
+            width: auto;
             margin: 0;
           }
 
           .home-project--mongdang {
-            width: 1184px;
-            height: auto;
+            grid-column: 2 / span 4;
           }
 
           .home-project--shinhan {
-            width: 800px;
-            height: auto;
-            margin-left: auto;
-            justify-self: end;
+            grid-column: 7 / span 3;
+            margin-top: 96px;
           }
 
           .home-project--crowd {
-            width: 800px;
-            height: auto;
+            grid-column: 4 / span 3;
+            margin-top: -24px;
           }
 
           .home-project--macadamia {
-            width: 1184px;
-            height: auto;
+            grid-column: 8 / span 4;
+            margin-top: 48px;
+          }
+
+          .home-project--budongsan {
+            grid-column: 2 / span 3;
+            margin-top: -8px;
+          }
+
+          .home-project--donga {
+            grid-column: 6 / span 3;
+            margin-top: 72px;
+          }
+
+          .home-project-media {
+            aspect-ratio: 4 / 3;
           }
 
           .home-project--mobile-only {
@@ -978,7 +973,7 @@ export default function Home() {
           }
 
           .home-studio {
-            height: 1080px;
+            height: auto;
             min-height: 0;
             padding-top: 160px;
             padding-bottom: 160px;
@@ -999,12 +994,12 @@ export default function Home() {
           }
 
           .home-studio-intro {
-            width: 1331px;
+            width: 100%;
             max-width: none;
           }
 
           [data-service-grid] {
-            height: 252px;
+            height: auto;
             align-items: start;
           }
 
@@ -1013,17 +1008,18 @@ export default function Home() {
           }
 
           .home-clients {
-            height: 976px;
+            height: auto;
+            min-height: 0;
             padding: 160px 64px;
           }
 
           .home-story {
-            height: 1130px;
+            height: auto;
             padding: 160px 64px;
           }
 
           .home-story-grid {
-            height: 810px;
+            height: auto;
             grid-template-columns: 996px 1404px;
           }
 

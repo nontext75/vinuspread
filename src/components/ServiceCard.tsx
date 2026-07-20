@@ -88,11 +88,11 @@ export function ServiceCard({
 
   return (
     <motion.article
-      initial={animate && !reduceMotion ? { opacity: 0, y: 32 } : false}
-      animate={animate && reduceMotion ? { opacity: 1, y: 0 } : undefined}
-      whileInView={animate ? { opacity: 1, y: 0 } : undefined}
-      viewport={animate ? { once: true, amount: 0.24 } : undefined}
-      transition={animate ? { duration: reduceMotion ? 0 : 0.62, delay: reduceMotion ? 0 : index * 0.06, ease: [0.23, 1, 0.32, 1] } : undefined}
+      initial={animate && !reduceMotion ? { opacity: 0, y: 104, scale: 0.975, clipPath: "inset(20% 0 0 0)" } : false}
+      animate={animate && reduceMotion ? { opacity: 1, y: 0, scale: 1, clipPath: "inset(0% 0 0 0)" } : undefined}
+      whileInView={animate ? { opacity: 1, y: 0, scale: 1, clipPath: "inset(0% 0 0 0)" } : undefined}
+      viewport={animate ? { once: true, amount: 0.2 } : undefined}
+      transition={animate ? { duration: reduceMotion ? 0 : 0.92, delay: reduceMotion ? 0 : index * 0.09, ease: [0.16, 1, 0.3, 1] } : undefined}
       className={cn("min-w-0", className)}
       data-service-card={dataServiceCard ? "" : undefined}
     >

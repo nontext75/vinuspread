@@ -40,10 +40,10 @@ export default function WorkPage() {
         eyebrow="Experience"
         title={<>We Spread<br />the Beautiful Things</>}
         description="We believe the visual work we create will make tomorrow more beautiful than today."
-        className="max-md:min-h-[604px]"
+        className="max-md:min-h-[520px] md:!pt-16 md:!pb-20"
       />
 
-      <section className="subpage-content flex flex-col gap-16 !pt-24 !pb-[68px] md:gap-9 md:!pt-0 md:!pb-[70px]">
+      <section className="subpage-content flex flex-col gap-16 !pt-14 !pb-[68px] md:gap-8 md:!pt-0 md:!pb-[70px]">
         <AnimatePresence mode="wait" initial={false}>
         {viewMode === "grid" ? (
           <motion.div
@@ -52,7 +52,7 @@ export default function WorkPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
             transition={{ duration: reduceMotion ? 0 : 0.22, ease: [0.23, 1, 0.32, 1] }}
-            className="flex flex-col items-start gap-12 sm:grid sm:grid-cols-2 sm:gap-x-[var(--grid-gutter)] sm:gap-y-[var(--space-content)] sm:content-start xl:grid-cols-3 2xl:grid-cols-4"
+            className="flex flex-col items-start gap-12 sm:grid sm:grid-cols-2 sm:gap-x-[var(--grid-gutter)] sm:gap-y-12 sm:content-start lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
           >
             {visibleProjects.map((project, index) => (
               <PortfolioCard
@@ -60,8 +60,9 @@ export default function WorkPage() {
                 {...project}
                 index={index}
                 animate
-                imageSizes="(max-width: 639px) calc(100vw - 48px), (max-width: 1279px) 50vw, (max-width: 1535px) 33vw, 25vw"
+                imageSizes="(max-width: 639px) calc(100vw - 48px), (max-width: 1023px) 50vw, (max-width: 1279px) 33vw, (max-width: 1535px) 25vw, 20vw"
                 layoutClassName="w-full"
+                mediaClassName="aspect-[4/3]"
               />
             ))}
           </motion.div>
@@ -85,7 +86,7 @@ export default function WorkPage() {
         )}
         </AnimatePresence>
 
-        <div className="order-first flex w-full justify-start md:order-last md:justify-center">
+        <div className="order-first z-20 flex w-full justify-start md:sticky md:bottom-8 md:order-last md:justify-center md:pb-2">
           <PortfolioControls
             categories={categories}
             activeCategory={activeFilter}

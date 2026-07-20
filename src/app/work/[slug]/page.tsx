@@ -1,10 +1,11 @@
 "use client";
 
-import { use } from "react";
+import { use, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+
 import { Footer } from "@/components/Footer";
 import { ProjectMetaGrid } from "@/components/project/ProjectMetaGrid";
 import { ProjectContentBlock } from "@/components/project/ProjectContentBlock";
@@ -73,6 +74,11 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
   const reduceMotion = useReducedMotion();
   const { slug } = use(params);
   const project = portfolioData[slug];
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroImageY = useTransform(heroScroll, [0, 1], ["0%", "20%"]);
+  const heroTextY = useTransform(heroScroll, [0, 1], ["0%", "-15%"]);
+  const heroOpacity = useTransform(heroScroll, [0, 0.8], [1, 0.3]);
 
   if (!project) {
     return (
@@ -92,13 +98,16 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
 
   return (
     <main className="min-h-[100dvh] overflow-x-hidden bg-vinus-paper text-vinus-ink selection:bg-vinus-ink selection:text-vinus-paper">
-      <section data-header-theme="dark" className="relative h-[520px] w-full overflow-hidden bg-vinus-ink md:h-auto md:aspect-video">
-        <Image src={project.image} alt={project.title} fill priority sizes="100vw" className="object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-black/25" />
+      <section ref={heroRef} data-header-theme="dark" className="relative h-[520px] w-full overflow-hidden bg-vinus-ink md:h-auto md:aspect-video">
+        <motion.div className="absolute inset-0 scale-[1.12] will-change-transform" style={{ y: reduceMotion ? 0 : heroImageY }}>
+          <Image src={project.image} alt={project.title} fill priority sizes="100vw" className="object-cover" />
+        </motion.div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-black/30" />
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 36 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: reduceMotion ? 0.01 : 0.75, delay: reduceMotion ? 0 : 0.12, ease: [0.23, 1, 0.32, 1] }}
+          style={{ y: reduceMotion ? 0 : heroTextY, opacity: reduceMotion ? 1 : heroOpacity }}
+          transition={{ duration: reduceMotion ? 0.01 : 0.75, delay: reduceMotion ? 0 : 0.12, ease: [0.16, 1, 0.3, 1] }}
           className="absolute inset-x-0 bottom-1 flex flex-col items-start gap-2 px-[var(--space-edge)] text-white md:bottom-0 md:gap-3 md:pb-[var(--space-section)]"
         >
           <p className="type-label font-medium text-white/70">{project.category}</p>
@@ -112,6 +121,7 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
           </h1>
         </motion.div>
       </section>
+
 
       <section className="flex h-[644px] w-full flex-col gap-12 border-b border-vinus-ink/10 px-[var(--space-edge)] pt-16 pb-24 md:h-auto md:py-24 min-[2200px]:!h-[325px]">
         <Link href="/work" className="type-body group inline-flex items-center gap-3 font-medium text-vinus-ink transition-opacity hover:opacity-60 md:type-label md:text-vinus-ink/45"><ArrowLeft className="size-3.5 transition-transform duration-200 motion-safe:group-hover:-translate-x-1" /><span className="md:hidden">Back to Experience</span><span className="hidden md:inline">Back to Work</span></Link>

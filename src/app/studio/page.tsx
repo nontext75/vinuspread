@@ -1,8 +1,10 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Footer } from "@/components/Footer";
+
 import { ClientLogoGrid } from "@/components/ClientLogoGrid";
 import { ServiceCard } from "@/components/ServiceCard";
 import { StudioPhilosophyCard } from "@/components/StudioPhilosophyCard";
@@ -51,6 +53,10 @@ const visionFormula = [
 export default function StudioPage() {
   const reduceMotion = useReducedMotion();
   const enter = (distance = 36) => ({ opacity: 0, y: distance });
+  const wideImageRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: wideScroll } = useScroll({ target: wideImageRef, offset: ["start end", "end start"] });
+  const wideImageY = useTransform(wideScroll, [0, 1], ["-14%", "14%"]);
+  const wideImageScale = useTransform(wideScroll, [0, 0.5, 1], [1.16, 1.08, 1.14]);
 
   return (
     <main className="subpage-wrapper selection:bg-vinus-ink selection:text-vinus-paper">
@@ -85,7 +91,7 @@ export default function StudioPage() {
             animate={reduceMotion ? { opacity: 1, y: 0 } : undefined}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.28 }}
-            transition={{ duration: reduceMotion ? 0.01 : 0.75, ease: [0.23, 1, 0.32, 1] }}
+            transition={{ duration: reduceMotion ? 0.01 : 0.75, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col items-start justify-start gap-8 text-left md:items-center md:justify-center md:gap-12 md:pr-12 md:text-center min-[2200px]:h-[1384px]"
           >
             <p className="type-label font-medium md:hidden">Our Vision</p>
@@ -97,16 +103,23 @@ export default function StudioPage() {
           </motion.div>
 
           <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 64, scale: 0.985 }}
-            animate={reduceMotion ? { opacity: 1, y: 0, scale: 1 } : undefined}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.18 }}
-            transition={{ duration: reduceMotion ? 0.01 : 0.85, ease: [0.23, 1, 0.32, 1] }}
+            ref={wideImageRef}
+            initial={reduceMotion ? false : { opacity: 0, y: 48 }}
+            animate={reduceMotion ? { opacity: 1, y: 0 } : undefined}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: reduceMotion ? 0.01 : 0.85, ease: [0.16, 1, 0.3, 1] }}
             className="relative h-[428px] w-full overflow-hidden bg-vinus-wash md:h-auto md:aspect-[2432/939] min-[2200px]:h-[939px]"
           >
-            <Image src="/vinus/dummy-photo/studio-wide.jpg" alt="VINUSPREAD visual perspective" fill sizes="calc(100vw - 128px)" className="object-cover" />
+            <motion.div
+              className="absolute inset-0 will-change-transform"
+              style={{ y: reduceMotion ? 0 : wideImageY, scale: reduceMotion ? 1 : wideImageScale }}
+            >
+              <Image src="/vinus/dummy-photo/studio-wide.jpg" alt="VINUSPREAD visual perspective" fill sizes="calc(100vw - 128px)" className="object-cover" />
+            </motion.div>
           </motion.div>
       </section>
+
 
       <section className="studio-business h-[1660px] w-full overflow-hidden border-b border-vinus-ink/10 px-[var(--space-edge)] py-24 md:h-auto md:overflow-visible md:py-[var(--space-section)] min-[2200px]:!h-[1103px] min-[2200px]:overflow-hidden">
         <div className="flex max-w-[1200px] flex-col gap-10 md:gap-6">

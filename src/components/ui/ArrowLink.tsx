@@ -21,7 +21,7 @@ export function ArrowLink({ href, children, inverse = false, className }: ArrowL
         className,
       )}
     >
-      <span>{children}</span>
+      <span className="border-b border-current leading-none">{children}</span>
       <Image
         src="/vinus/icons/arrow-link.svg"
         alt=""

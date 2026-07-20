@@ -23,8 +23,8 @@ export function PortfolioControls<Category extends string>({
   onViewModeChange,
 }: PortfolioControlsProps<Category>) {
   return (
-    <div className="flex w-full items-center gap-2 text-vinus-ink md:h-[54px] md:w-[562px] md:max-w-full md:gap-6 md:rounded-full md:border md:border-white/15 md:bg-vinus-ink md:px-[25px] md:py-px md:text-white md:shadow-[0_25px_25px_rgba(0,0,0,0.25)]">
-      <div className="flex min-w-0 flex-1 items-center justify-between gap-2 md:h-8 md:w-[414px] md:flex-none md:justify-start md:gap-3 md:border-r md:border-white/15 md:pr-[25px]">
+    <div className="flex w-full items-center gap-2 text-vinus-ink md:w-auto md:max-w-full md:gap-3 md:rounded-full md:border md:border-white/15 md:bg-vinus-ink md:p-3 md:text-white md:shadow-[0_25px_25px_rgba(0,0,0,0.25)]">
+      <div className="flex min-w-0 flex-1 items-center justify-between gap-2 md:h-8 md:w-auto md:flex-none md:justify-start md:gap-3 md:border-r md:border-white/15 md:pr-3">
         {categories.map((category) => {
           const count = getCount(category);
           const disabled = count === 0;

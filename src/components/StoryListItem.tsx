@@ -32,18 +32,18 @@ export function StoryListItem({
   const reduceMotion = useReducedMotion();
   const imageRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: imageRef, offset: ["start end", "end start"] });
-  const imageY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
 
   return (
     <motion.div
-      initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-      animate={reduceMotion ? { opacity: 1, y: 0 } : undefined}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.35 }}
+      initial={reduceMotion ? false : { opacity: 0, y: 112, scale: 0.985, clipPath: "inset(22% 0 0 0)" }}
+      animate={reduceMotion ? { opacity: 1, y: 0, scale: 1, clipPath: "inset(0% 0 0 0)" } : undefined}
+      whileInView={{ opacity: 1, y: 0, scale: 1, clipPath: "inset(0% 0 0 0)" }}
+      viewport={{ once: true, amount: 0.18 }}
       transition={{
-        duration: reduceMotion ? 0 : 0.36,
-        delay: reduceMotion ? 0 : index * 0.035,
-        ease: [0.23, 1, 0.32, 1],
+        duration: reduceMotion ? 0 : 0.98,
+        delay: reduceMotion ? 0 : index * 0.09,
+        ease: [0.16, 1, 0.3, 1],
       }}
       className={cn(
         "group border-vinus-ink/10 bg-white",
@@ -60,35 +60,43 @@ export function StoryListItem({
             variant === "home" ? "size-24 md:size-[174px]" : "size-24 md:size-[120px]",
           )}
         >
-          <motion.div className="absolute inset-0 will-change-transform" style={{ y: reduceMotion ? 0 : imageY, scale: reduceMotion ? 1 : 1.12 }}>
+          <motion.div className="absolute inset-0 will-change-transform" style={{ y: reduceMotion ? 0 : imageY, scale: reduceMotion ? 1 : 1.14 }}>
             <Image
               src={image}
               alt=""
               fill
               sizes={variant === "home" ? "(max-width: 767px) 96px, 174px" : "(max-width: 767px) 96px, 120px"}
-              className="object-cover transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] motion-safe:group-hover:scale-[1.04]"
+              className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:group-hover:scale-[1.06]"
             />
           </motion.div>
         </div>
-        <div className={cn("flex min-w-0 flex-col self-start gap-4 md:col-start-2", variant === "home" ? "md:gap-6" : "md:gap-3")}>
+        <div className={cn("flex min-w-0 flex-col self-start gap-4 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 md:col-start-2", variant === "home" ? "md:gap-6" : "md:gap-3")}>
           <p className={cn("font-medium text-vinus-ink", variant === "home" ? "type-body md:font-normal md:text-vinus-ink/65" : "type-label md:font-normal")}>
             {category} · {date}
           </p>
           <h2
             className={cn(
-              "font-medium text-vinus-ink transition-opacity duration-200 group-hover:opacity-65",
+              "font-medium text-vinus-ink transition-colors duration-300 group-hover:text-vinus-ink/80",
               variant === "home" ? "type-story-title type-story-title--home" : "type-story-title",
             )}
           >
             {title}
           </h2>
-          <p className={cn("type-body font-normal text-vinus-ink", variant === "home" ? "max-w-[680px]" : "max-w-[720px]")}>{excerpt}</p>
+          <p
+            className={cn(
+              "font-normal text-vinus-ink/75",
+              variant === "home" ? "type-body max-w-[760px] md:type-lead" : "type-body max-w-[720px]",
+            )}
+          >
+            {excerpt}
+          </p>
         </div>
         <ArrowUpRight
           aria-hidden="true"
-          className="hidden size-6 stroke-[1.2] transition-transform duration-200 motion-safe:group-hover:translate-x-1 motion-safe:group-hover:-translate-y-1 md:col-start-3 md:block"
+          className="hidden size-6 stroke-[1.2] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:group-hover:translate-x-1.5 motion-safe:group-hover:-translate-y-1.5 md:col-start-3 md:block"
         />
       </Link>
     </motion.div>
   );
 }
+
