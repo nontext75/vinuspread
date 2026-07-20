@@ -13,10 +13,14 @@ const socialLinks = [
 ];
 
 function FooterUtility({ onBackToTop }: { onBackToTop: () => void }) {
+  const pathname = usePathname();
+  const isKorean = pathname === "/ko" || pathname.startsWith("/ko/");
+  const homeHref = isKorean ? "/ko" : "/";
+
   return (
     <div className="h-40 border-t border-white/15 px-5 md:h-[72px] md:px-16">
       <div className="flex h-full flex-col items-start gap-4 py-5 md:flex-row md:items-center md:justify-between md:gap-0 md:py-6">
-        <Link href="/" aria-label="Vinuspread home" className="block h-6 w-[100px] shrink-0 overflow-hidden">
+        <Link href={homeHref} aria-label="Vinuspread home" className="block h-6 w-[100px] shrink-0 overflow-hidden">
           <BrandLogo tone="light" wordmarkOnly />
         </Link>
         <nav aria-label="Social media" className="type-body flex h-6 w-full items-center justify-between text-white/70 md:w-[1200px] md:justify-center md:gap-12">
@@ -33,7 +37,7 @@ function FooterUtility({ onBackToTop }: { onBackToTop: () => void }) {
           ))}
         </nav>
         <button type="button" onClick={onBackToTop} className="type-body h-6 w-[100px] shrink-0 text-left transition-opacity duration-200 hover:opacity-55 md:text-center">
-          Back to top
+          맨 위로
         </button>
       </div>
     </div>
@@ -46,9 +50,9 @@ function ContactBlock({ mobile = false }: { mobile?: boolean }) {
       <h2 className="type-body font-medium">Contact</h2>
       <div className={mobile ? "h-[70px] w-full pt-2" : "h-[70px] w-[540px] pt-3"}>
         <p className={mobile ? "type-label text-white/55" : "type-body text-white/55"}>
-          Ready to shape your next project?
+          다음 프로젝트를 함께 준비하고 있습니다.
           <br />
-          We&apos;re here from first idea to final detail.
+          첫 아이디어부터 마지막 디테일까지 함께하겠습니다.
         </p>
       </div>
       <div className="relative h-[106px] w-full">
@@ -95,7 +99,7 @@ function KoreaOffice({ mobile = false }: { mobile?: boolean }) {
     <section className="flex flex-col gap-2 md:gap-3">
       <h2 className="type-body font-normal text-white/55">Korea</h2>
       <address className={`${mobile ? "type-label" : "type-body"} max-w-[620px] whitespace-normal not-italic`}>
-        Suite 1202, 227 Gonghang-daero, Gangseo-gu, Seoul 07802
+        서울시 강서구 공항대로 227, 1202호
       </address>
     </section>
   );
@@ -103,13 +107,16 @@ function KoreaOffice({ mobile = false }: { mobile?: boolean }) {
 
 export function Footer() {
   const pathname = usePathname();
-  const nextPage = pathname === "/work"
+  const isKorean = pathname === "/ko" || pathname.startsWith("/ko/");
+  const normalizePathname = isKorean ? pathname.replace(/^\/ko(?=\/|$)/, "") || "/" : pathname;
+  const localizeHref = (href: string) => (isKorean ? `/ko${href}` : href);
+  const nextPage = normalizePathname === "/work"
     ? { label: "STUDIO", href: "/studio" }
-    : pathname.startsWith("/work/")
+    : normalizePathname.startsWith("/work/")
       ? { label: "STUDIO", href: "/studio" }
-      : pathname === "/studio"
+      : normalizePathname === "/studio"
         ? { label: "STORY", href: "/news" }
-        : pathname.startsWith("/news")
+        : normalizePathname.startsWith("/news")
           ? { label: "CONTACT", href: "/contact" }
           : { label: "EXPERIENCE", href: "/work" };
 
@@ -124,7 +131,7 @@ export function Footer() {
         <div className="h-[760px] w-full">
           <div className="flex flex-col gap-6">
             <p className="type-body font-medium">Next page</p>
-            <Link href={nextPage.href} aria-label={`Go to ${nextPage.label}`} className="group inline-flex h-12 items-center gap-5 self-start">
+            <Link href={localizeHref(nextPage.href)} aria-label={`Go to ${nextPage.label}`} className="group inline-flex h-12 items-center gap-5 self-start">
               <span className="type-footer-next font-normal">{nextPage.label}</span>
               <ArrowRight aria-hidden="true" className="size-10 shrink-0 stroke-[1.15] transition-transform duration-200 group-hover:translate-x-2" />
             </Link>
@@ -149,7 +156,7 @@ export function Footer() {
             <p className="type-body font-medium">Next page</p>
           </div>
           <div className="h-[134px]">
-            <Link href={nextPage.href} aria-label={`Go to ${nextPage.label}`} className="group inline-flex items-center gap-12">
+            <Link href={localizeHref(nextPage.href)} aria-label={`Go to ${nextPage.label}`} className="group inline-flex items-center gap-12">
               <span className="type-footer-next font-normal">{nextPage.label}</span>
               <ArrowRight aria-hidden="true" className="size-[92px] shrink-0 stroke-[1.15] transition-transform duration-200 group-hover:translate-x-3" />
             </Link>

@@ -7,17 +7,9 @@ import { SubpageHero } from "@/components/SubpageHero";
 import { PortfolioCard } from "@/components/PortfolioCard";
 import { PortfolioListItem } from "@/components/PortfolioListItem";
 import { PortfolioControls, type PortfolioViewMode } from "@/components/PortfolioControls";
+import { portfolioProjects } from "@/lib/portfolio";
 
-const projects = [
-  { title: "Mongdang", subtitle: "Brand Experience & Storytelling", category: "Character", image: "/vinus/dummy-photo/work-01.jpg", href: "/work/mongdang" },
-  { title: "Shinhan Easy", subtitle: "Digital Experience & Mobile Web", category: "Web", image: "/vinus/dummy-photo/work-02.jpg", href: "/work/shinhan-easy" },
-  { title: "Crowd OH!", subtitle: "Crowdsourcing Platform Design", category: "Web", image: "/vinus/dummy-photo/work-03.jpg", href: "/work/crowdsourcing-platform-crowd-oh" },
-  { title: "macadamia", subtitle: "Product Strategy & UX/UI Design", category: "Web", image: "/vinus/dummy-photo/work-04.jpg", href: "/work/macadamia-website" },
-  { title: "Budongsan114 Mediate BIZsolution", subtitle: "Enterprise B2B Product Strategy", category: "Web", image: "/vinus/dummy-photo/work-05.jpg", href: "/work/budongsan114-mediate-bizsolution" },
-  { title: "Donga On book", subtitle: "Branding & Digital Platform", category: "Web", image: "/vinus/dummy-photo/work-06.jpg", href: "/work/donga-on-book" },
-  { title: "Aliot Brand Identity", subtitle: "Corporate Visual Direction & Identity", category: "Web", image: "/vinus/dummy-photo/work-07.jpg", href: "/work/aliot-brand-identity" },
-  { title: "The Frame Artstore Catalogue", subtitle: "Editorial Design & Branding System", category: "Web", image: "/vinus/dummy-photo/work-08.jpg", href: "/work/the-frame-artstore-catalogue" },
-] as const;
+const projects = portfolioProjects.map((project) => ({ ...project, href: `/work/${project.slug}` }));
 
 const categories = ["All", "Web", "Character", "Branding"] as const;
 type Category = (typeof categories)[number];
@@ -39,8 +31,9 @@ export default function WorkPage() {
       <SubpageHero
         eyebrow="Experience"
         title={<>We Spread<br />the Beautiful Things</>}
-        description="Explore selected work shaped through product strategy, interface design, and brand systems."
-        className="max-md:min-h-[520px] md:!pt-16 md:!pb-20"
+        description={<>제품 전략, 인터페이스 디자인, 브랜드 시스템으로 완성한<br className="hidden md:block" />주요 프로젝트를 소개합니다.</>}
+        size="spacious"
+        className="max-md:min-h-[520px]"
       />
 
       <section className="subpage-content flex flex-col gap-16 !pt-14 !pb-[68px] md:gap-8 md:!pt-0 md:!pb-[70px]">

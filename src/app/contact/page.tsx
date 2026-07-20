@@ -17,9 +17,9 @@ const categories = ["Website", "Responsive Web", "Mobile Web", "Mobile App", "Br
 
 const contactDetails: ReadonlyArray<{ label: string; value: string; detail: string; href?: string }> = [
   { label: "Business enquiries", value: "vinus@vinus.co.kr", detail: "TEL 02-3661-1907 / FAX 02-3661-1906", href: "mailto:vinus@vinus.co.kr" },
-  { label: "Open positions", value: "Join our team", detail: "We are always looking for talent.", href: "mailto:vinus@vinus.co.kr?subject=Open%20Position" },
-  { label: "Korea office", value: "Suite 1202, 227 Gonghang-daero, Gangseo-gu, Seoul 07802", detail: "Seoul, Korea", href: "https://maps.google.com/?q=227+Gonghang-daero+Seoul" },
-  { label: "Business hours", value: "Monday to Friday", detail: "10:00 AM - 18:00 PM, GMT (+9)" },
+  { label: "Open positions", value: "Join our team", detail: "좋은 동료를 늘 기다리고 있습니다.", href: "mailto:vinus@vinus.co.kr?subject=Open%20Position" },
+  { label: "Korea office", value: "서울시 강서구 공항대로 227, 1202호", detail: "서울, 대한민국", href: "https://maps.google.com/?q=227+Gonghang-daero+Seoul" },
+  { label: "Business hours", value: "Monday to Friday", detail: "오전 10:00 - 오후 18:00, GMT (+9)" },
 ] as const;
 
 export default function ContactPage() {
@@ -33,7 +33,7 @@ export default function ContactPage() {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    alert("Thank you. Your inquiry has been submitted successfully.");
+    alert("문의가 접수되었습니다. 확인 후 연락드리겠습니다.");
   };
 
   return (
@@ -41,8 +41,8 @@ export default function ContactPage() {
       <SubpageHero
         eyebrow="Contact"
         title={<><span>Let&apos;s shape what</span><br /><span>comes next.</span></>}
-        description={<><span>Share your idea, challenge, or product goal.</span><br className="hidden md:block" /> <span>We&apos;ll help you find the right direction.</span></>}
-        size="medium"
+        description={<><span>아이디어, 과제, 제품 목표를 알려주세요.</span><br className="hidden md:block" /> <span>함께 적절한 방향을 찾아보겠습니다.</span></>}
+        size="spacious"
         className="md:!pt-[var(--space-section)]"
       />
 
@@ -94,19 +94,19 @@ export default function ContactPage() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-12">
           <div className="flex flex-col gap-4">
             <h2 className="type-contact-heading font-normal">Let&apos;s shape what<br />comes next.</h2>
-            <p className="type-body text-vinus-ink">Share your idea, challenge, or product goal. We&apos;ll help you find the right direction.</p>
+            <p className="type-body text-vinus-ink">아이디어, 과제, 제품 목표를 알려주세요. 함께 적절한 방향을 찾아보겠습니다.</p>
           </div>
 
           <div className="flex flex-col gap-6">
-            <FormField label="Company Name" htmlFor="mobile-company-name"><input id="mobile-company-name" type="text" placeholder="Enter your company name" value={formData.companyName} onChange={(event) => setFormData({ ...formData, companyName: event.target.value })} className={formControlClassName} /></FormField>
-            <FormField label="Your Name" htmlFor="mobile-your-name" required><input id="mobile-your-name" type="text" required placeholder="Please write your name" value={formData.name} onChange={(event) => setFormData({ ...formData, name: event.target.value })} className={formControlClassName} /></FormField>
-            <FormField label="Phone Number" htmlFor="mobile-phone-number" required><input id="mobile-phone-number" type="tel" required placeholder="Enter your phone number" value={formData.phone} onChange={(event) => setFormData({ ...formData, phone: event.target.value })} className={formControlClassName} /></FormField>
-            <FormField label="Email Address" htmlFor="mobile-email-address" required><input id="mobile-email-address" type="email" required placeholder="Please write your email address" value={formData.email} onChange={(event) => setFormData({ ...formData, email: event.target.value })} className={formControlClassName} /></FormField>
+            <FormField label="Company Name" htmlFor="mobile-company-name"><input id="mobile-company-name" type="text" placeholder="회사명을 입력하세요" value={formData.companyName} onChange={(event) => setFormData({ ...formData, companyName: event.target.value })} className={formControlClassName} /></FormField>
+            <FormField label="Your Name" htmlFor="mobile-your-name" required><input id="mobile-your-name" type="text" required placeholder="이름을 입력하세요" value={formData.name} onChange={(event) => setFormData({ ...formData, name: event.target.value })} className={formControlClassName} /></FormField>
+            <FormField label="Phone Number" htmlFor="mobile-phone-number" required><input id="mobile-phone-number" type="tel" required placeholder="연락 가능한 번호를 입력하세요" value={formData.phone} onChange={(event) => setFormData({ ...formData, phone: event.target.value })} className={formControlClassName} /></FormField>
+            <FormField label="Email Address" htmlFor="mobile-email-address" required><input id="mobile-email-address" type="email" required placeholder="이메일 주소를 입력하세요" value={formData.email} onChange={(event) => setFormData({ ...formData, email: event.target.value })} className={formControlClassName} /></FormField>
             <FormField label="Project Budget" htmlFor="mobile-project-budget" required><select id="mobile-project-budget" value={formData.budget} onChange={(event) => setFormData({ ...formData, budget: event.target.value })} className={`${formControlClassName} cursor-pointer appearance-none`}><option>Under $5,000</option><option>$5,000 - $10,000</option><option>$10,000 - $30,000</option><option>Above $30,000</option></select></FormField>
             <FormField label="Attachment" htmlFor="mobile-attachment">
               <span className="flex h-[61px] min-w-0 items-center justify-between gap-3 border-b border-vinus-ink/35">
-                <span className="type-body min-w-0 truncate text-vinus-ink/45">{formData.file?.name ?? "Select a file to attach..."}</span>
-                <label htmlFor="mobile-attachment" className="type-body inline-flex h-11 shrink-0 cursor-pointer items-center gap-2 rounded-full border border-vinus-ink/35 px-4 py-2 font-medium"><Upload className="size-3.5" />Browse<input id="mobile-attachment" type="file" onChange={(event) => setFormData({ ...formData, file: event.target.files?.[0] ?? null })} className="hidden" /></label>
+                <span className="type-body min-w-0 truncate text-vinus-ink/45">{formData.file?.name ?? "첨부 파일을 선택하세요"}</span>
+                <label htmlFor="mobile-attachment" className="type-body inline-flex h-11 shrink-0 cursor-pointer items-center gap-2 rounded-full border border-vinus-ink/35 px-4 py-2 font-medium"><Upload className="size-3.5" />파일 선택<input id="mobile-attachment" type="file" onChange={(event) => setFormData({ ...formData, file: event.target.files?.[0] ?? null })} className="hidden" /></label>
               </span>
             </FormField>
           </div>
@@ -122,11 +122,11 @@ export default function ContactPage() {
           </div>
 
           <FormField label="Project details" htmlFor="mobile-project-details" required className="gap-4">
-            <textarea id="mobile-project-details" required rows={5} placeholder="Share your goals, timeline, and key requirements." value={formData.description} onChange={(event) => setFormData({ ...formData, description: event.target.value })} className="type-body h-40 w-full resize-none border border-vinus-ink/35 bg-transparent p-4 outline-none placeholder:text-vinus-ink/45 focus:border-vinus-ink" />
+            <textarea id="mobile-project-details" required rows={5} placeholder="목표, 일정, 필요한 내용을 알려주세요." value={formData.description} onChange={(event) => setFormData({ ...formData, description: event.target.value })} className="type-body h-40 w-full resize-none border border-vinus-ink/35 bg-transparent p-4 outline-none placeholder:text-vinus-ink/45 focus:border-vinus-ink" />
           </FormField>
 
-          <p className="type-body text-vinus-ink">By submitting this form, you agree to our privacy policy.</p>
-          <Button type="submit" size="lg" className="w-fit">Send request</Button>
+          <p className="type-body text-vinus-ink">제출 시 개인정보 처리방침에 동의한 것으로 간주됩니다.</p>
+          <Button type="submit" size="lg" className="w-fit">문의 보내기</Button>
         </form>
       </section>
 
@@ -135,27 +135,27 @@ export default function ContactPage() {
           <div className="grid min-h-[266px] grid-cols-1 gap-12 border-b border-vinus-ink/35 pb-[98px] pt-8 md:grid-cols-12 md:items-end md:gap-8">
             <div className="flex flex-col gap-6 md:col-span-8 md:col-start-1">
               <h2 className="type-contact-heading font-normal">Let&apos;s shape what<br />comes next.</h2>
-              <p className="type-lead max-w-[760px] font-normal text-vinus-ink">Share your idea, challenge, or product goal. We&apos;ll help you find the right direction.</p>
+              <p className="type-lead max-w-[760px] font-normal text-vinus-ink">아이디어, 과제, 제품 목표를 알려주세요. 함께 적절한 방향을 찾아보겠습니다.</p>
             </div>
           </div>
 
           <form onSubmit={handleSubmit}>
             <FormSection label="01 / Essentials" contentClassName="grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-2">
-                <FormField label="Company Name" htmlFor="company-name"><input id="company-name" type="text" placeholder="Enter your company name" value={formData.companyName} onChange={(event) => setFormData({ ...formData, companyName: event.target.value })} className={formControlClassName} /></FormField>
-                <FormField label="Your Name" htmlFor="your-name" required><input id="your-name" type="text" required placeholder="Please write your name" value={formData.name} onChange={(event) => setFormData({ ...formData, name: event.target.value })} className={formControlClassName} /></FormField>
-                <FormField label="Phone Number" htmlFor="phone-number" required><input id="phone-number" type="tel" required placeholder="Enter your phone number" value={formData.phone} onChange={(event) => setFormData({ ...formData, phone: event.target.value })} className={formControlClassName} /></FormField>
-                <FormField label="Email Address" htmlFor="email-address" required><input id="email-address" type="email" required placeholder="Please write your email address" value={formData.email} onChange={(event) => setFormData({ ...formData, email: event.target.value })} className={formControlClassName} /></FormField>
+                <FormField label="Company Name" htmlFor="company-name"><input id="company-name" type="text" placeholder="회사명을 입력하세요" value={formData.companyName} onChange={(event) => setFormData({ ...formData, companyName: event.target.value })} className={formControlClassName} /></FormField>
+                <FormField label="Your Name" htmlFor="your-name" required><input id="your-name" type="text" required placeholder="이름을 입력하세요" value={formData.name} onChange={(event) => setFormData({ ...formData, name: event.target.value })} className={formControlClassName} /></FormField>
+                <FormField label="Phone Number" htmlFor="phone-number" required><input id="phone-number" type="tel" required placeholder="연락 가능한 번호를 입력하세요" value={formData.phone} onChange={(event) => setFormData({ ...formData, phone: event.target.value })} className={formControlClassName} /></FormField>
+                <FormField label="Email Address" htmlFor="email-address" required><input id="email-address" type="email" required placeholder="이메일 주소를 입력하세요" value={formData.email} onChange={(event) => setFormData({ ...formData, email: event.target.value })} className={formControlClassName} /></FormField>
                 <FormField label="Project Budget" htmlFor="project-budget" required><select id="project-budget" value={formData.budget} onChange={(event) => setFormData({ ...formData, budget: event.target.value })} className={`${formControlClassName} cursor-pointer appearance-none`}><option>Under $5,000</option><option>$5,000 - $10,000</option><option>$10,000 - $30,000</option><option>Above $30,000</option></select></FormField>
                 <FormField label="Attachment" htmlFor="attachment">
                   <span className="flex h-[61px] min-w-0 items-center justify-between gap-3 border-b border-vinus-ink/35">
-                    <span className="type-body min-w-0 truncate text-vinus-ink/45">{formData.file?.name ?? "Select a file to attach..."}</span>
-                    <label htmlFor="attachment" className="type-body inline-flex h-11 shrink-0 cursor-pointer items-center gap-2 rounded-full border border-vinus-ink/35 px-4 py-2 font-medium transition-colors duration-200 hover:bg-vinus-ink hover:text-white"><Upload className="size-3.5" />Browse<input id="attachment" type="file" onChange={(event) => setFormData({ ...formData, file: event.target.files?.[0] ?? null })} className="hidden" /></label>
+                    <span className="type-body min-w-0 truncate text-vinus-ink/45">{formData.file?.name ?? "첨부 파일을 선택하세요"}</span>
+                    <label htmlFor="attachment" className="type-body inline-flex h-11 shrink-0 cursor-pointer items-center gap-2 rounded-full border border-vinus-ink/35 px-4 py-2 font-medium transition-colors duration-200 hover:bg-vinus-ink hover:text-white"><Upload className="size-3.5" />파일 선택<input id="attachment" type="file" onChange={(event) => setFormData({ ...formData, file: event.target.files?.[0] ?? null })} className="hidden" /></label>
                   </span>
                 </FormField>
             </FormSection>
 
             <FormSection label="02 / Services" className="md:min-h-[349px]" contentClassName="flex min-h-[156px] flex-col gap-6">
-                <p className={formLabelClassName}>Select all that apply *</p>
+                <p className={formLabelClassName}>해당하는 항목을 모두 선택하세요 *</p>
                 <div className="flex flex-wrap gap-[var(--space-inline)]">
                   {categories.map((category) => {
                     const selected = selectedCategories.includes(category);
@@ -165,12 +165,12 @@ export default function ContactPage() {
             </FormSection>
 
             <FormSection label="03 / Project brief">
-              <FormField label="Project Details" htmlFor="project-details" required className="gap-4" labelClassName="font-bold"><textarea id="project-details" required rows={6} placeholder="Share your goals, timeline, and key requirements." value={formData.description} onChange={(event) => setFormData({ ...formData, description: event.target.value })} className="type-body h-[210px] w-full resize-y border border-vinus-ink/35 bg-white/55 p-6 outline-none placeholder:text-vinus-ink/45 focus:border-vinus-ink" /></FormField>
+              <FormField label="Project Details" htmlFor="project-details" required className="gap-4" labelClassName="font-bold"><textarea id="project-details" required rows={6} placeholder="목표, 일정, 필요한 내용을 알려주세요." value={formData.description} onChange={(event) => setFormData({ ...formData, description: event.target.value })} className="type-body h-[210px] w-full resize-y border border-vinus-ink/35 bg-white/55 p-6 outline-none placeholder:text-vinus-ink/45 focus:border-vinus-ink" /></FormField>
             </FormSection>
 
             <div className="grid min-h-[120px] grid-cols-1 gap-8 pt-16 md:grid-cols-12 md:items-start">
-              <Button type="submit" size="lg" className="w-full md:col-span-3">Send request</Button>
-              <p className="type-body text-vinus-ink/45 md:col-span-5 md:col-start-5 md:self-center">Your inquiry will be sent directly to our team. We do not store your personal information.</p>
+              <Button type="submit" size="lg" className="w-full md:col-span-3">문의 보내기</Button>
+              <p className="type-body text-vinus-ink/45 md:col-span-5 md:col-start-5 md:self-center">문의 내용은 담당 팀으로 전달됩니다. 개인정보는 별도로 저장하지 않습니다.</p>
             </div>
           </form>
         </div>

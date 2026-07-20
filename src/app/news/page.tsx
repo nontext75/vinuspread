@@ -11,7 +11,8 @@ export default function NewsPage() {
       <SubpageHero
         eyebrow="Story"
         title={<>Ideas and stories<br />worth sharing.</>}
-        description="Practical observations on brands, products, design principles, and the words that shape digital experiences."
+        description={<>브랜드, 제품, 디자인 원칙, 그리고 디지털 경험을 만드는 언어에 대한<br className="hidden md:block" />실용적인 관점을 전합니다.</>}
+        size="spacious"
         className="max-md:min-h-[656px]"
       />
 

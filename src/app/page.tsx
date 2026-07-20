@@ -12,6 +12,7 @@ import { ArrowLink } from "@/components/ui/ArrowLink";
 import { PortfolioCard } from "@/components/PortfolioCard";
 import { ServiceCard } from "@/components/ServiceCard";
 import { StoryListItem } from "@/components/StoryListItem";
+import { portfolioProjects } from "@/lib/portfolio";
 import { stories as storyEntries } from "@/lib/stories";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -28,68 +29,23 @@ type Project = {
   mobileOnly?: boolean;
 };
 
-const projects: Project[] = [
-  {
-    title: "Mongdang",
-    subtitle: "Brand Experience & Storytelling",
-    category: "Character",
-    src: "/vinus/dummy-photo/work-01.jpg",
-    slug: "mongdang",
-    layout: "home-project--mongdang",
-    mobileLayout: "w-full",
-    speed: -8,
-  },
-  {
-    title: "Shinhan Easy",
-    subtitle: "Digital Experience & Mobile Web",
-    category: "Web",
-    src: "/vinus/dummy-photo/work-02.jpg",
-    slug: "shinhan-easy",
-    layout: "home-project--shinhan",
-    mobileLayout: "ml-[14%] w-[86%]",
-    speed: 10,
-  },
-  {
-    title: "Crowd OH!",
-    subtitle: "Crowdsourcing Platform Design",
-    category: "Web",
-    src: "/vinus/dummy-photo/work-03.jpg",
-    slug: "crowdsourcing-platform-crowd-oh",
-    layout: "home-project--crowd",
-    mobileLayout: "w-[92%]",
-    speed: -7,
-  },
-  {
-    title: "macadamia",
-    subtitle: "Product Strategy & UX/UI Design",
-    category: "Web",
-    src: "/vinus/dummy-photo/work-04.jpg",
-    slug: "macadamia-website",
-    layout: "home-project--macadamia",
-    mobileLayout: "ml-[8%] w-[92%]",
-    speed: 8,
-  },
-  {
-    title: "Budongsan114 Mediate BIZsolution",
-    subtitle: "Product Strategy · UX/UI · Web",
-    category: "Web",
-    src: "/vinus/dummy-photo/work-05.jpg",
-    slug: "budongsan114-mediate-bizsolution",
-    layout: "home-project--budongsan",
-    mobileLayout: "ml-[20%] w-[80%]",
-    speed: -10,
-  },
-  {
-    title: "DongA On book",
-    subtitle: "Branding · Digital Design · Web",
-    category: "Web",
-    src: "/vinus/dummy-photo/work-06.jpg",
-    slug: "donga-on-book",
-    layout: "home-project--donga",
-    mobileLayout: "ml-[7%] w-[93%]",
-    speed: 7,
-  },
-];
+const projectLayouts = [
+  { layout: "home-project--mongdang", mobileLayout: "w-full", speed: -8 },
+  { layout: "home-project--shinhan", mobileLayout: "ml-[14%] w-[86%]", speed: 10 },
+  { layout: "home-project--crowd", mobileLayout: "w-[92%]", speed: -7 },
+  { layout: "home-project--macadamia", mobileLayout: "ml-[8%] w-[92%]", speed: 8 },
+  { layout: "home-project--budongsan", mobileLayout: "ml-[20%] w-[80%]", speed: -10 },
+  { layout: "home-project--donga", mobileLayout: "ml-[7%] w-[93%]", speed: 7 },
+] as const;
+
+const projects: Project[] = portfolioProjects.slice(0, 6).map((project, index) => ({
+  title: project.title,
+  subtitle: project.subtitle,
+  category: project.category,
+  src: project.image,
+  slug: project.slug,
+  ...projectLayouts[index],
+}));
 
 const services = [
   { title: "Product Strategy", details: ["Discovery", "Roadmap", "AI Opportunity"] },
@@ -98,27 +54,9 @@ const services = [
   { title: "Launch & Operation", details: ["CMS", "SEO", "Analytics", "Improvement"] },
 ];
 
-const homeStoryContent = [
-  {
-    title: "Why You Shouldn't Choose Brand Colors by Instinct",
-    excerpt:
-      "Color is not just a matter of taste; it determines the perception and emotions of your brand. Even a small change can affect the entire way people perceive your brand.",
-  },
-  {
-    title: "What Happens When You Don't Have Design Principles",
-    excerpt:
-      "Without clear principles, design sways with every piece of feedback and personal preference. Consistent standards keep all decisions moving in one direction.",
-  },
-  {
-    title: "UX Writing: How to Start with a Single Button",
-    excerpt:
-      "We design starting from the shortest sentences users encounter most frequently. Even the wording of a single button shapes the direction of the experience and the next action.",
-  },
-] as const;
-
-const stories = storyEntries.map((story, index) => ({
-  title: homeStoryContent[index]?.title ?? story.title,
-  excerpt: homeStoryContent[index]?.excerpt ?? story.excerpt,
+const stories = storyEntries.map((story) => ({
+  title: story.title,
+  excerpt: story.excerpt,
   date: story.date,
   image: story.image,
   href: `/news/${story.slug}`,
@@ -434,7 +372,8 @@ export default function Home() {
               data-hero-reveal
               className="home-hero-lead type-lead w-full max-w-[860px] text-white"
             >
-              We work with brands from the first idea to the last detail, shaping direction, experience, and improvement together.
+              첫 아이디어부터 마지막 디테일까지,<br />
+              방향과 경험을 함께 만들고 더 나은 흐름으로 다듬습니다.
             </p>
 
             <span data-hero-reveal aria-hidden="true" className="block h-2 w-[120px] bg-white md:h-5" />
@@ -447,13 +386,13 @@ export default function Home() {
           </div>
 
           <p data-hero-reveal className="type-lead max-w-[1500px] font-normal text-white/70">
-            From first idea to final detail, we work with you to find direction,
+            아이디어의 시작부터 완성 이후의 개선까지,
             <br />
-            build better experiences, and keep improving what comes next.
+            다음 가능성을 더 선명한 경험으로 연결합니다.
           </p>
 
           <div data-hero-reveal>
-            <ArrowLink href="/contact" inverse>Download Brochure</ArrowLink>
+            <ArrowLink href="/contact" inverse>브로슈어 다운로드</ArrowLink>
           </div>
         </div>
       </section>
@@ -461,19 +400,19 @@ export default function Home() {
       <section className="home-intro relative border-t border-vinus-ink/10 bg-white">
         <div className="home-intro-content flex flex-col items-start gap-12 md:gap-16">
           <p data-reveal className="home-intro-copy type-heading">
-            <span className="md:hidden">We focus on essential value and elevate it with beauty.</span>
-            <span className="md:hidden">As times continue to change, we stay grounded in what lasts.<br />We create design that helps ideas move beyond their limits.</span>
+            <span className="md:hidden">본질적인 가치에 집중하고, 아름다움으로 더 나은 경험을 만듭니다.</span>
+            <span className="md:hidden">변화가 계속되는 시대에도 오래 남는 기준을 지킵니다.<br />아이디어가 한계를 넘어설 수 있는 디자인을 만듭니다.</span>
             <span className="hidden md:block">
-              We focus on essential value and<br />
-              elevate it with beauty.<br />
-              As times continue to change,<br />
-              we stay grounded in what lasts.<br />
-              We create design that helps ideas<br />
-              move beyond their limits.
+              본질적인 가치에 집중하고<br />
+              아름다움으로 더 나은 경험을 만듭니다.<br />
+              변화가 계속되는 시대에도<br />
+              오래 남는 기준을 지킵니다.<br />
+              아이디어가 한계를 넘어설 수 있는<br />
+              디자인을 만듭니다.
             </span>
           </p>
           <div data-reveal>
-            <ArrowLink href="/studio">The Studio</ArrowLink>
+            <ArrowLink href="/studio">스튜디오 보기</ArrowLink>
           </div>
         </div>
       </section>
@@ -485,8 +424,8 @@ export default function Home() {
               <span className="home-portfolio-title-line block">Work</span>
             </h2>
             <p className="home-portfolio-copy type-lead">
-              <span className="home-portfolio-copy-line block">Selected work shaped through strategy, interface design,</span>
-              <span className="home-portfolio-copy-line block">and brand systems built to keep improving.</span>
+              <span className="home-portfolio-copy-line block">전략, 인터페이스 디자인, 브랜드 시스템으로 완성한</span>
+              <span className="home-portfolio-copy-line block">주요 프로젝트를 소개합니다.</span>
             </p>
           </div>
         </div>
@@ -500,7 +439,7 @@ export default function Home() {
         </div>
 
         <div className="home-portfolio-cta flex justify-center" data-reveal>
-          <ArrowLink href="/work">Browse all work</ArrowLink>
+          <ArrowLink href="/work">전체 프로젝트 보기</ArrowLink>
         </div>
       </section>
 
@@ -547,10 +486,10 @@ export default function Home() {
               Always there, from first idea to final detail.
             </p>
             <p data-reveal className="home-studio-body type-lead w-full">
-              Vinuspread works with teams from early direction to launch and beyond.
+              바이너스프레드는 초기 방향 설정부터 출시 이후의 개선까지 함께합니다.
               <br className="hidden lg:block" />
-              We use AI as a working method to plan, design, and improve experiences with over 20 years of practice in
-              <br className="hidden lg:block" /> UI/UX, branding, and product design.
+              20년 이상의 UI/UX, 브랜딩, 제품 디자인 경험을 바탕으로,
+              <br className="hidden lg:block" /> 더 빠르고 유연한 방식으로 경험을 설계하고 다듬습니다.
             </p>
           </div>
 
@@ -582,8 +521,8 @@ export default function Home() {
           </div>
 
           <nav aria-label="Studio links" className="home-studio-links flex w-full max-w-[460px] flex-wrap justify-start gap-[var(--space-compact)] pt-2 xl:pt-4" data-reveal>
-            <ArrowLink href="/studio">Explore our services</ArrowLink>
-            <ArrowLink href="/work">See our work</ArrowLink>
+            <ArrowLink href="/studio">서비스 살펴보기</ArrowLink>
+            <ArrowLink href="/work">프로젝트 보기</ArrowLink>
           </nav>
         </div>
       </section>
@@ -610,9 +549,9 @@ export default function Home() {
                 <span className="block">Insights</span>
               </h2>
               <div className="hidden lg:block">
-                <ArrowLink href="/news">View all stories</ArrowLink>
+                <ArrowLink href="/news">스토리 전체보기</ArrowLink>
               </div>
-              <p className="type-lead lg:hidden">Ideas and insights for building meaningful experiences.</p>
+              <p className="type-lead lg:hidden">의미 있는 경험을 만들기 위한 관점과 인사이트를 전합니다.</p>
             </div>
           </div>
 
@@ -628,7 +567,7 @@ export default function Home() {
             ))}
           </div>
           <div className="home-story-link lg:hidden">
-            <ArrowLink href="/news">View all stories</ArrowLink>
+            <ArrowLink href="/news">스토리 전체보기</ArrowLink>
           </div>
         </div>
       </section>

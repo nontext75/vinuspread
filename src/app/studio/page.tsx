@@ -14,7 +14,7 @@ const philosophies = [
   {
     tag: "mind",
     title: "Define the Value",
-    description: "We clarify what matters most, then turn it into decisions that make each project stronger.",
+    description: "가장 중요한 가치를 먼저 정의하고, 프로젝트를 더 단단하게 만드는 판단으로 연결합니다.",
     image: "/vinus/dummy-photo/studio-01.jpg",
     placement: "order-2 lg:order-none min-[2200px]:col-span-5 min-[2200px]:col-start-1 min-[2200px]:row-start-1",
     ratio: "h-auto w-full aspect-[4/3] min-[2200px]:aspect-[584/438]",
@@ -22,7 +22,7 @@ const philosophies = [
   {
     tag: "think",
     title: "Question the Direction",
-    description: "We ask better questions early, so strategy, structure, and design can move in one clear direction.",
+    description: "초기 단계에서 더 나은 질문을 던지고, 전략과 구조, 디자인이 하나의 방향으로 움직이게 합니다.",
     image: "/vinus/dummy-photo/studio-02.jpg",
     placement: "order-1 lg:order-none min-[2200px]:col-span-5 min-[2200px]:col-start-8 min-[2200px]:row-start-1",
     ratio: "h-auto aspect-[4/5] min-[2200px]:h-[1243px] min-[2200px]:aspect-auto",
@@ -30,7 +30,7 @@ const philosophies = [
   {
     tag: "behavior",
     title: "Shape the Experience",
-    description: "We translate direction into interfaces, systems, and interactions that people can understand and use.",
+    description: "정해진 방향을 사람들이 이해하고 사용할 수 있는 인터페이스, 시스템, 인터랙션으로 구체화합니다.",
     image: "/vinus/dummy-photo/studio-03.jpg",
     placement: "order-3 lg:order-none min-[2200px]:col-span-4 min-[2200px]:col-start-3 min-[2200px]:row-start-3",
     ratio: "h-auto aspect-[4/3] min-[2200px]:h-[592px] min-[2200px]:aspect-auto",
@@ -38,9 +38,9 @@ const philosophies = [
 ] as const;
 
 const businessFields = [
-  { title: "Website", description: "Designing and developing web platforms optimized for brand and business value.", image: "/vinus/dummy-photo/work-02.jpg" },
-  { title: "Mobile App", description: "Crafting intuitive and user-centered mobile UX/UI designs and application architectures.", image: "/vinus/dummy-photo/work-04.jpg" },
-  { title: "Branding", description: "Building unique brand identities and cohesive visual systems that express core values.", image: "/vinus/dummy-photo/work-01.jpg" },
+  { title: "Website", description: "브랜드와 비즈니스 가치에 맞는 웹 플랫폼을 설계하고 구축합니다.", image: "/vinus/dummy-photo/work-02.jpg" },
+  { title: "Mobile App", description: "사용자 중심의 모바일 UX/UI와 직관적인 앱 구조를 설계합니다.", image: "/vinus/dummy-photo/work-04.jpg" },
+  { title: "Branding", description: "브랜드의 핵심 가치를 담은 아이덴티티와 시각 시스템을 만듭니다.", image: "/vinus/dummy-photo/work-01.jpg" },
 ] as const;
 
 const visionFormula: ReadonlyArray<{ label: string; meaning: string; tone?: "light" | "dark" }> = [
@@ -51,7 +51,6 @@ const visionFormula: ReadonlyArray<{ label: string; meaning: string; tone?: "lig
 
 export default function StudioPage() {
   const reduceMotion = useReducedMotion();
-  const enter = (distance = 36) => ({ opacity: 0, y: distance });
   const visionTitleLines = ["Spread", "the Beautiful", "Things"];
   const easeOutExpo = [0.16, 1, 0.3, 1] as const;
   const wideImageRef = useRef<HTMLDivElement>(null);
@@ -99,7 +98,7 @@ export default function StudioPage() {
       <SubpageHero
         eyebrow="Studio"
         title={<><span>We elevate essential</span><br /><span>value with beauty.</span></>}
-        description="In a fast changing world, we help brands and products stay focused on what matters, then improve it through design, technology, and iteration."
+        description="빠르게 변하는 환경 속에서도 브랜드와 제품이 중요한 가치에 집중하도록 돕고, 디자인과 기술, 반복적인 개선으로 더 나은 방향을 만듭니다."
         size="spacious"
       />
 
@@ -138,7 +137,7 @@ export default function StudioPage() {
               ))}
             </h2>
             <motion.p variants={visionCopy} className="type-lead max-w-[960px] font-normal md:type-heading">
-              We believe good design makes ideas clearer, experiences richer,<br className="hidden md:block" /> and every next step easier to share.
+              좋은 디자인은 아이디어를 더 선명하게 만들고, 경험을 더 풍부하게 하며,<br className="hidden md:block" /> 다음 가능성을 더 쉽게 나눌 수 있게 한다고 믿습니다.
             </motion.p>
             <motion.div
               variants={visionContainer}
@@ -189,7 +188,10 @@ export default function StudioPage() {
       <section className="studio-business h-[1660px] w-full overflow-hidden border-b border-vinus-ink/10 px-[var(--space-edge)] py-24 md:h-auto md:overflow-visible md:py-[var(--space-section)] min-[2200px]:!h-[1103px] min-[2200px]:overflow-hidden">
         <div className="flex max-w-[1200px] flex-col gap-10 md:gap-6">
           <h2 className="type-studio-business-title">Field of business</h2>
-          <p className="type-studio-business-intro max-w-[640px]">We provide optimized digital services, enabling users to interact easily and comfortably across digital touchpoints.</p>
+          <p className="type-studio-business-intro max-w-[760px]">
+            사용자가 다양한 디지털 접점에서 쉽고 편안하게 상호작용할 수 있도록<br className="hidden md:block" />
+            디지털 서비스를 최적화합니다.
+          </p>
         </div>
         <div className="grid grid-cols-1 gap-10 pt-10 md:grid-cols-3 md:gap-8 md:pt-16">
           {businessFields.map((field, index) => (
@@ -218,7 +220,8 @@ export default function StudioPage() {
         <div className="flex max-w-[1130px] flex-col gap-[var(--space-content)]">
           <h2 className="type-feature font-normal">Clients &amp; Partners</h2>
           <p className="type-heading max-w-[1040px] font-normal">
-            New value begins with the connection between people. We do work that moves people&apos;s hearts.
+            새로운 가치는 사람과 사람의 연결에서 시작됩니다.<br />
+            우리는 사람의 마음을 움직이는 일을 만듭니다.
           </p>
         </div>
         <ClientLogoGrid tone="light" dividers="top" mobileLimit={20} />

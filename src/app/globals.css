@@ -413,6 +413,7 @@
 @media (min-width: 768px) {
   .subpage-header {
     margin-top: 96px;
+    min-height: 928px;
     padding: var(--space-section) var(--space-edge) var(--space-major);
   }
 }
