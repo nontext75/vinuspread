@@ -98,7 +98,7 @@ export default function StudioPage() {
       <SubpageHero
         eyebrow="Studio"
         title={<><span>We elevate essential</span><br /><span>value with beauty.</span></>}
-        description="빠르게 변하는 환경 속에서도 브랜드와 제품이 중요한 가치에 집중하도록 돕고, 디자인과 기술, 반복적인 개선으로 더 나은 방향을 만듭니다."
+        description={<>변화 속에서도 브랜드와 제품의 본질을 놓치지 않습니다.<br className="hidden md:block" />디자인과 기술, 반복적인 개선으로 더 나은 방향을 만듭니다.</>}
         size="spacious"
       />
 
@@ -155,8 +155,8 @@ export default function StudioPage() {
                       tone === "dark" ? "bg-vinus-ink text-white" : "bg-vinus-wash text-vinus-ink"
                     }`}
                   >
-                    <span className="type-label font-normal md:text-[clamp(24px,3vw,40px)] md:font-medium md:leading-tight">{label}</span>
-                    <span className={`type-label font-normal md:text-[clamp(16px,1.8vw,24px)] md:leading-8 ${tone === "dark" ? "text-white/50" : "text-vinus-ink/50"}`}>
+                    <span className="studio-formula-label font-medium">{label}</span>
+                    <span className={`studio-formula-meaning font-normal ${tone === "dark" ? "text-white/50" : "text-vinus-ink/50"}`}>
                       <span className="md:hidden">({meaning})</span>
                       <span className="hidden md:inline">{meaning}</span>
                     </span>

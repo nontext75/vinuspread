@@ -40,8 +40,8 @@ export default function ContactPage() {
     <main className="subpage-wrapper selection:bg-vinus-ink selection:text-vinus-paper">
       <SubpageHero
         eyebrow="Contact"
-        title={<><span>Let&apos;s shape what</span><br /><span>comes next.</span></>}
-        description={<><span>아이디어, 과제, 제품 목표를 알려주세요.</span><br className="hidden md:block" /> <span>함께 적절한 방향을 찾아보겠습니다.</span></>}
+        title={<><span>Tell us about</span><br /><span>your next project.</span></>}
+        description={<><span>만들고 싶은 것과 해결하고 싶은 문제를 들려주세요.</span><br className="hidden md:block" /> <span>필요한 방향부터 함께 정리하겠습니다.</span></>}
         size="spacious"
         className="md:!pt-[var(--space-section)]"
       />
@@ -93,8 +93,8 @@ export default function ContactPage() {
       <section className="h-[1774px] w-full overflow-hidden bg-vinus-paper px-6 py-24 md:hidden">
         <form onSubmit={handleSubmit} className="flex flex-col gap-12">
           <div className="flex flex-col gap-4">
-            <h2 className="type-contact-heading font-normal">Let&apos;s shape what<br />comes next.</h2>
-            <p className="type-body text-vinus-ink">아이디어, 과제, 제품 목표를 알려주세요. 함께 적절한 방향을 찾아보겠습니다.</p>
+            <h2 className="type-contact-heading font-normal">Project Inquiry</h2>
+            <p className="type-body text-vinus-ink">필요한 내용을 남겨주시면 검토 후 연락드리겠습니다.</p>
           </div>
 
           <div className="flex flex-col gap-6">
@@ -134,8 +134,8 @@ export default function ContactPage() {
         <div className="mx-auto flex max-w-[1600px] flex-col gap-6">
           <div className="grid min-h-[266px] grid-cols-1 gap-12 border-b border-vinus-ink/35 pb-[98px] pt-8 md:grid-cols-12 md:items-end md:gap-8">
             <div className="flex flex-col gap-6 md:col-span-8 md:col-start-1">
-              <h2 className="type-contact-heading font-normal">Let&apos;s shape what<br />comes next.</h2>
-              <p className="type-lead max-w-[760px] font-normal text-vinus-ink">아이디어, 과제, 제품 목표를 알려주세요. 함께 적절한 방향을 찾아보겠습니다.</p>
+              <h2 className="type-contact-heading font-normal">Project Inquiry</h2>
+              <p className="type-lead max-w-[760px] font-normal text-vinus-ink">필요한 내용을 남겨주시면 검토 후 연락드리겠습니다.</p>
             </div>
           </div>
 
