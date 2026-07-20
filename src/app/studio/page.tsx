@@ -44,9 +44,9 @@ const businessFields = [
 ] as const;
 
 const visionFormula: ReadonlyArray<{ label: string; meaning: string; tone?: "light" | "dark" }> = [
-  { label: "Venus", meaning: "Beauty" },
-  { label: "Virus", meaning: "Inspiration" },
-  { label: "Spread", meaning: "Action", tone: "dark" },
+  { label: "vinus", meaning: "beauty" },
+  { label: "virus", meaning: "inspiration" },
+  { label: "spread", meaning: "action", tone: "dark" },
 ] as const;
 
 export default function StudioPage() {
@@ -121,15 +121,15 @@ export default function StudioPage() {
         </div>
       </section>
 
-      <section className="studio-vision flex h-[1156px] w-full flex-col gap-8 overflow-hidden border-b border-vinus-ink/10 px-[var(--space-edge)] py-24 md:h-auto md:overflow-visible md:gap-16 md:py-[var(--space-section)] min-[2200px]:!h-[2900px]">
+      <section className="studio-vision flex h-[1320px] w-full flex-col gap-8 overflow-hidden border-b border-vinus-ink/10 px-[var(--space-edge)] py-24 md:h-auto md:overflow-visible md:gap-16 md:py-[var(--space-section)] min-[2200px]:!h-[2900px]">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.22, margin: "0px 0px -10% 0px" }}
             variants={visionContainer}
-            className="flex flex-col items-start justify-start gap-8 text-left md:items-center md:justify-center md:gap-12 md:pr-12 md:text-center min-[2200px]:h-[1384px]"
+            className="flex flex-col items-center justify-center gap-8 text-center md:gap-12 md:pr-12 min-[2200px]:h-[1384px] min-[2200px]:gap-[160px]"
           >
-            <motion.p variants={visionCopy} className="type-label font-medium md:hidden">Our Vision</motion.p>
+            <motion.p variants={visionCopy} className="type-label font-medium">Our Vision</motion.p>
             <h2 className="type-studio-vision type-studio-vision--compact font-normal" aria-label="Spread the Beautiful Things">
               {visionTitleLines.map((line) => (
                 <span key={line} className="block overflow-hidden pb-[0.06em]">
@@ -156,9 +156,10 @@ export default function StudioPage() {
                       tone === "dark" ? "bg-vinus-ink text-white" : "bg-vinus-wash text-vinus-ink"
                     }`}
                   >
-                    <span className="md:text-[clamp(24px,3vw,40px)] md:leading-tight">{label}</span>
+                    <span className="type-label font-normal md:text-[clamp(24px,3vw,40px)] md:font-medium md:leading-tight">{label}</span>
                     <span className={`type-label font-normal md:text-[clamp(16px,1.8vw,24px)] md:leading-8 ${tone === "dark" ? "text-white/50" : "text-vinus-ink/50"}`}>
-                      {meaning}
+                      <span className="md:hidden">({meaning})</span>
+                      <span className="hidden md:inline">{meaning}</span>
                     </span>
                   </motion.span>
                 </div>

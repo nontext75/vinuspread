@@ -255,17 +255,17 @@
     line-height: 40px;
   }
   .type-value-word {
-    font-size: 14px;
+    font-size: 40px;
     font-weight: 400;
-    line-height: 20px;
+    line-height: 44px;
   }
   .type-studio-vision {
     font-size: 48px;
     line-height: 52px;
   }
   .type-studio-vision--compact {
-    font-size: 32px;
-    line-height: 36px;
+    font-size: 56px;
+    line-height: 58px;
   }
   .type-studio-business-title {
     font-size: 14px;
@@ -363,8 +363,8 @@
     line-height: 328px;
   }
   .type-studio-vision--compact {
-    font-size: 280px;
-    line-height: 258px;
+    font-size: 240px;
+    line-height: 240px;
   }
 }
 
