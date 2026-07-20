@@ -36,7 +36,7 @@ const portfolioData: Record<string, PortfolioProject> = {
   "crowdsourcing-platform-crowd-oh": {
     title: "Crowd OH!", subtitle: "Crowdsourcing Platform Design", category: "Web", image: "/vinus/dummy-photo/work-03.jpg", client: "Crowd OH Corp", period: "2022.11",
     overview: "A next-generation crowdsourcing platform that connects creators and businesses. Clear controls and expressive interactions keep contributors engaged throughout each project.",
-    blocks: [{ heading: "Dashboard Experience", body: "The core challenge was presenting substantial work-status data without visual overload. We developed modular dashboards and direct project tracking patterns for everyday use." }],
+    blocks: [{ heading: "Dashboard Experience", body: "The challenge was to present complex work-status data clearly. We designed modular dashboards and direct project tracking patterns for everyday use." }],
   },
   "macadamia-website": {
     title: "macadamia", subtitle: "Product Strategy & UX/UI Design", category: "Web", image: "/vinus/dummy-photo/work-04.jpg", client: "Macadamia Labs", period: "2022.09",
@@ -63,7 +63,7 @@ const portfolioData: Record<string, PortfolioProject> = {
     overview: "A design project organizing the artworks of Samsung Electronics' lifestyle TV 'The Frame' digital content platform 'Art Store'. Although a digital publication, we captured the tangible weight of a physical catalogue and the pacing of a gallery book, perfectly translating the product's premium texture.",
     blocks: [
       { heading: "A Catalogue for Art, Not Television.", body: "The Frame is not just a TV. It is a screen when active, and an art piece when off — a lifestyle TV that hangs like a picture frame on the wall. The Frame showcases over 5,000 digital artworks, including masterpieces from MoMA, The Met, and Musée d'Orsay. Our task was to introduce these pieces to users. Rather than a standard electronics manual, it needed to feel like a curated museum catalog." },
-      { heading: "A Museum Monograph on Digital Screens.", body: "The catalogue had to transcend a simple product guide and serve as the threshold to the world of The Frame. We organized the historical flow of Art Store works from ancient to modern art, ensuring that the product's technical details flowed in harmony with the art-historical weight. Our ultimate goal was to marry the reverence of an art monograph with the absolute clarity of an electronics catalogue within a digital format." },
+      { heading: "A Museum Monograph on Digital Screens.", body: "The catalogue needed to be more than a product guide. It had to open the world of The Frame with the pace of a curated art book. We organized the historical flow of Art Store works from ancient to modern art, balancing product clarity with the weight of art history." },
     ],
   },
 };

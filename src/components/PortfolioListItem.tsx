@@ -31,7 +31,7 @@ export function PortfolioListItem({ title, subtitle, category, image, href, inde
         <Image src={image} alt="" fill sizes="200px" className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:group-hover:scale-[1.05]" />
       </div>
       <div className="min-w-0 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1">
-        <h2 className="type-heading font-medium transition-colors duration-300 group-hover:text-vinus-ink/80">{title}</h2>
+        <h2 className="type-card-title font-medium transition-colors duration-300 group-hover:text-vinus-ink/80">{title}</h2>
         <p className="type-body mt-[var(--space-inline)] text-vinus-ink/55 md:type-lead">{subtitle}</p>
       </div>
       <div className="flex items-center gap-[var(--space-compact)]">

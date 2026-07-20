@@ -1,0 +1,483 @@
+{
+  "meta": {
+    "sourceLanguage": "en",
+    "preparedFor": ["english-copy-review", "korean-page-build"],
+    "notes": [
+      "English copy is extracted from the current site implementation.",
+      "Korean copy fields are intentionally left blank for later localization.",
+      "This file is a copy review and localization source; pages are not yet wired to consume it."
+    ]
+  },
+  "common": {
+    "en": {
+      "brand": "vinuspread",
+      "metadata": {
+        "title": "vinuspread - Global Digital Design Studio",
+        "description": "Global digital design studio partnering with brands and businesses that create exceptional experiences where people live, work, and unwind."
+      },
+      "navigation": [
+        { "label": "Experience", "href": "/work" },
+        { "label": "Studio", "href": "/studio" },
+        { "label": "Story", "href": "/news" },
+        { "label": "Contact", "href": "/contact" }
+      ],
+      "menu": {
+        "open": "Menu",
+        "closeAriaLabel": "Close menu",
+        "dialogAriaLabel": "Site navigation",
+        "descriptor": "Product Management & Design Studio - Seoul, Korea",
+        "email": "vinus@vinus.co.kr"
+      },
+      "footer": {
+        "nextPageLabel": "Next page",
+        "contactTitle": "Contact",
+        "contactBody": "Ready to shape your next project?\nWe're here from first idea to final detail.",
+        "contactCta": "Contact us",
+        "businessEnquiries": "Business enquiries",
+        "openPositions": "Open positions",
+        "businessHours": "Business hours",
+        "businessDays": "Monday to Friday",
+        "businessTime": "10:00 AM – 18:00 PM GMT (+9)",
+        "korea": "Korea",
+        "address": "Suite 1202, 227 Gonghang-daero, Gangseo-gu, Seoul 07802",
+        "phoneFax": "TEL : 02-3661-1907   FAX : 02-3661-1906",
+        "backToTop": "Back to top",
+        "socialLinks": ["instagram", "pinterest", "behance", "vinorleague"]
+      },
+      "ui": {
+        "backToExperience": "Back to Experience",
+        "backToWork": "Back to Work",
+        "overview": "Overview",
+        "nextProject": "Next Project",
+        "projectNotFound": "Project Not Found"
+      }
+    },
+    "ko": {}
+  },
+  "pages": {
+    "home": {
+      "en": {
+        "hero": {
+          "lead": [
+            "We work with brands from the first idea to the last detail, shaping direction, experience, and improvement together."
+          ],
+          "title": ["We design", "sustainable", "growth"],
+          "description": "From first idea to final detail, we work with you to find direction,\nbuild better experiences, and keep improving what comes next.",
+          "primaryCta": "Download Brochure"
+        },
+        "intro": {
+          "copy": "We focus on essential value and elevate it with beauty.\nAs times continue to change, we stay grounded in what lasts.\nWe create design that helps ideas move beyond their limits.",
+          "cta": "The Studio"
+        },
+        "portfolio": {
+          "title": "Work",
+          "description": "Selected work shaped through strategy, interface design,\nand brand systems built to keep improving.",
+          "cta": "Browse all work"
+        },
+        "reel": {
+          "playAriaLabel": "Play Vinuspread reel",
+          "dialogAriaLabel": "Vinuspread playreel",
+          "closeAriaLabel": "Close playreel",
+          "caption": "Vinuspread PlayReel"
+        },
+        "studio": {
+          "title": "How we work",
+          "lead": "Always there, from first idea to final detail.",
+          "body": "Vinuspread works with teams from early direction to launch and beyond.\nWe use AI as a working method to plan, design, and improve experiences with over 20 years of practice in UI/UX, branding, and product design.",
+          "links": ["Explore our services", "See our work"],
+          "services": [
+            { "title": "Product Strategy", "details": ["Discovery", "Roadmap", "AI Opportunity"] },
+            { "title": "Experience Design", "details": ["UX/UI", "Web", "App", "Interaction"] },
+            { "title": "Brand Systems", "details": ["Identity", "Visual Direction", "Content"] },
+            { "title": "Launch & Operation", "details": ["CMS", "SEO", "Analytics", "Improvement"] }
+          ]
+        },
+        "clients": {
+          "title": "Clients we've\npartnered with."
+        },
+        "stories": {
+          "title": "Ideas &\nInsights",
+          "mobileDescription": "Ideas and insights for building meaningful experiences.",
+          "cta": "View all stories"
+        }
+      },
+      "ko": {}
+    },
+    "work": {
+      "en": {
+        "hero": {
+          "eyebrow": "Experience",
+          "title": "We Spread\nthe Beautiful Things",
+          "description": "Explore selected work shaped through product strategy, interface design, and brand systems."
+        },
+        "filters": ["All", "Web", "Character", "Branding"],
+        "viewControls": {
+          "gridAriaLabel": "Grid view",
+          "listAriaLabel": "List view"
+        }
+      },
+      "ko": {}
+    },
+    "studio": {
+      "en": {
+        "hero": {
+          "eyebrow": "Studio",
+          "title": "We elevate essential\nvalue with beauty.",
+          "description": "In a fast changing world, we help brands and products stay focused on what matters, then improve it through design, technology, and iteration."
+        },
+        "principles": [
+          {
+            "tag": "mind",
+            "title": "Define the Value",
+            "description": "We clarify what matters most, then turn it into decisions that make each project stronger."
+          },
+          {
+            "tag": "think",
+            "title": "Question the Direction",
+            "description": "We ask better questions early, so strategy, structure, and design can move in one clear direction."
+          },
+          {
+            "tag": "behavior",
+            "title": "Shape the Experience",
+            "description": "We translate direction into interfaces, systems, and interactions that people can understand and use."
+          }
+        ],
+        "vision": {
+          "eyebrow": "Our Vision",
+          "title": "Spread\nthe Beautiful\nThings",
+          "description": "We believe good design makes ideas clearer, experiences richer, and every next step easier to share.",
+          "formula": [
+            { "label": "vinus", "meaning": "beauty" },
+            { "label": "virus", "meaning": "inspiration" },
+            { "label": "spread", "meaning": "action" }
+          ]
+        },
+        "business": {
+          "title": "Field of business",
+          "description": "We provide optimized digital services, enabling users to interact easily and comfortably across digital touchpoints.",
+          "fields": [
+            { "title": "Website", "description": "Designing and developing web platforms optimized for brand and business value." },
+            { "title": "Mobile App", "description": "Crafting intuitive and user-centered mobile UX/UI designs and application architectures." },
+            { "title": "Branding", "description": "Building unique brand identities and cohesive visual systems that express core values." }
+          ]
+        },
+        "clients": {
+          "title": "Clients & Partners",
+          "description": "New value begins with the connection between people. We do work that moves people's hearts."
+        }
+      },
+      "ko": {}
+    },
+    "story": {
+      "en": {
+        "hero": {
+          "eyebrow": "Story",
+          "title": "Ideas and stories\nworth sharing.",
+          "description": "Practical observations on brands, products, design principles, and the words that shape digital experiences."
+        },
+        "backLink": "Back to Story",
+        "nextStory": "Next story"
+      },
+      "ko": {}
+    },
+    "contact": {
+      "en": {
+        "hero": {
+          "eyebrow": "Contact",
+          "title": "Let's shape what\ncomes next.",
+          "description": "Share your idea, challenge, or product goal.\nWe'll help you find the right direction."
+        },
+        "contactDetails": [
+          {
+            "label": "Business enquiries",
+            "value": "vinus@vinus.co.kr",
+            "detail": "TEL 02-3661-1907 / FAX 02-3661-1906"
+          },
+          {
+            "label": "Open positions",
+            "value": "Join our team",
+            "detail": "We are always looking for talent."
+          },
+          {
+            "label": "Korea office",
+            "value": "Suite 1202, 227 Gonghang-daero, Gangseo-gu, Seoul 07802",
+            "detail": "Seoul, Korea"
+          },
+          {
+            "label": "Business hours",
+            "value": "Monday to Friday",
+            "detail": "10:00 AM - 18:00 PM, GMT (+9)"
+          }
+        ],
+        "media": {
+          "title": "Seoul, Korea",
+          "meta": "37.5587° N · 126.8351° E"
+        },
+        "form": {
+          "title": "Tell us about\nyour next project.",
+          "mobileDescription": "Share the details below so we can prepare an accurate estimate and consultation.",
+          "desktopDescription": "Share the essentials below. We'll review your request and get back to you with the right direction.",
+          "sections": ["01 / Essentials", "02 / Services", "03 / Project brief"],
+          "fields": {
+            "companyName": {
+              "label": "Company Name",
+              "placeholder": "Enter your company name"
+            },
+            "name": {
+              "label": "Your Name",
+              "placeholder": "Please write your name"
+            },
+            "phone": {
+              "label": "Phone Number",
+              "placeholder": "Enter your phone number"
+            },
+            "email": {
+              "label": "Email Address",
+              "placeholder": "Please write your email address"
+            },
+            "budget": {
+              "label": "Project Budget",
+              "options": ["Under $5,000", "$5,000 - $10,000", "$10,000 - $30,000", "Above $30,000"]
+            },
+            "attachment": {
+              "label": "Attachment",
+              "placeholder": "Select a file to attach...",
+              "button": "Browse"
+            },
+            "serviceType": {
+              "label": "Service type *",
+              "desktopLabel": "Select all that apply *",
+              "options": ["Website", "Responsive Web", "Mobile Web", "Mobile App", "Branding", "Character", "Editorial & Print", "Other"]
+            },
+            "projectDetails": {
+              "label": "Project Details",
+              "mobileLabel": "Project details",
+              "mobilePlaceholder": "Share your goals, timeline, and key requirements.",
+              "desktopPlaceholder": "Share your goals, timeline, and key requirements."
+            }
+          },
+          "privacyMobile": "By submitting this form, you agree to our privacy policy.",
+          "privacyDesktop": "Your inquiry will be sent directly to our team. We do not store your personal information.",
+          "submitMobile": "Send request",
+          "submitDesktop": "Send request",
+          "successMessage": "Thank you. Your inquiry has been submitted successfully."
+        }
+      },
+      "ko": {}
+    }
+  },
+  "collections": {
+    "portfolio": {
+      "en": [
+        {
+          "slug": "mongdang",
+          "title": "Mongdang",
+          "subtitle": "Brand Experience & Storytelling",
+          "category": "Character",
+          "client": "Mongdang Studio",
+          "period": "2023.08",
+          "overview": "Mongdang is a storytelling-driven character brand project. We developed an endearing visual language and character system that helps brand narratives connect emotionally with children and parents alike.",
+          "blocks": [
+            {
+              "heading": "Character System & Visual Identity",
+              "body": "Characters are not just drawings. They are vessels for brand messages. We focused on warm, organic shapes and approachable colors that work consistently across physical and digital media."
+            }
+          ]
+        },
+        {
+          "slug": "shinhan-easy",
+          "title": "Shinhan Easy",
+          "subtitle": "Digital Experience & Mobile Web",
+          "category": "Web",
+          "client": "Shinhan Financial Group",
+          "period": "2023.02",
+          "overview": "A simplified and intuitive digital financial portal tailored for the modern mobile user. We prioritized speed, clarity, and direct paths to action.",
+          "blocks": [
+            {
+              "heading": "UX/UI Design System Integration",
+              "body": "Designed to minimize cognitive load, Shinhan Easy streamlines complex banking procedures into clear steps. We established a unified mobile grid and a concise typographic hierarchy."
+            }
+          ]
+        },
+        {
+          "slug": "crowdsourcing-platform-crowd-oh",
+          "title": "Crowd OH!",
+          "subtitle": "Crowdsourcing Platform Design",
+          "category": "Web",
+          "client": "Crowd OH Corp",
+          "period": "2022.11",
+          "overview": "A next-generation crowdsourcing platform that connects creators and businesses. Clear controls and expressive interactions keep contributors engaged throughout each project.",
+          "blocks": [
+            {
+              "heading": "Dashboard Experience",
+              "body": "The challenge was to present complex work-status data clearly. We designed modular dashboards and direct project tracking patterns for everyday use."
+            }
+          ]
+        },
+        {
+          "slug": "macadamia-website",
+          "title": "macadamia",
+          "subtitle": "Product Strategy & UX/UI Design",
+          "category": "Web",
+          "client": "Macadamia Labs",
+          "period": "2022.09",
+          "overview": "A focused product experience that presents design principles and creative strategies through clear space, strong typography, and fluid interaction.",
+          "blocks": [
+            {
+              "heading": "Interaction & Motion Design",
+              "body": "Subtle page transitions and scroll-responsive elements give the experience rhythm while preserving fast, direct access to every piece of information."
+            }
+          ]
+        },
+        {
+          "slug": "budongsan114-mediate-bizsolution",
+          "title": "Budongsan114 Mediate BIZsolution",
+          "subtitle": "Enterprise B2B Product Strategy",
+          "category": "Web",
+          "client": "Budongsan 114",
+          "period": "2022.07",
+          "overview": "A comprehensive enterprise platform that streamlines property management and agent communication, translating a complex legacy system into a clear business tool.",
+          "blocks": [
+            {
+              "heading": "Optimizing B2B Systems",
+              "body": "We reorganized information into dedicated control grids and modular workspaces that support intensive daily use while reducing errors and workflow delays."
+            }
+          ]
+        },
+        {
+          "slug": "donga-on-book",
+          "title": "Donga On book",
+          "subtitle": "Branding & Digital Platform",
+          "category": "Web",
+          "client": "Donga Publishing",
+          "period": "2022.06",
+          "overview": "A traditional publishing experience transformed into an interactive digital learning ecosystem, connecting educators and learners through intuitive tools.",
+          "blocks": [
+            {
+              "heading": "Digital Learning Ecosystem",
+              "body": "A modular content grid supports text, worksheets, video, and interactive assets across devices while keeping the learning path consistent for students."
+            }
+          ]
+        },
+        {
+          "slug": "aliot-brand-identity",
+          "title": "Aliot Brand Identity",
+          "subtitle": "Corporate Visual Direction & Identity",
+          "category": "Web",
+          "client": "Aliot Technology",
+          "period": "2022.05",
+          "overview": "A clean and flexible identity system for a technology company, designed to maintain visual clarity across product interfaces, communication, and print.",
+          "blocks": [
+            {
+              "heading": "Visual Identity System",
+              "body": "We created a flexible brand system with geometric details, a focused primary color, and a concise hierarchy suited to both digital interfaces and print."
+            }
+          ]
+        },
+        {
+          "slug": "the-frame-artstore-catalogue",
+          "title": "The Frame Artstore Catalogue",
+          "subtitle": "Editorial Design & Branding System",
+          "category": "Web",
+          "client": "Samsung Electronics",
+          "period": "2022.04",
+          "overview": "A design project organizing the artworks of Samsung Electronics' lifestyle TV 'The Frame' digital content platform 'Art Store'. Although a digital publication, we captured the tangible weight of a physical catalogue and the pacing of a gallery book, perfectly translating the product's premium texture.",
+          "blocks": [
+            {
+              "heading": "A Catalogue for Art, Not Television.",
+              "body": "The Frame is not just a TV. It is a screen when active, and an art piece when off — a lifestyle TV that hangs like a picture frame on the wall. The Frame showcases over 5,000 digital artworks, including masterpieces from MoMA, The Met, and Musée d'Orsay. Our task was to introduce these pieces to users. Rather than a standard electronics manual, it needed to feel like a curated museum catalog."
+            },
+            {
+              "heading": "A Museum Monograph on Digital Screens.",
+              "body": "The catalogue needed to be more than a product guide. It had to open the world of The Frame with the pace of a curated art book. We organized the historical flow of Art Store works from ancient to modern art, balancing product clarity with the weight of art history."
+            }
+          ]
+        }
+      ],
+      "ko": []
+    },
+    "stories": {
+      "en": [
+        {
+          "slug": "brand-colors-by-instinct",
+          "title": "Why You Shouldn't Choose Brand Colors by Instinct",
+          "homeExcerpt": "Color is not just a matter of taste; it determines the perception and emotions of your brand. Even a small change can affect the entire way people perceive your brand.",
+          "excerpt": "Color decisions become stronger when they begin with a clear principle rather than personal preference.",
+          "date": "2026.04.20",
+          "category": "Insight",
+          "intro": "Color is one of the fastest ways people recognize a brand, but recognition alone does not make a color system useful. A strong palette starts with the role the brand needs to play.",
+          "sections": [
+            {
+              "heading": "Begin with meaning",
+              "paragraphs": [
+                "Before choosing a hue, define the impression the brand should leave and the situations in which the color must work. This gives every later decision a clear reason.",
+                "A color that feels attractive in isolation may behave very differently across products, interfaces, campaigns, and physical environments."
+              ]
+            },
+            {
+              "heading": "Build a system, not a swatch",
+              "paragraphs": [
+                "Primary colors create recognition. Supporting colors establish hierarchy, states, contrast, and accessibility. Together they should operate as one practical system.",
+                "Testing the palette in real layouts reveals more than comparing samples on a mood board. Context shows whether the brand remains clear, flexible, and consistent."
+              ]
+            }
+          ],
+          "tags": ["Brand", "Color system", "Identity"]
+        },
+        {
+          "slug": "design-principles",
+          "title": "What Happens When You Don't Have Design Principles",
+          "homeExcerpt": "Without clear principles, design sways with every piece of feedback and personal preference. Consistent standards keep all decisions moving in one direction.",
+          "excerpt": "Consistent standards keep every design decision moving in one clear direction.",
+          "date": "2026.05.22",
+          "category": "Insight",
+          "intro": "Design principles make judgment visible. They help a team explain why one direction fits the product better than another and keep decisions connected as the work grows.",
+          "sections": [
+            {
+              "heading": "A shared basis for decisions",
+              "paragraphs": [
+                "Without principles, feedback is easily reduced to personal preference. The loudest opinion wins and the product changes direction from one review to the next.",
+                "A small set of clear principles gives teams a shared language for evaluating ideas without removing room for exploration."
+              ]
+            },
+            {
+              "heading": "Principles should guide action",
+              "paragraphs": [
+                "Useful principles are specific enough to influence a real design choice. They describe what the experience should prioritize and how the product should behave under pressure.",
+                "When principles are used continuously, consistency becomes the result of aligned decisions rather than rigid repetition."
+              ]
+            }
+          ],
+          "tags": ["Design system", "Principles", "Collaboration"]
+        },
+        {
+          "slug": "ux-writing-single-button",
+          "title": "UX Writing: How to Start with a Single Button",
+          "homeExcerpt": "We design starting from the shortest sentences users encounter most frequently. Even the wording of a single button shapes the direction of the experience and the next action.",
+          "excerpt": "Even the wording of one button shapes the next action and the direction of an experience.",
+          "date": "2026.05.01",
+          "category": "Insight",
+          "intro": "A button is a compact promise. Its words tell people what will happen next, how much effort is required, and whether the action feels safe to take.",
+          "sections": [
+            {
+              "heading": "Write for the next moment",
+              "paragraphs": [
+                "Good interface writing focuses on the action and its result. Labels such as Continue or Submit can be vague when the next screen or outcome is not already obvious.",
+                "A specific label reduces hesitation because it helps users predict the immediate consequence of their choice."
+              ]
+            },
+            {
+              "heading": "Test words inside the flow",
+              "paragraphs": [
+                "A button cannot be judged apart from the message, form, or task around it. The surrounding context determines how much explanation the label needs.",
+                "Reviewing the complete journey helps teams keep language consistent and prevents small wording decisions from creating larger usability problems."
+              ]
+            }
+          ],
+          "tags": ["UX writing", "Product design", "Interaction"]
+        }
+      ],
+      "ko": []
+    }
+  }
+}

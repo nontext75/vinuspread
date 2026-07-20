@@ -69,7 +69,7 @@ export function PortfolioCard({
           </div>
           <div className="absolute inset-0 bg-vinus-ink/0 transition-colors duration-500 ease-out group-hover:bg-vinus-ink/5" />
         </div>
-        <div className="flex min-w-0 items-center justify-between gap-4 md:gap-6">
+        <div className="flex min-w-0 items-start justify-between gap-4 md:gap-6">
           <div className="flex min-w-0 flex-col gap-2 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5 md:gap-3">
             <h3 className="type-card-title w-full text-pretty break-words whitespace-normal font-medium transition-colors duration-300 group-hover:text-vinus-ink/80">{title}</h3>
             <p className="type-body w-full text-pretty font-normal break-words whitespace-normal text-vinus-ink/70 md:type-lead">{subtitle}</p>

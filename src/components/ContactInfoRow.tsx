@@ -31,7 +31,7 @@ export function ContactInfoRow({ label, value, detail, href, index = 0, divider 
     >
       <p className="type-label w-full font-medium md:type-body md:w-[220px] md:font-normal">{label}</p>
       <div className="flex min-w-0 flex-1 flex-col gap-2 md:gap-3">
-        {href ? <a href={href} className="type-body break-words border-b border-current font-medium transition-opacity duration-200 hover:opacity-60 md:type-lead">{value}</a> : <p className="type-body break-words font-medium md:type-lead">{value}</p>}
+        {href ? <a href={href} className="type-body break-words font-medium transition-opacity duration-200 hover:opacity-60 md:type-lead">{value}</a> : <p className="type-body break-words font-medium md:type-lead">{value}</p>}
         <p className="type-body font-normal text-vinus-ink/65">{detail}</p>
       </div>
     </motion.div>

@@ -294,9 +294,9 @@
     font-size: var(--type-hero);
   }
   .type-card-title {
-    font-size: 40px;
-    font-weight: 400;
-    line-height: 48px;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 40px;
   }
   .type-story-title {
     font-size: 32px;
@@ -350,6 +350,13 @@
   .footer-next-title {
     font-size: var(--type-page);
     line-height: min(0.92em, var(--leading-display));
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .type-footer-next {
+    font-size: 88px;
+    line-height: 84px;
   }
 }
 

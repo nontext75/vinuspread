@@ -39,7 +39,7 @@ export default function WorkPage() {
       <SubpageHero
         eyebrow="Experience"
         title={<>We Spread<br />the Beautiful Things</>}
-        description="We believe the visual work we create will make tomorrow more beautiful than today."
+        description="Explore selected work shaped through product strategy, interface design, and brand systems."
         className="max-md:min-h-[520px] md:!pt-16 md:!pb-20"
       />
 

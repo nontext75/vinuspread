@@ -40,8 +40,8 @@ export default function ContactPage() {
     <main className="subpage-wrapper selection:bg-vinus-ink selection:text-vinus-paper">
       <SubpageHero
         eyebrow="Contact"
-        title={<><span>Make wonderful things</span><br /><span>with us.</span></>}
-        description={<><span>Our dedication begins where the client&apos;s expectations end.</span><br className="hidden md:block" /> <span>We strive to create and share beautiful, diverse experiences together.</span></>}
+        title={<><span>Let&apos;s shape what</span><br /><span>comes next.</span></>}
+        description={<><span>Share your idea, challenge, or product goal.</span><br className="hidden md:block" /> <span>We&apos;ll help you find the right direction.</span></>}
         size="medium"
         className="md:!pt-[var(--space-section)]"
       />
@@ -100,7 +100,7 @@ export default function ContactPage() {
           <div className="flex flex-col gap-6">
             <FormField label="Company Name" htmlFor="mobile-company-name"><input id="mobile-company-name" type="text" placeholder="Enter your company name" value={formData.companyName} onChange={(event) => setFormData({ ...formData, companyName: event.target.value })} className={formControlClassName} /></FormField>
             <FormField label="Your Name" htmlFor="mobile-your-name" required><input id="mobile-your-name" type="text" required placeholder="Please write your name" value={formData.name} onChange={(event) => setFormData({ ...formData, name: event.target.value })} className={formControlClassName} /></FormField>
-            <FormField label="Phone Number" htmlFor="mobile-phone-number" required><input id="mobile-phone-number" type="tel" required placeholder="Please enter contactable phone number" value={formData.phone} onChange={(event) => setFormData({ ...formData, phone: event.target.value })} className={formControlClassName} /></FormField>
+            <FormField label="Phone Number" htmlFor="mobile-phone-number" required><input id="mobile-phone-number" type="tel" required placeholder="Enter your phone number" value={formData.phone} onChange={(event) => setFormData({ ...formData, phone: event.target.value })} className={formControlClassName} /></FormField>
             <FormField label="Email Address" htmlFor="mobile-email-address" required><input id="mobile-email-address" type="email" required placeholder="Please write your email address" value={formData.email} onChange={(event) => setFormData({ ...formData, email: event.target.value })} className={formControlClassName} /></FormField>
             <FormField label="Project Budget" htmlFor="mobile-project-budget" required><select id="mobile-project-budget" value={formData.budget} onChange={(event) => setFormData({ ...formData, budget: event.target.value })} className={`${formControlClassName} cursor-pointer appearance-none`}><option>Under $5,000</option><option>$5,000 - $10,000</option><option>$10,000 - $30,000</option><option>Above $30,000</option></select></FormField>
             <FormField label="Attachment" htmlFor="mobile-attachment">
@@ -122,11 +122,11 @@ export default function ContactPage() {
           </div>
 
           <FormField label="Project details" htmlFor="mobile-project-details" required className="gap-4">
-            <textarea id="mobile-project-details" required rows={5} placeholder="Tell us what you want to make, who it is for, and when you hope to launch." value={formData.description} onChange={(event) => setFormData({ ...formData, description: event.target.value })} className="type-body h-40 w-full resize-none border border-vinus-ink/35 bg-transparent p-4 outline-none placeholder:text-vinus-ink/45 focus:border-vinus-ink" />
+            <textarea id="mobile-project-details" required rows={5} placeholder="Share your goals, timeline, and key requirements." value={formData.description} onChange={(event) => setFormData({ ...formData, description: event.target.value })} className="type-body h-40 w-full resize-none border border-vinus-ink/35 bg-transparent p-4 outline-none placeholder:text-vinus-ink/45 focus:border-vinus-ink" />
           </FormField>
 
           <p className="type-body text-vinus-ink">By submitting this form, you agree to our privacy policy.</p>
-          <Button type="submit" size="lg" className="w-fit">Send inquiry</Button>
+          <Button type="submit" size="lg" className="w-fit">Send request</Button>
         </form>
       </section>
 
@@ -143,7 +143,7 @@ export default function ContactPage() {
             <FormSection label="01 / Essentials" contentClassName="grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-2">
                 <FormField label="Company Name" htmlFor="company-name"><input id="company-name" type="text" placeholder="Enter your company name" value={formData.companyName} onChange={(event) => setFormData({ ...formData, companyName: event.target.value })} className={formControlClassName} /></FormField>
                 <FormField label="Your Name" htmlFor="your-name" required><input id="your-name" type="text" required placeholder="Please write your name" value={formData.name} onChange={(event) => setFormData({ ...formData, name: event.target.value })} className={formControlClassName} /></FormField>
-                <FormField label="Phone Number" htmlFor="phone-number" required><input id="phone-number" type="tel" required placeholder="Please enter contactable phone number" value={formData.phone} onChange={(event) => setFormData({ ...formData, phone: event.target.value })} className={formControlClassName} /></FormField>
+                <FormField label="Phone Number" htmlFor="phone-number" required><input id="phone-number" type="tel" required placeholder="Enter your phone number" value={formData.phone} onChange={(event) => setFormData({ ...formData, phone: event.target.value })} className={formControlClassName} /></FormField>
                 <FormField label="Email Address" htmlFor="email-address" required><input id="email-address" type="email" required placeholder="Please write your email address" value={formData.email} onChange={(event) => setFormData({ ...formData, email: event.target.value })} className={formControlClassName} /></FormField>
                 <FormField label="Project Budget" htmlFor="project-budget" required><select id="project-budget" value={formData.budget} onChange={(event) => setFormData({ ...formData, budget: event.target.value })} className={`${formControlClassName} cursor-pointer appearance-none`}><option>Under $5,000</option><option>$5,000 - $10,000</option><option>$10,000 - $30,000</option><option>Above $30,000</option></select></FormField>
                 <FormField label="Attachment" htmlFor="attachment">
@@ -165,11 +165,11 @@ export default function ContactPage() {
             </FormSection>
 
             <FormSection label="03 / Project brief">
-              <FormField label="Project Details" htmlFor="project-details" required className="gap-4" labelClassName="font-bold"><textarea id="project-details" required rows={6} placeholder="Tell us about the project goals, timeline, and any specific requirements." value={formData.description} onChange={(event) => setFormData({ ...formData, description: event.target.value })} className="type-body h-[210px] w-full resize-y border border-vinus-ink/35 bg-white/55 p-6 outline-none placeholder:text-vinus-ink/45 focus:border-vinus-ink" /></FormField>
+              <FormField label="Project Details" htmlFor="project-details" required className="gap-4" labelClassName="font-bold"><textarea id="project-details" required rows={6} placeholder="Share your goals, timeline, and key requirements." value={formData.description} onChange={(event) => setFormData({ ...formData, description: event.target.value })} className="type-body h-[210px] w-full resize-y border border-vinus-ink/35 bg-white/55 p-6 outline-none placeholder:text-vinus-ink/45 focus:border-vinus-ink" /></FormField>
             </FormSection>
 
             <div className="grid min-h-[120px] grid-cols-1 gap-8 pt-16 md:grid-cols-12 md:items-start">
-              <Button type="submit" size="lg" className="w-full md:col-span-3">Submit Inquiry</Button>
+              <Button type="submit" size="lg" className="w-full md:col-span-3">Send request</Button>
               <p className="type-body text-vinus-ink/45 md:col-span-5 md:col-start-5 md:self-center">Your inquiry will be sent directly to our team. We do not store your personal information.</p>
             </div>
           </form>

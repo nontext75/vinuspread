@@ -46,9 +46,9 @@ function ContactBlock({ mobile = false }: { mobile?: boolean }) {
       <h2 className="type-body font-medium">Contact</h2>
       <div className={mobile ? "h-[70px] w-full pt-2" : "h-[70px] w-[540px] pt-3"}>
         <p className={mobile ? "type-label text-white/55" : "type-body text-white/55"}>
-          We&apos;re ready to turn ideas into meaningful experiences
+          Ready to shape your next project?
           <br />
-          and begin what&apos;s next together.
+          We&apos;re here from first idea to final detail.
         </p>
       </div>
       <div className="relative h-[106px] w-full">

@@ -13,24 +13,24 @@ import { SubpageHero } from "@/components/SubpageHero";
 const philosophies = [
   {
     tag: "mind",
-    title: "Detailing the Value",
-    description: "We add value in details. A difference in an unexpected, unseen place is what ultimately determines the level of completeness.",
+    title: "Define the Value",
+    description: "We clarify what matters most, then turn it into decisions that make each project stronger.",
     image: "/vinus/dummy-photo/studio-01.jpg",
     placement: "order-2 lg:order-none min-[2200px]:col-span-5 min-[2200px]:col-start-1 min-[2200px]:row-start-1",
     ratio: "h-auto w-full aspect-[4/3] min-[2200px]:aspect-[584/438]",
   },
   {
     tag: "think",
-    title: "Asking and Answering",
-    description: "We deeply contemplate the essence of value. True planning starts in the process of asking questions and finding answers.",
+    title: "Question the Direction",
+    description: "We ask better questions early, so strategy, structure, and design can move in one clear direction.",
     image: "/vinus/dummy-photo/studio-02.jpg",
     placement: "order-1 lg:order-none min-[2200px]:col-span-5 min-[2200px]:col-start-8 min-[2200px]:row-start-1",
     ratio: "h-auto aspect-[4/5] min-[2200px]:h-[1243px] min-[2200px]:aspect-auto",
   },
   {
     tag: "behavior",
-    title: "Discovering Experience",
-    description: "We change the world by discovering experiences and practicing action. We realize the value of business to help our partners leap forward.",
+    title: "Shape the Experience",
+    description: "We translate direction into interfaces, systems, and interactions that people can understand and use.",
     image: "/vinus/dummy-photo/studio-03.jpg",
     placement: "order-3 lg:order-none min-[2200px]:col-span-4 min-[2200px]:col-start-3 min-[2200px]:row-start-3",
     ratio: "h-auto aspect-[4/3] min-[2200px]:h-[592px] min-[2200px]:aspect-auto",
@@ -99,7 +99,7 @@ export default function StudioPage() {
       <SubpageHero
         eyebrow="Studio"
         title={<><span>We elevate essential</span><br /><span>value with beauty.</span></>}
-        description="Even amidst the intense speed of a rapidly changing era, we focus on the unchanging essence of value, striving to create beautiful design that transcends structural and physical limits."
+        description="In a fast changing world, we help brands and products stay focused on what matters, then improve it through design, technology, and iteration."
         size="spacious"
       />
 
@@ -138,7 +138,7 @@ export default function StudioPage() {
               ))}
             </h2>
             <motion.p variants={visionCopy} className="type-lead max-w-[960px] font-normal md:type-heading">
-              We believe the visual works we create will change tomorrow&apos;s world<br className="hidden md:block" /> to be more beautiful than today.
+              We believe good design makes ideas clearer, experiences richer,<br className="hidden md:block" /> and every next step easier to share.
             </motion.p>
             <motion.div
               variants={visionContainer}

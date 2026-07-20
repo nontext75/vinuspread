@@ -432,11 +432,9 @@ export default function Home() {
           <div className="flex w-full flex-col items-start gap-[var(--space-section)]">
             <p
               data-hero-reveal
-              className="home-hero-lead type-lead w-full max-w-[720px] text-white"
+              className="home-hero-lead type-lead w-full max-w-[860px] text-white"
             >
-              <span className="block">We uncover the ideas that matter most to people and businesses.</span>
-              <span className="block">We shape them into clear, meaningful experiences built for change.</span>
-              <span className="block">We create lasting value through design that grows with you.</span>
+              We work with brands from the first idea to the last detail, shaping direction, experience, and improvement together.
             </p>
 
             <span data-hero-reveal aria-hidden="true" className="block h-2 w-[120px] bg-white md:h-5" />
@@ -449,11 +447,9 @@ export default function Home() {
           </div>
 
           <p data-hero-reveal className="type-lead max-w-[1500px] font-normal text-white/70">
-            We design sustainable growth together with our clients.
+            From first idea to final detail, we work with you to find direction,
             <br />
-            From brand inception through refinement and expansion — we&apos;re with you at every stage.
-            <br />
-            We&apos;ll be your trusted partner.
+            build better experiences, and keep improving what comes next.
           </p>
 
           <div data-hero-reveal>
@@ -466,14 +462,14 @@ export default function Home() {
         <div className="home-intro-content flex flex-col items-start gap-12 md:gap-16">
           <p data-reveal className="home-intro-copy type-heading">
             <span className="md:hidden">We focus on essential value and elevate it with beauty.</span>
-            <span className="md:hidden">Even as times change relentlessly, we stay grounded in what doesn&apos;t.<br />We create beautiful design that transcends structural and physical limits.</span>
+            <span className="md:hidden">As times continue to change, we stay grounded in what lasts.<br />We create design that helps ideas move beyond their limits.</span>
             <span className="hidden md:block">
               We focus on essential value and<br />
               elevate it with beauty.<br />
-              Even as times change relentlessly,<br />
-              we stay grounded in what doesn&apos;t.<br />
-              We create beautiful design that<br />
-              transcends structural and physical limits.
+              As times continue to change,<br />
+              we stay grounded in what lasts.<br />
+              We create design that helps ideas<br />
+              move beyond their limits.
             </span>
           </p>
           <div data-reveal>
@@ -489,8 +485,8 @@ export default function Home() {
               <span className="home-portfolio-title-line block">Work</span>
             </h2>
             <p className="home-portfolio-copy type-lead">
-              <span className="home-portfolio-copy-line block">We believe the visual works we create will change tomorrow&apos;s world</span>
-              <span className="home-portfolio-copy-line block">to be more beautiful than today.</span>
+              <span className="home-portfolio-copy-line block">Selected work shaped through strategy, interface design,</span>
+              <span className="home-portfolio-copy-line block">and brand systems built to keep improving.</span>
             </p>
           </div>
         </div>
@@ -551,9 +547,9 @@ export default function Home() {
               Always there, from first idea to final detail.
             </p>
             <p data-reveal className="home-studio-body type-lead w-full">
-              Vinuspread is a product management group that partners with clients from the first idea through completion and beyond.
+              Vinuspread works with teams from early direction to launch and beyond.
               <br className="hidden lg:block" />
-              We help define the direction, using AI to work faster and more experimentally—backed by over 20 years of experience in
+              We use AI as a working method to plan, design, and improve experiences with over 20 years of practice in
               <br className="hidden lg:block" /> UI/UX, branding, and product design.
             </p>
           </div>
