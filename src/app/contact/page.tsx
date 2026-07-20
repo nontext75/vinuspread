@@ -93,8 +93,8 @@ export default function ContactPage() {
       <section className="h-[1774px] w-full overflow-hidden bg-vinus-paper px-6 py-24 md:hidden">
         <form onSubmit={handleSubmit} className="flex flex-col gap-12">
           <div className="flex flex-col gap-4">
-            <h2 className="type-contact-heading font-normal">Tell us about<br />your next project.</h2>
-            <p className="type-body text-vinus-ink">Share the details below so we can prepare an accurate estimate and consultation.</p>
+            <h2 className="type-contact-heading font-normal">Let&apos;s shape what<br />comes next.</h2>
+            <p className="type-body text-vinus-ink">Share your idea, challenge, or product goal. We&apos;ll help you find the right direction.</p>
           </div>
 
           <div className="flex flex-col gap-6">
@@ -134,8 +134,8 @@ export default function ContactPage() {
         <div className="mx-auto flex max-w-[1600px] flex-col gap-6">
           <div className="grid min-h-[266px] grid-cols-1 gap-12 border-b border-vinus-ink/35 pb-[98px] pt-8 md:grid-cols-12 md:items-end md:gap-8">
             <div className="flex flex-col gap-6 md:col-span-8 md:col-start-1">
-              <h2 className="type-contact-heading font-normal">Tell us about<br />your next project.</h2>
-              <p className="type-lead max-w-[760px] font-normal text-vinus-ink">Share the essentials below. We&apos;ll review your request and get back to you with the right direction.</p>
+              <h2 className="type-contact-heading font-normal">Let&apos;s shape what<br />comes next.</h2>
+              <p className="type-lead max-w-[760px] font-normal text-vinus-ink">Share your idea, challenge, or product goal. We&apos;ll help you find the right direction.</p>
             </div>
           </div>
 

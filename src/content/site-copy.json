@@ -214,9 +214,9 @@
           "meta": "37.5587° N · 126.8351° E"
         },
         "form": {
-          "title": "Tell us about\nyour next project.",
-          "mobileDescription": "Share the details below so we can prepare an accurate estimate and consultation.",
-          "desktopDescription": "Share the essentials below. We'll review your request and get back to you with the right direction.",
+          "title": "Let's shape what\ncomes next.",
+          "mobileDescription": "Share your idea, challenge, or product goal. We'll help you find the right direction.",
+          "desktopDescription": "Share your idea, challenge, or product goal. We'll help you find the right direction.",
           "sections": ["01 / Essentials", "02 / Services", "03 / Project brief"],
           "fields": {
             "companyName": {
