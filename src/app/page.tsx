@@ -6,7 +6,6 @@ import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } fr
 import { X } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
 import { Footer } from "@/components/Footer";
 import { ClientLogoGrid } from "@/components/ClientLogoGrid";
 import { ArrowLink } from "@/components/ui/ArrowLink";
@@ -260,15 +259,50 @@ export default function Home() {
         },
       );
 
+      gsap.fromTo(
+        ".home-portfolio-title-line",
+        { y: 120, opacity: 0, scale: 0.985 },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 1.05,
+          stagger: 0.105,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: ".home-portfolio-heading",
+            start: "top 76%",
+            toggleActions: "play none none none",
+          },
+        },
+      );
+
+      gsap.fromTo(
+        ".home-portfolio-copy-line",
+        { y: 42, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.82,
+          delay: 0.28,
+          stagger: 0.075,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".home-portfolio-heading",
+            start: "top 76%",
+            toggleActions: "play none none none",
+          },
+        },
+      );
+
       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element, index) => {
         gsap.fromTo(
           element,
-          { y: 46, opacity: 0, clipPath: "inset(0 0 18% 0)" },
+          { y: 40, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            clipPath: "inset(0 0 0% 0)",
-            duration: 0.9,
+            duration: 0.82,
             delay: (index % 3) * 0.035,
             ease: "power4.out",
             scrollTrigger: {
@@ -283,17 +317,6 @@ export default function Home() {
 
     const mediaQuery = gsap.matchMedia();
     mediaQuery.add("(min-width: 768px)", () => {
-      const lenis = new Lenis({
-        lerp: 0.075,
-        smoothWheel: true,
-        wheelMultiplier: 0.74,
-        touchMultiplier: 1,
-        syncTouch: false,
-      });
-      const updateLenis = (time: number) => lenis.raf(time * 1000);
-      lenis.on("scroll", ScrollTrigger.update);
-      gsap.ticker.add(updateLenis);
-
       const desktopContext = gsap.context(() => {
         const heroTimeline = gsap.timeline({
           defaults: { ease: "none" },
@@ -331,24 +354,23 @@ export default function Home() {
           gsap.fromTo(
             card,
             {
-              y: 220,
+              y: 160,
               opacity: 0,
-              scale: 0.96,
-              clipPath: "inset(30% 0 0 0)",
+              scale: 0.985,
             },
             {
               y: 0,
               opacity: 1,
               scale: 1,
-              clipPath: "inset(0% 0 0 0)",
-              duration: 1.18,
-              delay: (index % 2) * 0.12,
-              ease: "expo.out",
+              duration: 1.05,
+              delay: index * 0.055,
+              ease: "power4.out",
+              overwrite: "auto",
               scrollTrigger: {
                 trigger: card,
-                start: "top 92%",
-                end: "top 58%",
-                toggleActions: "play none none reverse",
+                start: "top 90%",
+                end: "top 62%",
+                toggleActions: "play none none none",
               },
             },
           );
@@ -376,8 +398,6 @@ export default function Home() {
 
       return () => {
         desktopContext.revert();
-        gsap.ticker.remove(updateLenis);
-        lenis.destroy();
       };
     });
 
@@ -464,14 +484,13 @@ export default function Home() {
 
       <section id="work" className="home-portfolio relative bg-white">
         <div className="home-portfolio-heading border-b border-vinus-ink/10">
-          <div className="flex max-w-[1680px] flex-col items-start gap-[var(--space-compact)]">
-            <h2 data-reveal className="type-display font-normal">Work</h2>
-            <p data-reveal className="type-lead">
-              We spread the virus of beauty throughout the world.
-              <br />
-              We believe the visual work we create will make tomorrow
-              <br />
-              more beautiful than today.
+          <div className="flex max-w-[1680px] flex-col items-start gap-[var(--space-content)]">
+            <h2 className="home-portfolio-title type-display font-normal" aria-label="Work">
+              <span className="home-portfolio-title-line block">Work</span>
+            </h2>
+            <p className="home-portfolio-copy type-lead">
+              <span className="home-portfolio-copy-line block">We believe the visual works we create will change tomorrow&apos;s world</span>
+              <span className="home-portfolio-copy-line block">to be more beautiful than today.</span>
             </p>
           </div>
         </div>
@@ -692,6 +711,11 @@ export default function Home() {
           padding-bottom: 0;
         }
 
+        .home-portfolio-title,
+        .home-portfolio-copy {
+          overflow: hidden;
+        }
+
         .home-portfolio-canvas {
           display: flex;
           flex-direction: column;
@@ -897,8 +921,13 @@ export default function Home() {
 
           .home-portfolio-heading {
             width: 100%;
-            height: 361px;
+            height: auto;
             padding: 0 64px 1px;
+          }
+
+          .home-portfolio-title {
+            max-width: 1320px;
+            line-height: 0.92;
           }
 
           .home-portfolio-heading p {

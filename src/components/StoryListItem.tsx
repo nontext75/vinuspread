@@ -36,13 +36,13 @@ export function StoryListItem({
 
   return (
     <motion.div
-      initial={reduceMotion ? false : { opacity: 0, y: 112, scale: 0.985, clipPath: "inset(22% 0 0 0)" }}
-      animate={reduceMotion ? { opacity: 1, y: 0, scale: 1, clipPath: "inset(0% 0 0 0)" } : undefined}
-      whileInView={{ opacity: 1, y: 0, scale: 1, clipPath: "inset(0% 0 0 0)" }}
-      viewport={{ once: true, amount: 0.18 }}
+      initial={reduceMotion ? false : { opacity: 0, y: 84, scale: 0.992 }}
+      animate={reduceMotion ? { opacity: 1, y: 0, scale: 1 } : undefined}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.16, margin: "0px 0px -8% 0px" }}
       transition={{
-        duration: reduceMotion ? 0 : 0.98,
-        delay: reduceMotion ? 0 : index * 0.09,
+        duration: reduceMotion ? 0 : 0.86,
+        delay: reduceMotion ? 0 : index * 0.065,
         ease: [0.16, 1, 0.3, 1],
       }}
       className={cn(

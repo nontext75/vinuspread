@@ -9,7 +9,6 @@ import { ClientLogoGrid } from "@/components/ClientLogoGrid";
 import { ServiceCard } from "@/components/ServiceCard";
 import { StudioPhilosophyCard } from "@/components/StudioPhilosophyCard";
 import { SubpageHero } from "@/components/SubpageHero";
-import { VisionFormula } from "@/components/VisionFormula";
 
 const philosophies = [
   {
@@ -44,7 +43,7 @@ const businessFields = [
   { title: "Branding", description: "Building unique brand identities and cohesive visual systems that express core values.", image: "/vinus/dummy-photo/work-01.jpg" },
 ] as const;
 
-const visionFormula = [
+const visionFormula: ReadonlyArray<{ label: string; meaning: string; tone?: "light" | "dark" }> = [
   { label: "Venus", meaning: "Beauty" },
   { label: "Virus", meaning: "Inspiration" },
   { label: "Spread", meaning: "Action", tone: "dark" },
@@ -53,10 +52,47 @@ const visionFormula = [
 export default function StudioPage() {
   const reduceMotion = useReducedMotion();
   const enter = (distance = 36) => ({ opacity: 0, y: distance });
+  const visionTitleLines = ["Spread", "the Beautiful", "Things"];
+  const easeOutExpo = [0.16, 1, 0.3, 1] as const;
   const wideImageRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: wideScroll } = useScroll({ target: wideImageRef, offset: ["start end", "end start"] });
   const wideImageY = useTransform(wideScroll, [0, 1], ["-14%", "14%"]);
   const wideImageScale = useTransform(wideScroll, [0, 0.5, 1], [1.16, 1.08, 1.14]);
+
+  const visionContainer = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: reduceMotion ? 0 : 0.11,
+      },
+    },
+  };
+  const visionLine = {
+    hidden: reduceMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 132, scale: 0.985 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: reduceMotion ? 0 : 1.08, ease: easeOutExpo },
+    },
+  };
+  const visionCopy = {
+    hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 48 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: reduceMotion ? 0 : 0.86, ease: easeOutExpo },
+    },
+  };
+  const visionToken = {
+    hidden: reduceMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 72, scale: 0.88 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: reduceMotion ? 0 : 0.84, ease: easeOutExpo },
+    },
+  };
 
   return (
     <main className="subpage-wrapper selection:bg-vinus-ink selection:text-vinus-paper">
@@ -87,19 +123,47 @@ export default function StudioPage() {
 
       <section className="studio-vision flex h-[1156px] w-full flex-col gap-8 overflow-hidden border-b border-vinus-ink/10 px-[var(--space-edge)] py-24 md:h-auto md:overflow-visible md:gap-16 md:py-[var(--space-section)] min-[2200px]:!h-[2900px]">
           <motion.div
-            initial={reduceMotion ? false : enter(48)}
-            animate={reduceMotion ? { opacity: 1, y: 0 } : undefined}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.28 }}
-            transition={{ duration: reduceMotion ? 0.01 : 0.75, ease: [0.16, 1, 0.3, 1] }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.22, margin: "0px 0px -10% 0px" }}
+            variants={visionContainer}
             className="flex flex-col items-start justify-start gap-8 text-left md:items-center md:justify-center md:gap-12 md:pr-12 md:text-center min-[2200px]:h-[1384px]"
           >
-            <p className="type-label font-medium md:hidden">Our Vision</p>
-            <h2 className="type-studio-vision type-studio-vision--compact font-normal">Spread<br />the Beautiful<br />Things</h2>
-            <p className="type-lead max-w-[960px] font-normal md:type-heading">
+            <motion.p variants={visionCopy} className="type-label font-medium md:hidden">Our Vision</motion.p>
+            <h2 className="type-studio-vision type-studio-vision--compact font-normal" aria-label="Spread the Beautiful Things">
+              {visionTitleLines.map((line) => (
+                <span key={line} className="block overflow-hidden pb-[0.06em]">
+                  <motion.span variants={visionLine} className="block will-change-transform">{line}</motion.span>
+                </span>
+              ))}
+            </h2>
+            <motion.p variants={visionCopy} className="type-lead max-w-[960px] font-normal md:type-heading">
               We believe the visual works we create will change tomorrow&apos;s world<br className="hidden md:block" /> to be more beautiful than today.
-            </p>
-            <VisionFormula items={visionFormula} />
+            </motion.p>
+            <motion.div
+              variants={visionContainer}
+              aria-label={visionFormula.map(({ label, meaning }) => `${label}, ${meaning}`).join(" plus ")}
+              className="type-body flex w-full flex-col items-center gap-2 md:w-auto md:flex-row md:flex-nowrap md:gap-6"
+            >
+              {visionFormula.map(({ label, meaning, tone = "light" }, index) => (
+                <div key={`${label}-${meaning}`} className="flex w-full flex-col items-center gap-2 md:w-auto md:flex-row md:gap-6">
+                  {index > 0 && (
+                    <motion.span variants={visionCopy} aria-hidden="true" className="type-lead text-vinus-ink/40">+</motion.span>
+                  )}
+                  <motion.span
+                    variants={visionToken}
+                    className={`inline-flex min-h-11 w-full items-center justify-center gap-1 rounded-full px-6 py-2 font-medium will-change-transform md:size-[clamp(160px,18vw,240px)] md:flex-col md:px-6 md:py-5 min-[2200px]:px-10 ${
+                      tone === "dark" ? "bg-vinus-ink text-white" : "bg-vinus-wash text-vinus-ink"
+                    }`}
+                  >
+                    <span className="md:text-[clamp(24px,3vw,40px)] md:leading-tight">{label}</span>
+                    <span className={`type-label font-normal md:text-[clamp(16px,1.8vw,24px)] md:leading-8 ${tone === "dark" ? "text-white/50" : "text-vinus-ink/50"}`}>
+                      {meaning}
+                    </span>
+                  </motion.span>
+                </div>
+              ))}
+            </motion.div>
           </motion.div>
 
           <motion.div
@@ -138,7 +202,7 @@ export default function StudioPage() {
               href="/contact"
               className="studio-business-card h-[392px] overflow-hidden border-t border-vinus-ink/10 pt-6 md:h-auto md:overflow-visible"
               mediaClassName="aspect-[789/493]"
-              titleClassName="type-business-card-title lowercase font-medium"
+              titleClassName="type-business-card-title font-medium"
               descriptionClassName="text-vinus-ink"
               copyClassName="md:gap-6"
               arrowPlacement="footer"
