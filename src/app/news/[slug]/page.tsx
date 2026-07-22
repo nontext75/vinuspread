@@ -45,7 +45,7 @@ export default async function StoryDetailPage({ params }: StoryPageProps) {
             className="type-body inline-flex w-fit items-center gap-3 font-medium transition-opacity duration-200 hover:opacity-55 md:type-label"
           >
             <ArrowLeft aria-hidden="true" className="size-5 stroke-[1.25]" />
-            스토리 목록으로
+            Back to Story
           </Link>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-8">
@@ -97,7 +97,7 @@ export default async function StoryDetailPage({ params }: StoryPageProps) {
         <nav className="h-[425px] border-t border-vinus-ink/10 px-6 py-16 md:h-auto md:px-16 md:py-24">
           <Link href={`/news/${nextStory.slug}`} className="group flex items-end justify-between gap-8">
             <div className="flex max-w-[1800px] flex-col gap-4">
-              <span className="type-body font-medium">다음 스토리</span>
+              <span className="type-body font-medium">Next story</span>
               <span className="type-story-next font-normal">{nextStory.title}</span>
             </div>
             <ArrowRight aria-hidden="true" className="size-12 shrink-0 stroke-[1.1] transition-transform duration-200 group-hover:translate-x-3 md:size-[92px]" />

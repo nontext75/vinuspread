@@ -1,21 +1,17 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { X } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Footer } from "@/components/Footer";
 import { ClientLogoGrid } from "@/components/ClientLogoGrid";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { PortfolioCard } from "@/components/PortfolioCard";
 import { ServiceCard } from "@/components/ServiceCard";
 import { StoryListItem } from "@/components/StoryListItem";
-import { portfolioProjects } from "@/lib/portfolio";
 import { stories as storyEntries } from "@/lib/stories";
-
-gsap.registerPlugin(ScrollTrigger);
+import { useHomeMotion } from "./home-motion";
 
 type Project = {
   title: string;
@@ -29,23 +25,68 @@ type Project = {
   mobileOnly?: boolean;
 };
 
-const projectLayouts = [
-  { layout: "home-project--mongdang", mobileLayout: "w-full", speed: -8 },
-  { layout: "home-project--shinhan", mobileLayout: "ml-[14%] w-[86%]", speed: 10 },
-  { layout: "home-project--crowd", mobileLayout: "w-[92%]", speed: -7 },
-  { layout: "home-project--macadamia", mobileLayout: "ml-[8%] w-[92%]", speed: 8 },
-  { layout: "home-project--budongsan", mobileLayout: "ml-[20%] w-[80%]", speed: -10 },
-  { layout: "home-project--donga", mobileLayout: "ml-[7%] w-[93%]", speed: 7 },
-] as const;
-
-const projects: Project[] = portfolioProjects.slice(0, 6).map((project, index) => ({
-  title: project.title,
-  subtitle: project.subtitle,
-  category: project.category,
-  src: project.image,
-  slug: project.slug,
-  ...projectLayouts[index],
-}));
+const projects: Project[] = [
+  {
+    title: "Mongdang",
+    subtitle: "Brand Experience & Storytelling",
+    category: "Character",
+    src: "/vinus/dummy-photo/work-01.jpg",
+    slug: "mongdang",
+    layout: "home-project--mongdang",
+    mobileLayout: "w-full",
+    speed: -8,
+  },
+  {
+    title: "Shinhan Easy",
+    subtitle: "Digital Experience & Mobile Web",
+    category: "Web",
+    src: "/vinus/dummy-photo/work-02.jpg",
+    slug: "shinhan-easy",
+    layout: "home-project--shinhan",
+    mobileLayout: "ml-[14%] w-[86%]",
+    speed: 10,
+  },
+  {
+    title: "Crowd OH!",
+    subtitle: "Crowdsourcing Platform Design",
+    category: "Web",
+    src: "/vinus/dummy-photo/work-03.jpg",
+    slug: "crowdsourcing-platform-crowd-oh",
+    layout: "home-project--crowd",
+    mobileLayout: "w-[92%]",
+    speed: -7,
+  },
+  {
+    title: "macadamia",
+    subtitle: "Product Strategy & UX/UI Design",
+    category: "Web",
+    src: "/vinus/dummy-photo/work-04.jpg",
+    slug: "macadamia-website",
+    layout: "home-project--macadamia",
+    mobileLayout: "ml-[8%] w-[92%]",
+    speed: 8,
+  },
+  {
+    title: "Budongsan114 Mediate BIZsolution",
+    subtitle: "Product Strategy · UX/UI · Web",
+    category: "Web",
+    src: "/vinus/dummy-photo/work-05.jpg",
+    slug: "budongsan114-mediate-bizsolution",
+    layout: "home-project--budongsan",
+    mobileLayout: "ml-[20%] w-[80%]",
+    speed: -10,
+  },
+  {
+    title: "DongA On book",
+    subtitle: "Branding · Digital Design · Web",
+    category: "Web",
+    src: "/vinus/dummy-photo/work-06.jpg",
+    slug: "donga-on-book",
+    layout: "home-project--donga",
+    mobileLayout: "ml-[7%] w-[93%]",
+    speed: 7,
+  },
+];
 
 const services = [
   { title: "Product Strategy", details: ["Discovery", "Roadmap", "AI Opportunity"] },
@@ -54,9 +95,27 @@ const services = [
   { title: "Launch & Operation", details: ["CMS", "SEO", "Analytics", "Improvement"] },
 ];
 
-const stories = storyEntries.map((story) => ({
-  title: story.title,
-  excerpt: story.excerpt,
+const homeStoryContent = [
+  {
+    title: "Why You Shouldn't Choose Brand Colors by Instinct",
+    excerpt:
+      "Color is not just a matter of taste; it determines the perception and emotions of your brand. Even a small change can affect the entire way people perceive your brand.",
+  },
+  {
+    title: "What Happens When You Don't Have Design Principles",
+    excerpt:
+      "Without clear principles, design sways with every piece of feedback and personal preference. Consistent standards keep all decisions moving in one direction.",
+  },
+  {
+    title: "UX Writing: How to Start with a Single Button",
+    excerpt:
+      "We design starting from the shortest sentences users encounter most frequently. Even the wording of a single button shapes the direction of the experience and the next action.",
+  },
+] as const;
+
+const stories = storyEntries.map((story, index) => ({
+  title: homeStoryContent[index]?.title ?? story.title,
+  excerpt: homeStoryContent[index]?.excerpt ?? story.excerpt,
   date: story.date,
   image: story.image,
   href: `/news/${story.slug}`,
@@ -94,6 +153,7 @@ export default function Home() {
   });
   const reelImageY = useTransform(reelProgress, [0, 1], ["-12%", "12%"]);
   const reelImageScale = useTransform(reelProgress, [0, 0.5, 1], [1.14, 1.04, 1.1]);
+  const projectSpeeds = useMemo(() => projects.map((project) => project.speed), []);
 
   useLayoutEffect(() => {
     const root = rootRef.current;
@@ -170,180 +230,12 @@ export default function Home() {
     };
   }, [isPlayReelPresent]);
 
-  useLayoutEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
-
-    if (reduceMotion) {
-      gsap.set(
-        root.querySelectorAll(
-          "[data-hero-reveal], [data-reveal], [data-project-media], [data-project-image], [data-service-card], .home-hero-content, .home-portfolio-column, .home-studio-content, .home-clients, .home-story-list",
-        ),
-        { clearProps: "all" },
-      );
-      return;
-    }
-
-    const context = gsap.context(() => {
-      gsap.fromTo(
-        "[data-hero-reveal]",
-        { y: 28, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.9,
-          stagger: 0.08,
-          ease: "power3.out",
-        },
-      );
-
-      gsap.fromTo(
-        ".home-portfolio-title-line",
-        { y: 120, opacity: 0, scale: 0.985 },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          duration: 1.05,
-          stagger: 0.105,
-          ease: "power4.out",
-          scrollTrigger: {
-            trigger: ".home-portfolio-heading",
-            start: "top 76%",
-            toggleActions: "play none none none",
-          },
-        },
-      );
-
-      gsap.fromTo(
-        ".home-portfolio-copy-line",
-        { y: 42, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.82,
-          delay: 0.28,
-          stagger: 0.075,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".home-portfolio-heading",
-            start: "top 76%",
-            toggleActions: "play none none none",
-          },
-        },
-      );
-
-      gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element, index) => {
-        gsap.fromTo(
-          element,
-          { y: 40, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.82,
-            delay: (index % 3) * 0.035,
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: element,
-              start: "top 86%",
-              toggleActions: "play none none reverse",
-            },
-          },
-        );
-      });
-    }, rootRef);
-
-    const mediaQuery = gsap.matchMedia();
-    mediaQuery.add("(min-width: 768px)", () => {
-      const desktopContext = gsap.context(() => {
-        const heroTimeline = gsap.timeline({
-          defaults: { ease: "none" },
-          scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: 1.15 },
-        });
-
-        heroTimeline
-          .fromTo("[data-hero-image]", { scale: 1.14, yPercent: -8 }, { scale: 1.04, yPercent: 18 }, 0)
-          .to(".home-hero-content", { yPercent: -14 }, 0)
-          .to(".home-hero-title span:nth-child(1)", { xPercent: -1.1 }, 0)
-          .to(".home-hero-title span:nth-child(2)", { xPercent: 0.8 }, 0)
-          .to(".home-hero-title span:nth-child(3)", { xPercent: -0.7 }, 0);
-
-        gsap.fromTo(
-          ".home-intro-copy",
-          { y: 120 },
-          {
-            y: -64,
-            ease: "none",
-            scrollTrigger: { trigger: ".home-intro", start: "top bottom", end: "bottom top", scrub: 1.6 },
-          },
-        );
-
-        gsap.fromTo(
-          ".home-portfolio-heading > div",
-          { y: 120 },
-          {
-            y: -84,
-            ease: "none",
-            scrollTrigger: { trigger: ".home-portfolio", start: "top bottom", end: "top top", scrub: 1.45 },
-          },
-        );
-
-        gsap.utils.toArray<HTMLElement>(".home-portfolio-canvas--desktop [data-project-card]").forEach((card, index) => {
-          gsap.fromTo(
-            card,
-            {
-              y: 160,
-              opacity: 0,
-              scale: 0.985,
-            },
-            {
-              y: 0,
-              opacity: 1,
-              scale: 1,
-              duration: 1.05,
-              delay: index * 0.055,
-              ease: "power4.out",
-              overwrite: "auto",
-              scrollTrigger: {
-                trigger: card,
-                start: "top 90%",
-                end: "top 62%",
-                toggleActions: "play none none none",
-              },
-            },
-          );
-        });
-
-        gsap.utils.toArray<HTMLElement>("[data-project-card]").forEach((card, index) => {
-          const image = card.querySelector<HTMLElement>("[data-project-image]");
-          if (!image) return;
-          const speed = projects[index]?.speed ?? 8;
-          const distance = Math.max(8, Math.min(16, Math.abs(speed) * 1.25));
-          const direction = Math.sign(speed || 1);
-          gsap.fromTo(
-            image,
-            { yPercent: direction * -distance, scale: 1.12 },
-            {
-              yPercent: direction * distance,
-              scale: 1.18,
-              ease: "none",
-              scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: 1.65 },
-            },
-          );
-        });
-
-      }, rootRef);
-
-      return () => {
-        desktopContext.revert();
-      };
-    });
-
-    return () => {
-      mediaQuery.revert();
-      context.revert();
-    };
-  }, [reduceMotion]);
+  useHomeMotion({
+    rootRef,
+    heroRef,
+    reduceMotion: Boolean(reduceMotion),
+    projectSpeeds,
+  });
 
   return (
     <div ref={rootRef} className="home-page relative overflow-hidden bg-white text-vinus-ink">
@@ -372,8 +264,7 @@ export default function Home() {
               data-hero-reveal
               className="home-hero-lead type-lead w-full max-w-[860px] text-white"
             >
-              첫 아이디어부터 마지막 디테일까지,<br />
-              방향과 경험을 함께 만들고 더 나은 흐름으로 다듬습니다.
+              We work with brands from the first idea to the last detail, shaping direction, experience, and improvement together.
             </p>
 
             <span data-hero-reveal aria-hidden="true" className="block h-2 w-[120px] bg-white md:h-5" />
@@ -386,13 +277,13 @@ export default function Home() {
           </div>
 
           <p data-hero-reveal className="type-lead max-w-[1500px] font-normal text-white/70">
-            아이디어의 시작부터 완성 이후의 개선까지,
+            From first idea to final detail, we work with you to find direction,
             <br />
-            다음 가능성을 더 선명한 경험으로 연결합니다.
+            build better experiences, and keep improving what comes next.
           </p>
 
           <div data-hero-reveal>
-            <ArrowLink href="/contact" inverse>브로슈어 다운로드</ArrowLink>
+            <ArrowLink href="/contact" inverse>Download Brochure</ArrowLink>
           </div>
         </div>
       </section>
@@ -400,19 +291,19 @@ export default function Home() {
       <section className="home-intro relative border-t border-vinus-ink/10 bg-white">
         <div className="home-intro-content flex flex-col items-start gap-12 md:gap-16">
           <p data-reveal className="home-intro-copy type-heading">
-            <span className="md:hidden">본질적인 가치에 집중하고, 아름다움으로 더 나은 경험을 만듭니다.</span>
-            <span className="md:hidden">변화가 계속되는 시대에도 오래 남는 기준을 지킵니다.<br />아이디어가 한계를 넘어설 수 있는 디자인을 만듭니다.</span>
+            <span className="md:hidden">We focus on essential value and elevate it with beauty.</span>
+            <span className="md:hidden">As times continue to change, we stay grounded in what lasts.<br />We create design that helps ideas move beyond their limits.</span>
             <span className="hidden md:block">
-              본질적인 가치에 집중하고<br />
-              아름다움으로 더 나은 경험을 만듭니다.<br />
-              변화가 계속되는 시대에도<br />
-              오래 남는 기준을 지킵니다.<br />
-              아이디어가 한계를 넘어설 수 있는<br />
-              디자인을 만듭니다.
+              We focus on essential value and<br />
+              elevate it with beauty.<br />
+              As times continue to change,<br />
+              we stay grounded in what lasts.<br />
+              We create design that helps ideas<br />
+              move beyond their limits.
             </span>
           </p>
           <div data-reveal>
-            <ArrowLink href="/studio">스튜디오 보기</ArrowLink>
+            <ArrowLink href="/studio">The Studio</ArrowLink>
           </div>
         </div>
       </section>
@@ -424,8 +315,8 @@ export default function Home() {
               <span className="home-portfolio-title-line block">Work</span>
             </h2>
             <p className="home-portfolio-copy type-lead">
-              <span className="home-portfolio-copy-line block">전략, 인터페이스 디자인, 브랜드 시스템으로 완성한</span>
-              <span className="home-portfolio-copy-line block">주요 프로젝트를 소개합니다.</span>
+              <span className="home-portfolio-copy-line block">Selected work shaped through strategy, interface design,</span>
+              <span className="home-portfolio-copy-line block">and brand systems built to keep improving.</span>
             </p>
           </div>
         </div>
@@ -439,7 +330,7 @@ export default function Home() {
         </div>
 
         <div className="home-portfolio-cta flex justify-center" data-reveal>
-          <ArrowLink href="/work">전체 프로젝트 보기</ArrowLink>
+          <ArrowLink href="/work">Browse all work</ArrowLink>
         </div>
       </section>
 
@@ -486,10 +377,10 @@ export default function Home() {
               Always there, from first idea to final detail.
             </p>
             <p data-reveal className="home-studio-body type-lead w-full">
-              바이너스프레드는 초기 방향 설정부터 출시 이후의 개선까지 함께합니다.
+              Vinuspread works with teams from early direction to launch and beyond.
               <br className="hidden lg:block" />
-              20년 이상의 UI/UX, 브랜딩, 제품 디자인 경험을 바탕으로,
-              <br className="hidden lg:block" /> 더 빠르고 유연한 방식으로 경험을 설계하고 다듬습니다.
+              We use AI as a working method to plan, design, and improve experiences with over 20 years of practice in
+              <br className="hidden lg:block" /> UI/UX, branding, and product design.
             </p>
           </div>
 
@@ -521,8 +412,8 @@ export default function Home() {
           </div>
 
           <nav aria-label="Studio links" className="home-studio-links flex w-full max-w-[460px] flex-wrap justify-start gap-[var(--space-compact)] pt-2 xl:pt-4" data-reveal>
-            <ArrowLink href="/studio">서비스 살펴보기</ArrowLink>
-            <ArrowLink href="/work">프로젝트 보기</ArrowLink>
+            <ArrowLink href="/studio">Explore our services</ArrowLink>
+            <ArrowLink href="/work">See our work</ArrowLink>
           </nav>
         </div>
       </section>
@@ -549,9 +440,9 @@ export default function Home() {
                 <span className="block">Insights</span>
               </h2>
               <div className="hidden lg:block">
-                <ArrowLink href="/news">스토리 전체보기</ArrowLink>
+                <ArrowLink href="/news">View all stories</ArrowLink>
               </div>
-              <p className="type-lead lg:hidden">의미 있는 경험을 만들기 위한 관점과 인사이트를 전합니다.</p>
+              <p className="type-lead lg:hidden">Ideas and insights for building meaningful experiences.</p>
             </div>
           </div>
 
@@ -567,7 +458,7 @@ export default function Home() {
             ))}
           </div>
           <div className="home-story-link lg:hidden">
-            <ArrowLink href="/news">스토리 전체보기</ArrowLink>
+            <ArrowLink href="/news">View all stories</ArrowLink>
           </div>
         </div>
       </section>
@@ -609,19 +500,26 @@ export default function Home() {
 
       <style jsx global>{`
         .home-hero {
-          height: 980px;
-          min-height: 0;
-          padding: 96px 24px 96px;
+          min-height: 980px;
+          height: auto;
+          padding: 96px 20px 64px;
         }
 
         .home-hero-content {
-          height: 704px;
+          height: auto;
           max-width: 1800px;
+          gap: 48px;
+        }
+
+        .home-hero-lead,
+        .home-hero-content p.type-lead {
+          font-size: 24px;
+          line-height: 1.4;
         }
 
         .home-hero-title {
-          font-size: 64px;
-          line-height: 64px;
+          font-size: 60px;
+          line-height: 0.9;
         }
 
         .home-intro {
@@ -636,8 +534,8 @@ export default function Home() {
         }
 
         .home-portfolio {
-          height: 3364px;
-          margin-bottom: 160px;
+          height: auto;
+          margin-bottom: 0;
           padding: 96px 24px;
         }
 
@@ -676,20 +574,20 @@ export default function Home() {
         }
 
         .home-studio {
-          height: 908px;
+          height: auto;
           min-height: 0;
           padding-top: 96px;
           padding-bottom: 96px;
         }
 
         .home-clients {
-          height: 1080px;
+          height: auto;
           padding-top: 96px;
           padding-bottom: 96px;
         }
 
         .home-story {
-          height: 1484px;
+          height: auto;
           padding-top: 96px;
           padding-bottom: 96px;
         }
@@ -725,6 +623,7 @@ export default function Home() {
           }
 
           .home-portfolio {
+            height: auto;
             padding: 96px 64px;
           }
 
@@ -738,6 +637,7 @@ export default function Home() {
             grid-template-columns: repeat(2, minmax(0, 1fr));
             align-items: start;
             gap: var(--space-section) var(--space-edge);
+            margin-top: 96px;
           }
 
           .home-portfolio-canvas--desktop {
@@ -772,6 +672,19 @@ export default function Home() {
             grid-row: 2;
           }
 
+          .home-project--budongsan {
+            grid-column: 1;
+            grid-row: 3;
+            width: 82%;
+          }
+
+          .home-project--donga {
+            grid-column: 2;
+            grid-row: 3;
+            width: 82%;
+            justify-self: end;
+          }
+
           .home-project--mobile-only {
             display: none;
           }
@@ -782,10 +695,12 @@ export default function Home() {
           }
 
           .home-clients {
+            height: auto;
             padding: 160px 64px;
           }
 
           .home-story {
+            height: auto;
             padding: 160px 64px;
           }
         }
@@ -1001,20 +916,39 @@ export default function Home() {
         }
 
         @media (max-width: 767px) {
+          .home-hero {
+            min-height: 760px;
+            padding: 112px 24px 64px;
+          }
+
           .home-hero-content {
-            gap: 36px;
+            gap: 32px;
           }
 
           .home-hero-content > div:first-child {
-            gap: 32px;
+            gap: 28px;
+          }
+
+          .home-hero-lead,
+          .home-hero-content p.type-lead {
+            font-size: 14px;
+            line-height: 20px;
+          }
+
+          .home-hero-content > div:first-child > span {
+            height: 4px;
+            width: 64px;
           }
 
           .home-hero-title {
             max-width: 100%;
+            font-size: clamp(56px, 16.2vw, 68px);
+            line-height: 0.92;
           }
 
           .home-hero-content > div:last-child {
-            margin-top: -24px;
+            margin-top: 0;
+            max-width: 280px;
           }
 
           .home-intro-content p br:nth-of-type(5) {
@@ -1111,13 +1045,13 @@ export default function Home() {
 
           .home-story-grid {
             display: flex;
-            height: 1292px;
+            height: auto;
             flex-direction: column;
             gap: 64px;
           }
 
           .home-story-heading {
-            height: 184px;
+            height: auto;
             gap: 24px;
           }
 
@@ -1128,7 +1062,7 @@ export default function Home() {
 
           .home-story-grid > div:nth-child(2) {
             display: flex;
-            height: 956px;
+            height: auto;
             flex-direction: column;
             gap: 64px;
             border-top: 0;

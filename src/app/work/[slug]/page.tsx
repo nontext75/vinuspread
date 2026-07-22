@@ -10,7 +10,63 @@ import { Footer } from "@/components/Footer";
 import { ProjectMetaGrid } from "@/components/project/ProjectMetaGrid";
 import { ProjectContentBlock } from "@/components/project/ProjectContentBlock";
 import { NextProjectLink } from "@/components/project/NextProjectLink";
-import { portfolioData } from "@/lib/portfolio";
+
+type PortfolioProject = {
+  title: string;
+  subtitle: string;
+  category: string;
+  image: string;
+  client: string;
+  period: string;
+  overview: string;
+  blocks: Array<{ heading: string; body: string; image?: string }>;
+};
+
+const portfolioData: Record<string, PortfolioProject> = {
+  mongdang: {
+    title: "Mongdang", subtitle: "Brand Experience & Storytelling", category: "Character", image: "/vinus/dummy-photo/work-01.jpg", client: "Mongdang Studio", period: "2023.08",
+    overview: "Mongdang is a storytelling-driven character brand project. We developed an endearing visual language and character system that helps brand narratives connect emotionally with children and parents alike.",
+    blocks: [{ heading: "Character System & Visual Identity", body: "Characters are not just drawings. They are vessels for brand messages. We focused on warm, organic shapes and approachable colors that work consistently across physical and digital media." }],
+  },
+  "shinhan-easy": {
+    title: "Shinhan Easy", subtitle: "Digital Experience & Mobile Web", category: "Web", image: "/vinus/dummy-photo/work-02.jpg", client: "Shinhan Financial Group", period: "2023.02",
+    overview: "A simplified and intuitive digital financial portal tailored for the modern mobile user. We prioritized speed, clarity, and direct paths to action.",
+    blocks: [{ heading: "UX/UI Design System Integration", body: "Designed to minimize cognitive load, Shinhan Easy streamlines complex banking procedures into clear steps. We established a unified mobile grid and a concise typographic hierarchy." }],
+  },
+  "crowdsourcing-platform-crowd-oh": {
+    title: "Crowd OH!", subtitle: "Crowdsourcing Platform Design", category: "Web", image: "/vinus/dummy-photo/work-03.jpg", client: "Crowd OH Corp", period: "2022.11",
+    overview: "A next-generation crowdsourcing platform that connects creators and businesses. Clear controls and expressive interactions keep contributors engaged throughout each project.",
+    blocks: [{ heading: "Dashboard Experience", body: "The challenge was to present complex work-status data clearly. We designed modular dashboards and direct project tracking patterns for everyday use." }],
+  },
+  "macadamia-website": {
+    title: "macadamia", subtitle: "Product Strategy & UX/UI Design", category: "Web", image: "/vinus/dummy-photo/work-04.jpg", client: "Macadamia Labs", period: "2022.09",
+    overview: "A focused product experience that presents design principles and creative strategies through clear space, strong typography, and fluid interaction.",
+    blocks: [{ heading: "Interaction & Motion Design", body: "Subtle page transitions and scroll-responsive elements give the experience rhythm while preserving fast, direct access to every piece of information." }],
+  },
+  "budongsan114-mediate-bizsolution": {
+    title: "Budongsan114 Mediate BIZsolution", subtitle: "Enterprise B2B Product Strategy", category: "Web", image: "/vinus/dummy-photo/work-05.jpg", client: "Budongsan 114", period: "2022.07",
+    overview: "A comprehensive enterprise platform that streamlines property management and agent communication, translating a complex legacy system into a clear business tool.",
+    blocks: [{ heading: "Optimizing B2B Systems", body: "We reorganized information into dedicated control grids and modular workspaces that support intensive daily use while reducing errors and workflow delays." }],
+  },
+  "donga-on-book": {
+    title: "Donga On book", subtitle: "Branding & Digital Platform", category: "Web", image: "/vinus/dummy-photo/work-06.jpg", client: "Donga Publishing", period: "2022.06",
+    overview: "A traditional publishing experience transformed into an interactive digital learning ecosystem, connecting educators and learners through intuitive tools.",
+    blocks: [{ heading: "Digital Learning Ecosystem", body: "A modular content grid supports text, worksheets, video, and interactive assets across devices while keeping the learning path consistent for students." }],
+  },
+  "aliot-brand-identity": {
+    title: "Aliot Brand Identity", subtitle: "Corporate Visual Direction & Identity", category: "Web", image: "/vinus/dummy-photo/work-07.jpg", client: "Aliot Technology", period: "2022.05",
+    overview: "A clean and flexible identity system for a technology company, designed to maintain visual clarity across product interfaces, communication, and print.",
+    blocks: [{ heading: "Visual Identity System", body: "We created a flexible brand system with geometric details, a focused primary color, and a concise hierarchy suited to both digital interfaces and print." }],
+  },
+  "the-frame-artstore-catalogue": {
+    title: "The Frame Artstore Catalogue", subtitle: "Editorial Design & Branding System", category: "Web", image: "/vinus/dummy-photo/work-08.jpg", client: "Samsung Electronics", period: "2022.04",
+    overview: "A design project organizing the artworks of Samsung Electronics' lifestyle TV 'The Frame' digital content platform 'Art Store'. Although a digital publication, we captured the tangible weight of a physical catalogue and the pacing of a gallery book, perfectly translating the product's premium texture.",
+    blocks: [
+      { heading: "A Catalogue for Art, Not Television.", body: "The Frame is not just a TV. It is a screen when active, and an art piece when off — a lifestyle TV that hangs like a picture frame on the wall. The Frame showcases over 5,000 digital artworks, including masterpieces from MoMA, The Met, and Musée d'Orsay. Our task was to introduce these pieces to users. Rather than a standard electronics manual, it needed to feel like a curated museum catalog." },
+      { heading: "A Museum Monograph on Digital Screens.", body: "The catalogue needed to be more than a product guide. It had to open the world of The Frame with the pace of a curated art book. We organized the historical flow of Art Store works from ancient to modern art, balancing product clarity with the weight of art history." },
+    ],
+  },
+};
 
 const projectSlugs = Object.keys(portfolioData);
 
@@ -28,7 +84,7 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
     return (
       <main className="flex min-h-[100dvh] flex-col items-center justify-center bg-vinus-paper px-6 text-center text-vinus-ink">
         <h1 className="type-heading font-normal">Project Not Found</h1>
-        <Link href="/work" className="type-body mt-8 inline-flex items-center gap-[var(--space-inline)] text-vinus-ink/60"><ArrowLeft className="size-4" />목록으로 돌아가기</Link>
+        <Link href="/work" className="type-body mt-8 inline-flex items-center gap-[var(--space-inline)] text-vinus-ink/60"><ArrowLeft className="size-4" />Back to Experience</Link>
       </main>
     );
   }
@@ -42,7 +98,7 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
 
   return (
     <main className="min-h-[100dvh] overflow-x-hidden bg-vinus-paper text-vinus-ink selection:bg-vinus-ink selection:text-vinus-paper">
-      <section ref={heroRef} data-header-theme="dark" className="relative h-[520px] w-full overflow-hidden bg-vinus-ink md:h-auto md:aspect-video">
+      <section ref={heroRef} data-header-theme="dark" className="relative h-[620px] w-full overflow-hidden bg-vinus-ink sm:h-[720px] md:h-auto md:aspect-video">
         <motion.div className="absolute inset-0 scale-[1.12] will-change-transform" style={{ y: reduceMotion ? 0 : heroImageY }}>
           <Image src={project.image} alt={project.title} fill priority sizes="100vw" className="object-cover" />
         </motion.div>
@@ -52,7 +108,7 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
           animate={{ opacity: 1, y: 0 }}
           style={{ y: reduceMotion ? 0 : heroTextY, opacity: reduceMotion ? 1 : heroOpacity }}
           transition={{ duration: reduceMotion ? 0.01 : 0.75, delay: reduceMotion ? 0 : 0.12, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute inset-x-0 bottom-1 flex flex-col items-start gap-2 px-[var(--space-edge)] text-white md:bottom-0 md:gap-3 md:pb-[var(--space-section)]"
+          className="absolute inset-x-0 bottom-10 flex flex-col items-start gap-3 px-[var(--space-edge)] text-white sm:bottom-14 md:bottom-0 md:gap-3 md:pb-[var(--space-section)]"
         >
           <p className="type-label font-medium text-white/70">{project.category}</p>
           <h1 className="type-project-title max-w-full font-normal md:max-w-[1680px]">
@@ -67,8 +123,8 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
       </section>
 
 
-      <section className="flex h-[644px] w-full flex-col gap-12 border-b border-vinus-ink/10 px-[var(--space-edge)] pt-16 pb-24 md:h-auto md:py-24 min-[2200px]:!h-[325px]">
-        <Link href="/work" className="type-body group inline-flex items-center gap-3 font-medium text-vinus-ink transition-opacity hover:opacity-60 md:type-label md:text-vinus-ink/45"><ArrowLeft className="size-3.5 transition-transform duration-200 motion-safe:group-hover:-translate-x-1" /><span>목록으로 돌아가기</span></Link>
+      <section className="flex w-full flex-col gap-12 border-b border-vinus-ink/10 px-[var(--space-edge)] py-16 md:gap-16 md:py-24 min-[2200px]:min-h-[325px] min-[2200px]:justify-center">
+        <Link href="/work" className="type-body group inline-flex items-center gap-3 font-medium text-vinus-ink transition-opacity hover:opacity-60 md:type-label md:text-vinus-ink/45"><ArrowLeft className="size-3.5 transition-transform duration-200 motion-safe:group-hover:-translate-x-1" /><span className="md:hidden">Back to Experience</span><span className="hidden md:inline">Back to Work</span></Link>
         <ProjectMetaGrid
           items={[
             ["Client", project.client],
@@ -83,12 +139,12 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
         </div>
       </section>
 
-      <section className="hidden w-full grid-cols-1 gap-6 border-b border-vinus-ink/10 px-[var(--space-edge)] py-16 md:grid md:grid-cols-[584px_840px] md:gap-8 md:py-24 min-[2200px]:h-[264px]">
+      <section className="hidden w-full grid-cols-1 gap-6 border-b border-vinus-ink/10 px-[var(--space-edge)] py-16 md:grid md:grid-cols-[minmax(220px,584px)_minmax(0,840px)] md:gap-8 md:py-24 min-[2200px]:min-h-[264px] min-[2200px]:items-center">
         <span className="type-label font-medium text-vinus-ink/45">Overview</span>
         <p className="type-body font-normal text-vinus-ink">{project.overview}</p>
       </section>
 
-      <section className="flex h-[1348px] w-full flex-col gap-24 overflow-hidden px-[var(--space-edge)] pb-24 md:h-auto md:gap-[var(--space-major)] md:overflow-visible md:py-[var(--space-section)] min-[2200px]:!h-[2358px] min-[2200px]:overflow-hidden">
+      <section className="flex w-full flex-col gap-24 px-[var(--space-edge)] py-24 md:gap-[var(--space-major)] md:py-[var(--space-section)] min-[2200px]:gap-[192px] min-[2200px]:py-[128px]">
         {contentBlocks.map((block, index) => (
           <ProjectContentBlock
             key={block.heading}

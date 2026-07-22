@@ -3,7 +3,7 @@
 @layer base {
   :root {
     --font-en: var(--font-instrument-sans);
-    --font-ko: var(--font-noto-sans-kr);
+    --font-ko: var(--font-pretendard);
     --font-sans: var(--font-en);
   }
 }
@@ -277,14 +277,6 @@
     font-weight: 400;
     line-height: 32px;
   }
-  .studio-formula-label {
-    font-size: 24px;
-    line-height: 28px;
-  }
-  .studio-formula-meaning {
-    font-size: 16px;
-    line-height: 22px;
-  }
   .footer-next-title {
     font-size: clamp(40px, 13vw, 56px);
     line-height: 0.92;
@@ -355,14 +347,6 @@
     font-weight: 400;
     line-height: var(--leading-lead);
   }
-  .studio-formula-label {
-    font-size: clamp(40px, 3.2vw, 56px);
-    line-height: 1;
-  }
-  .studio-formula-meaning {
-    font-size: clamp(22px, 1.7vw, 28px);
-    line-height: 1.25;
-  }
   .footer-next-title {
     font-size: var(--type-page);
     line-height: min(0.92em, var(--leading-display));
@@ -388,12 +372,6 @@
   .type-studio-vision--compact {
     font-size: 240px;
     line-height: 240px;
-  }
-  .studio-formula-label {
-    font-size: 64px;
-  }
-  .studio-formula-meaning {
-    font-size: 32px;
   }
 }
 
@@ -435,7 +413,6 @@
 @media (min-width: 768px) {
   .subpage-header {
     margin-top: 96px;
-    min-height: 928px;
     padding: var(--space-section) var(--space-edge) var(--space-major);
   }
 }

@@ -16,9 +16,9 @@ const instrumentSans = localFont({
   fallback: ["Arial", "sans-serif"],
 });
 
-const notoSansKr = localFont({
-  src: "./fonts/NotoSansKR-VF.ttf",
-  variable: "--font-noto-sans-kr",
+const pretendard = localFont({
+  src: "./fonts/PretendardVariable.woff2",
+  variable: "--font-pretendard",
   weight: "100 900",
   display: "swap",
   fallback: ["Arial", "sans-serif"],
@@ -36,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${instrumentSans.variable} ${notoSansKr.variable}`}>
+    <html lang="en" className={`${instrumentSans.variable} ${pretendard.variable}`}>
       <body className={`${instrumentSans.className} antialiased bg-vinus-white text-vinus-ink`}>
         <SmoothScroll />
         <Header />

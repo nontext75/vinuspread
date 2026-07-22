@@ -56,12 +56,6 @@ function MagneticButton({ children, className = "" }: { children: React.ReactNod
 
 export function Header() {
   const pathname = usePathname();
-  const isKorean = pathname === "/ko" || pathname.startsWith("/ko/");
-  const localizeHref = (href: string) => {
-    if (!isKorean) return href;
-    return href === "/" ? "/ko" : `/ko${href}`;
-  };
-  const normalizePathname = isKorean ? pathname.replace(/^\/ko(?=\/|$)/, "") || "/" : pathname;
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuPresent, setMenuPresent] = useState(false);
   const [onDarkBackground, setOnDarkBackground] = useState(
@@ -73,7 +67,7 @@ export function Header() {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const routeStartsOnDark = normalizePathname === "/" || (normalizePathname.startsWith("/work/") && normalizePathname !== "/work");
+    const routeStartsOnDark = pathname === "/" || (pathname.startsWith("/work/") && pathname !== "/work");
     const sections = Array.from(document.querySelectorAll<HTMLElement>("[data-header-theme]"));
     const intersectingSections = new Set<HTMLElement>();
     let observer: IntersectionObserver | undefined;
@@ -124,7 +118,7 @@ export function Header() {
       observer?.disconnect();
       window.removeEventListener("resize", handleResize);
     };
-  }, [pathname, normalizePathname]);
+  }, [pathname]);
 
   useEffect(() => {
     if (!menuPresent) return;
@@ -197,24 +191,23 @@ export function Header() {
         aria-hidden={menuPresent}
         className={`fixed inset-x-0 top-0 z-40 transition-colors duration-200 motion-reduce:transition-none ${onDarkBackground ? "text-white" : "text-vinus-ink"}`}
       >
-        <div className="flex h-[72px] w-full items-center justify-between px-[var(--space-compact)] md:h-[96px] md:px-[var(--space-edge)]">
-          <Link href={localizeHref("/")} className="relative flex h-9 w-[120px] shrink-0 items-center md:w-40" aria-label="Vinuspread home">
-            <BrandLogo tone={onDarkBackground ? "light" : "dark"} priority />
+        <div className="flex h-[72px] w-full items-center justify-between px-5 md:px-10 xl:h-[88px] xl:px-16">
+          <Link href="/" className="relative flex h-6 w-[107px] shrink-0 items-center md:h-9 md:w-40" aria-label="Vinuspread home">
+            <BrandLogo tone={onDarkBackground ? "light" : "dark"} priority className="h-6 w-[107px] md:h-9 md:w-40" />
           </Link>
 
-          <div className="flex items-center gap-[var(--space-compact)] md:gap-6">
-            <nav className="type-body hidden items-center gap-[var(--space-compact)] font-medium md:flex">
+          <div className="flex items-center gap-6 md:gap-[54px]">
+            <nav className="type-body hidden items-center gap-8 font-medium xl:gap-[25px] md:flex">
               {navItems.map((item) => {
-                const isActive = normalizePathname === item.href;
+                const isActive = pathname === item.href;
                 return (
                   <Link
                     key={item.href}
-                    href={localizeHref(item.href)}
-                    className="inline-flex min-h-11 min-w-11 items-center justify-center transition-opacity duration-200 hover:opacity-60 motion-reduce:transition-none"
+                    href={item.href}
+                    className={`inline-flex min-h-10 items-center justify-center transition-opacity duration-200 hover:opacity-60 motion-reduce:transition-none ${isActive ? "opacity-100" : ""}`}
+                    aria-current={isActive ? "page" : undefined}
                   >
-                    <span className={`border-b pb-px ${isActive ? "border-current" : "border-transparent"}`}>
-                      {item.label}
-                    </span>
+                    <span>{item.label}</span>
                   </Link>
                 );
               })}
@@ -231,10 +224,10 @@ export function Header() {
                 aria-expanded={menuPresent}
                 aria-controls="site-menu-overlay"
                 aria-haspopup="dialog"
-                className={`group flex h-10 items-center gap-2.5 rounded-full px-4 py-2.5 transition-opacity duration-200 hover:opacity-70 active:scale-[0.97] motion-reduce:transform-none motion-reduce:transition-none ${onDarkBackground ? "bg-white text-vinus-ink" : "bg-vinus-ink text-white"}`}
+                className={`group flex h-10 items-center gap-2 rounded-full px-4 py-2 transition-opacity duration-200 hover:opacity-70 active:scale-[0.97] motion-reduce:transform-none motion-reduce:transition-none ${onDarkBackground ? "bg-white text-vinus-ink" : "bg-vinus-ink text-white"}`}
               >
                 <span className="type-label font-medium">Menu</span>
-                <Menu className="size-4 transition-transform group-hover:rotate-90 motion-reduce:transform-none motion-reduce:transition-none" />
+                <Menu className="size-3 transition-transform group-hover:rotate-90 motion-reduce:transform-none motion-reduce:transition-none" />
               </button>
             </MagneticButton>
           </div>
@@ -256,9 +249,9 @@ export function Header() {
             transition={reduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
             className="fixed inset-0 z-50 flex flex-col justify-between bg-vinus-ink text-vinus-white"
           >
-            <div className="flex h-[72px] shrink-0 items-center justify-between px-[var(--space-compact)] md:h-[96px] md:px-[var(--space-edge)]">
-              <Link href={localizeHref("/")} onClick={() => setMenuOpen(false)} className="relative flex h-12 w-[120px] shrink-0 items-center md:w-40" aria-label="Vinuspread home">
-                <BrandLogo tone="light" priority />
+            <div className="flex h-[72px] shrink-0 items-center justify-between px-5 md:px-10 xl:h-[88px] xl:px-16">
+              <Link href="/" onClick={() => setMenuOpen(false)} className="relative flex h-6 w-[107px] shrink-0 items-center md:h-9 md:w-40" aria-label="Vinuspread home">
+                <BrandLogo tone="light" priority className="h-6 w-[107px] md:h-9 md:w-40" />
               </Link>
               <button
                 ref={closeButtonRef}
@@ -273,7 +266,7 @@ export function Header() {
 
             <nav className="my-auto flex flex-col gap-[var(--space-compact)] px-6 md:px-[var(--space-edge)]">
               {navItems.map((item, index) => {
-                const isActive = normalizePathname === item.href;
+                const isActive = pathname === item.href;
                 return (
                   <motion.div
                     key={item.label}
@@ -282,7 +275,7 @@ export function Header() {
                     transition={reduceMotion ? { duration: 0 } : { delay: 0.1 + index * 0.08, duration: 0.6 }}
                   >
                     <Link
-                      href={localizeHref(item.href)}
+                      href={item.href}
                       onClick={() => setMenuOpen(false)}
                       className={`type-page block min-w-11 font-normal uppercase transition-transform duration-300 hover:translate-x-4 motion-reduce:transform-none motion-reduce:transition-none ${
                         isActive ? "opacity-100" : "opacity-60 hover:opacity-100"
