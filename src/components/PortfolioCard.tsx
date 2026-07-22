@@ -38,9 +38,9 @@ export function PortfolioCard({
 
   return (
     <motion.article
-      initial={animate && !reduceMotion ? { opacity: 0, y: 96, scale: 0.985 } : false}
-      animate={animate && reduceMotion ? { opacity: 1, y: 0, scale: 1 } : undefined}
-      whileInView={animate ? { opacity: 1, y: 0, scale: 1 } : undefined}
+      initial={animate && !reduceMotion ? { opacity: 0 } : false}
+      animate={animate && reduceMotion ? { opacity: 1 } : undefined}
+      whileInView={animate ? { opacity: 1 } : undefined}
       viewport={animate ? { once: true, amount: 0.16, margin: "0px 0px -8% 0px" } : undefined}
       transition={animate ? {
         duration: reduceMotion ? 0 : 0.9,
@@ -58,7 +58,7 @@ export function PortfolioCard({
           )}
           data-project-media
         >
-          <div className="absolute inset-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:group-hover:scale-[1.048]" data-project-image>
+          <div className="absolute -inset-[8%] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:group-hover:scale-[1.035]" data-project-image>
             <Image
               src={image}
               alt={imageAlt || title}
@@ -68,13 +68,11 @@ export function PortfolioCard({
             />
           </div>
           <div className="absolute inset-0 bg-vinus-ink/0 transition-colors duration-500 ease-out group-hover:bg-vinus-ink/5" />
+          {category && <CategoryBadge className="absolute bottom-4 right-4 z-10 shrink-0 text-vinus-ink">{category}</CategoryBadge>}
         </div>
-        <div className="flex min-w-0 items-start justify-between gap-4 md:gap-6">
-          <div className="flex min-w-0 flex-col gap-2 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5 md:gap-3">
-            <h3 className="type-card-title w-full text-pretty break-words whitespace-normal font-medium transition-colors duration-300 group-hover:text-vinus-ink/80">{title}</h3>
-            <p className="type-body w-full text-pretty font-normal break-words whitespace-normal text-vinus-ink/70 md:type-lead">{subtitle}</p>
-          </div>
-          {category && <CategoryBadge className="shrink-0 text-vinus-ink">{category}</CategoryBadge>}
+        <div className="flex min-w-0 flex-col gap-2 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5 md:gap-3">
+          <h3 className="type-card-title w-full text-pretty break-words whitespace-normal font-medium transition-colors duration-300 group-hover:text-vinus-ink/80">{title}</h3>
+          <p className="type-body w-full text-pretty font-normal break-words whitespace-normal text-vinus-ink/70 md:type-lead">{subtitle}</p>
         </div>
       </Link>
     </motion.article>

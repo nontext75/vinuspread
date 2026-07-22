@@ -36,9 +36,9 @@ export function StoryListItem({
 
   return (
     <motion.div
-      initial={reduceMotion ? false : { opacity: 0, y: 84, scale: 0.992 }}
-      animate={reduceMotion ? { opacity: 1, y: 0, scale: 1 } : undefined}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      initial={reduceMotion ? false : { opacity: 0 }}
+      animate={reduceMotion ? { opacity: 1 } : undefined}
+      whileInView={{ opacity: 1 }}
       viewport={{ once: true, amount: 0.16, margin: "0px 0px -8% 0px" }}
       transition={{
         duration: reduceMotion ? 0 : 0.86,

@@ -26,7 +26,7 @@ export function useHomeMotion({
     if (reduceMotion) {
       gsap.set(
         root.querySelectorAll(
-          "[data-hero-reveal], [data-reveal], [data-project-media], [data-project-image], [data-service-card], .home-hero-content, .home-portfolio-column, .home-studio-content, .home-clients, .home-story-list",
+          "[data-hero-reveal], [data-reveal], [data-intro-line], [data-intro-link], [data-project-media], [data-project-image], [data-service-card], .home-hero-content, .home-portfolio-column, .home-studio-content, .home-clients, .home-story-list",
         ),
         { clearProps: "all" },
       );
@@ -36,26 +36,25 @@ export function useHomeMotion({
     const context = gsap.context(() => {
       gsap.fromTo(
         "[data-hero-reveal]",
-        { yPercent: 115, opacity: 0, rotate: 0.001 },
+        { opacity: 0 },
         {
-          yPercent: 0,
           opacity: 1,
-          duration: 1.15,
+          duration: 0.72,
           stagger: 0.095,
           ease: "power4.out",
+          clearProps: "transform",
         },
       );
 
       gsap.fromTo(
         ".home-portfolio-title-line",
-        { y: 120, opacity: 0, scale: 0.985 },
+        { opacity: 0 },
         {
-          y: 0,
           opacity: 1,
-          scale: 1,
-          duration: 1.05,
+          duration: 0.72,
           stagger: 0.105,
           ease: "power4.out",
+          clearProps: "transform",
           scrollTrigger: {
             trigger: ".home-portfolio-heading",
             start: "top 76%",
@@ -66,14 +65,14 @@ export function useHomeMotion({
 
       gsap.fromTo(
         ".home-portfolio-copy-line",
-        { y: 42, opacity: 0 },
+        { opacity: 0 },
         {
-          y: 0,
           opacity: 1,
-          duration: 0.82,
+          duration: 0.64,
           delay: 0.28,
           stagger: 0.075,
           ease: "power3.out",
+          clearProps: "transform",
           scrollTrigger: {
             trigger: ".home-portfolio-heading",
             start: "top 76%",
@@ -85,13 +84,13 @@ export function useHomeMotion({
       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element, index) => {
         gsap.fromTo(
           element,
-          { y: 40, opacity: 0 },
+          { opacity: 0 },
           {
-            y: 0,
             opacity: 1,
-            duration: 0.82,
+            duration: 0.64,
             delay: (index % 3) * 0.035,
             ease: "power4.out",
+            clearProps: "transform",
             scrollTrigger: {
               trigger: element,
               start: "top 86%",
@@ -101,16 +100,31 @@ export function useHomeMotion({
         );
       });
 
+      const introTimeline = gsap.timeline({
+        defaults: { ease: "power4.out" },
+        scrollTrigger: {
+          trigger: ".home-intro",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 0.85,
+        },
+      });
+
+      introTimeline
+        .set("[data-intro-line], [data-intro-link]", { opacity: 1, y: 84 })
+        .to("[data-intro-line]", { y: 0, duration: 0.32, stagger: 0.035 }, 0.08)
+        .to("[data-intro-link]", { y: 0, duration: 0.24 }, 0.28)
+        .to(".home-intro-content", { y: -720, duration: 0.34, ease: "power3.in" }, 0.78);
+
       gsap.fromTo(
         ".home-studio-content [data-service-card]",
-        { y: 72, opacity: 0, scale: 0.975 },
+        { opacity: 0 },
         {
-          y: 0,
           opacity: 1,
-          scale: 1,
-          duration: 1.05,
+          duration: 0.72,
           stagger: 0.085,
           ease: "power4.out",
+          clearProps: "transform",
           scrollTrigger: {
             trigger: ".home-studio-content",
             start: "top 78%",
@@ -121,13 +135,13 @@ export function useHomeMotion({
 
       gsap.fromTo(
         ".home-clients > *",
-        { y: 36, opacity: 0 },
+        { opacity: 0 },
         {
-          y: 0,
           opacity: 1,
-          duration: 0.85,
+          duration: 0.64,
           stagger: 0.045,
           ease: "power3.out",
+          clearProps: "transform",
           scrollTrigger: {
             trigger: ".home-clients",
             start: "top 82%",
@@ -152,58 +166,23 @@ export function useHomeMotion({
         });
 
         heroTimeline
-          .fromTo("[data-hero-image]", { scale: 1.16, yPercent: -9 }, { scale: 1.035, yPercent: 19 }, 0)
-          .to(".home-hero-content", { yPercent: -17, opacity: 0.22 }, 0);
-
-        const heroTitleLines = root.querySelectorAll(".home-hero-title span");
-
-        if (heroTitleLines.length >= 3) {
-          heroTimeline
-            .to(".home-hero-title span:nth-child(1)", { xPercent: -1.1 }, 0)
-            .to(".home-hero-title span:nth-child(2)", { xPercent: 0.8 }, 0)
-            .to(".home-hero-title span:nth-child(3)", { xPercent: -0.7 }, 0);
-        } else {
-          heroTimeline.to(".home-hero-title", { xPercent: -0.7 }, 0);
-        }
-
-        gsap.fromTo(
-          ".home-intro-copy",
-          { y: 120 },
-          {
-            y: -64,
-            ease: "none",
-            scrollTrigger: { trigger: ".home-intro", start: "top bottom", end: "bottom top", scrub: 1.6 },
-          },
-        );
-
-        gsap.fromTo(
-          ".home-portfolio-heading > div",
-          { y: 120 },
-          {
-            y: -84,
-            ease: "none",
-            scrollTrigger: { trigger: ".home-portfolio", start: "top bottom", end: "top top", scrub: 1.45 },
-          },
-        );
+          .fromTo("[data-hero-image]", { scale: 1.08, yPercent: -4 }, { scale: 1.03, yPercent: 8 }, 0);
 
         gsap.utils.toArray<HTMLElement>(".home-portfolio-canvas--desktop [data-project-card]").forEach((card, index) => {
           gsap.fromTo(
             card,
             {
-              y: 160,
-              x: index % 2 === 0 ? -28 : 28,
               opacity: 0,
-              scale: 0.985,
+              y: 96,
             },
             {
-              y: 0,
-              x: 0,
               opacity: 1,
-              scale: 1,
-              duration: 1.18,
-              delay: index * 0.055,
+              y: 0,
+              duration: 0.9,
+              delay: index * 0.075,
               ease: "power4.out",
               overwrite: "auto",
+              clearProps: "transform",
               scrollTrigger: {
                 trigger: card,
                 start: "top 90%",
@@ -214,40 +193,12 @@ export function useHomeMotion({
           );
         });
 
-        gsap.utils.toArray<HTMLElement>("[data-project-card]").forEach((card, index) => {
+        gsap.utils.toArray<HTMLElement>("[data-project-card]").forEach((card) => {
           const image = card.querySelector<HTMLElement>("[data-project-image]");
           if (!image) return;
 
-          const speed = projectSpeeds[index] ?? 8;
-          const distance = Math.max(8, Math.min(16, Math.abs(speed) * 1.25));
-          const direction = Math.sign(speed || 1);
-
-          gsap.fromTo(
-            image,
-            { yPercent: direction * -distance, scale: 1.12 },
-            {
-              yPercent: direction * distance,
-              scale: 1.18,
-              ease: "none",
-              scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: 1.65 },
-            },
-          );
+          gsap.set(image, { yPercent: 0, scale: 1.02 });
         });
-
-        gsap.fromTo(
-          ".home-story-list",
-          { y: 96 },
-          {
-            y: -48,
-            ease: "none",
-            scrollTrigger: {
-              trigger: ".home-story-list",
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1.7,
-            },
-          },
-        );
       }, rootRef);
 
       return () => {

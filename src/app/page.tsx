@@ -246,7 +246,7 @@ export default function Home() {
       >
         <div className="absolute inset-0">
           <Image
-            src="/vinus/dummy-photo/hero.jpg"
+            src="/vinus/dummy-photo/hero-figma.jpg"
             alt="Modern residential architecture"
             fill
             priority
@@ -264,7 +264,9 @@ export default function Home() {
               data-hero-reveal
               className="home-hero-lead type-lead w-full max-w-[860px] text-white"
             >
-              We work with brands from the first idea to the last detail, shaping direction, experience, and improvement together.
+              We work with brands from the first idea
+              <br />
+              to the last detail, shaping direction, experience, and improvement together.
             </p>
 
             <span data-hero-reveal aria-hidden="true" className="block h-2 w-[120px] bg-white md:h-5" />
@@ -290,19 +292,19 @@ export default function Home() {
 
       <section className="home-intro relative border-t border-vinus-ink/10 bg-white">
         <div className="home-intro-content flex flex-col items-start gap-12 md:gap-16">
-          <p data-reveal className="home-intro-copy type-heading">
-            <span className="md:hidden">We focus on essential value and elevate it with beauty.</span>
-            <span className="md:hidden">As times continue to change, we stay grounded in what lasts.<br />We create design that helps ideas move beyond their limits.</span>
+          <p className="home-intro-copy type-heading font-medium">
+            <span data-intro-line className="md:hidden">We focus on essential value and elevate it with beauty.</span>
+            <span data-intro-line className="md:hidden">As times continue to change, we stay grounded in what lasts.<br />We create design that helps ideas move beyond their limits.</span>
             <span className="hidden md:block">
-              We focus on essential value and<br />
-              elevate it with beauty.<br />
-              As times continue to change,<br />
-              we stay grounded in what lasts.<br />
-              We create design that helps ideas<br />
-              move beyond their limits.
+              <span data-intro-line className="block">We focus on essential value and</span>
+              <span data-intro-line className="block">elevate it with beauty.</span>
+              <span data-intro-line className="block">As times continue to change,</span>
+              <span data-intro-line className="block">we stay grounded in what lasts.</span>
+              <span data-intro-line className="block">We create design that helps ideas</span>
+              <span data-intro-line className="block">move beyond their limits.</span>
             </span>
           </p>
-          <div data-reveal>
+          <div data-intro-link>
             <ArrowLink href="/studio">The Studio</ArrowLink>
           </div>
         </div>
@@ -311,13 +313,16 @@ export default function Home() {
       <section id="work" className="home-portfolio relative bg-white">
         <div className="home-portfolio-heading border-b border-vinus-ink/10">
           <div className="flex max-w-[1680px] flex-col items-start gap-[var(--space-content)]">
-            <h2 className="home-portfolio-title type-display font-normal" aria-label="Work">
-              <span className="home-portfolio-title-line block">Work</span>
+            <h2 className="home-portfolio-title type-display font-normal" aria-label="Experience">
+              <span className="home-portfolio-title-line block">Experience</span>
             </h2>
             <p className="home-portfolio-copy type-lead">
               <span className="home-portfolio-copy-line block">Selected work shaped through strategy, interface design,</span>
               <span className="home-portfolio-copy-line block">and brand systems built to keep improving.</span>
             </p>
+            <div className="home-portfolio-cta" data-reveal>
+              <ArrowLink href="/work">Browse all work</ArrowLink>
+            </div>
           </div>
         </div>
 
@@ -329,9 +334,6 @@ export default function Home() {
           {projects.map((project) => <ProjectCard key={project.title} project={project} />)}
         </div>
 
-        <div className="home-portfolio-cta flex justify-center" data-reveal>
-          <ArrowLink href="/work">Browse all work</ArrowLink>
-        </div>
       </section>
 
       <section ref={reelRef} data-header-theme="dark" className="home-reel relative overflow-hidden bg-white text-white">
@@ -524,7 +526,7 @@ export default function Home() {
 
         .home-intro {
           height: 720px;
-          padding: 96px 24px;
+          padding: 128px 24px 96px;
         }
 
         .home-intro-copy {
@@ -604,11 +606,11 @@ export default function Home() {
           }
 
           .home-intro {
-            min-height: 876px;
+            min-height: 980px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
-            padding: 96px 64px;
+            padding: 180px 64px 96px;
           }
 
           .home-intro-content {
@@ -714,9 +716,9 @@ export default function Home() {
 
         @media (min-width: 1440px) {
           .home-hero {
-            height: 2356px;
+            height: 2503px;
             min-height: 0;
-            padding: 418px 64px 0;
+            padding: 746px 64px 0;
           }
 
           .home-hero-content {
@@ -734,39 +736,45 @@ export default function Home() {
 
           .home-hero-title {
             width: 1848px;
-            font-size: 364px;
-            line-height: 328px;
+            font-size: 360px;
+            line-height: 324px;
           }
 
-          .home-hero-lead {
-            line-height: 32px;
+          .home-hero-lead,
+          .home-hero-content p.type-lead {
+            font-size: 36px;
+            line-height: 42px;
           }
 
           .home-intro {
-            height: 845px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height: 280vh;
+            display: block;
             padding: 0 64px;
           }
 
           .home-intro-content {
+            position: sticky;
+            top: 50%;
+            transform: translateY(-50%);
+            height: auto;
             width: 1440px;
+            margin: 0 auto;
+            gap: 64px;
           }
 
           .home-intro-copy {
             width: 1440px;
-            gap: 32px;
+            gap: 0;
             font-size: 64px;
-            line-height: 72px;
+            line-height: 70.4px;
           }
 
           .home-portfolio {
-            height: auto;
+            height: 3229px;
             display: flex;
             flex-direction: column;
-            margin: 0 0 160px;
-            padding: 64px 0;
+            margin: 0;
+            padding: 128px 0 0;
           }
 
           .home-portfolio-heading {
@@ -780,8 +788,19 @@ export default function Home() {
             line-height: 0.92;
           }
 
+          .home-portfolio-title .home-portfolio-title-line {
+            font-size: 120px;
+            line-height: 124.8px;
+          }
+
           .home-portfolio-heading p {
-            line-height: 32px;
+            margin-top: 48px;
+            font-size: 36px;
+            line-height: 42px;
+          }
+
+          .home-portfolio-heading .home-portfolio-cta {
+            margin-top: 104px;
           }
 
           .home-portfolio-canvas--mobile {
@@ -795,8 +814,8 @@ export default function Home() {
             grid-template-columns: repeat(12, minmax(0, 1fr));
             column-gap: 48px;
             row-gap: 88px;
-            margin: 40px 0 0;
-            padding: 72px 64px 80px;
+            margin: 96px 0 0;
+            padding: 0 64px 80px;
           }
 
           .home-project {
@@ -841,21 +860,24 @@ export default function Home() {
             display: none;
           }
 
-          .home-portfolio-cta {
-            width: 100%;
-            margin: 64px 0 0;
-          }
-
           .home-reel {
             height: 1280px;
             min-height: 0;
           }
 
           .home-studio {
-            height: auto;
+            height: 1172px;
             min-height: 0;
-            padding-top: 160px;
-            padding-bottom: 160px;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 128px;
+            padding-bottom: 128px;
+          }
+
+          .home-studio-content {
+            width: 1440px !important;
+            max-width: 1440px !important;
+            gap: 96px;
           }
 
           .home-studio-lead {
@@ -878,8 +900,10 @@ export default function Home() {
           }
 
           [data-service-grid] {
-            height: auto;
-            align-items: start;
+            width: 1440px !important;
+            max-width: 1440px !important;
+            height: 360px;
+            align-items: stretch;
           }
 
           .home-service-card {
@@ -887,31 +911,32 @@ export default function Home() {
           }
 
           .home-clients {
-            height: auto;
+            height: 1123px;
             min-height: 0;
             padding: 160px 64px;
           }
 
           .home-story {
-            height: auto;
-            padding: 160px 64px;
+            height: 976px;
+            padding: 128px 64px 0;
           }
 
           .home-story-grid {
-            height: auto;
-            grid-template-columns: 996px 1404px;
+            height: 720px;
+            grid-template-columns: 1168px 1168px;
+            column-gap: 96px;
           }
 
           .home-story-row {
-            height: 270px;
+            height: 240px;
           }
 
           .home-story-row--last {
-            height: 270px;
+            height: 240px;
           }
 
           .home-page > footer {
-            height: 732px;
+            height: 714px;
           }
         }
 

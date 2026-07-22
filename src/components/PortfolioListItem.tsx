@@ -20,9 +20,9 @@ export function PortfolioListItem({ title, subtitle, category, image, href, inde
   return (
     <motion.a
       href={href}
-      initial={reduceMotion ? false : { opacity: 0, y: 88, scale: 0.992 }}
-      animate={reduceMotion ? { opacity: 1, y: 0, scale: 1 } : undefined}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      initial={reduceMotion ? false : { opacity: 0 }}
+      animate={reduceMotion ? { opacity: 1 } : undefined}
+      whileInView={{ opacity: 1 }}
       viewport={{ once: true, amount: 0.16, margin: "0px 0px -8% 0px" }}
       transition={{ duration: reduceMotion ? 0 : 0.86, delay: reduceMotion ? 0 : index * 0.065, ease: [0.16, 1, 0.3, 1] }}
       className="group grid grid-cols-[1fr_auto] items-center gap-[var(--space-compact)] border-b border-vinus-ink/10 py-[var(--space-content)] md:grid-cols-[200px_1fr_auto]"
