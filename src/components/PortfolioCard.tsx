@@ -58,13 +58,13 @@ export function PortfolioCard({
           )}
           data-project-media
         >
-          <div className="absolute -inset-[8%] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:group-hover:scale-[1.035]" data-project-image>
+          <div className="absolute inset-0" data-project-image>
             <Image
               src={image}
               alt={imageAlt || title}
               fill
               sizes={imageSizes}
-              className="object-cover"
+              className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:group-hover:scale-[1.035]"
             />
           </div>
           <div className="absolute inset-0 bg-vinus-ink/0 transition-colors duration-500 ease-out group-hover:bg-vinus-ink/5" />

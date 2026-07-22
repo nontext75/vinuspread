@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useLayoutEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -66,57 +66,44 @@ export function Header() {
   const menuOverlayRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const routeStartsOnDark = pathname === "/" || (pathname.startsWith("/work/") && pathname !== "/work");
-    const sections = Array.from(document.querySelectorAll<HTMLElement>("[data-header-theme]"));
-    const intersectingSections = new Set<HTMLElement>();
-    let observer: IntersectionObserver | undefined;
-    let resizeFrame = 0;
+    let frame = 0;
 
-    const observeThemeSections = () => {
-      observer?.disconnect();
-      intersectingSections.clear();
+    const syncTheme = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const sections = Array.from(document.querySelectorAll<HTMLElement>("[data-header-theme]"));
 
-      if (sections.length === 0) {
-        setOnDarkBackground(routeStartsOnDark);
-        return;
-      }
+        if (sections.length === 0) {
+          setOnDarkBackground(routeStartsOnDark);
+          return;
+        }
 
-      const probeY = 48;
-      const bottomInset = Math.max(window.innerHeight - probeY - 1, 0);
+        const probeY = 48;
+        const activeSection = sections.find((section) => {
+          const rect = section.getBoundingClientRect();
+          return rect.top <= probeY && rect.bottom > probeY;
+        });
 
-      observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            const section = entry.target as HTMLElement;
-            if (entry.isIntersecting) intersectingSections.add(section);
-            else intersectingSections.delete(section);
-          });
-
-          const activeSection = sections.find((section) => intersectingSections.has(section));
-          setOnDarkBackground(activeSection?.dataset.headerTheme === "dark");
-        },
-        {
-          rootMargin: `-${probeY}px 0px -${bottomInset}px 0px`,
-          threshold: 0,
-        },
-      );
-
-      sections.forEach((section) => observer?.observe(section));
+        const isDark = activeSection?.dataset.headerTheme === "dark";
+        document.documentElement.dataset.headerOnDark = isDark ? "true" : "false";
+        setOnDarkBackground(isDark);
+      });
     };
 
-    const handleResize = () => {
-      cancelAnimationFrame(resizeFrame);
-      resizeFrame = requestAnimationFrame(observeThemeSections);
-    };
-
-    observeThemeSections();
-    window.addEventListener("resize", handleResize, { passive: true });
+    syncTheme();
+    const themeInterval = window.setInterval(syncTheme, 160);
+    window.addEventListener("scroll", syncTheme, { passive: true });
+    document.addEventListener("scroll", syncTheme, { passive: true, capture: true });
+    window.addEventListener("resize", syncTheme, { passive: true });
 
     return () => {
-      cancelAnimationFrame(resizeFrame);
-      observer?.disconnect();
-      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(frame);
+      window.clearInterval(themeInterval);
+      window.removeEventListener("scroll", syncTheme);
+      document.removeEventListener("scroll", syncTheme, { capture: true });
+      window.removeEventListener("resize", syncTheme);
     };
   }, [pathname]);
 
@@ -189,11 +176,16 @@ export function Header() {
       {/* Floating Header */}
       <header
         aria-hidden={menuPresent}
-        className={`fixed inset-x-0 top-0 z-40 transition-colors duration-200 motion-reduce:transition-none ${onDarkBackground ? "text-white" : "text-vinus-ink"}`}
+        className={`site-header fixed inset-x-0 top-0 z-40 transition-colors duration-200 motion-reduce:transition-none ${onDarkBackground ? "text-white" : "text-vinus-ink"}`}
       >
         <div className="flex h-[72px] w-full items-center justify-between px-5 md:px-10 xl:h-[88px] xl:px-16">
           <Link href="/" className="relative flex h-6 w-[107px] shrink-0 items-center md:h-9 md:w-40" aria-label="Vinuspread home">
-            <BrandLogo tone={onDarkBackground ? "light" : "dark"} priority className="h-6 w-[107px] md:h-9 md:w-40" />
+            <span className="site-logo-light absolute inset-0">
+              <BrandLogo tone="light" priority className="h-6 w-[107px] md:h-9 md:w-40" />
+            </span>
+            <span className="site-logo-dark absolute inset-0">
+              <BrandLogo tone="dark" priority className="h-6 w-[107px] md:h-9 md:w-40" />
+            </span>
           </Link>
 
           <div className="flex items-center gap-6 md:gap-[54px]">
@@ -224,7 +216,7 @@ export function Header() {
                 aria-expanded={menuPresent}
                 aria-controls="site-menu-overlay"
                 aria-haspopup="dialog"
-                className={`group flex h-10 items-center gap-2 rounded-full px-4 py-2 transition-opacity duration-200 hover:opacity-70 active:scale-[0.97] motion-reduce:transform-none motion-reduce:transition-none ${onDarkBackground ? "bg-white text-vinus-ink" : "bg-vinus-ink text-white"}`}
+                className={`site-menu-button group flex h-10 items-center gap-2 rounded-full px-4 py-2 transition-opacity duration-200 hover:opacity-70 active:scale-[0.97] motion-reduce:transform-none motion-reduce:transition-none ${onDarkBackground ? "bg-white text-vinus-ink" : "bg-vinus-ink text-white"}`}
               >
                 <span className="type-label font-medium">Menu</span>
                 <Menu className="size-3 transition-transform group-hover:rotate-90 motion-reduce:transform-none motion-reduce:transition-none" />

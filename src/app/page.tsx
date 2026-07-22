@@ -500,7 +500,7 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      <style jsx global>{`
+      <style>{`
         .home-hero {
           min-height: 980px;
           height: auto;
@@ -747,26 +747,27 @@ export default function Home() {
           }
 
           .home-intro {
-            height: 280vh;
+            height: 883px;
             display: block;
             padding: 0 64px;
           }
 
           .home-intro-content {
-            position: sticky;
-            top: 50%;
-            transform: translateY(-50%);
+            position: relative;
+            top: auto;
+            transform: none;
             height: auto;
             width: 1440px;
             margin: 0 auto;
+            padding-top: 200px;
             gap: 64px;
           }
 
           .home-intro-copy {
             width: 1440px;
             gap: 0;
-            font-size: 64px;
-            line-height: 70.4px;
+            font-size: 56px;
+            line-height: 61.6px;
           }
 
           .home-portfolio {
@@ -834,22 +835,22 @@ export default function Home() {
 
           .home-project--crowd {
             grid-column: 4 / span 3;
-            margin-top: -24px;
+            margin-top: -61px;
           }
 
           .home-project--macadamia {
             grid-column: 8 / span 4;
-            margin-top: 48px;
+            margin-top: 11px;
           }
 
           .home-project--budongsan {
             grid-column: 2 / span 3;
-            margin-top: -8px;
+            margin-top: -31px;
           }
 
           .home-project--donga {
             grid-column: 6 / span 3;
-            margin-top: 72px;
+            margin-top: 79px;
           }
 
           .home-project-media {
@@ -866,7 +867,7 @@ export default function Home() {
           }
 
           .home-studio {
-            height: 1172px;
+            height: 1167px;
             min-height: 0;
             align-items: flex-start;
             justify-content: center;

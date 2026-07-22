@@ -112,6 +112,11 @@ export function Footer() {
         : pathname.startsWith("/news")
           ? { label: "CONTACT", href: "/contact" }
           : { label: "EXPERIENCE", href: "/work" };
+  const footerDesktopHeight = pathname === "/" || pathname === "/work"
+    ? "xl:h-[714px]"
+    : pathname.startsWith("/news/")
+      ? "xl:h-[690px]"
+      : "xl:h-[687px]";
 
   const scrollToTop = () => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -119,7 +124,7 @@ export function Footer() {
   };
 
   return (
-    <footer id="contact" data-header-theme="dark" className="h-[963px] overflow-hidden bg-vinus-charcoal font-sans text-white md:h-[806px] xl:h-[687px]">
+    <footer id="contact" data-header-theme="dark" className={`h-[963px] overflow-hidden bg-vinus-charcoal font-sans text-white md:h-[806px] ${footerDesktopHeight}`}>
       <div className="h-[958px] px-5 py-16 md:hidden">
         <div className="w-full">
           <div className="flex flex-col gap-3">

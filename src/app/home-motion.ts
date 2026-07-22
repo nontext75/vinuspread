@@ -100,21 +100,22 @@ export function useHomeMotion({
         );
       });
 
-      const introTimeline = gsap.timeline({
-        defaults: { ease: "power4.out" },
-        scrollTrigger: {
-          trigger: ".home-intro",
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 0.85,
+      gsap.fromTo(
+        "[data-intro-line], [data-intro-link]",
+        { y: 72 },
+        {
+          y: 0,
+          duration: 0.9,
+          stagger: 0.055,
+          ease: "power4.out",
+          clearProps: "transform",
+          scrollTrigger: {
+            trigger: ".home-intro",
+            start: "top 72%",
+            toggleActions: "play none none none",
+          },
         },
-      });
-
-      introTimeline
-        .set("[data-intro-line], [data-intro-link]", { opacity: 1, y: 84 })
-        .to("[data-intro-line]", { y: 0, duration: 0.32, stagger: 0.035 }, 0.08)
-        .to("[data-intro-link]", { y: 0, duration: 0.24 }, 0.28)
-        .to(".home-intro-content", { y: -720, duration: 0.34, ease: "power3.in" }, 0.78);
+      );
 
       gsap.fromTo(
         ".home-studio-content [data-service-card]",
@@ -173,13 +174,13 @@ export function useHomeMotion({
             card,
             {
               opacity: 0,
-              y: 96,
+              y: 140,
             },
             {
               opacity: 1,
               y: 0,
-              duration: 0.9,
-              delay: index * 0.075,
+              duration: 1.05,
+              delay: index * 0.12,
               ease: "power4.out",
               overwrite: "auto",
               clearProps: "transform",

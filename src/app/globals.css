@@ -388,6 +388,48 @@
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
+.site-logo-light {
+  display: block;
+}
+
+.site-logo-dark {
+  display: none;
+}
+
+:root[data-header-on-dark="false"] .site-header {
+  color: var(--color-vinus-ink);
+}
+
+:root[data-header-on-dark="false"] .site-logo-light {
+  display: none;
+}
+
+:root[data-header-on-dark="false"] .site-logo-dark {
+  display: block;
+}
+
+:root[data-header-on-dark="false"] .site-menu-button {
+  background: var(--color-vinus-ink);
+  color: var(--color-vinus-white);
+}
+
+:root[data-header-on-dark="true"] .site-header {
+  color: var(--color-vinus-white);
+}
+
+:root[data-header-on-dark="true"] .site-logo-light {
+  display: block;
+}
+
+:root[data-header-on-dark="true"] .site-logo-dark {
+  display: none;
+}
+
+:root[data-header-on-dark="true"] .site-menu-button {
+  background: var(--color-vinus-white);
+  color: var(--color-vinus-ink);
+}
+
 /* Unified Subpage Styles */
 .subpage-wrapper {
   min-height: 100vh;
@@ -417,16 +459,6 @@
 .studio-vision { height: 941px; }
 .studio-business { height: 1857px; }
 .studio-clients { height: 1166px; }
-.home-hero { height: 998px !important; min-height: 998px !important; }
-.home-intro { height: 440px !important; }
-.home-portfolio { height: 2678px !important; }
-.home-reel { height: 420px !important; }
-.home-studio { height: 996px !important; }
-.home-clients { height: 1284px !important; }
-.home-story { height: 1834px !important; }
-.home-reel { min-height: 0 !important; }
-.home-page > footer { height: 963px !important; }
-
 .project-detail-meta { height: 617px; }
 .project-detail-content { height: 2398px; }
 .story-detail-title { font-size: 42px; line-height: 0.95; }
@@ -442,16 +474,6 @@
   .studio-vision { height: 1163px; }
   .studio-business { height: 2334px; }
   .studio-clients { height: 837px; }
-  .home-hero { height: 1764px !important; min-height: 1764px !important; }
-  .home-intro { height: 528px !important; }
-  .home-portfolio { height: 1974px !important; }
-  .home-reel { height: 640px !important; }
-  .home-studio { height: 903px !important; }
-  .home-clients { height: 992px !important; }
-  .home-story { height: 1309px !important; }
-  .home-intro { min-height: 0 !important; }
-  .home-reel { min-height: 0 !important; }
-  .home-page > footer { height: 806px !important; }
   .project-detail-meta { height: 250px; }
   .project-detail-overview { height: 270px; }
   .project-detail-content { height: 5071px; }
@@ -471,15 +493,6 @@
   .studio-vision { height: 2071px; }
   .studio-business { height: 2421px; }
   .studio-clients { height: 1023px; }
-  .home-hero { height: 2496px !important; min-height: 2496px !important; }
-  .home-intro { height: 730px !important; }
-  .home-portfolio { height: 3220px !important; }
-  .home-reel { height: 1280px !important; }
-  .home-studio { height: 1163px !important; }
-  .home-clients { height: 1123px !important; }
-  .home-story { height: 976px !important; }
-  .home-portfolio { margin-bottom: 0 !important; }
-  .home-page > footer { height: 714px !important; }
   .project-detail-hero { height: 1522px; aspect-ratio: auto; }
   .project-detail-meta { height: 260px; }
   .project-detail-overview { height: 332px; }
@@ -519,7 +532,8 @@
   }
 
   .story-page-list {
-    min-height: 2640px;
+    height: 2656px;
+    min-height: 2656px;
     padding-top: 120px !important;
     padding-bottom: 120px !important;
   }
@@ -541,7 +555,7 @@
 }
 @media (min-width: 768px) {
   .subpage-header {
-    margin-top: 96px;
+    margin-top: 88px;
     padding: var(--space-section) var(--space-edge) var(--space-major);
   }
 }
@@ -656,6 +670,10 @@
   .studio-principles article h2 {
     font-size: 120px !important;
     line-height: 120px !important;
+  }
+
+  .experience-page-hero {
+    margin-top: 92px;
   }
 }
 
