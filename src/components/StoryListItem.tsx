@@ -49,7 +49,7 @@ export function StoryListItem({
         "group border-vinus-ink/10 bg-white",
           variant === "home"
           ? "home-story-row flex flex-col items-start gap-4 md:grid md:grid-cols-[174px_minmax(0,1fr)_24px] md:gap-[var(--space-content)] md:border-b md:py-[var(--space-content)]"
-          : "flex flex-col items-start gap-4 md:grid md:grid-cols-[120px_minmax(0,1fr)_24px] md:gap-9 md:py-12 md:shadow-[inset_0_-1px_0_rgba(13,13,13,0.1)]",
+          : "story-archive-row grid h-[431px] grid-cols-[96px_minmax(0,1fr)] items-start gap-4 overflow-hidden py-8 shadow-[inset_0_-1px_0_rgba(13,13,13,0.1)] md:h-60 md:grid-cols-[120px_minmax(0,1fr)_24px] md:gap-9 md:py-12",
       )}
     >
       <Link href={href} className="contents">

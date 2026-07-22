@@ -113,7 +113,7 @@ const homeStoryContent = [
   },
 ] as const;
 
-const stories = storyEntries.map((story, index) => ({
+const stories = storyEntries.slice(0, 3).map((story, index) => ({
   title: homeStoryContent[index]?.title ?? story.title,
   excerpt: homeStoryContent[index]?.excerpt ?? story.excerpt,
   date: story.date,

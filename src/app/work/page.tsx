@@ -40,10 +40,10 @@ export default function WorkPage() {
         eyebrow="Experience"
         title={<>We Spread<br />the Beautiful Things</>}
         description="Explore selected work shaped through product strategy, interface design, and brand systems."
-        className="max-md:min-h-[520px] md:!pt-16 md:!pb-20"
+        className="experience-page-hero"
       />
 
-      <section className="subpage-content flex flex-col gap-16 !pt-14 !pb-[68px] md:gap-10 md:!pt-0 md:!pb-24 min-[2200px]:!pb-[128px]">
+      <section className="experience-page-list subpage-content flex flex-col gap-16 overflow-hidden !pt-14 !pb-[68px] md:gap-10 md:!pt-0 md:!pb-24 min-[2200px]:!pb-[128px]">
         <AnimatePresence mode="wait" initial={false}>
         {viewMode === "grid" ? (
           <motion.div

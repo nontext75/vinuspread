@@ -12,11 +12,11 @@ export default function NewsPage() {
         eyebrow="Story"
         title={<>Ideas and stories<br />worth sharing.</>}
         description="Practical observations on brands, products, design principles, and the words that shape digital experiences."
-        className="max-md:min-h-[656px]"
+        className="story-page-hero"
       />
 
-      <section className="subpage-content min-[2200px]:h-[821px]">
-        <div className="flex flex-col gap-12 md:gap-0 md:border-t md:border-vinus-ink/10">
+      <section className="story-page-list subpage-content px-5 md:px-10 min-[2200px]:px-20">
+        <div className="flex flex-col gap-0 md:border-t md:border-vinus-ink/10">
           {stories.map((article, index) => (
             <StoryListItem
               key={article.title}

@@ -51,7 +51,6 @@ const visionFormula: ReadonlyArray<{ label: string; meaning: string; tone?: "lig
 
 export default function StudioPage() {
   const reduceMotion = useReducedMotion();
-  const enter = (distance = 36) => ({ opacity: 0, y: distance });
   const visionTitleLines = ["Spread", "the Beautiful", "Things"];
   const easeOutExpo = [0.16, 1, 0.3, 1] as const;
   const wideImageRef = useRef<HTMLDivElement>(null);
@@ -101,9 +100,10 @@ export default function StudioPage() {
         title={<><span>We elevate essential</span><br /><span>value with beauty.</span></>}
         description="In a fast changing world, we help brands and products stay focused on what matters, then improve it through design, technology, and iteration."
         size="spacious"
+        className="studio-page-hero"
       />
 
-      <section className="studio-principles w-full overflow-visible border-b border-vinus-ink/10 px-[var(--space-edge)] pt-12 pb-24 md:py-[var(--space-section)]">
+      <section className="studio-principles w-full overflow-hidden border-b border-vinus-ink/10 px-[var(--space-edge)] pt-12 pb-24 md:py-[var(--space-section)]">
         <div className="grid grid-cols-1 gap-16 md:grid-cols-2 md:gap-x-8 md:gap-y-20 xl:grid-cols-3 xl:gap-8 min-[2200px]:grid-cols-[repeat(12,173.333px)] min-[2200px]:grid-rows-[1491px_48px_864px] min-[2200px]:gap-x-8 min-[2200px]:gap-y-0">
           {philosophies.map((item, index) => (
             <StudioPhilosophyCard
@@ -121,7 +121,7 @@ export default function StudioPage() {
         </div>
       </section>
 
-      <section className="studio-vision flex w-full flex-col gap-8 overflow-visible border-b border-vinus-ink/10 px-[var(--space-edge)] py-24 md:gap-16 md:py-[var(--space-section)] min-[2200px]:!h-[2900px] min-[2200px]:overflow-hidden">
+      <section className="studio-vision flex w-full flex-col gap-8 overflow-hidden border-b border-vinus-ink/10 px-[var(--space-edge)] py-24 md:gap-16 md:py-[var(--space-section)]">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -185,7 +185,7 @@ export default function StudioPage() {
       </section>
 
 
-      <section className="studio-business w-full overflow-visible border-b border-vinus-ink/10 px-[var(--space-edge)] py-24 md:py-[var(--space-section)] min-[2200px]:min-h-[1103px]">
+      <section className="studio-business w-full overflow-hidden border-b border-vinus-ink/10 px-[var(--space-edge)] py-24 md:py-[var(--space-section)]">
         <div className="flex max-w-[1200px] flex-col gap-10 md:gap-6">
           <h2 className="type-studio-business-title">Field of business</h2>
           <p className="type-studio-business-intro max-w-[640px]">We provide optimized digital services, enabling users to interact easily and comfortably across digital touchpoints.</p>
@@ -213,7 +213,7 @@ export default function StudioPage() {
         </div>
       </section>
 
-      <section className="studio-clients flex w-full flex-col gap-[var(--space-section)] px-[var(--space-edge)] py-24 md:py-[var(--space-section)]">
+      <section className="studio-clients flex w-full flex-col gap-[var(--space-section)] overflow-hidden px-[var(--space-edge)] py-24 md:py-[var(--space-section)]">
         <div className="flex max-w-[1130px] flex-col gap-[var(--space-content)]">
           <h2 className="type-feature font-normal">Clients &amp; Partners</h2>
           <p className="type-heading max-w-[1040px] font-normal">

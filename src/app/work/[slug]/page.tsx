@@ -44,9 +44,13 @@ const portfolioData: Record<string, PortfolioProject> = {
     blocks: [{ heading: "Interaction & Motion Design", body: "Subtle page transitions and scroll-responsive elements give the experience rhythm while preserving fast, direct access to every piece of information." }],
   },
   "budongsan114-mediate-bizsolution": {
-    title: "Budongsan114 Mediate BIZsolution", subtitle: "Enterprise B2B Product Strategy", category: "Web", image: "/vinus/dummy-photo/work-05.jpg", client: "Budongsan 114", period: "2022.07",
+    title: "Budongsan114 Mediate BIZsolution", subtitle: "Enterprise B2B Product Strategy", category: "Web", image: "/vinus/project/budongsan-hero.png", client: "Budongsan 114", period: "2022.07",
     overview: "A comprehensive enterprise platform that streamlines property management and agent communication, translating a complex legacy system into a clear business tool.",
-    blocks: [{ heading: "Optimizing B2B Systems", body: "We reorganized information into dedicated control grids and modular workspaces that support intensive daily use while reducing errors and workflow delays." }],
+    blocks: [
+      { heading: "Optimizing B2B Systems", body: "A B2B product is defined by the work it supports. We reorganized dense property information into focused dashboards and modular workspaces that reduce errors and make intensive daily tasks easier to scan.", image: "/vinus/project/budongsan-dashboard.png" },
+      { heading: "A platform for brokers", body: "Clear navigation, consistent controls, and a practical information hierarchy help agents move between listings, customer work, and business tools without losing context.", image: "/vinus/project/budongsan-architecture.png" },
+      { heading: "A connected digital ecosystem", body: "The final system connects public-facing services and professional tools through one visual language, creating a platform that can continue to grow with the business.", image: "/vinus/project/budongsan-websites.png" },
+    ],
   },
   "donga-on-book": {
     title: "Donga On book", subtitle: "Branding & Digital Platform", category: "Web", image: "/vinus/dummy-photo/work-06.jpg", client: "Donga Publishing", period: "2022.06",
@@ -98,7 +102,7 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
 
   return (
     <main className="min-h-[100dvh] overflow-x-hidden bg-vinus-paper text-vinus-ink selection:bg-vinus-ink selection:text-vinus-paper">
-      <section ref={heroRef} data-header-theme="dark" className="relative h-[620px] w-full overflow-hidden bg-vinus-ink sm:h-[720px] md:h-auto md:aspect-video">
+      <section ref={heroRef} data-header-theme="dark" className="project-detail-hero relative h-[480px] w-full overflow-hidden bg-vinus-ink md:aspect-video md:h-auto">
         <motion.div className="absolute inset-0 scale-[1.12] will-change-transform" style={{ y: reduceMotion ? 0 : heroImageY }}>
           <Image src={project.image} alt={project.title} fill priority sizes="100vw" className="object-cover" />
         </motion.div>
@@ -123,7 +127,7 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
       </section>
 
 
-      <section className="flex w-full flex-col gap-12 border-b border-vinus-ink/10 px-[var(--space-edge)] py-16 md:gap-16 md:py-24 min-[2200px]:min-h-[325px] min-[2200px]:justify-center">
+      <section className="project-detail-meta flex w-full flex-col gap-12 overflow-hidden border-b border-vinus-ink/10 px-[var(--space-edge)] py-16 md:gap-16 md:py-24 min-[2200px]:justify-center">
         <Link href="/work" className="type-body group inline-flex items-center gap-3 font-medium text-vinus-ink transition-opacity hover:opacity-60 md:type-label md:text-vinus-ink/45"><ArrowLeft className="size-3.5 transition-transform duration-200 motion-safe:group-hover:-translate-x-1" /><span className="md:hidden">Back to Experience</span><span className="hidden md:inline">Back to Work</span></Link>
         <ProjectMetaGrid
           items={[
@@ -139,12 +143,12 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
         </div>
       </section>
 
-      <section className="hidden w-full grid-cols-1 gap-6 border-b border-vinus-ink/10 px-[var(--space-edge)] py-16 md:grid md:grid-cols-[minmax(220px,584px)_minmax(0,840px)] md:gap-8 md:py-24 min-[2200px]:min-h-[264px] min-[2200px]:items-center">
+      <section className="project-detail-overview hidden w-full grid-cols-1 gap-6 overflow-hidden border-b border-vinus-ink/10 px-[var(--space-edge)] py-16 md:grid md:grid-cols-[minmax(220px,584px)_minmax(0,840px)] md:gap-8 md:py-24 min-[2200px]:items-center">
         <span className="type-label font-medium text-vinus-ink/45">Overview</span>
         <p className="type-body font-normal text-vinus-ink">{project.overview}</p>
       </section>
 
-      <section className="flex w-full flex-col gap-24 px-[var(--space-edge)] py-24 md:gap-[var(--space-major)] md:py-[var(--space-section)] min-[2200px]:gap-[192px] min-[2200px]:py-[128px]">
+      <section className="project-detail-content flex w-full flex-col justify-between gap-24 overflow-hidden px-[var(--space-edge)] py-24 md:gap-[var(--space-major)] md:py-[var(--space-section)] min-[2200px]:gap-[192px] min-[2200px]:py-[128px]">
         {contentBlocks.map((block, index) => (
           <ProjectContentBlock
             key={block.heading}

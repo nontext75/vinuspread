@@ -5,6 +5,7 @@ const baseUrl = process.env.QA_BASE_URL ?? "http://localhost:3000";
 const outputDir = "output/playwright";
 const viewports = [
   { name: "desktop", width: 2560, height: 1440 },
+  { name: "tablet", width: 1024, height: 1366 },
   { name: "mobile", width: 390, height: 844 },
 ];
 const routes = [
@@ -36,6 +37,7 @@ for (const viewport of viewports) {
       window.scrollTo(0, y);
       await new Promise((resolve) => setTimeout(resolve, 70));
     }
+    await new Promise((resolve) => setTimeout(resolve, 700));
     window.scrollTo(0, 0);
     await new Promise((resolve) => setTimeout(resolve, 250));
   });
@@ -58,7 +60,7 @@ for (const viewport of viewports) {
         text: element.textContent?.trim().slice(0, 48) ?? "",
         font: getComputedStyle(element).fontFamily,
       }))
-      .filter(({ text, font }) => text && !/Instrument\s*Sans|Noto\s*Sans\s*KR/i.test(font))
+      .filter(({ text, font }) => text && !/Instrument\s*Sans|Pretendard|Noto\s*Sans\s*KR/i.test(font))
       .slice(0, 20);
     const brokenImages = Array.from(document.images)
       .filter((image) => image.complete && image.naturalWidth === 0)
@@ -99,7 +101,10 @@ for (const viewport of viewports) {
       ).filter((element) => {
         const style = getComputedStyle(element);
         return Number(style.opacity) < 0.95 || style.visibility === "hidden";
-      }).length,
+      }).map((element) => ({
+        className: typeof element.className === "string" ? element.className.slice(0, 140) : "",
+        opacity: getComputedStyle(element).opacity,
+      })),
       unexpectedFonts,
       brokenImages,
       overflowingElements,
@@ -123,6 +128,10 @@ for (const viewport of viewports) {
           height: Math.round(rect.height),
         };
       }),
+      storyRows: Array.from(document.querySelectorAll(".story-archive-row")).map((element) => {
+        const rect = element.getBoundingClientRect();
+        return { height: Math.round(rect.height), width: Math.round(rect.width) };
+      }),
     };
   });
 
@@ -139,6 +148,7 @@ for (const viewport of viewports) {
         hiddenMotionNodes: metrics.hiddenMotionNodes,
         mainChildren: metrics.mainChildren.map(({ top, height, className }) => ({ top, height, className })),
         articleChildren: metrics.articleChildren.map(({ top, height, className }) => ({ top, height, className })),
+        storyRows: metrics.storyRows,
       }
     : { route, viewport, pageErrors, metrics }));
   await page.close();

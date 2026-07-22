@@ -119,7 +119,7 @@ export function Footer() {
   };
 
   return (
-    <footer id="contact" data-header-theme="dark" className="h-[1062px] overflow-hidden bg-vinus-charcoal font-sans text-white md:h-[816px] xl:h-[695px]">
+    <footer id="contact" data-header-theme="dark" className="h-[963px] overflow-hidden bg-vinus-charcoal font-sans text-white md:h-[806px] xl:h-[687px]">
       <div className="h-[958px] px-5 py-16 md:hidden">
         <div className="w-full">
           <div className="flex flex-col gap-3">

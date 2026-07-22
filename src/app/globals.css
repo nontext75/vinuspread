@@ -396,6 +396,135 @@
   padding-top: 0;
 }
 
+.story-page-hero {
+  height: 651px !important;
+  min-height: 651px !important;
+}
+
+.story-page-list {
+  min-height: 4401px;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.contact-page-hero { height: 651px !important; min-height: 651px !important; }
+.contact-info-mobile { height: 1176px; }
+.contact-inquiry-mobile { height: 1206px; }
+.experience-page-hero { height: 651px; min-height: 651px; }
+.experience-page-list { height: 3016px; }
+.studio-page-hero { height: 661px; min-height: 661px; }
+.studio-principles { height: 1941px; }
+.studio-vision { height: 941px; }
+.studio-business { height: 1857px; }
+.studio-clients { height: 1166px; }
+.home-hero { height: 998px !important; min-height: 998px !important; }
+.home-intro { height: 440px !important; }
+.home-portfolio { height: 2678px !important; }
+.home-reel { height: 420px !important; }
+.home-studio { height: 996px !important; }
+.home-clients { height: 1284px !important; }
+.home-story { height: 1834px !important; }
+.home-reel { min-height: 0 !important; }
+.home-page > footer { height: 963px !important; }
+
+.project-detail-meta { height: 617px; }
+.project-detail-content { height: 2398px; }
+.story-detail-title { font-size: 42px; line-height: 0.95; }
+
+@media (min-width: 768px) {
+  .contact-page-hero { height: 638px !important; min-height: 638px !important; }
+  .contact-info-desktop { height: 1410px; }
+  .contact-inquiry-desktop { height: 949px; }
+  .experience-page-hero { height: 638px; min-height: 638px; }
+  .experience-page-list { height: 2036px; }
+  .studio-page-hero { height: 670px; min-height: 670px; }
+  .studio-principles { height: 703px; }
+  .studio-vision { height: 1163px; }
+  .studio-business { height: 2334px; }
+  .studio-clients { height: 837px; }
+  .home-hero { height: 1764px !important; min-height: 1764px !important; }
+  .home-intro { height: 528px !important; }
+  .home-portfolio { height: 1974px !important; }
+  .home-reel { height: 640px !important; }
+  .home-studio { height: 903px !important; }
+  .home-clients { height: 992px !important; }
+  .home-story { height: 1309px !important; }
+  .home-intro { min-height: 0 !important; }
+  .home-reel { min-height: 0 !important; }
+  .home-page > footer { height: 806px !important; }
+  .project-detail-meta { height: 250px; }
+  .project-detail-overview { height: 270px; }
+  .project-detail-content { height: 5071px; }
+  .story-detail-header { height: 368px; }
+  .story-detail-title { font-size: var(--type-page); line-height: min(0.92em, var(--leading-display)); }
+  .story-detail-body { height: 978px; }
+}
+
+@media (min-width: 2200px) {
+  .contact-page-hero { height: 866px !important; min-height: 866px !important; }
+  .contact-info-desktop { height: 1064px; }
+  .contact-inquiry-desktop { height: 1241px; }
+  .experience-page-hero { height: 866px; min-height: 866px; }
+  .experience-page-list { height: 1449px; }
+  .studio-page-hero { height: 866px; min-height: 866px; }
+  .studio-principles { height: 2761px; }
+  .studio-vision { height: 2071px; }
+  .studio-business { height: 2421px; }
+  .studio-clients { height: 1023px; }
+  .home-hero { height: 2496px !important; min-height: 2496px !important; }
+  .home-intro { height: 730px !important; }
+  .home-portfolio { height: 3220px !important; }
+  .home-reel { height: 1280px !important; }
+  .home-studio { height: 1163px !important; }
+  .home-clients { height: 1123px !important; }
+  .home-story { height: 976px !important; }
+  .home-portfolio { margin-bottom: 0 !important; }
+  .home-page > footer { height: 714px !important; }
+  .project-detail-hero { height: 1522px; aspect-ratio: auto; }
+  .project-detail-meta { height: 260px; }
+  .project-detail-overview { height: 332px; }
+  .project-detail-content { height: 12600px; }
+  .story-detail-article { padding-top: 88px; }
+  .story-detail-header { height: 560px; }
+  .story-detail-body { height: 1210px; }
+}
+
+@media (max-width: 767px) {
+  .story-page-list .story-archive-row:first-child {
+    height: 454px;
+  }
+
+  .story-page-list .story-archive-row:nth-child(9) {
+    height: 403px;
+  }
+}
+
+@media (min-width: 768px) {
+  .story-page-hero {
+    height: 638px !important;
+    min-height: 638px !important;
+  }
+
+  .story-page-list {
+    min-height: 2558px;
+    padding-top: 79px !important;
+    padding-bottom: 79px !important;
+  }
+}
+
+@media (min-width: 2200px) {
+  .story-page-hero {
+    height: 866px !important;
+    min-height: 866px !important;
+  }
+
+  .story-page-list {
+    min-height: 2640px;
+    padding-top: 120px !important;
+    padding-bottom: 120px !important;
+  }
+}
+
 .subpage-header {
   width: 100%;
   padding: 136px var(--space-edge) var(--space-major);

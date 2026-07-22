@@ -17,6 +17,13 @@ export function ProjectContentBlock({ heading, body, image, index }: ProjectCont
   const { scrollYProgress } = useScroll({ target: mediaRef, offset: ["start end", "end start"] });
   const imageY = useTransform(scrollYProgress, [0, 1], ["-14%", "14%"]);
   const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.16, 1.1, 1.14]);
+  const mediaAspect = image.includes("budongsan-dashboard")
+    ? "aspect-[164/512]"
+    : image.includes("budongsan-websites")
+      ? "aspect-[202/512]"
+      : image.includes("budongsan-architecture")
+        ? "aspect-[2880/2151]"
+        : "aspect-[1605/1003]";
 
   return (
     <motion.article
@@ -33,7 +40,7 @@ export function ProjectContentBlock({ heading, body, image, index }: ProjectCont
       </div>
       <div
         ref={mediaRef}
-        className={`relative aspect-[1605/1003] w-full overflow-hidden bg-vinus-wash lg:order-2 ${index === 0 ? "order-1" : "order-2"}`}
+        className={`relative w-full overflow-hidden bg-vinus-wash lg:order-2 ${mediaAspect} ${index === 0 ? "order-1" : "order-2"}`}
       >
         <motion.div className="absolute inset-0 will-change-transform" style={{ y: reduceMotion ? 0 : imageY, scale: reduceMotion ? 1 : imageScale }}>
           <Image src={image} alt={heading} fill sizes="(max-width: 1023px) calc(100vw - 48px), 66vw" className="object-cover" />

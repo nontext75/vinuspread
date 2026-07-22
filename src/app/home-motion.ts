@@ -36,13 +36,13 @@ export function useHomeMotion({
     const context = gsap.context(() => {
       gsap.fromTo(
         "[data-hero-reveal]",
-        { y: 28, opacity: 0 },
+        { yPercent: 115, opacity: 0, rotate: 0.001 },
         {
-          y: 0,
+          yPercent: 0,
           opacity: 1,
-          duration: 0.9,
-          stagger: 0.08,
-          ease: "power3.out",
+          duration: 1.15,
+          stagger: 0.095,
+          ease: "power4.out",
         },
       );
 
@@ -100,6 +100,41 @@ export function useHomeMotion({
           },
         );
       });
+
+      gsap.fromTo(
+        ".home-studio-content [data-service-card]",
+        { y: 72, opacity: 0, scale: 0.975 },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 1.05,
+          stagger: 0.085,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: ".home-studio-content",
+            start: "top 78%",
+            toggleActions: "play none none none",
+          },
+        },
+      );
+
+      gsap.fromTo(
+        ".home-clients > *",
+        { y: 36, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.85,
+          stagger: 0.045,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".home-clients",
+            start: "top 82%",
+            toggleActions: "play none none none",
+          },
+        },
+      );
     }, rootRef);
 
     const mediaQuery = gsap.matchMedia();
@@ -117,8 +152,8 @@ export function useHomeMotion({
         });
 
         heroTimeline
-          .fromTo("[data-hero-image]", { scale: 1.14, yPercent: -8 }, { scale: 1.04, yPercent: 18 }, 0)
-          .to(".home-hero-content", { yPercent: -14 }, 0);
+          .fromTo("[data-hero-image]", { scale: 1.16, yPercent: -9 }, { scale: 1.035, yPercent: 19 }, 0)
+          .to(".home-hero-content", { yPercent: -17, opacity: 0.22 }, 0);
 
         const heroTitleLines = root.querySelectorAll(".home-hero-title span");
 
@@ -156,14 +191,16 @@ export function useHomeMotion({
             card,
             {
               y: 160,
+              x: index % 2 === 0 ? -28 : 28,
               opacity: 0,
               scale: 0.985,
             },
             {
               y: 0,
+              x: 0,
               opacity: 1,
               scale: 1,
-              duration: 1.05,
+              duration: 1.18,
               delay: index * 0.055,
               ease: "power4.out",
               overwrite: "auto",
@@ -196,6 +233,21 @@ export function useHomeMotion({
             },
           );
         });
+
+        gsap.fromTo(
+          ".home-story-list",
+          { y: 96 },
+          {
+            y: -48,
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".home-story-list",
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.7,
+            },
+          },
+        );
       }, rootRef);
 
       return () => {

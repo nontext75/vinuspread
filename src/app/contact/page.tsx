@@ -40,13 +40,13 @@ export default function ContactPage() {
     <main className="subpage-wrapper selection:bg-vinus-ink selection:text-vinus-paper">
       <SubpageHero
         eyebrow="Contact"
-        title={<><span>Let&apos;s shape what</span><br /><span>comes next.</span></>}
-        description={<><span>Share your idea, challenge, or product goal.</span><br className="hidden md:block" /> <span>We&apos;ll help you find the right direction.</span></>}
+        title={<><span>Tell us about</span><br /><span>your next project.</span></>}
+        description={<><span>Share the essentials below. We&apos;ll review your request</span><br className="hidden md:block" /> <span>and get back to you with the right direction.</span></>}
         size="medium"
-        className="md:!pt-[var(--space-section)]"
+        className="contact-page-hero"
       />
 
-      <section className="flex w-full flex-col gap-8 overflow-visible px-6 py-12 md:hidden">
+      <section className="contact-info-mobile flex w-full flex-col gap-8 overflow-hidden px-6 py-12 md:hidden">
         <div className="relative h-[234px] w-full overflow-hidden bg-vinus-wash">
           <Image src="/vinus/dummy-photo/contact.jpg" alt="VINUSPREAD studio environment" fill sizes="342px" className="object-cover" />
         </div>
@@ -57,7 +57,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="hidden w-full px-6 pb-24 md:block md:px-16">
+      <section className="contact-info-desktop hidden w-full overflow-hidden px-6 pb-24 md:block md:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-12">
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 32 }}
@@ -90,11 +90,11 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="w-full overflow-visible bg-vinus-paper px-6 py-24 md:hidden">
+      <section className="contact-inquiry-mobile w-full overflow-hidden bg-vinus-paper px-6 py-24 md:hidden">
         <form onSubmit={handleSubmit} className="flex flex-col gap-12">
           <div className="flex flex-col gap-4">
-            <h2 className="type-contact-heading font-normal">Let&apos;s shape what<br />comes next.</h2>
-            <p className="type-body text-vinus-ink">Share your idea, challenge, or product goal. We&apos;ll help you find the right direction.</p>
+            <h2 className="type-contact-heading font-normal">Project Inquiry</h2>
+            <p className="type-body text-vinus-ink">Tell us about your project below. We&apos;ll review your request and get back to you with the right direction.</p>
           </div>
 
           <div className="flex flex-col gap-6">
@@ -130,12 +130,12 @@ export default function ContactPage() {
         </form>
       </section>
 
-      <section className="hidden w-full bg-vinus-paper px-6 py-16 md:block md:px-16 md:py-24">
+      <section className="contact-inquiry-desktop hidden w-full overflow-hidden bg-vinus-paper px-6 py-16 md:block md:px-16 md:py-24">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-6">
           <div className="grid min-h-[266px] grid-cols-1 gap-12 border-b border-vinus-ink/35 pb-[98px] pt-8 md:grid-cols-12 md:items-end md:gap-8">
             <div className="flex flex-col gap-6 md:col-span-8 md:col-start-1">
-              <h2 className="type-contact-heading font-normal">Let&apos;s shape what<br />comes next.</h2>
-              <p className="type-lead max-w-[760px] font-normal text-vinus-ink">Share your idea, challenge, or product goal. We&apos;ll help you find the right direction.</p>
+              <h2 className="type-contact-heading font-normal">Project Inquiry</h2>
+              <p className="type-lead max-w-[760px] font-normal text-vinus-ink">Tell us about your project below. We&apos;ll review your request and get back to you with the right direction.</p>
             </div>
           </div>
 
