@@ -36,7 +36,7 @@ export function PortfolioControls<Category extends string>({
               disabled={disabled}
               aria-pressed={activeCategory === category}
               onClick={() => onCategoryChange(category)}
-              className={`type-label flex min-h-12 min-w-12 items-center justify-center whitespace-nowrap border-b px-1 font-medium transition-colors duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vinus-ink md:min-h-8 md:min-w-0 md:rounded-full md:border-b-0 md:px-3 md:focus-visible:outline-white ${
+              className={`label-sm flex min-h-12 min-w-12 items-center justify-center whitespace-nowrap border-b px-1 font-medium transition-colors duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vinus-ink md:min-h-8 md:min-w-0 md:rounded-full md:border-b-0 md:px-3 md:focus-visible:outline-white ${
                 disabled
                   ? "cursor-not-allowed border-transparent text-vinus-ink/25 md:text-white/25"
                   : activeCategory === category

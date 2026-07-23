@@ -38,12 +38,13 @@ export default function WorkPage() {
     <main className="subpage-wrapper selection:bg-vinus-ink selection:text-vinus-paper">
       <SubpageHero
         eyebrow="Experience"
-        title={<>We Spread<br />the Beautiful Things</>}
+        title={<>We Spread{" "}<br />the Beautiful Things</>}
+        titleLabel="We Spread the Beautiful Things"
         description="Explore selected work shaped through product strategy, interface design, and brand systems."
         className="experience-page-hero"
       />
 
-      <section className="experience-page-list subpage-content flex flex-col gap-16 overflow-hidden !pt-14 !pb-[68px] md:gap-10 md:!pt-0 md:!pb-24 min-[2200px]:!pb-[128px]">
+      <section className="experience-page-list subpage-content relative flex flex-col gap-5 overflow-visible !pt-14 !pb-10 md:gap-0 md:!pt-0 md:!pb-1 min-[2200px]:!pb-[128px]">
         <AnimatePresence mode="wait" initial={false}>
         {viewMode === "grid" ? (
           <motion.div
@@ -52,7 +53,7 @@ export default function WorkPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
             transition={{ duration: reduceMotion ? 0 : 0.22, ease: [0.23, 1, 0.32, 1] }}
-            className="flex flex-col items-start gap-12 sm:grid sm:grid-cols-2 sm:gap-x-[var(--grid-gutter)] sm:gap-y-14 sm:content-start lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-4 min-[2200px]:gap-x-8 min-[2200px]:gap-y-16"
+            className="flex flex-col items-start gap-5 sm:grid sm:grid-cols-2 sm:gap-x-[var(--grid-gutter)] sm:gap-y-14 sm:content-start lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-4 min-[2200px]:gap-x-8 min-[2200px]:gap-y-16"
           >
             {visibleProjects.map((project, index) => (
               <PortfolioCard
@@ -60,9 +61,8 @@ export default function WorkPage() {
                 {...project}
                 index={index}
                 animate
+                mediaRatio="landscape"
                 imageSizes="(max-width: 639px) calc(100vw - 48px), (max-width: 1023px) 50vw, (max-width: 1279px) 33vw, 25vw"
-                layoutClassName="w-full"
-                mediaClassName="aspect-[4/3]"
               />
             ))}
           </motion.div>
@@ -86,7 +86,7 @@ export default function WorkPage() {
         )}
         </AnimatePresence>
 
-        <div className="order-first z-20 flex w-full justify-start md:sticky md:bottom-8 md:order-last md:justify-center md:pb-2 min-[2200px]:bottom-10">
+        <div className="absolute left-6 top-14 z-20 flex w-[calc(100%-48px)] justify-start md:absolute md:left-16 md:w-[calc(100%-128px)] md:justify-center md:pb-2 min-[2200px]:sticky min-[2200px]:bottom-10 min-[2200px]:left-auto min-[2200px]:top-auto min-[2200px]:order-last min-[2200px]:mx-auto min-[2200px]:w-full">
           <PortfolioControls
             categories={categories}
             activeCategory={activeFilter}

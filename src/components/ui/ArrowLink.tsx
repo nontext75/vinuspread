@@ -16,12 +16,12 @@ export function ArrowLink({ href, children, inverse = false, className }: ArrowL
     <Link
       href={href}
       className={cn(
-        "group inline-flex h-[47px] w-fit items-center gap-2 py-2 text-[24px] font-medium leading-[1.3] tracking-[0] transition-opacity duration-200 ease-out hover:opacity-55 motion-safe:active:scale-[0.97]",
+        "body-link group inline-flex w-fit items-center gap-2 py-2 tracking-normal transition-opacity duration-200 ease-out hover:opacity-55 motion-safe:active:scale-[0.97]",
         inverse ? "text-white" : "text-vinus-ink",
         className,
       )}
     >
-      <span className="border-b border-current leading-none">{children}</span>
+      <span className="border-b border-current">{children}</span>
       <Image
         src="/vinus/icons/arrow-link.svg"
         alt=""

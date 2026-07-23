@@ -9,6 +9,7 @@ import { ClientLogoGrid } from "@/components/ClientLogoGrid";
 import { ServiceCard } from "@/components/ServiceCard";
 import { StudioPhilosophyCard } from "@/components/StudioPhilosophyCard";
 import { SubpageHero } from "@/components/SubpageHero";
+import { VisionFormula } from "@/components/VisionFormula";
 
 const philosophies = [
   {
@@ -16,24 +17,24 @@ const philosophies = [
     title: "Define the Value",
     description: "We clarify what matters most, then turn it into decisions that make each project stronger.",
     image: "/vinus/dummy-photo/studio-01.jpg",
-    placement: "order-1 md:col-span-1 xl:order-none min-[2200px]:col-span-5 min-[2200px]:col-start-1 min-[2200px]:row-start-1",
-    ratio: "h-auto w-full aspect-[4/3] min-[2200px]:aspect-[584/438]",
+    placement: "order-1 xl:order-none min-[2200px]:col-span-5 min-[2200px]:col-start-1 min-[2200px]:row-start-1",
+    mediaRatio: "studioWide",
   },
   {
     tag: "Think",
     title: "Question the Direction",
     description: "We ask better questions early, so strategy, structure, and design can move in one clear direction.",
     image: "/vinus/dummy-photo/studio-02.jpg",
-    placement: "order-2 md:col-span-1 xl:order-none min-[2200px]:col-span-5 min-[2200px]:col-start-8 min-[2200px]:row-start-1",
-    ratio: "h-auto aspect-[4/5] min-[2200px]:h-[1243px] min-[2200px]:aspect-auto",
+    placement: "order-2 xl:order-none min-[2200px]:col-span-5 min-[2200px]:col-start-8 min-[2200px]:row-start-1",
+    mediaRatio: "portrait",
   },
   {
     tag: "Behavior",
     title: "Shape the Experience",
     description: "We translate direction into interfaces, systems, and interactions that people can understand and use.",
     image: "/vinus/dummy-photo/studio-03.jpg",
-    placement: "order-3 md:col-span-2 md:w-[58%] md:justify-self-center xl:w-auto xl:order-none min-[2200px]:col-span-4 min-[2200px]:col-start-3 min-[2200px]:row-start-3",
-    ratio: "h-auto aspect-[4/3] min-[2200px]:h-[592px] min-[2200px]:aspect-auto",
+    placement: "order-3 xl:order-none min-[2200px]:col-span-4 min-[2200px]:col-start-3 min-[2200px]:row-start-3",
+    mediaRatio: "shortWide",
   },
 ] as const;
 
@@ -83,28 +84,19 @@ export default function StudioPage() {
       transition: { duration: reduceMotion ? 0 : 0.86, ease: easeOutExpo },
     },
   };
-  const visionToken = {
-    hidden: reduceMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 72, scale: 0.88 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: reduceMotion ? 0 : 0.84, ease: easeOutExpo },
-    },
-  };
-
   return (
     <main className="subpage-wrapper selection:bg-vinus-ink selection:text-vinus-paper">
       <SubpageHero
         eyebrow="Studio"
-        title={<><span>We elevate essential</span><br /><span>value with beauty.</span></>}
+        title={<><span>We elevate essential</span>{" "}<br /><span>value with beauty.</span></>}
+        titleLabel="We elevate essential value with beauty."
         description="In a fast changing world, we help brands and products stay focused on what matters, then improve it through design, technology, and iteration."
         size="spacious"
         className="studio-page-hero"
       />
 
-      <section className="studio-principles w-full overflow-hidden border-b border-vinus-ink/10 px-[var(--space-edge)] pt-12 pb-24 md:py-[var(--space-section)]">
-        <div className="grid grid-cols-1 gap-16 md:grid-cols-2 md:gap-x-8 md:gap-y-20 xl:grid-cols-3 xl:gap-8 min-[2200px]:grid-cols-[repeat(12,173.333px)] min-[2200px]:grid-rows-[1491px_48px_864px] min-[2200px]:gap-x-8 min-[2200px]:gap-y-0">
+      <section className="studio-principles w-full overflow-visible border-b border-vinus-ink/10 px-[var(--space-edge)] pt-12 pb-20 md:py-[var(--space-section)]">
+        <div className="grid grid-cols-1 gap-16 md:grid-cols-3 md:gap-6 xl:gap-8 min-[2200px]:grid-cols-[repeat(12,173.333px)] min-[2200px]:grid-rows-[1491px_48px_864px] min-[2200px]:gap-x-8 min-[2200px]:gap-y-0">
           {philosophies.map((item, index) => (
             <StudioPhilosophyCard
               key={item.tag}
@@ -113,58 +105,40 @@ export default function StudioPage() {
               description={item.description}
               image={item.image}
               layoutClassName={item.placement}
-              mediaClassName={item.ratio}
-              descriptionClassName={item.tag === "Think" ? "min-[2200px]:max-w-none" : undefined}
+              mediaRatio={item.mediaRatio}
               index={index}
             />
           ))}
         </div>
       </section>
 
-      <section className="studio-vision flex w-full flex-col gap-8 overflow-hidden border-b border-vinus-ink/10 px-[var(--space-edge)] py-24 md:gap-16 md:py-[var(--space-section)]">
+      <section className="studio-vision flex w-full flex-col gap-8 overflow-visible border-b border-vinus-ink/10 px-[var(--space-edge)] py-16 md:gap-16 md:py-[var(--space-section)] min-[2200px]:gap-24 min-[2200px]:py-32">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.22, margin: "0px 0px -10% 0px" }}
             variants={visionContainer}
-            className="flex flex-col items-center justify-center gap-8 text-center md:gap-12 md:pr-12 min-[2200px]:h-[1384px] min-[2200px]:gap-[160px]"
+            className="studio-vision-title-block flex flex-col items-center justify-center gap-8 text-center md:gap-12 min-[2200px]:h-[612px] min-[2200px]:gap-12"
           >
-            <motion.p variants={visionCopy} className="type-label font-medium">Our Vision</motion.p>
-            <h2 className="type-studio-vision type-studio-vision--compact font-normal" aria-label="Spread the Beautiful Things">
+            <motion.p variants={visionCopy} className="body-md font-medium">Our Vision</motion.p>
+            <h2 className="studio-vision-title display-studio-vision display-studio-vision-compact font-normal" aria-label="Spread the Beautiful Things">
               {visionTitleLines.map((line) => (
                 <span key={line} className="block overflow-hidden pb-[0.06em]">
                   <motion.span variants={visionLine} className="block will-change-transform">{line}</motion.span>
                 </span>
               ))}
             </h2>
-            <motion.p variants={visionCopy} className="type-lead max-w-[960px] font-normal md:type-heading">
-              We believe good design makes ideas clearer, experiences richer,<br className="hidden md:block" /> and every next step easier to share.
-            </motion.p>
-            <motion.div
-              variants={visionContainer}
-              aria-label={visionFormula.map(({ label, meaning }) => `${label}, ${meaning}`).join(" plus ")}
-              className="type-body flex w-full flex-col items-center gap-2 md:w-auto md:flex-row md:flex-nowrap md:gap-6"
-            >
-              {visionFormula.map(({ label, meaning, tone = "light" }, index) => (
-                <div key={`${label}-${meaning}`} className="flex w-full flex-col items-center gap-2 md:w-auto md:flex-row md:gap-6">
-                  {index > 0 && (
-                    <motion.span variants={visionCopy} aria-hidden="true" className="type-lead text-vinus-ink/40">+</motion.span>
-                  )}
-                  <motion.span
-                    variants={visionToken}
-                    className={`inline-flex size-28 shrink-0 flex-col items-center justify-center gap-1 rounded-full px-4 py-4 font-medium will-change-transform md:size-[clamp(160px,18vw,240px)] md:px-6 md:py-5 min-[2200px]:px-10 ${
-                      tone === "dark" ? "bg-vinus-ink text-white" : "bg-vinus-wash text-vinus-ink"
-                    }`}
-                  >
-                    <span className="type-label font-normal md:text-[clamp(24px,3vw,40px)] md:font-medium md:leading-tight">{label}</span>
-                    <span className={`type-label font-normal md:text-[clamp(16px,1.8vw,24px)] md:leading-8 ${tone === "dark" ? "text-white/50" : "text-vinus-ink/50"}`}>
-                      {meaning}
-                    </span>
-                  </motion.span>
-                </div>
-              ))}
-            </motion.div>
           </motion.div>
+
+          <motion.p
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.4 }}
+            variants={visionCopy}
+            className="body-lg mx-auto w-full max-w-[1040px] text-center font-normal"
+          >
+            We believe good design makes ideas clearer, experiences richer,<br className="hidden md:block" /> and every next step easier to share.
+          </motion.p>
 
           <motion.div
             ref={wideImageRef}
@@ -173,7 +147,7 @@ export default function StudioPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: reduceMotion ? 0.01 : 0.85, ease: [0.16, 1, 0.3, 1] }}
-            className="relative h-[428px] w-full overflow-hidden bg-vinus-wash md:h-auto md:aspect-[2432/939] min-[2200px]:h-[939px]"
+            className="studio-wide-media relative w-full overflow-hidden bg-vinus-wash"
           >
             <motion.div
               className="absolute inset-0 will-change-transform"
@@ -181,14 +155,17 @@ export default function StudioPage() {
             >
               <Image src="/vinus/dummy-photo/studio-wide.jpg" alt="VINUSPREAD visual perspective" fill sizes="calc(100vw - 128px)" className="object-cover" />
             </motion.div>
+            <motion.div variants={visionCopy} className="absolute inset-0 z-10 flex items-center justify-center">
+              <VisionFormula items={visionFormula} />
+            </motion.div>
           </motion.div>
       </section>
 
 
-      <section className="studio-business w-full overflow-hidden border-b border-vinus-ink/10 px-[var(--space-edge)] py-24 md:py-[var(--space-section)]">
+      <section className="studio-business w-full overflow-visible border-b border-vinus-ink/10 px-[var(--space-edge)] py-16 md:py-[var(--space-section)]">
         <div className="flex max-w-[1200px] flex-col gap-10 md:gap-6">
-          <h2 className="type-studio-business-title">Field of business</h2>
-          <p className="type-studio-business-intro max-w-[640px]">We provide optimized digital services, enabling users to interact easily and comfortably across digital touchpoints.</p>
+          <h2 className="heading-studio-business">Field of business</h2>
+          <p className="body-studio-business max-w-[640px]">We provide optimized digital services, enabling users to interact easily and comfortably across digital touchpoints.</p>
         </div>
         <div className="grid grid-cols-1 gap-10 pt-10 md:grid-cols-3 md:gap-8 md:pt-16">
           {businessFields.map((field, index) => (
@@ -201,10 +178,8 @@ export default function StudioPage() {
               imageAlt=""
               href="/contact"
               className="studio-business-card min-h-[392px] overflow-visible border-t border-vinus-ink/10 pt-6 md:min-h-0"
-              mediaClassName="aspect-[789/493]"
-              titleClassName="type-business-card-title font-medium"
-              descriptionClassName="text-vinus-ink"
-              copyClassName="md:gap-6"
+              mediaRatio="business"
+              mode="business"
               arrowPlacement="footer"
               animate
               index={index}
@@ -213,10 +188,10 @@ export default function StudioPage() {
         </div>
       </section>
 
-      <section className="studio-clients flex w-full flex-col gap-[var(--space-section)] overflow-hidden px-[var(--space-edge)] py-24 md:py-[var(--space-section)]">
+      <section className="studio-clients flex w-full flex-col gap-[var(--space-section)] overflow-visible px-[var(--space-edge)] py-12 md:py-[var(--space-section)]">
         <div className="flex max-w-[1130px] flex-col gap-[var(--space-content)]">
-          <h2 className="type-feature font-normal">Clients &amp; Partners</h2>
-          <p className="type-heading max-w-[1040px] font-normal">
+          <h2 className="heading-feature font-normal">Clients &amp; Partners</h2>
+          <p className="heading-md max-w-[1040px] font-normal">
             New value begins with the connection between people. We do work that moves people&apos;s hearts.
           </p>
         </div>

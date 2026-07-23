@@ -8,18 +8,8 @@ const instrumentSans = localFont({
   src: [
     { path: "./fonts/instrument-sans-regular.woff2", weight: "400", style: "normal" },
     { path: "./fonts/instrument-sans-medium.woff2", weight: "500", style: "normal" },
-    { path: "./fonts/instrument-sans-semibold.woff2", weight: "600", style: "normal" },
-    { path: "./fonts/instrument-sans-bold.woff2", weight: "700", style: "normal" },
   ],
   variable: "--font-instrument-sans",
-  display: "swap",
-  fallback: ["Arial", "sans-serif"],
-});
-
-const pretendard = localFont({
-  src: "./fonts/PretendardVariable.woff2",
-  variable: "--font-pretendard",
-  weight: "100 900",
   display: "swap",
   fallback: ["Arial", "sans-serif"],
 });
@@ -36,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${instrumentSans.variable} ${pretendard.variable}`}>
+    <html lang="en" className={instrumentSans.variable}>
       <body className={`${instrumentSans.className} antialiased bg-vinus-white text-vinus-ink`}>
         <SmoothScroll />
         <Header />

@@ -189,7 +189,7 @@ export function Header() {
           </Link>
 
           <div className="flex items-center gap-6 md:gap-[54px]">
-            <nav className="type-body hidden items-center gap-8 font-medium xl:gap-[25px] md:flex">
+            <nav className="body-md hidden items-center gap-8 font-medium xl:gap-[25px] md:flex">
               {navItems.map((item) => {
                 const isActive = pathname === item.href;
                 return (
@@ -218,7 +218,7 @@ export function Header() {
                 aria-haspopup="dialog"
                 className={`site-menu-button group flex h-10 items-center gap-2 rounded-full px-4 py-2 transition-opacity duration-200 hover:opacity-70 active:scale-[0.97] motion-reduce:transform-none motion-reduce:transition-none ${onDarkBackground ? "bg-white text-vinus-ink" : "bg-vinus-ink text-white"}`}
               >
-                <span className="type-label font-medium">Menu</span>
+                <span className="label-sm font-medium">Menu</span>
                 <Menu className="size-3 transition-transform group-hover:rotate-90 motion-reduce:transform-none motion-reduce:transition-none" />
               </button>
             </MagneticButton>
@@ -269,7 +269,7 @@ export function Header() {
                     <Link
                       href={item.href}
                       onClick={() => setMenuOpen(false)}
-                      className={`type-page block min-w-11 font-normal uppercase transition-transform duration-300 hover:translate-x-4 motion-reduce:transform-none motion-reduce:transition-none ${
+                      className={`heading-page block min-w-11 font-normal uppercase transition-transform duration-300 hover:translate-x-4 motion-reduce:transform-none motion-reduce:transition-none ${
                         isActive ? "opacity-100" : "opacity-60 hover:opacity-100"
                       }`}
                     >
@@ -280,9 +280,9 @@ export function Header() {
               })}
             </nav>
 
-            <div className="type-label mx-[var(--space-compact)] mb-[var(--space-content)] flex flex-col justify-between gap-[var(--space-compact)] border-t border-white/10 pt-[var(--space-compact)] opacity-60 md:mx-[var(--space-edge)] md:flex-row">
-              <p>Product Management &amp; Design Studio - Seoul, Korea</p>
-              <a href="mailto:vinus@vinus.co.kr" className="hover:underline text-white">
+            <div className="label-sm mx-[var(--space-compact)] mb-[var(--space-content)] flex flex-col justify-between gap-[var(--space-compact)] border-t border-white/10 pt-[var(--space-compact)] opacity-60 md:mx-[var(--space-edge)] md:flex-row">
+              <p className="label-sm">Product Management &amp; Design Studio - Seoul, Korea</p>
+              <a href="mailto:vinus@vinus.co.kr" className="label-sm text-white hover:underline">
                 vinus@vinus.co.kr
               </a>
             </div>

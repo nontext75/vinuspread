@@ -10,7 +10,8 @@ export default function NewsPage() {
     <main className="subpage-wrapper selection:bg-vinus-ink selection:text-vinus-paper">
       <SubpageHero
         eyebrow="Story"
-        title={<>Ideas and stories<br />worth sharing.</>}
+        title={<>Ideas and stories{" "}<br />worth sharing.</>}
+        titleLabel="Ideas and stories worth sharing."
         description="Practical observations on brands, products, design principles, and the words that shape digital experiences."
         className="story-page-hero"
       />

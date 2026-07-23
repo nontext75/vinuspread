@@ -44,8 +44,8 @@ const portfolioData: Record<string, PortfolioProject> = {
     blocks: [{ heading: "Interaction & Motion Design", body: "Subtle page transitions and scroll-responsive elements give the experience rhythm while preserving fast, direct access to every piece of information." }],
   },
   "budongsan114-mediate-bizsolution": {
-    title: "Budongsan114 Mediate BIZsolution", subtitle: "Enterprise B2B Product Strategy", category: "Web", image: "/vinus/project/budongsan-hero.png", client: "Budongsan 114", period: "2022.07",
-    overview: "A comprehensive enterprise platform that streamlines property management and agent communication, translating a complex legacy system into a clear business tool.",
+    title: "Budongsan114 Mediate BIZsolution", subtitle: "Mediate BIZsolution for real estate brokers", category: "Web", image: "/vinus/project/budongsan-hero.png", client: "Budongsan 114", period: "2022.05",
+    overview: "A B2B work solution for real estate brokers, designed to bring listing management, client response, and market analysis into one integrated platform.\nVINUSPREAD led the full UI design for the business solution, shaping complex real estate data into a practical workspace for daily operations.",
     blocks: [
       { heading: "Optimizing B2B Systems", body: "A B2B product is defined by the work it supports. We reorganized dense property information into focused dashboards and modular workspaces that reduce errors and make intensive daily tasks easier to scan.", image: "/vinus/project/budongsan-dashboard.png" },
       { heading: "A platform for brokers", body: "Clear navigation, consistent controls, and a practical information hierarchy help agents move between listings, customer work, and business tools without losing context.", image: "/vinus/project/budongsan-architecture.png" },
@@ -87,8 +87,8 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
   if (!project) {
     return (
       <main className="flex min-h-[100dvh] flex-col items-center justify-center bg-vinus-paper px-6 text-center text-vinus-ink">
-        <h1 className="type-heading font-normal">Project Not Found</h1>
-        <Link href="/work" className="type-body mt-8 inline-flex items-center gap-[var(--space-inline)] text-vinus-ink/60"><ArrowLeft className="size-4" />Back to Experience</Link>
+        <h1 className="heading-md font-normal">Project Not Found</h1>
+        <Link href="/work" className="body-md mt-8 inline-flex items-center gap-[var(--space-inline)] text-vinus-ink/60"><ArrowLeft className="size-4" />Back to Experience</Link>
       </main>
     );
   }
@@ -114,21 +114,23 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
           transition={{ duration: reduceMotion ? 0.01 : 0.75, delay: reduceMotion ? 0 : 0.12, ease: [0.16, 1, 0.3, 1] }}
           className="absolute inset-x-0 bottom-10 flex flex-col items-start gap-3 px-[var(--space-edge)] text-white sm:bottom-14 md:bottom-0 md:gap-3 md:pb-[var(--space-section)]"
         >
-          <p className="type-label font-medium text-white/70">{project.category}</p>
-          <h1 className="type-project-title max-w-full font-normal md:max-w-[1680px]">
-            <span className="md:hidden">{project.title}</span>
+          <p className="label-sm font-medium text-white/70">{project.category}</p>
+          <h1
+            aria-label={project.title}
+            className="display-project-title max-w-full font-normal md:max-w-[1680px]"
+          >
+            <span aria-hidden="true" className="md:hidden">{project.title}</span>
             {slug === "the-frame-artstore-catalogue" ? (
-              <span className="hidden md:block"><span className="block">The Frame</span><span className="block">Artstore Catalogue</span></span>
+              <span aria-hidden="true" className="hidden md:block"><span className="block">The Frame</span><span className="block">Artstore Catalogue</span></span>
             ) : (
-              <span className="hidden md:block">{project.title}</span>
+              <span aria-hidden="true" className="hidden md:block">{project.title}</span>
             )}
           </h1>
         </motion.div>
       </section>
 
 
-      <section className="project-detail-meta flex w-full flex-col gap-12 overflow-hidden border-b border-vinus-ink/10 px-[var(--space-edge)] py-16 md:gap-16 md:py-24 min-[2200px]:justify-center">
-        <Link href="/work" className="type-body group inline-flex items-center gap-3 font-medium text-vinus-ink transition-opacity hover:opacity-60 md:type-label md:text-vinus-ink/45"><ArrowLeft className="size-3.5 transition-transform duration-200 motion-safe:group-hover:-translate-x-1" /><span className="md:hidden">Back to Experience</span><span className="hidden md:inline">Back to Work</span></Link>
+      <section className="project-detail-meta flex w-full flex-col justify-center overflow-visible border-b border-vinus-ink/10 px-[var(--space-edge)] py-0 md:py-20 min-[2200px]:py-24">
         <ProjectMetaGrid
           items={[
             ["Client", project.client],
@@ -137,18 +139,18 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
             ["Subtitle", project.subtitle],
           ].map(([label, value]) => ({ label, value }))}
         />
-        <div className="flex flex-col gap-4 md:hidden">
-          <span className="type-label font-medium text-vinus-ink">Overview</span>
-          <p className="type-body font-normal text-vinus-ink/65">{project.overview}</p>
-        </div>
       </section>
 
-      <section className="project-detail-overview hidden w-full grid-cols-1 gap-6 overflow-hidden border-b border-vinus-ink/10 px-[var(--space-edge)] py-16 md:grid md:grid-cols-[minmax(220px,584px)_minmax(0,840px)] md:gap-8 md:py-24 min-[2200px]:items-center">
-        <span className="type-label font-medium text-vinus-ink/45">Overview</span>
-        <p className="type-body font-normal text-vinus-ink">{project.overview}</p>
+      <section className="project-detail-overview grid w-full grid-cols-1 gap-6 overflow-visible border-b border-vinus-ink/10 px-[var(--space-edge)] py-16 md:grid-cols-[minmax(220px,584px)_minmax(0,840px)] md:gap-8 md:py-8 min-[2200px]:items-center min-[2200px]:py-24">
+        <span className="label-sm font-medium text-vinus-ink/45">Overview</span>
+        <p
+          className="body-md whitespace-pre-line font-normal text-vinus-ink"
+        >
+          {project.overview}
+        </p>
       </section>
 
-      <section className="project-detail-content flex w-full flex-col justify-between gap-24 overflow-hidden px-[var(--space-edge)] py-24 md:gap-[var(--space-major)] md:py-[var(--space-section)] min-[2200px]:gap-[192px] min-[2200px]:py-[128px]">
+      <section className="project-detail-content flex w-full flex-col justify-between gap-16 overflow-visible px-[var(--space-edge)] py-16 md:gap-[var(--space-major)] md:py-[var(--space-section)] min-[2200px]:gap-[192px] min-[2200px]:py-[128px]">
         {contentBlocks.map((block, index) => (
           <ProjectContentBlock
             key={block.heading}

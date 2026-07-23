@@ -16,6 +16,7 @@ export type SubpageHeroSize = keyof typeof heroHeightClasses;
 type SubpageHeroProps = {
   eyebrow: string;
   title: ReactNode;
+  titleLabel?: string;
   description: ReactNode;
   size?: SubpageHeroSize;
   className?: string;
@@ -30,6 +31,7 @@ type SubpageHeroProps = {
 export function SubpageHero({
   eyebrow,
   title,
+  titleLabel,
   description,
   size = "compact",
   className,
@@ -50,7 +52,7 @@ export function SubpageHero({
   });
 
   return (
-    <section ref={ref} className={cn("subpage-header overflow-hidden", heroHeightClasses[size], className)}>
+    <section ref={ref} className={cn("subpage-header", heroHeightClasses[size], className)}>
       <motion.div
         className="subpage-header-inner will-change-transform"
         style={{ y: reduceMotion ? 0 : heroY, opacity: reduceMotion ? 1 : heroOpacity }}
@@ -60,7 +62,7 @@ export function SubpageHero({
           <motion.span aria-hidden="true" className="subpage-rule" initial={{ scaleX: 0, originX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.8, delay: 0.16, ease: [0.16, 1, 0.3, 1] }} />
         </div>
         <div className="subpage-copy-stack">
-          <motion.h1 className="subpage-title" initial={initial} animate={visible} transition={transition(0.12)}>{title}</motion.h1>
+          <motion.h1 className="subpage-title" aria-label={titleLabel} initial={initial} animate={visible} transition={transition(0.12)}>{title}</motion.h1>
           <motion.p className="subpage-lead" initial={initial} animate={visible} transition={transition(0.2)}>{description}</motion.p>
         </div>
       </motion.div>

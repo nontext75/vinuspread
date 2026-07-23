@@ -14,12 +14,12 @@ const socialLinks = [
 
 function FooterUtility({ onBackToTop }: { onBackToTop: () => void }) {
   return (
-    <div className="h-[104px] border-t border-white/15 px-5 md:h-[72px] md:px-10 xl:px-16">
+    <div className="h-[104px] border-t border-white/10 bg-vinus-footer-utility px-5 md:h-[72px] md:px-10 xl:px-16">
       <div className="flex h-full flex-col items-start gap-4 py-5 md:flex-row md:items-center md:justify-between md:gap-0 md:py-6">
         <Link href="/" aria-label="Vinuspread home" className="block h-6 w-[100px] shrink-0 overflow-hidden">
           <BrandLogo tone="light" wordmarkOnly />
         </Link>
-        <nav aria-label="Social media" className="type-body flex h-6 w-full items-center justify-between text-white/70 md:w-[438px] md:justify-center md:gap-12">
+        <nav aria-label="Social media" className="body-md flex h-6 w-full items-center justify-between text-white/70 md:w-[438px] md:justify-center md:gap-12">
           {socialLinks.map((link) => (
             <a
               key={link.label}
@@ -32,7 +32,7 @@ function FooterUtility({ onBackToTop }: { onBackToTop: () => void }) {
             </a>
           ))}
         </nav>
-        <button type="button" onClick={onBackToTop} className="type-body hidden h-6 w-[100px] shrink-0 text-left text-white/70 transition-opacity duration-200 hover:opacity-55 md:block md:text-right">
+        <button type="button" onClick={onBackToTop} className="body-md hidden h-6 w-[100px] shrink-0 text-left text-white/70 transition-opacity duration-200 hover:opacity-55 md:block md:text-right">
           Back to top
         </button>
       </div>
@@ -42,17 +42,17 @@ function FooterUtility({ onBackToTop }: { onBackToTop: () => void }) {
 
 function ContactBlock({ mobile = false }: { mobile?: boolean }) {
   return (
-    <section className={mobile ? "flex w-full flex-col items-start" : "flex w-full flex-col items-start"}>
-      <h2 className="type-body font-medium">Contact</h2>
-      <div className={mobile ? "w-full pt-2" : "w-[540px] pt-3"}>
-        <p className={mobile ? "type-label text-white/55" : "type-body text-white/55"}>
+    <section className={mobile ? "flex w-full flex-col items-start gap-3" : "flex w-full flex-col items-start gap-3"}>
+      <h2 className="label-meta">Contact</h2>
+      <div className={mobile ? "w-full" : "w-[540px]"}>
+        <p className={mobile ? "label-sm text-white/55" : "body-md text-white/55"}>
           Ready to shape your next project?
           <br />
           We&apos;re here from first idea to final detail.
         </p>
       </div>
-      <div className="relative mt-5 h-10 w-full md:mt-8">
-        <a href="mailto:vinus@vinus.co.kr" className="type-footer-cta group inline-flex h-10 w-[152px] items-center gap-3 border-b border-white pb-[7px]">
+      <div className="relative mt-2 w-full">
+        <a href="mailto:vinus@vinus.co.kr" className="body-footer-cta group inline-flex items-center gap-2 border-b border-white py-2 font-medium">
           Contact us
           <ArrowUpRight aria-hidden="true" className="size-5 shrink-0 stroke-[1.3] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" />
         </a>
@@ -63,38 +63,38 @@ function ContactBlock({ mobile = false }: { mobile?: boolean }) {
 
 function Enquiries() {
   return (
-    <section className="flex flex-col gap-2 md:gap-3">
-      <h2 className="type-body font-normal text-white/55">Business enquiries</h2>
-      <a href="mailto:vinus@vinus.co.kr" className="type-body hover:underline">vinus@vinus.co.kr</a>
-      <p className="type-body whitespace-nowrap text-white/55">TEL : 02-3661-1907&nbsp;&nbsp; FAX : 02-3661-1906</p>
+    <section className="flex flex-col gap-2">
+      <h2 className="label-meta text-white/55">Business enquiries</h2>
+      <a href="mailto:vinus@vinus.co.kr" className="body-md hover:underline">vinus@vinus.co.kr</a>
+      <p className="body-md whitespace-nowrap text-white/55">TEL : 02-3661-1907&nbsp;&nbsp; FAX : 02-3661-1906</p>
     </section>
   );
 }
 
 function OpenPositions() {
   return (
-    <section className="flex flex-col gap-2 md:gap-3">
-      <h2 className="type-body font-normal text-white/55">Open positions</h2>
-      <a href="mailto:vinus@vinus.co.kr?subject=Open%20Position" className="type-body hover:underline">vinus@vinus.co.kr</a>
+    <section className="flex flex-col gap-2">
+      <h2 className="label-meta text-white/55">Open positions</h2>
+      <a href="mailto:vinus@vinus.co.kr?subject=Open%20Position" className="body-md hover:underline">vinus@vinus.co.kr</a>
     </section>
   );
 }
 
 function BusinessHours() {
   return (
-    <section className="flex flex-col gap-2 md:gap-3">
-      <h2 className="type-body font-normal text-white/55">Business hours</h2>
-      <p className="type-body font-medium">Monday to Friday</p>
-      <p className="type-body text-white/55">10:00 AM – 18:00 PM GMT (+9)</p>
+    <section className="flex flex-col gap-2">
+      <h2 className="label-meta text-white/55">Business hours</h2>
+      <p className="body-md font-normal">Monday to Friday</p>
+      <p className="body-md text-white/55">10:00 AM – 18:00 PM GMT (+9)</p>
     </section>
   );
 }
 
 function KoreaOffice({ mobile = false }: { mobile?: boolean }) {
   return (
-    <section className="flex flex-col gap-2 md:gap-3">
-      <h2 className="type-body font-normal text-white/55">Korea</h2>
-      <address className={`${mobile ? "type-label" : "type-body"} max-w-[620px] whitespace-normal not-italic`}>
+    <section className="flex flex-col gap-2">
+      <h2 className="label-meta text-white/55">Korea</h2>
+      <address className={`${mobile ? "label-sm" : "body-md"} max-w-[620px] whitespace-normal not-italic`}>
         Suite 1202, 227 Gonghang-daero, Gangseo-gu, Seoul 07802
       </address>
     </section>
@@ -103,6 +103,7 @@ function KoreaOffice({ mobile = false }: { mobile?: boolean }) {
 
 export function Footer() {
   const pathname = usePathname();
+  const isProjectDetail = pathname.startsWith("/work/");
   const nextPage = pathname === "/work"
     ? { label: "STUDIO", href: "/studio" }
     : pathname.startsWith("/work/")
@@ -113,10 +114,17 @@ export function Footer() {
           ? { label: "CONTACT", href: "/contact" }
           : { label: "EXPERIENCE", href: "/work" };
   const footerDesktopHeight = pathname === "/" || pathname === "/work"
-    ? "xl:h-[714px]"
+    ? "xl:min-h-[714px]"
+    : isProjectDetail
+      ? "xl:min-h-[682px]"
     : pathname.startsWith("/news/")
-      ? "xl:h-[690px]"
-      : "xl:h-[687px]";
+      ? "xl:min-h-[690px]"
+    : pathname === "/news"
+      ? "xl:min-h-[682px]"
+    : pathname === "/contact"
+      ? "xl:min-h-[682px]"
+      : "xl:min-h-[687px]";
+  const footerDesktopMainHeight = isProjectDetail ? "xl:h-[610px] xl:py-20" : "xl:h-[610px] xl:py-24";
 
   const scrollToTop = () => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -124,13 +132,13 @@ export function Footer() {
   };
 
   return (
-    <footer id="contact" data-header-theme="dark" className={`h-[963px] overflow-hidden bg-vinus-charcoal font-sans text-white md:h-[806px] ${footerDesktopHeight}`}>
-      <div className="h-[958px] px-5 py-16 md:hidden">
+    <footer id="contact" data-header-theme="dark" className={`min-h-[945px] overflow-visible bg-vinus-footer font-sans text-white md:min-h-[785px] ${footerDesktopHeight}`}>
+      <div className="min-h-[841px] px-5 py-16 md:hidden">
         <div className="w-full">
           <div className="flex flex-col gap-3">
-            <p className="type-label font-medium">Next page</p>
-            <Link href={nextPage.href} aria-label={`Go to ${nextPage.label}`} className="group inline-flex h-[58px] items-center gap-3 self-start">
-              <span className="type-footer-next font-normal">{nextPage.label}</span>
+            <p className="label-sm font-medium">Next page</p>
+            <Link href={nextPage.href} aria-label={`Go to ${nextPage.label}`} className="group inline-flex min-h-16 items-center gap-3 self-start">
+              <span className="display-footer-next font-normal">{nextPage.label}</span>
               <ArrowRight aria-hidden="true" className="size-9 shrink-0 stroke-[1.15] transition-transform duration-200 group-hover:translate-x-2" />
             </Link>
           </div>
@@ -146,20 +154,20 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="hidden h-[744px] px-10 py-[88px] md:flex md:flex-col md:gap-[72px] xl:hidden">
+      <div className="hidden h-[713px] overflow-hidden px-10 py-[88px] md:flex md:flex-col md:gap-[72px] xl:hidden">
         <div className="flex flex-col gap-8 xl:gap-6">
           <div>
-            <p className="type-label font-medium xl:type-body">Next page</p>
+            <p className="label-sm font-medium">Next page</p>
           </div>
           <div>
             <Link href={nextPage.href} aria-label={`Go to ${nextPage.label}`} className="group inline-flex items-center gap-3 xl:gap-12">
-              <span className="type-footer-next font-normal">{nextPage.label}</span>
+              <span className="display-footer-next font-normal">{nextPage.label}</span>
               <ArrowRight aria-hidden="true" className="size-16 shrink-0 stroke-[1.15] transition-transform duration-200 group-hover:translate-x-3 xl:size-[92px]" />
             </Link>
           </div>
         </div>
 
-        <div className="grid w-full grid-cols-2 gap-8 xl:mt-[18px] xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+        <div className="grid w-full grid-cols-2 gap-8 xl:mt-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
           <ContactBlock />
           <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
             <div className="flex flex-col gap-6 xl:gap-12">
@@ -174,22 +182,22 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="hidden h-[623px] px-16 py-24 xl:flex xl:flex-col">
+      <div className={`hidden px-16 xl:flex xl:flex-col ${footerDesktopMainHeight}`}>
         <div className="flex flex-col gap-6">
-          <p className="type-body font-medium">Next page</p>
+          <p className="label-meta">Next page</p>
           <Link href={nextPage.href} aria-label={`Go to ${nextPage.label}`} className="group inline-flex items-center gap-12 self-start">
-            <span className="type-footer-next font-normal">{nextPage.label}</span>
+            <span className="display-footer-next font-normal">{nextPage.label}</span>
             <ArrowRight aria-hidden="true" className="size-[92px] shrink-0 stroke-[1.15] transition-transform duration-200 group-hover:translate-x-3" />
           </Link>
         </div>
         <div className="mt-[90px] grid w-full grid-cols-2 gap-8">
           <ContactBlock />
           <div className="grid grid-cols-2 gap-8">
-            <div className="flex flex-col gap-12">
+            <div className="flex flex-col gap-6">
                 <Enquiries />
                 <OpenPositions />
             </div>
-            <div className="flex flex-col gap-12">
+            <div className="flex flex-col gap-6">
                 <BusinessHours />
                 <KoreaOffice />
             </div>

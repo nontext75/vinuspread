@@ -12,9 +12,7 @@ export type StudioPhilosophyCardProps = {
   image: string;
   imageAlt?: string;
   layoutClassName?: string;
-  mediaClassName?: string;
-  titleClassName?: string;
-  descriptionClassName?: string;
+  mediaRatio?: "landscape" | "portrait" | "studioWide" | "shortWide";
   imageSizes?: string;
   index?: number;
 };
@@ -27,9 +25,7 @@ export function StudioPhilosophyCard({
   image,
   imageAlt,
   layoutClassName,
-  mediaClassName,
-  titleClassName,
-  descriptionClassName,
+  mediaRatio = "landscape",
   imageSizes = "(max-width: 1023px) calc(100vw - 48px), 42vw",
   index = 0,
 }: StudioPhilosophyCardProps) {
@@ -51,8 +47,18 @@ export function StudioPhilosophyCard({
         ease: [0.16, 1, 0.3, 1],
       }}
       className={cn("group flex min-w-0 flex-col gap-4 lg:gap-8 min-[2200px]:gap-12", layoutClassName)}
+      data-studio-card={tag.toLowerCase()}
     >
-      <div ref={mediaRef} className={cn("relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-vinus-wash", mediaClassName)}>
+      <div
+        ref={mediaRef}
+        className={cn(
+          "studio-philosophy-card__media relative w-full shrink-0 overflow-hidden bg-vinus-wash",
+          mediaRatio === "landscape" && "studio-philosophy-card__media--landscape",
+          mediaRatio === "portrait" && "studio-philosophy-card__media--portrait",
+          mediaRatio === "studioWide" && "studio-philosophy-card__media--studio-wide",
+          mediaRatio === "shortWide" && "studio-philosophy-card__media--short-wide",
+        )}
+      >
         <motion.div
           className="absolute inset-0 will-change-transform"
           style={{ y: reduceMotion ? 0 : imageY, scale: reduceMotion ? 1 : imageScale }}
@@ -69,9 +75,9 @@ export function StudioPhilosophyCard({
       </div>
 
       <div className="flex min-w-0 flex-col gap-2">
-        <h2 className="type-value-word">{tag}</h2>
-        <h3 className={cn("type-lead font-medium md:type-heading md:font-normal", titleClassName)}>{title}</h3>
-        <p className={cn("type-body max-w-[584px] font-normal text-vinus-ink md:type-lead", descriptionClassName)}>{description}</p>
+        <h2 className="display-studio-keyword">{tag}</h2>
+        <h3 className="heading-md font-normal">{title}</h3>
+        <p className="studio-philosophy-card__description body-lg max-w-[584px] font-normal text-vinus-ink">{description}</p>
       </div>
     </motion.article>
   );

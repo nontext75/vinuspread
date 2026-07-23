@@ -14,8 +14,9 @@ export type PortfolioCardProps = {
   category?: string;
   imageAlt?: string;
   imageSizes?: string;
+  size?: "standard" | "feature";
+  mediaRatio?: "square" | "landscape" | "wide";
   layoutClassName?: string;
-  mediaClassName?: string;
   animate?: boolean;
   index?: number;
 };
@@ -29,8 +30,9 @@ export function PortfolioCard({
   category,
   imageAlt = "",
   imageSizes = "(max-width: 767px) calc(100vw - 48px), 50vw",
+  size = "standard",
+  mediaRatio = "square",
   layoutClassName,
-  mediaClassName,
   animate = false,
   index = 0,
 }: PortfolioCardProps) {
@@ -38,23 +40,25 @@ export function PortfolioCard({
 
   return (
     <motion.article
-      initial={animate && !reduceMotion ? { opacity: 0 } : false}
+      initial={animate && !reduceMotion ? { opacity: 0, y: 72 } : false}
       animate={animate && reduceMotion ? { opacity: 1 } : undefined}
-      whileInView={animate ? { opacity: 1 } : undefined}
+      whileInView={animate ? { opacity: 1, y: 0 } : undefined}
       viewport={animate ? { once: true, amount: 0.16, margin: "0px 0px -8% 0px" } : undefined}
       transition={animate ? {
         duration: reduceMotion ? 0 : 0.9,
         delay: reduceMotion ? 0 : (index % 6) * 0.075,
         ease: [0.16, 1, 0.3, 1],
       } : undefined}
-      className={cn("min-w-0", layoutClassName)}
+      className={cn("project-card w-full min-w-0", size === "feature" && "project-card--feature", layoutClassName)}
       data-project-card
     >
-      <Link href={href} className="group flex min-w-0 flex-col gap-4 md:gap-6">
+      <Link href={href} className="project-card__link group flex min-w-0 flex-col">
         <div
           className={cn(
-            "relative aspect-square w-full overflow-hidden bg-vinus-wash",
-            mediaClassName,
+            "project-card__media relative w-full overflow-hidden bg-vinus-wash",
+            mediaRatio === "square" && "project-card__media--square",
+            mediaRatio === "landscape" && "project-card__media--landscape",
+            mediaRatio === "wide" && "project-card__media--wide",
           )}
           data-project-media
         >
@@ -64,15 +68,33 @@ export function PortfolioCard({
               alt={imageAlt || title}
               fill
               sizes={imageSizes}
+              loading={size === "feature" ? "eager" : "lazy"}
               className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:group-hover:scale-[1.035]"
             />
           </div>
           <div className="absolute inset-0 bg-vinus-ink/0 transition-colors duration-500 ease-out group-hover:bg-vinus-ink/5" />
-          {category && <CategoryBadge className="absolute bottom-4 right-4 z-10 shrink-0 text-vinus-ink">{category}</CategoryBadge>}
         </div>
-        <div className="flex min-w-0 flex-col gap-2 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5 md:gap-3">
-          <h3 className="type-card-title w-full text-pretty break-words whitespace-normal font-medium transition-colors duration-300 group-hover:text-vinus-ink/80">{title}</h3>
-          <p className="type-body w-full text-pretty font-normal break-words whitespace-normal text-vinus-ink/70 md:type-lead">{subtitle}</p>
+        <div className="project-card__copy flex min-w-0 flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5">
+          <div className="project-card__title-row flex min-w-0 items-start justify-between gap-4">
+            <h3
+              className={cn(
+                "min-w-0 break-words whitespace-normal transition-colors duration-300 group-hover:text-vinus-ink/80",
+                size === "feature" ? "heading-card-large font-normal" : "heading-card font-medium",
+              )}
+            >
+              {title}
+            </h3>
+            {category && (
+              <CategoryBadge className="mt-1">
+                {category}
+              </CategoryBadge>
+            )}
+          </div>
+          <p
+            className="body-md w-full font-normal break-words whitespace-normal text-vinus-ink/70"
+          >
+            {subtitle}
+          </p>
         </div>
       </Link>
     </motion.article>

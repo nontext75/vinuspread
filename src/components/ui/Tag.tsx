@@ -13,7 +13,7 @@ export function Tag({ children, selected = false, className, type = "button", ..
       type={type}
       aria-pressed={selected}
       className={cn(
-        "type-body inline-flex h-11 items-center justify-center rounded-full border px-4 py-2.5 font-medium transition-colors duration-200 motion-safe:active:scale-[0.97]",
+        "tag-control body-md inline-flex items-center justify-center rounded-full border font-medium transition-colors duration-200 motion-safe:active:scale-[0.97]",
         selected
           ? "border-vinus-ink bg-vinus-ink text-white"
           : "border-vinus-ink/15 text-vinus-ink hover:border-vinus-ink",

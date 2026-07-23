@@ -9,7 +9,7 @@ export function CategoryBadge({ children, className }: CategoryBadgeProps) {
   return (
     <span
       className={cn(
-        "type-label inline-flex h-8 min-w-14 shrink-0 items-center justify-center whitespace-nowrap rounded-full border border-current px-3 font-normal",
+        "label-badge inline-flex h-9 min-w-14 shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-muted px-4 py-2 text-vinus-secondary",
         className,
       )}
     >

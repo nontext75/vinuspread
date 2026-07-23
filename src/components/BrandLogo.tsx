@@ -19,17 +19,16 @@ export function BrandLogo({
 
   if (wordmarkOnly) {
     return (
-      <span className={cn("block h-6 w-[100px] overflow-hidden", className)}>
-        <Image
-          src={src}
-          alt="Vinuspread"
-          width={134}
-          height={30}
-          priority={priority}
-          unoptimized
-          className="block h-[30px] w-[134px] max-w-none -translate-x-[34px] -translate-y-[5px]"
-        />
-      </span>
+      <span
+        role="img"
+        aria-label="Vinuspread"
+        className={cn("block h-6 w-[100px] overflow-hidden bg-no-repeat", className)}
+        style={{
+          backgroundImage: `url(${src})`,
+          backgroundPosition: "-34px -5px",
+          backgroundSize: "134px 30px",
+        }}
+      />
     );
   }
 
