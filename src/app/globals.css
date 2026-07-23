@@ -808,35 +808,22 @@ nextjs-portal {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-delay: 0s !important;
+    transition-duration: 0.01ms !important;
+  }
+
   .reveal-motion {
     opacity: 1 !important;
     transform: none !important;
     clip-path: none !important;
     transition: none !important;
   }
-}
-
-/* Static Figma QA mode: motion stays disabled until layout sync is complete. */
-*,
-*::before,
-*::after {
-  animation: none !important;
-  scroll-behavior: auto !important;
-  transition-duration: 0s !important;
-  transition-delay: 0s !important;
-}
-
-[data-hero-reveal],
-[data-reveal],
-[data-intro-line],
-[data-intro-link],
-[data-project-media],
-[data-project-image],
-[data-service-card],
-.reveal-motion {
-  opacity: 1 !important;
-  visibility: visible !important;
-  clip-path: none !important;
 }
 
 .custom-noise {

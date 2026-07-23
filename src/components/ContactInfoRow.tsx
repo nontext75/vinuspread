@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export type ContactInfoRowProps = {
@@ -15,7 +15,7 @@ export type ContactInfoRowProps = {
 
 /** Reusable Contact information row with Hug text and grid-based alignment. */
 export function ContactInfoRow({ label, value, detail, href, index = 0, divider = true, className }: ContactInfoRowProps) {
-  const reduceMotion = true;
+  const reduceMotion = useReducedMotion();
   return (
     <motion.div
       initial={reduceMotion ? false : { opacity: 0, y: 10 }}

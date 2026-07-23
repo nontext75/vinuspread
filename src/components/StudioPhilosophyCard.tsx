@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export type StudioPhilosophyCardProps = {
@@ -29,7 +29,7 @@ export function StudioPhilosophyCard({
   imageSizes = "(max-width: 1023px) calc(100vw - 48px), 42vw",
   index = 0,
 }: StudioPhilosophyCardProps) {
-  const reduceMotion = true;
+  const reduceMotion = useReducedMotion();
   const mediaRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: mediaRef, offset: ["start end", "end start"] });
   const imageY = useTransform(scrollYProgress, [0, 1], ["-14%", "14%"]);

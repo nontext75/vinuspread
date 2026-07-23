@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { X } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { ClientLogoGrid } from "@/components/ClientLogoGrid";
@@ -150,7 +150,7 @@ export default function Home() {
   const playReelTriggerRef = useRef<HTMLButtonElement>(null);
   const playReelDialogRef = useRef<HTMLDivElement>(null);
   const playReelCloseRef = useRef<HTMLButtonElement>(null);
-  const reduceMotion = true;
+  const reduceMotion = useReducedMotion();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPlayReelPresent, setIsPlayReelPresent] = useState(false);
   const { scrollYProgress: reelProgress } = useScroll({
@@ -232,7 +232,7 @@ export default function Home() {
         data-header-theme="dark"
         className="home-hero relative overflow-hidden bg-vinus-ink text-white"
       >
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 will-change-transform" data-hero-image>
           <Image
             src="/vinus/dummy-photo/hero-figma.jpg"
             alt="Modern residential architecture"
@@ -248,6 +248,7 @@ export default function Home() {
           <div className="flex w-full flex-col items-start gap-[var(--space-section)]">
             <p
               data-hero-reveal
+              data-motion="hero-lead"
               className="home-hero-lead body-xl w-full max-w-[860px] text-white"
             >
               We work with brands from the first idea
@@ -255,22 +256,22 @@ export default function Home() {
               to the last detail, shaping direction, experience, and improvement together.
             </p>
 
-            <span data-hero-reveal aria-hidden="true" className="block h-2 w-[120px] bg-white" />
+            <span data-hero-reveal data-motion="hero-rule" aria-hidden="true" className="block h-2 w-[120px] bg-white" />
 
             <h1 className="home-hero-title display-hero font-normal">
-              <span data-hero-reveal className="block">We design</span>
-              <span data-hero-reveal className="block">sustainable</span>
-              <span data-hero-reveal className="block">growth</span>
+              <span data-hero-reveal data-motion="hero-title" className="block">We design</span>
+              <span data-hero-reveal data-motion="hero-title" className="block">sustainable</span>
+              <span data-hero-reveal data-motion="hero-title" className="block">growth</span>
             </h1>
           </div>
 
-          <p data-hero-reveal className="home-hero-summary body-xl max-w-[1500px] font-normal text-white md:font-medium min-[2200px]:w-[1500px]">
+          <p data-hero-reveal data-motion="hero-summary" className="home-hero-summary body-xl max-w-[1500px] font-normal text-white md:font-medium min-[2200px]:w-[1500px]">
             From first idea to final detail, we work with you to find direction,
             <br className="home-hero-summary-break" />
             build better experiences, and keep improving what comes next.
           </p>
 
-          <div data-hero-reveal>
+          <div data-hero-reveal data-motion="hero-cta">
             <ArrowLink href="/contact" inverse className="[&>span]:border-0">Download Brochure</ArrowLink>
           </div>
         </div>
@@ -412,7 +413,6 @@ export default function Home() {
                     index < services.length - 1 ? "lg:border-r" : ""
                   } max-lg:border-b max-lg:last:border-b-0 sm:[&:nth-child(odd)]:border-r`}
                   dataServiceCard
-                  animate
                   index={index}
                 />
               );
@@ -466,7 +466,7 @@ export default function Home() {
           <div className="home-story-list">
             {stories.map((story, index) => (
               <StoryListItem
-                key={story.title}
+                key={story.href}
                 {...story}
                 category="Insight"
                 variant="home"

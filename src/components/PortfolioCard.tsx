@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { CategoryBadge } from "@/components/CategoryBadge";
 import { cn } from "@/lib/utils";
 
@@ -36,7 +36,7 @@ export function PortfolioCard({
   animate = false,
   index = 0,
 }: PortfolioCardProps) {
-  const reduceMotion = true;
+  const reduceMotion = useReducedMotion();
 
   return (
     <motion.article

@@ -38,11 +38,14 @@ Current section sync state:
 - Story: matched responsive card rows, typography, and the three Figma source images
 - Footer: matched against the main Footer component variants, not page-instance overrides
 
-Current comparison mode:
+Current motion mode:
 
-- All page motion and transitions are disabled for still-cut comparison.
-- Browser audit reports zero running animations and zero elements with active animation/transition duration.
-- Smooth scrolling is disabled (`scroll-behavior: auto`).
+- The approved still layout is locked and motion has been restored without changing section geometry.
+- Desktop fine-pointer devices use Lenis inertia synchronized with GSAP ScrollTrigger.
+- Mobile and touch devices keep native scrolling.
+- Home hero copy enters in a paced hierarchy; hero, project media, and PlayReel media respond to scroll progress.
+- Subpage heroes, portfolio cards, story rows, Studio cards, contact rows, and project-detail content use restrained staggered entrances.
+- `prefers-reduced-motion: reduce` disables inertial scrolling and renders all content in its resting state.
 
 Current main page section start positions:
 
@@ -101,7 +104,8 @@ Key adjustments:
 - Large detail media are loaded directly so below-the-fold still-cut captures do not omit images.
 - Story detail title, cover, article copy, dividers, sections, tags, and responsive section positions now follow the current Figma reference.
 - The mobile Story title is fitted inside the real 390px viewport while the Figma header instance still carries its known fixed-width component override.
-- Shared Header, detail navigation, and Footer source files were not changed because their component update is being handled separately.
+- Budongsan114 detail content groups now use viewport-triggered entrances while preserving the approved image crops and section heights.
+- Shared detail-navigation and Footer layout source files were not changed; Header only restores its existing motion behavior without layout changes.
 
 Static QA screenshots are stored under `output/playwright/detail-*-static.png`.
 
@@ -128,14 +132,21 @@ Search checks were also run for obvious style contamination:
 
 No matches were found in `src/app` or `src/components` for those search patterns at the time of this status note.
 
-Subpage and detail-page browser measurements were performed at `390px`, `1024px`, and `2560px`. The checked English pages report zero Web Animations, zero active CSS transitions, and zero CSS animations.
+Home, index, and detail-page browser measurements were repeated at `390px`, `1024px`, and `2560px` after motion was restored. All 21 route/viewport combinations retain the approved page heights with a `0px` delta and no horizontal overflow.
+
+Motion QA also confirmed:
+
+- Desktop wheel input eases toward its target instead of stepping directly.
+- Home hero entrance, Intro pinning, project media parallax, PlayReel scaling, and section reveals run in normal mode.
+- Mobile uses native scrolling and keeps the same approved layout.
+- Reduced-motion mode creates no Lenis instance and leaves hero text at `opacity: 1`, `transform: none`, and `clip-path: none`.
+- No page runtime errors remain in the checked routes.
 
 ## Remaining Work
 
-- External still-cut review/acceptance of the completed English home and subpages.
+- Final external browser review of motion feel and pacing.
 - Apply the separately maintained shared component updates after that work is ready.
-- Restore and refine motion only after the still-cut review is approved.
 
 ## Notes
 
-Current priority is to keep the foundation stable while the shared component update proceeds separately. This subpage pass therefore keeps responsive geometry in explicit page-scoped rules and does not alter shared component source files.
+The approved responsive geometry remains explicit and unchanged. Motion is layered through transforms, opacity, clip-path, and scroll progress so it does not alter document flow or the locked Figma section metrics.

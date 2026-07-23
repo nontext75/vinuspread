@@ -34,17 +34,49 @@ export function useHomeMotion({
     }
 
     const context = gsap.context(() => {
-      gsap.fromTo(
-        "[data-hero-reveal]",
-        { opacity: 0 },
-        {
-          opacity: 1,
-          duration: 0.72,
-          stagger: 0.095,
-          ease: "power4.out",
-          clearProps: "transform",
-        },
-      );
+      const heroEntrance = gsap.timeline({
+        defaults: { ease: "power4.out" },
+      });
+
+      heroEntrance
+        .fromTo(
+          "[data-motion='hero-lead']",
+          { autoAlpha: 0, y: 32 },
+          { autoAlpha: 1, y: 0, duration: 0.78, clearProps: "transform,opacity,visibility" },
+          0,
+        )
+        .fromTo(
+          "[data-motion='hero-rule']",
+          { autoAlpha: 0, scaleX: 0, transformOrigin: "left center" },
+          { autoAlpha: 1, scaleX: 1, duration: 0.68, clearProps: "transform,opacity,visibility" },
+          0.12,
+        )
+        .fromTo(
+          "[data-motion='hero-title']",
+          { autoAlpha: 0, yPercent: 78, rotate: 1.5, clipPath: "inset(0 0 100% 0)" },
+          {
+            autoAlpha: 1,
+            yPercent: 0,
+            rotate: 0,
+            clipPath: "inset(0 0 0% 0)",
+            duration: 1.02,
+            stagger: 0.075,
+            clearProps: "transform,opacity,visibility,clipPath",
+          },
+          0.2,
+        )
+        .fromTo(
+          "[data-motion='hero-summary'], [data-motion='hero-cta']",
+          { autoAlpha: 0, y: 36 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.82,
+            stagger: 0.09,
+            clearProps: "transform,opacity,visibility",
+          },
+          0.52,
+        );
 
       const revealElements = gsap.utils.toArray<HTMLElement>(
         "[data-reveal], .home-clients-title-block > *, .home-story-list, [data-service-grid]",
@@ -178,6 +210,26 @@ export function useHomeMotion({
               toggleActions: "play none none none",
             },
           });
+
+          const image = card.querySelector<HTMLElement>("[data-project-image]");
+          if (!image) return;
+
+          const direction = (projectSpeeds[index] ?? 0) < 0 ? -1 : 1;
+          gsap.fromTo(
+            image,
+            { yPercent: direction * -2.5, scale: 1.06 },
+            {
+              yPercent: direction * 2.5,
+              scale: 1.06,
+              ease: "none",
+              scrollTrigger: {
+                trigger: card,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 0.9,
+              },
+            },
+          );
         });
       }, rootRef);
 
@@ -257,7 +309,22 @@ export function useHomeMotion({
           const image = card.querySelector<HTMLElement>("[data-project-image]");
           if (!image) return;
 
-          gsap.set(image, { yPercent: 0, scale: 1.02 });
+          const direction = (projectSpeeds[index] ?? 0) < 0 ? -1 : 1;
+          gsap.fromTo(
+            image,
+            { yPercent: direction * -3.5, scale: 1.08 },
+            {
+              yPercent: direction * 3.5,
+              scale: 1.08,
+              ease: "none",
+              scrollTrigger: {
+                trigger: card,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1.1,
+              },
+            },
+          );
         });
       }, rootRef);
 

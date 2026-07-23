@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const heroHeightClasses = {
@@ -36,7 +36,7 @@ export function SubpageHero({
   size = "compact",
   className,
 }: SubpageHeroProps) {
-  const reduceMotion = true;
+  const reduceMotion = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
 
@@ -59,7 +59,13 @@ export function SubpageHero({
       >
         <div className="subpage-label-stack">
           <motion.p className="subpage-eyebrow" initial={initial} animate={visible} transition={transition(0.04)}>{eyebrow}</motion.p>
-          <motion.span aria-hidden="true" className="subpage-rule" initial={{ scaleX: 0, originX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.8, delay: 0.16, ease: [0.16, 1, 0.3, 1] }} />
+          <motion.span
+            aria-hidden="true"
+            className="subpage-rule"
+            initial={reduceMotion ? false : { scaleX: 0, originX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: reduceMotion ? 0 : 0.8, delay: reduceMotion ? 0 : 0.16, ease: [0.16, 1, 0.3, 1] }}
+          />
         </div>
         <div className="subpage-copy-stack">
           <motion.h1 className="subpage-title" aria-label={titleLabel} initial={initial} animate={visible} transition={transition(0.12)}>{title}</motion.h1>

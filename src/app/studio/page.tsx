@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Footer } from "@/components/Footer";
 
 import { ClientLogoGrid } from "@/components/ClientLogoGrid";
@@ -51,7 +51,7 @@ const visionFormula: ReadonlyArray<{ label: string; meaning: string; tone?: "lig
 ] as const;
 
 export default function StudioPage() {
-  const reduceMotion = true;
+  const reduceMotion = useReducedMotion();
   const visionTitleLines = ["Spread", "the Beautiful", "Things"];
   const easeOutExpo = [0.16, 1, 0.3, 1] as const;
   const wideImageRef = useRef<HTMLDivElement>(null);

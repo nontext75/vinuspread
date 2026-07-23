@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Footer } from "@/components/Footer";
 import { SubpageHero } from "@/components/SubpageHero";
 import { PortfolioCard } from "@/components/PortfolioCard";
@@ -23,7 +23,7 @@ const categories = ["All", "Web", "Character", "Branding"] as const;
 type Category = (typeof categories)[number];
 
 export default function WorkPage() {
-  const reduceMotion = true;
+  const reduceMotion = useReducedMotion();
   const [activeFilter, setActiveFilter] = useState<Category>("All");
   const [viewMode, setViewMode] = useState<PortfolioViewMode>("grid");
   const visibleProjects = activeFilter === "All"

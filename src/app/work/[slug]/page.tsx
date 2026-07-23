@@ -4,7 +4,7 @@ import { use, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 
 import { Footer } from "@/components/Footer";
 import { ProjectMetaGrid } from "@/components/project/ProjectMetaGrid";
@@ -75,10 +75,16 @@ const portfolioData: Record<string, PortfolioProject> = {
 const projectSlugs = Object.keys(portfolioData);
 const budongsanDetailCopy = "Budongsan114 has long operated as a data driven real estate platform. Mediate BIZsolution extends that platform into the broker’s daily workflow, combining listing management, client management, market analysis, and operational tools in one place.\nThe goal was not to create another information website. It was to design a working desk for real estate professionals, where data, action, and decision making could happen in a clear sequence.";
 
-function BudongsanDetailContent() {
+function BudongsanDetailContent({ reduceMotion }: { reduceMotion: boolean }) {
   return (
     <>
-      <article className="budongsan-content-block budongsan-content-block--first">
+      <motion.article
+        initial={reduceMotion ? false : { opacity: 0, y: 72 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.08, margin: "0px 0px -6% 0px" }}
+        transition={{ duration: reduceMotion ? 0 : 0.92, ease: [0.16, 1, 0.3, 1] }}
+        className="budongsan-content-block budongsan-content-block--first"
+      >
         <div className="budongsan-content-copy">
           <h2>A platform for brokers</h2>
           <p>{budongsanDetailCopy}</p>
@@ -89,9 +95,15 @@ function BudongsanDetailContent() {
         <div className="budongsan-content-media budongsan-content-media--dashboard-second">
           <Image src="/vinus/project/budongsan-dashboard.png" alt="Budongsan114 listing management dashboard" fill sizes="100vw" loading="eager" unoptimized />
         </div>
-      </article>
+      </motion.article>
 
-      <article className="budongsan-content-block budongsan-content-block--second">
+      <motion.article
+        initial={reduceMotion ? false : { opacity: 0, y: 88 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.06, margin: "0px 0px -6% 0px" }}
+        transition={{ duration: reduceMotion ? 0 : 1.02, ease: [0.16, 1, 0.3, 1] }}
+        className="budongsan-content-block budongsan-content-block--second"
+      >
         <div className="budongsan-content-copy">
           <h2>A platform for brokers</h2>
           <p>{budongsanDetailCopy}</p>
@@ -102,13 +114,13 @@ function BudongsanDetailContent() {
         <div className="budongsan-content-media budongsan-content-media--websites">
           <Image src="/vinus/project/budongsan-websites.png" alt="Budongsan114 connected website experiences" fill sizes="100vw" loading="eager" unoptimized />
         </div>
-      </article>
+      </motion.article>
     </>
   );
 }
 
 export default function PortfolioDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const reduceMotion = true;
+  const reduceMotion = useReducedMotion();
   const { slug } = use(params);
   const project = portfolioData[slug];
   const heroRef = useRef<HTMLElement>(null);
@@ -191,7 +203,7 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
 
       <section className={`project-detail-content flex w-full flex-col overflow-visible ${slug === "budongsan114-mediate-bizsolution" ? "budongsan-detail-content" : "justify-between gap-16 px-[var(--space-edge)] py-16 md:gap-[var(--space-major)] md:py-[var(--space-section)] min-[2200px]:gap-[192px] min-[2200px]:py-[128px]"}`}>
         {slug === "budongsan114-mediate-bizsolution" ? (
-          <BudongsanDetailContent />
+          <BudongsanDetailContent reduceMotion={Boolean(reduceMotion)} />
         ) : (
           contentBlocks.map((block, index) => (
             <ProjectContentBlock

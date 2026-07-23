@@ -7,6 +7,7 @@ import {
   motion,
   AnimatePresence,
   useMotionValue,
+  useReducedMotion,
   useSpring,
 } from "framer-motion";
 import { Menu, X } from "lucide-react";
@@ -14,7 +15,7 @@ import { BrandLogo } from "@/components/BrandLogo";
 
 function MagneticButton({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const btnRef = useRef<HTMLDivElement>(null);
-  const reduceMotion = true;
+  const reduceMotion = useReducedMotion();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const springX = useSpring(x, { stiffness: 260, damping: 20, mass: 0.45 });
@@ -60,7 +61,7 @@ export function Header() {
   const [onDarkBackground, setOnDarkBackground] = useState(
     () => pathname === "/" || (pathname.startsWith("/work/") && pathname !== "/work"),
   );
-  const reduceMotion = true;
+  const reduceMotion = useReducedMotion();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuOverlayRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);

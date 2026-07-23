@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export type ServiceCardProps = {
@@ -45,7 +45,7 @@ export function ServiceCard({
   index = 0,
   mode = "default",
 }: ServiceCardProps) {
-  const reduceMotion = true;
+  const reduceMotion = useReducedMotion();
   const arrow = href ? (
     <ArrowUpRight
       aria-hidden="true"
@@ -117,9 +117,9 @@ export function ServiceCard({
 
   return (
     <motion.article
-      initial={animate && !reduceMotion ? { opacity: 0 } : false}
-      animate={animate && reduceMotion ? { opacity: 1 } : undefined}
-      whileInView={animate ? { opacity: 1 } : undefined}
+      initial={animate && !reduceMotion ? { opacity: 0, y: 48 } : false}
+      animate={animate && reduceMotion ? { opacity: 1, y: 0 } : undefined}
+      whileInView={animate ? { opacity: 1, y: 0 } : undefined}
       viewport={animate ? { once: true, amount: 0.18, margin: "0px 0px -8% 0px" } : undefined}
       transition={animate ? { duration: reduceMotion ? 0 : 0.82, delay: reduceMotion ? 0 : index * 0.065, ease: [0.16, 1, 0.3, 1] } : undefined}
       className={cn("service-card min-w-0", mode === "homeProcess" && "service-card--home-process", className)}
