@@ -899,21 +899,130 @@ nextjs-portal {
 }
 
 .story-page-list {
-  min-height: 4356px;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+  height: 4357px;
+  min-height: 4357px;
+  padding-inline: 20px !important;
+  padding-top: 48px !important;
+  padding-bottom: 48px !important;
 }
 
-.contact-page-hero { height: 583px !important; min-height: 583px !important; }
-.contact-info-mobile { min-height: 1176px; height: auto; }
-.contact-inquiry-mobile { min-height: 1198px; height: auto; }
-.experience-page-hero { height: 583px; min-height: 583px; }
-.experience-page-list { min-height: 3016px; height: auto; }
-.studio-page-hero { height: 666px; min-height: 666px; }
-.studio-principles { min-height: 1920px; height: auto; }
-.studio-vision { min-height: 930px; height: auto; }
-.studio-business { min-height: 1790px; height: auto; }
-.studio-clients { min-height: 1148px; height: auto; }
+.contact-page-hero { height: 609px !important; min-height: 609px !important; }
+.contact-info-mobile { min-height: 1155px; height: 1155px; }
+.contact-info-mobile > div:last-child > div {
+  height: 211.75px;
+  min-height: 211.75px;
+  padding-block: 64px;
+}
+.contact-inquiry-mobile { min-height: 1153px; height: 1153px; }
+.experience-page-hero { height: 609px; min-height: 609px; }
+.experience-page-list {
+  min-height: 3039.5px;
+  height: 3039.5px;
+  padding: 48px 20px 64px;
+}
+.experience-page-grid {
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-rows: 321px;
+  row-gap: 48px;
+}
+.experience-page-list .project-card__link {
+  gap: 24px;
+}
+.experience-page-list .project-card__copy {
+  gap: 8px;
+}
+.experience-page-list .project-card h3 {
+  font-size: 24px;
+  line-height: 1.2;
+}
+.experience-page-list .project-card p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+.experience-page-list .project-card .label-badge {
+  min-width: 0;
+  background: var(--color-vinus-footer);
+  color: var(--color-vinus-white);
+  font-size: 14px;
+  line-height: 1.4;
+}
+.experience-page-controls {
+  display: none;
+}
+.studio-page-hero { height: 580px; min-height: 580px; }
+.studio-principles {
+  min-height: 1877px;
+  height: 1877px;
+  padding: 48px 20px !important;
+}
+.studio-principles-grid {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 563px 585px 585px;
+  gap: 24px;
+}
+.studio-principles-grid > :nth-child(1) { height: 563px; }
+.studio-principles-grid > :nth-child(2),
+.studio-principles-grid > :nth-child(3) { height: 585px; }
+.studio-vision {
+  min-height: 929px;
+  height: 929px;
+  gap: 24px !important;
+  padding: 48px 20px !important;
+}
+.studio-vision-title-block {
+  display: contents;
+}
+.studio-business {
+  min-height: 1739px;
+  height: 1739px;
+  padding: 48px 20px !important;
+}
+.studio-business-heading {
+  gap: 12px;
+}
+.studio-business-heading > h2 {
+  font-size: 24px;
+  line-height: 1.2;
+}
+.studio-business-heading > p {
+  max-width: none;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.studio-business-grid {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 495px 469px 495px;
+  gap: 24px;
+  padding-top: 32px;
+}
+.studio-business-grid > :nth-child(1),
+.studio-business-grid > :nth-child(3) { height: 495px; }
+.studio-business-grid > :nth-child(2) { height: 469px; }
+.studio-clients {
+  min-height: 1107px;
+  height: 1107px;
+  gap: 32px !important;
+  padding: 48px 20px !important;
+}
+.studio-clients-heading {
+  gap: 12px;
+}
+.studio-clients-heading > h2 {
+  font-size: 24px;
+  line-height: 1.2;
+}
+.studio-clients-heading > p {
+  max-width: none;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.studio-clients .client-logo-grid {
+  height: 896px;
+}
+.studio-clients .client-logo-cell {
+  min-height: 64px;
+  height: 64px;
+}
 .project-detail-meta { min-height: 284px; height: auto; }
 .project-detail-overview {
   min-height: 273px;
@@ -936,16 +1045,131 @@ nextjs-portal {
 }
 
 @media (min-width: 768px) {
-  .contact-page-hero { height: 642px !important; min-height: 642px !important; }
-  .contact-info-desktop { min-height: 1404px; height: auto; }
-  .contact-inquiry-desktop { min-height: 941px; height: auto; }
-  .experience-page-hero { height: 642px; min-height: 642px; }
-  .experience-page-list { min-height: 2044px; height: auto; }
-  .studio-page-hero { height: 676px; min-height: 676px; }
-  .studio-principles { min-height: 694px; height: auto; }
-  .studio-vision { min-height: 1159px; height: auto; }
-  .studio-business { min-height: 2225px; height: auto; }
-  .studio-clients { min-height: 830px; height: auto; }
+  .contact-page-hero { height: 708px !important; min-height: 708px !important; }
+  .contact-info-desktop {
+    min-height: 1395px;
+    height: 1395px;
+    padding: 48px 40px !important;
+  }
+  .contact-info-desktop > div {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .contact-info-desktop > div > :first-child {
+    width: 100%;
+    padding: 0 !important;
+  }
+  .contact-info-desktop .captioned-media--contact {
+    height: 487px;
+  }
+  .contact-info-desktop > div > :last-child {
+    width: 100%;
+    padding: 0 !important;
+  }
+  .contact-info-desktop > div > :last-child > div {
+    height: 195px;
+    min-height: 195px;
+    gap: 64px;
+    padding-block: 64px;
+  }
+  .contact-info-desktop > div > :last-child > div > :first-child {
+    width: auto;
+    flex: 1 0 0;
+  }
+  .contact-info-desktop > div > :last-child > div > :last-child {
+    flex: 1 0 0;
+  }
+  .contact-inquiry-desktop {
+    min-height: 942px;
+    height: 942px;
+    padding: 64px 40px !important;
+  }
+  .experience-page-hero { height: 674px; min-height: 674px; }
+  .experience-page-list {
+    min-height: 2044px;
+    height: auto;
+    padding: 64px 40px 96px;
+  }
+  .experience-page-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 435px;
+    column-gap: 24px;
+    row-gap: 48px;
+  }
+  .experience-page-list .project-card h3 {
+    font-size: 28px;
+    line-height: 1.2;
+  }
+  .studio-page-hero { height: 708px; min-height: 708px; }
+  .studio-principles {
+    min-height: 678.1765px;
+    height: 678.1765px;
+    padding: 64px 40px !important;
+  }
+  .studio-principles-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: 550.1765px;
+    gap: 24px;
+  }
+  .studio-principles-grid > :nth-child(1) { height: 550.1765px; }
+  .studio-principles-grid > :nth-child(2),
+  .studio-principles-grid > :nth-child(3) { height: 533.6667px; }
+  .studio-vision {
+    min-height: 1153px;
+    height: 1153px;
+    gap: 32px !important;
+    padding: 64px 40px !important;
+  }
+  .studio-business {
+    min-height: 2192.1116px;
+    height: 2192.1116px;
+    padding: 64px 40px !important;
+  }
+  .studio-business-heading {
+    gap: 24px;
+  }
+  .studio-business-heading > h2 {
+    font-size: 72px;
+    line-height: 1;
+  }
+  .studio-business-heading > p {
+    font-size: 20px;
+    line-height: 1.4;
+  }
+  .studio-business-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: repeat(3, 602.7039px);
+    gap: 32px;
+    padding-top: 40px;
+  }
+  .studio-business-grid > :nth-child(1),
+  .studio-business-grid > :nth-child(2),
+  .studio-business-grid > :nth-child(3) { height: 602.7039px; }
+  .studio-clients {
+    min-height: 824px;
+    height: 824px;
+    gap: 40px !important;
+    padding: 64px 40px !important;
+  }
+  .studio-clients-heading {
+    gap: 24px;
+  }
+  .studio-clients-heading > h2 {
+    font-size: 72px;
+    line-height: 1;
+  }
+  .studio-clients-heading > p {
+    font-size: 20px;
+    line-height: 1.4;
+  }
+  .studio-clients .client-logo-grid {
+    height: 504px;
+  }
+  .studio-clients .client-logo-cell {
+    min-height: 72px;
+    height: 72px;
+  }
   .project-detail-hero { height: 600px; aspect-ratio: auto; }
   .project-detail-meta { min-height: 238px; height: 238px; padding-block: 76px !important; }
   .project-detail-overview {
@@ -976,19 +1200,154 @@ nextjs-portal {
     line-height: var(--type-heading-lead-line);
   }
   .contact-page-hero { height: 868px !important; min-height: 868px !important; }
-  .contact-info-desktop { min-height: 1058px; height: auto; }
+  .contact-info-desktop {
+    min-height: 1058px;
+    height: 1058px;
+    padding: 128px 64px !important;
+  }
+  .contact-info-desktop > div {
+    display: grid;
+    grid-template-columns: 940px 120px 1320px;
+    gap: 0;
+    height: 802px;
+  }
+  .contact-info-desktop > div > :first-child {
+    grid-column: 1;
+    height: 802px;
+  }
+  .contact-info-desktop .captioned-media--contact {
+    height: 802px;
+  }
+  .contact-info-desktop > div > :last-child {
+    grid-column: 3;
+    height: 802px;
+  }
+  .contact-info-desktop > div > :last-child > div {
+    height: 200.5px;
+    min-height: 200.5px;
+    padding-block: 64px;
+  }
   .contact-inquiry-desktop {
     min-height: 1234px;
-    height: auto;
-    padding-block: 128px !important;
+    height: 1234px;
+    padding: 128px 80px !important;
   }
   .experience-page-hero { height: 868px; min-height: 868px; }
-  .experience-page-list { min-height: 1451px; height: auto; }
+  .experience-page-list {
+    min-height: 1451px;
+    height: 1451px;
+    padding: 160px 64px;
+  }
+  .experience-page-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 541.5px;
+    column-gap: 24px;
+    row-gap: 48px;
+  }
+  .experience-page-list .project-card h3 {
+    font-size: 36px;
+    line-height: 1.2;
+  }
+  .experience-page-controls {
+    position: absolute;
+    z-index: 20;
+    bottom: 160px;
+    left: 50%;
+    display: flex;
+    width: 649px;
+    transform: translateX(-50%);
+    justify-content: center;
+  }
   .studio-page-hero { height: 868px; min-height: 868px; }
-  .studio-principles { min-height: 2762px; height: auto; }
-  .studio-vision { min-height: 2067px; height: auto; }
-  .studio-business { min-height: 2413px; height: auto; }
-  .studio-clients { min-height: 1014px; height: auto; }
+  .studio-principles {
+    min-height: 2762px;
+    height: 2762px;
+    padding: 128px 64px !important;
+  }
+  .studio-principles-grid {
+    position: relative;
+    display: block;
+    height: 2505px;
+  }
+  .studio-principles-grid > :nth-child(1) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 680px;
+    height: 1073px;
+  }
+  .studio-principles-grid > :nth-child(2) {
+    position: absolute;
+    top: 0;
+    left: 1437px;
+    width: 720px;
+    height: 1571px;
+  }
+  .studio-principles-grid > :nth-child(3) {
+    position: absolute;
+    top: 1603px;
+    left: 417px;
+    width: 720px;
+    height: 910px;
+  }
+  .studio-vision {
+    min-height: 2067px;
+    height: 2067px;
+    gap: 96px !important;
+    padding: 128px 64px !important;
+  }
+  .studio-vision-title-block {
+    display: block !important;
+  }
+  .studio-business {
+    min-height: 2413px;
+    height: 2413px;
+    padding: 128px 64px !important;
+  }
+  .studio-business-heading {
+    gap: 24px;
+  }
+  .studio-business-heading > h2 {
+    font-size: 120px;
+    line-height: 1;
+  }
+  .studio-business-heading > p {
+    font-size: 24px;
+    line-height: 1.4;
+  }
+  .studio-business-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: repeat(3, 616.3624px);
+    gap: 0;
+    padding-top: 120px;
+  }
+  .studio-business-grid > :nth-child(1),
+  .studio-business-grid > :nth-child(2),
+  .studio-business-grid > :nth-child(3) { height: 616.3624px; }
+  .studio-clients {
+    min-height: 1014px;
+    height: 1014px;
+    gap: 96px !important;
+    padding: 128px 64px !important;
+  }
+  .studio-clients-heading {
+    gap: 24px;
+  }
+  .studio-clients-heading > h2 {
+    font-size: 120px;
+    line-height: 1;
+  }
+  .studio-clients-heading > p {
+    font-size: 24px;
+    line-height: 1.4;
+  }
+  .studio-clients .client-logo-grid {
+    height: 353px;
+  }
+  .studio-clients .client-logo-cell {
+    min-height: 88.25px;
+    height: 88.25px;
+  }
   .project-detail-hero { height: 1522px; aspect-ratio: auto; }
   .project-detail-meta { min-height: 258px; height: auto; }
   .project-detail-overview {
@@ -1036,27 +1395,34 @@ nextjs-portal {
     aspect-ratio: auto;
   }
 
-  .story-page-list .story-archive-row:first-child {
-    min-height: 454px;
-    height: auto;
+  .story-page-list .story-archive-row {
+    height: 429px;
+    min-height: 429px;
   }
 
   .story-page-list .story-archive-row:nth-child(9) {
-    min-height: 403px;
-    height: auto;
+    height: 400px;
+    min-height: 400px;
   }
 }
 
 @media (min-width: 768px) {
   .story-page-hero {
-    height: 642px !important;
-    min-height: 642px !important;
+    height: 708px !important;
+    min-height: 708px !important;
   }
 
   .story-page-list {
+    height: 2592px;
     min-height: 2592px;
-    padding-top: 76px !important;
-    padding-bottom: 76px !important;
+    padding-inline: 40px !important;
+    padding-top: 96px !important;
+    padding-bottom: 96px !important;
+  }
+  .story-page-list .story-archive-row {
+    height: 240px;
+    min-height: 240px;
+    overflow: hidden;
   }
 }
 
@@ -1069,8 +1435,9 @@ nextjs-portal {
   .story-page-list {
     height: 2656px;
     min-height: 2656px;
-    padding-top: 120px !important;
-    padding-bottom: 120px !important;
+    padding-inline: 80px !important;
+    padding-top: 128px !important;
+    padding-bottom: 128px !important;
   }
 }
 
@@ -1089,12 +1456,12 @@ nextjs-portal {
   }
 
   .subpage-header {
-    margin-top: 72px;
+    margin-top: 65px;
   }
 }
 @media (min-width: 768px) {
   .subpage-header {
-    margin-top: 72px;
+    margin-top: 68px;
     padding: 136px var(--space-edge) var(--space-major);
   }
 }
@@ -1198,7 +1565,7 @@ nextjs-portal {
 
 @media (min-width: 2200px) {
   .subpage-header {
-    margin-top: 88px;
+    margin-top: 86px;
   }
 
   .studio-vision {
@@ -1222,7 +1589,7 @@ nextjs-portal {
   }
 
   .studio-principles {
-    padding-block: 96px !important;
+    padding-block: 128px !important;
   }
 
   .studio-principles > div {
@@ -1242,13 +1609,13 @@ nextjs-portal {
 
 @media (max-width: 767px) {
   .studio-page-hero {
-    height: 666px !important;
-    min-height: 666px !important;
+    height: 580px !important;
+    min-height: 580px !important;
   }
 
   .story-page-hero {
-    height: 583px !important;
-    min-height: 583px !important;
+    height: 524px !important;
+    min-height: 524px !important;
   }
 
   .studio-vision {

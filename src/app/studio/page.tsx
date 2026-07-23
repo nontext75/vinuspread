@@ -45,9 +45,9 @@ const businessFields = [
 ] as const;
 
 const visionFormula: ReadonlyArray<{ label: string; meaning: string; tone?: "light" | "dark" }> = [
-  { label: "vinus", meaning: "beauty" },
-  { label: "virus", meaning: "inspiration" },
-  { label: "spread", meaning: "action", tone: "dark" },
+  { label: "Venus", meaning: "beauty" },
+  { label: "Virus", meaning: "inspiration" },
+  { label: "Spread", meaning: "action", tone: "dark" },
 ] as const;
 
 export default function StudioPage() {
@@ -96,7 +96,7 @@ export default function StudioPage() {
       />
 
       <section className="studio-principles w-full overflow-visible border-b border-vinus-ink/10 px-[var(--space-edge)] pt-12 pb-20 md:py-[var(--space-section)]">
-        <div className="grid grid-cols-1 gap-16 md:grid-cols-3 md:gap-6 xl:gap-8 min-[2200px]:grid-cols-[repeat(12,173.333px)] min-[2200px]:grid-rows-[1491px_48px_864px] min-[2200px]:gap-x-8 min-[2200px]:gap-y-0">
+        <div className="studio-principles-grid grid grid-cols-1 md:grid-cols-3">
           {philosophies.map((item, index) => (
             <StudioPhilosophyCard
               key={item.tag}
@@ -163,11 +163,11 @@ export default function StudioPage() {
 
 
       <section className="studio-business w-full overflow-visible border-b border-vinus-ink/10 px-[var(--space-edge)] py-16 md:py-[var(--space-section)]">
-        <div className="flex max-w-[1200px] flex-col gap-10 md:gap-6">
+        <div className="studio-business-heading flex max-w-[1200px] flex-col">
           <h2 className="heading-studio-business">Field of business</h2>
           <p className="body-studio-business max-w-[640px]">We provide optimized digital services, enabling users to interact easily and comfortably across digital touchpoints.</p>
         </div>
-        <div className="grid grid-cols-1 gap-10 pt-10 md:grid-cols-3 md:gap-8 md:pt-16">
+        <div className="studio-business-grid grid grid-cols-1">
           {businessFields.map((field, index) => (
             <ServiceCard
               key={field.title}
@@ -189,13 +189,13 @@ export default function StudioPage() {
       </section>
 
       <section className="studio-clients flex w-full flex-col gap-[var(--space-section)] overflow-visible px-[var(--space-edge)] py-12 md:py-[var(--space-section)]">
-        <div className="flex max-w-[1130px] flex-col gap-[var(--space-content)]">
+        <div className="studio-clients-heading flex max-w-[1200px] flex-col">
           <h2 className="heading-feature font-normal">Clients &amp; Partners</h2>
           <p className="heading-md max-w-[1040px] font-normal">
-            New value begins with the connection between people. We do work that moves people&apos;s hearts.
+            New value begins with the connection between people.<br className="hidden md:block" /> We do work that moves people&apos;s hearts.
           </p>
         </div>
-        <ClientLogoGrid tone="light" dividers="top" mobileLimit={20} />
+        <ClientLogoGrid tone="light" dividers="top" />
       </section>
 
       <Footer />

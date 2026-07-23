@@ -9,13 +9,13 @@ import { Tag } from "@/components/ui/Tag";
 import { Button } from "@/components/ui/button";
 import { ContactInfoRow } from "@/components/ContactInfoRow";
 import { CaptionedMedia } from "@/components/CaptionedMedia";
-import { FormField, FormFileControl, formCompactControlClassName, formLabelClassName, formTextareaClassName } from "@/components/form/FormField";
+import { FormField, FormFileControl, formCompactControlClassName, formLabelClassName } from "@/components/form/FormField";
 
 const categories = ["Website", "Responsive Web", "Mobile Web", "Mobile App", "Branding", "Character", "Editorial & Print", "Other"] as const;
 
 const contactDetails: ReadonlyArray<{ label: string; value: string; detail: string; href?: string }> = [
   { label: "Business enquiries", value: "vinus@vinus.co.kr", detail: "TEL 02-3661-1907 / FAX 02-3661-1906", href: "mailto:vinus@vinus.co.kr" },
-  { label: "Open positions", value: "Join our team", detail: "We are always looking for talent.", href: "mailto:vinus@vinus.co.kr?subject=Open%20Position" },
+  { label: "Open positions", value: "Join our team", detail: "We are always looking for good people.", href: "mailto:vinus@vinus.co.kr?subject=Open%20Position" },
   { label: "Korea office", value: "Suite 1202, 227 Gonghang-daero, Gangseo-gu, Seoul 07802", detail: "Seoul, Korea", href: "https://maps.google.com/?q=227+Gonghang-daero+Seoul" },
   { label: "Business hours", value: "Monday to Friday", detail: "10:00 AM - 18:00 PM, GMT (+9)" },
 ] as const;
@@ -45,9 +45,9 @@ export default function ContactPage() {
         className="contact-page-hero"
       />
 
-      <section className="contact-info-mobile flex w-full flex-col gap-8 overflow-visible px-6 py-12 md:hidden">
-        <div className="relative h-[234px] w-full overflow-hidden bg-vinus-wash">
-          <Image src="/vinus/dummy-photo/contact.jpg" alt="VINUSPREAD studio environment" fill sizes="342px" className="object-cover" />
+      <section className="contact-info-mobile flex w-full flex-col gap-6 overflow-hidden px-5 py-8 md:hidden">
+        <div className="relative h-[220px] w-full shrink-0 overflow-hidden bg-vinus-wash">
+          <Image src="/vinus/dummy-photo/contact.jpg" alt="VINUSPREAD studio environment" fill sizes="350px" className="object-cover" />
         </div>
         <div className="flex flex-col">
           {contactDetails.map((item, index) => (
@@ -90,14 +90,14 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="contact-inquiry-mobile w-full overflow-visible bg-vinus-paper px-6 py-12 md:hidden">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-7">
-          <div className="flex flex-col gap-4">
+      <section className="contact-inquiry-mobile w-full overflow-hidden bg-vinus-paper px-5 py-12 md:hidden">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          <div className="flex flex-col gap-8">
             <h2 className="heading-contact font-normal">Project Inquiry</h2>
             <p className="body-md text-vinus-ink">Tell us about your project below. We&apos;ll review your request and get back to you with the right direction.</p>
           </div>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-5 border-y border-vinus-ink/60 py-5">
             <FormField label="Company Name" htmlFor="mobile-company-name"><input id="mobile-company-name" type="text" placeholder="Enter your company name" value={formData.companyName} onChange={(event) => setFormData({ ...formData, companyName: event.target.value })} className={formCompactControlClassName} /></FormField>
             <FormField label="Your Name" htmlFor="mobile-your-name" required><input id="mobile-your-name" type="text" required placeholder="Please write your name" value={formData.name} onChange={(event) => setFormData({ ...formData, name: event.target.value })} className={formCompactControlClassName} /></FormField>
             <FormField label="Phone Number" htmlFor="mobile-phone-number" required><input id="mobile-phone-number" type="tel" required placeholder="Enter your phone number" value={formData.phone} onChange={(event) => setFormData({ ...formData, phone: event.target.value })} className={formCompactControlClassName} /></FormField>
@@ -108,8 +108,8 @@ export default function ContactPage() {
             </FormField>
           </div>
 
-          <div className="flex flex-col gap-3">
-            <p className={formLabelClassName}>Service type *</p>
+          <div className="flex flex-col gap-6">
+            <p className={formLabelClassName}>Service Type *</p>
                 <div className="flex flex-wrap gap-2">
               {categories.map((category) => {
                 const selected = selectedCategories.includes(category);
@@ -118,12 +118,20 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <FormField label="Project details" htmlFor="mobile-project-details" required variant="textarea">
-            <textarea id="mobile-project-details" required rows={4} placeholder="Share your goals, timeline, and key requirements." value={formData.description} onChange={(event) => setFormData({ ...formData, description: event.target.value })} className={`${formTextareaClassName} h-24 resize-none bg-transparent p-4`} />
-          </FormField>
-
-          <p className="body-md text-vinus-ink">By submitting, you agree to our privacy policy.</p>
-          <Button type="submit" size="lg" className="w-fit">Send request</Button>
+          <div className="flex items-center justify-between">
+            <Button type="submit" size="lg">Submit Inquiry</Button>
+            <Button
+              type="reset"
+              size="lg"
+              variant="outline"
+              onClick={() => {
+                setFormData({ companyName: "", name: "", phone: "", email: "", budget: "$5,000 - $10,000", description: "", file: null });
+                setSelectedCategories(["Website"]);
+              }}
+            >
+              Reset
+            </Button>
+          </div>
         </form>
       </section>
 
@@ -162,7 +170,7 @@ export default function ContactPage() {
             </div>
 
             <div className="mt-8 flex min-h-12 items-center justify-between gap-4 min-[2200px]:mt-[72px] min-[2200px]:min-h-[58px]">
-              <Button type="submit" size="lg" className="h-[58px] px-7">Send request</Button>
+              <Button type="submit" size="lg" className="h-[58px] px-7">Submit Inquiry</Button>
               <Button type="reset" size="lg" variant="outline" className="h-[58px] px-7" onClick={() => { setFormData({ companyName: "", name: "", phone: "", email: "", budget: "$5,000 - $10,000", description: "", file: null }); setSelectedCategories(["Website"]); }}>Reset</Button>
             </div>
           </form>

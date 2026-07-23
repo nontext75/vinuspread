@@ -56,6 +56,35 @@ Footer main-component heights:
 - Tablet: `761px`
 - Desktop: `684px`
 
+## English Subpages
+
+The English Experience, Studio, Story, and Contact index pages were compared against the current Figma desktop, tablet, and mobile frames.
+
+This pass intentionally changes page composition and page-scoped layout only. Shared component source files remain reserved for the separate component update.
+
+Measured page heights:
+
+- Experience: mobile `4590px`, tablet `3547px`, desktop `3095px`
+- Studio: mobile `7174px`, tablet `6384px`, desktop `9894px`
+- Story: mobile `5823px`, tablet `4129px`, desktop `4294px`
+- Contact: mobile `3859px`, tablet `3874px`, desktop `3930px`
+
+Responsive section margins:
+
+- Mobile: `20px`
+- Tablet: `40px`
+- Desktop: generally `64px`; Story archive list uses the Figma-specific `80px`
+
+Page-specific adjustments:
+
+- Experience project grid rows, columns, gaps, cards, and desktop-only controls are aligned per breakpoint.
+- Studio principles, vision, business, and clients section slots are aligned per breakpoint.
+- Story hero, archive section, and card row slots are aligned per breakpoint.
+- Contact hero, information grid, inquiry form, image sizing, labels, and CTA composition are aligned per breakpoint.
+- All subpages use the main Footer component geometry rather than overridden page instances in Figma.
+
+Static QA screenshots are stored under `output/playwright/subpage-*-static.png`.
+
 ## Detail Pages
 
 Experience detail and Story detail pages were checked across desktop, tablet, and mobile.
@@ -94,12 +123,14 @@ Search checks were also run for obvious style contamination:
 
 No matches were found in `src/app` or `src/components` for those search patterns at the time of this status note.
 
+Subpage browser measurements were performed at `390px`, `1024px`, and `2560px`. Experience, Studio, Story, and Contact report zero Web Animations, zero active CSS transitions, and zero CSS animations.
+
 ## Remaining Work
 
-- External still-cut review/acceptance of the completed English home page.
+- External still-cut review/acceptance of the completed English home and subpages.
+- Apply the separately maintained shared component updates after that work is ready.
 - Restore and refine motion only after the still-cut review is approved.
-- Continue subpage comparison as a separate pass.
 
 ## Notes
 
-Current priority is to keep the foundation stable and avoid creating page specific styles unless absolutely necessary. Component level style corrections should be applied before page level overrides.
+Current priority is to keep the foundation stable while the shared component update proceeds separately. This subpage pass therefore keeps responsive geometry in explicit page-scoped rules and does not alter shared component source files.
