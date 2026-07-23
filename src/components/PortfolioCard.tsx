@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { CategoryBadge } from "@/components/CategoryBadge";
 import { cn } from "@/lib/utils";
 
@@ -36,7 +36,7 @@ export function PortfolioCard({
   animate = false,
   index = 0,
 }: PortfolioCardProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = true;
 
   return (
     <motion.article
@@ -73,22 +73,22 @@ export function PortfolioCard({
             />
           </div>
           <div className="absolute inset-0 bg-vinus-ink/0 transition-colors duration-500 ease-out group-hover:bg-vinus-ink/5" />
+          {category && (
+            <CategoryBadge className="absolute right-4 bottom-4 z-10">
+              {category}
+            </CategoryBadge>
+          )}
         </div>
         <div className="project-card__copy flex min-w-0 flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5">
-          <div className="project-card__title-row flex min-w-0 items-start justify-between gap-4">
+          <div className="project-card__title-row flex min-w-0 items-start">
             <h3
               className={cn(
                 "min-w-0 break-words whitespace-normal transition-colors duration-300 group-hover:text-vinus-ink/80",
-                size === "feature" ? "heading-card-large font-normal" : "heading-card font-medium",
+                size === "feature" ? "heading-card-large font-medium" : "heading-card font-medium",
               )}
             >
               {title}
             </h3>
-            {category && (
-              <CategoryBadge className="mt-1">
-                {category}
-              </CategoryBadge>
-            )}
           </div>
           <p
             className="body-md w-full font-normal break-words whitespace-normal text-vinus-ink/70"

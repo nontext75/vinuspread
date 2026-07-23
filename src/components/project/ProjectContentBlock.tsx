@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export type ProjectContentBlockProps = {
   heading: string;
@@ -12,7 +12,7 @@ export type ProjectContentBlockProps = {
 };
 
 export function ProjectContentBlock({ heading, body, image, index }: ProjectContentBlockProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = true;
   const mediaRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: mediaRef, offset: ["start end", "end start"] });
   const imageY = useTransform(scrollYProgress, [0, 1], ["-4%", "4%"]);

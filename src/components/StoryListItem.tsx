@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
 
@@ -29,7 +29,7 @@ export function StoryListItem({
   index = 0,
   variant = "archive",
 }: StoryListItemProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = true;
   const imageRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: imageRef, offset: ["start end", "end start"] });
   const imageY = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
@@ -48,7 +48,7 @@ export function StoryListItem({
       className={cn(
         "group border-vinus-ink/10 bg-white",
           variant === "home"
-          ? "home-story-row flex flex-col items-start gap-4 md:grid md:grid-cols-[144px_minmax(0,1fr)_24px] md:gap-[var(--space-content)] md:border-b md:py-[var(--space-content)]"
+          ? "home-story-row flex flex-col items-start gap-12 border-t border-[#e7e7e7] py-12 md:grid md:grid-cols-[144px_minmax(0,1fr)_24px] md:gap-12"
           : "story-archive-row grid min-h-[431px] grid-cols-[96px_minmax(0,1fr)] items-start gap-4 overflow-visible py-8 shadow-[inset_0_-1px_0_rgba(13,13,13,0.1)] md:min-h-60 md:grid-cols-[120px_minmax(0,1fr)_24px] md:gap-8 md:py-12",
       )}
     >
@@ -57,7 +57,7 @@ export function StoryListItem({
           ref={imageRef}
           className={cn(
             "relative shrink-0 overflow-hidden rounded-full bg-vinus-wash",
-            variant === "home" ? "size-24 md:size-36" : "size-24 md:size-[120px]",
+            variant === "home" ? "home-story-image size-36" : "size-24 md:size-[120px]",
           )}
         >
           <motion.div className="absolute inset-0 will-change-transform" style={{ y: reduceMotion ? 0 : imageY, scale: reduceMotion ? 1 : 1.14 }}>
@@ -65,20 +65,20 @@ export function StoryListItem({
               src={image}
               alt=""
               fill
-              sizes={variant === "home" ? "(max-width: 767px) 96px, 144px" : "(max-width: 767px) 96px, 120px"}
+              sizes={variant === "home" ? "144px" : "(max-width: 767px) 96px, 120px"}
               loading={variant === "home" ? "eager" : "lazy"}
               className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:group-hover:scale-[1.06]"
             />
           </motion.div>
         </div>
-        <div className={cn("flex min-w-0 flex-col self-start gap-4 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 md:col-start-2", variant === "home" ? "md:gap-4" : "md:gap-4")}>
-          <p className={cn("font-medium text-vinus-ink", variant === "home" ? "body-md md:font-normal md:text-vinus-secondary" : "label-sm md:font-normal")}>
+        <div className={cn("flex min-w-0 flex-col self-start gap-4 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 md:col-start-2", variant === "home" ? "home-story-copy gap-3 md:gap-4" : "md:gap-4")}>
+          <p className={cn("font-medium text-vinus-ink", variant === "home" ? "home-story-meta body-md font-normal text-vinus-secondary" : "label-sm md:font-normal")}>
             {category} · {date}
           </p>
           <h2
             className={cn(
               "font-medium text-vinus-ink transition-colors duration-300 group-hover:text-vinus-ink/80",
-              variant === "home" ? "heading-story-home font-normal" : "heading-story-item",
+              variant === "home" ? "home-story-item-title heading-story-home" : "heading-story-item",
             )}
           >
             {title}
@@ -86,7 +86,7 @@ export function StoryListItem({
           <p
             className={cn(
               "font-normal text-vinus-ink/75",
-              variant === "home" ? "body-md max-w-none text-vinus-ink" : "body-md max-w-[720px]",
+              variant === "home" ? "home-story-excerpt body-md max-w-none text-vinus-ink" : "body-md max-w-[720px]",
             )}
           >
             {excerpt}

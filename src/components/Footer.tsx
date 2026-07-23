@@ -1,9 +1,8 @@
 "use client";
 
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BrandLogo } from "@/components/BrandLogo";
 
 const socialLinks = [
   { label: "instagram", href: "https://www.instagram.com/" },
@@ -12,169 +11,123 @@ const socialLinks = [
   { label: "vinorleague", href: "#work" },
 ];
 
-function FooterUtility({ onBackToTop }: { onBackToTop: () => void }) {
+function ContactBlock() {
   return (
-    <div className="h-[104px] border-t border-white/10 bg-vinus-footer-utility px-5 md:h-[72px] md:px-10 xl:px-16">
-      <div className="flex h-full flex-col items-start gap-4 py-5 md:flex-row md:items-center md:justify-between md:gap-0 md:py-6">
-        <Link href="/" aria-label="Vinuspread home" className="block h-6 w-[100px] shrink-0 overflow-hidden">
-          <BrandLogo tone="light" wordmarkOnly />
-        </Link>
-        <nav aria-label="Social media" className="body-md flex h-6 w-full items-center justify-between text-white/70 md:w-[438px] md:justify-center md:gap-12">
-          {socialLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              target={link.href.startsWith("http") ? "_blank" : undefined}
-              rel={link.href.startsWith("http") ? "noreferrer" : undefined}
-              className="lowercase transition-opacity duration-200 hover:opacity-55"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-        <button type="button" onClick={onBackToTop} className="body-md hidden h-6 w-[100px] shrink-0 text-left text-white/70 transition-opacity duration-200 hover:opacity-55 md:block md:text-right">
-          Back to top
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function ContactBlock({ mobile = false }: { mobile?: boolean }) {
-  return (
-    <section className={mobile ? "flex w-full flex-col items-start gap-3" : "flex w-full flex-col items-start gap-3"}>
-      <h2 className="label-meta">Contact</h2>
-      <div className={mobile ? "w-full" : "w-[540px]"}>
-        <p className={mobile ? "label-sm text-white/55" : "body-md text-white/55"}>
-          Ready to shape your next project?
-          <br />
-          We&apos;re here from first idea to final detail.
-        </p>
-      </div>
-      <div className="relative mt-2 w-full">
-        <a href="mailto:vinus@vinus.co.kr" className="body-footer-cta group inline-flex items-center gap-2 border-b border-white py-2 font-medium">
-          Contact us
-          <ArrowUpRight aria-hidden="true" className="size-5 shrink-0 stroke-[1.3] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" />
-        </a>
-      </div>
+    <section className="site-footer-contact">
+      <h2>Contact</h2>
+      <p className="site-footer-contact-copy">
+        Ready to shape your next project?
+        <br />
+        We&apos;re here from first idea to final detail.
+      </p>
+      <a href="mailto:vinus@vinus.co.kr" className="site-footer-contact-link">
+        Contact us
+        <Image src="/vinus/icons/footer-arrow-ne.svg" alt="" width={24} height={24} aria-hidden="true" />
+      </a>
     </section>
   );
 }
 
-function Enquiries() {
+function BusinessEnquiries() {
   return (
-    <section className="flex flex-col gap-2">
-      <h2 className="label-meta text-white/55">Business enquiries</h2>
-      <a href="mailto:vinus@vinus.co.kr" className="body-md hover:underline">vinus@vinus.co.kr</a>
-      <p className="body-md whitespace-nowrap text-white/55">TEL : 02-3661-1907&nbsp;&nbsp; FAX : 02-3661-1906</p>
+    <section className="site-footer-info site-footer-info--business">
+      <h2>Business enquiries</h2>
+      <a href="mailto:vinus@vinus.co.kr">vinus@vinus.co.kr</a>
+      <p>{"TEL : 02-3661-1907\u00A0\u00A0\u00A0FAX : 02-3661-1906"}</p>
     </section>
   );
 }
 
 function OpenPositions() {
   return (
-    <section className="flex flex-col gap-2">
-      <h2 className="label-meta text-white/55">Open positions</h2>
-      <a href="mailto:vinus@vinus.co.kr?subject=Open%20Position" className="body-md hover:underline">vinus@vinus.co.kr</a>
+    <section className="site-footer-info site-footer-info--positions">
+      <h2>Open positions</h2>
+      <a href="mailto:vinus@vinus.co.kr?subject=Open%20Position">vinus@vinus.co.kr</a>
     </section>
   );
 }
 
 function BusinessHours() {
   return (
-    <section className="flex flex-col gap-2">
-      <h2 className="label-meta text-white/55">Business hours</h2>
-      <p className="body-md font-normal">Monday to Friday</p>
-      <p className="body-md text-white/55">10:00 AM – 18:00 PM GMT (+9)</p>
+    <section className="site-footer-info site-footer-info--hours">
+      <h2>Business hours</h2>
+      <p>Monday to Friday</p>
+      <p>10:00 AM - 18:00 PM GMT (+9)</p>
     </section>
   );
 }
 
-function KoreaOffice({ mobile = false }: { mobile?: boolean }) {
+function KoreaOffice() {
   return (
-    <section className="flex flex-col gap-2">
-      <h2 className="label-meta text-white/55">Korea</h2>
-      <address className={`${mobile ? "label-sm" : "body-md"} max-w-[620px] whitespace-normal not-italic`}>
-        Suite 1202, 227 Gonghang-daero, Gangseo-gu, Seoul 07802
-      </address>
+    <section className="site-footer-info site-footer-info--korea">
+      <h2>Korea</h2>
+      <address>Suite 1202, 227 Gonghang-daero, Gangseo-gu, Seoul 07802</address>
     </section>
+  );
+}
+
+function FooterUtility({ onBackToTop }: { onBackToTop: () => void }) {
+  return (
+    <div className="site-footer-utility">
+      <Link href="/" aria-label="Vinuspread home" className="site-footer-logo">
+        <Image src="/vinus/logo-white.svg" alt="Vinuspread" width={100} height={24} unoptimized />
+      </Link>
+      <nav aria-label="Social media" className="site-footer-socials">
+        {socialLinks.map((link) => (
+          <a
+            key={link.label}
+            href={link.href}
+            target={link.href.startsWith("http") ? "_blank" : undefined}
+            rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+      <button type="button" onClick={onBackToTop} className="site-footer-back-to-top">
+        Back to top
+      </button>
+    </div>
   );
 }
 
 export function Footer() {
   const pathname = usePathname();
-  const isProjectDetail = pathname.startsWith("/work/");
-  const nextPage = pathname === "/work"
-    ? { label: "STUDIO", href: "/studio" }
-    : pathname.startsWith("/work/")
-      ? { label: "STUDIO", href: "/studio" }
-      : pathname === "/studio"
-        ? { label: "STORY", href: "/news" }
-        : pathname.startsWith("/news")
-          ? { label: "CONTACT", href: "/contact" }
-          : { label: "EXPERIENCE", href: "/work" };
-  const footerDesktopHeight = pathname === "/" || pathname === "/work"
-    ? "xl:min-h-[714px]"
-    : isProjectDetail
-      ? "xl:min-h-[682px]"
-    : pathname.startsWith("/news/")
-      ? "xl:min-h-[690px]"
-    : pathname === "/news"
-      ? "xl:min-h-[682px]"
-    : pathname === "/contact"
-      ? "xl:min-h-[682px]"
-      : "xl:min-h-[687px]";
-  const footerDesktopMainHeight = isProjectDetail ? "xl:h-[610px] xl:py-20" : "xl:h-[610px] xl:py-24";
+  const nextPage = pathname === "/work" || pathname.startsWith("/work/")
+    ? { label: "Studio", href: "/studio" }
+    : pathname === "/studio"
+      ? { label: "Story", href: "/news" }
+      : pathname.startsWith("/news")
+        ? { label: "Contact", href: "/contact" }
+        : { label: "Experience", href: "/work" };
 
   const scrollToTop = () => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
 
   return (
-    <footer id="contact" data-header-theme="dark" className={`min-h-[945px] overflow-visible bg-vinus-footer font-sans text-white md:min-h-[785px] ${footerDesktopHeight}`}>
-      <div className="min-h-[841px] px-5 py-16 md:hidden">
-        <div className="w-full">
-          <div className="flex flex-col gap-3">
-            <p className="label-sm font-medium">Next page</p>
-            <Link href={nextPage.href} aria-label={`Go to ${nextPage.label}`} className="group inline-flex min-h-16 items-center gap-3 self-start">
-              <span className="display-footer-next font-normal">{nextPage.label}</span>
-              <ArrowRight aria-hidden="true" className="size-9 shrink-0 stroke-[1.15] transition-transform duration-200 group-hover:translate-x-2" />
-            </Link>
-          </div>
-          <div className="mt-[72px] flex flex-col gap-12">
-            <ContactBlock mobile />
-            <div className="flex flex-col gap-6">
-              <Enquiries />
-              <OpenPositions />
-              <BusinessHours />
-              <KoreaOffice mobile />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="hidden h-[713px] overflow-hidden px-10 py-[88px] md:flex md:flex-col md:gap-[72px] xl:hidden">
-        <div className="flex flex-col gap-8 xl:gap-6">
-          <div>
-            <p className="label-sm font-medium">Next page</p>
-          </div>
-          <div>
-            <Link href={nextPage.href} aria-label={`Go to ${nextPage.label}`} className="group inline-flex items-center gap-3 xl:gap-12">
-              <span className="display-footer-next font-normal">{nextPage.label}</span>
-              <ArrowRight aria-hidden="true" className="size-16 shrink-0 stroke-[1.15] transition-transform duration-200 group-hover:translate-x-3 xl:size-[92px]" />
-            </Link>
-          </div>
+    <footer id="contact" data-header-theme="dark" className="site-footer">
+      <div className="site-footer-main">
+        <div className="site-footer-next">
+          <p className="site-footer-next-label">Next page</p>
+          <Link href={nextPage.href} aria-label={`Go to ${nextPage.label}`} className="site-footer-next-link">
+            <span>{nextPage.label}</span>
+            <span className="site-footer-next-icon" aria-hidden="true">
+              <Image src="/vinus/icons/footer-arrow-right.svg" alt="" fill sizes="64px" />
+            </span>
+          </Link>
         </div>
 
-        <div className="grid w-full grid-cols-2 gap-8 xl:mt-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+        <div className="site-footer-spacer" />
+
+        <div className="site-footer-info-grid">
           <ContactBlock />
-          <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
-            <div className="flex flex-col gap-6 xl:gap-12">
-              <Enquiries />
+          <div className="site-footer-info-group">
+            <div className="site-footer-info-column">
+              <BusinessEnquiries />
               <OpenPositions />
             </div>
-            <div className="flex flex-col gap-6 xl:gap-12">
+            <div className="site-footer-info-column site-footer-info-column--second">
               <BusinessHours />
               <KoreaOffice />
             </div>
@@ -182,30 +135,447 @@ export function Footer() {
         </div>
       </div>
 
-      <div className={`hidden px-16 xl:flex xl:flex-col ${footerDesktopMainHeight}`}>
-        <div className="flex flex-col gap-6">
-          <p className="label-meta">Next page</p>
-          <Link href={nextPage.href} aria-label={`Go to ${nextPage.label}`} className="group inline-flex items-center gap-12 self-start">
-            <span className="display-footer-next font-normal">{nextPage.label}</span>
-            <ArrowRight aria-hidden="true" className="size-[92px] shrink-0 stroke-[1.15] transition-transform duration-200 group-hover:translate-x-3" />
-          </Link>
-        </div>
-        <div className="mt-[90px] grid w-full grid-cols-2 gap-8">
-          <ContactBlock />
-          <div className="grid grid-cols-2 gap-8">
-            <div className="flex flex-col gap-6">
-                <Enquiries />
-                <OpenPositions />
-            </div>
-            <div className="flex flex-col gap-6">
-                <BusinessHours />
-                <KoreaOffice />
-            </div>
-          </div>
-        </div>
-      </div>
-
       <FooterUtility onBackToTop={scrollToTop} />
+
+      <style>{`
+        .site-footer {
+          width: 100%;
+          height: 876.9565px;
+          min-height: 0;
+          overflow: hidden;
+          background: #3a3a3d;
+          color: #fff;
+        }
+
+        .site-footer-main {
+          display: flex;
+          width: 100%;
+          height: 779.9565px;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 64px 20px;
+        }
+
+        .site-footer-next {
+          display: flex;
+          width: 350px;
+          height: 67.9565px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+        }
+
+        .site-footer-next-label,
+        .site-footer-contact h2,
+        .site-footer-info h2,
+        .site-footer-socials,
+        .site-footer-back-to-top {
+          font-weight: 500;
+        }
+
+        .site-footer-next-label {
+          height: 17px;
+          font-size: 12px;
+          line-height: 1.4;
+        }
+
+        .site-footer-next-link {
+          display: flex;
+          height: 38.9565px;
+          align-items: center;
+          gap: 12px;
+          overflow: hidden;
+          font-size: 28px;
+          font-weight: 500;
+          line-height: 1.1;
+          white-space: nowrap;
+        }
+
+        .site-footer-next-icon {
+          position: relative;
+          display: block;
+          width: 38.9565px;
+          height: 38.9565px;
+          flex: none;
+          padding: 7.304px;
+        }
+
+        .site-footer-next-icon img {
+          inset: 7.304px !important;
+          width: 24.348px !important;
+          height: 24.348px !important;
+        }
+
+        .site-footer-spacer {
+          width: 1px;
+          height: 72px;
+          flex: none;
+        }
+
+        .site-footer-info-grid {
+          display: flex;
+          width: 350px;
+          height: 512px;
+          flex-direction: column;
+          gap: 48px;
+        }
+
+        .site-footer-contact {
+          display: flex;
+          width: 350px;
+          height: 125px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+        }
+
+        .site-footer-contact h2,
+        .site-footer-info h2 {
+          color: rgb(255 255 255 / 0.55);
+          font-size: 12px;
+          line-height: 1.4;
+        }
+
+        .site-footer-contact h2 {
+          color: #fff;
+        }
+
+        .site-footer-contact-copy {
+          color: rgb(255 255 255 / 0.55);
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 1.5;
+        }
+
+        .site-footer-contact-link {
+          display: flex;
+          height: 42px;
+          align-items: center;
+          gap: 8px;
+          border-bottom: 1px solid #fff;
+          padding: 8px 0;
+          font-size: 20px;
+          font-weight: 500;
+          line-height: 1.3;
+        }
+
+        .site-footer-contact-link img {
+          width: 24px;
+          height: 24px;
+        }
+
+        .site-footer-info-group {
+          display: flex;
+          width: 350px;
+          height: 339px;
+          flex-direction: column;
+          gap: 24px;
+        }
+
+        .site-footer-info-column {
+          display: flex;
+          width: 350px;
+          height: 149px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 28px;
+        }
+
+        .site-footer-info-column--second {
+          height: 166px;
+          gap: 24px;
+        }
+
+        .site-footer-info {
+          display: flex;
+          width: 350px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 1.5;
+        }
+
+        .site-footer-info p,
+        .site-footer-info a,
+        .site-footer-info address {
+          font-style: normal;
+          white-space: normal;
+        }
+
+        .site-footer-info--business,
+        .site-footer-info--hours {
+          height: 75px;
+        }
+
+        .site-footer-info--positions {
+          height: 46px;
+        }
+
+        .site-footer-info--korea {
+          height: 67px;
+        }
+
+        .site-footer-utility {
+          display: flex;
+          width: 100%;
+          height: 97px;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: flex-start;
+          gap: 16px;
+          border-width: 0;
+          box-shadow: inset 0 1px rgb(255 255 255 / 0.1);
+          background: #2c2c2d;
+          padding: 20px;
+        }
+
+        .site-footer-logo,
+        .site-footer-logo img {
+          display: block;
+          width: 100px;
+          height: 24px;
+        }
+
+        .site-footer-socials {
+          display: flex;
+          width: 295px;
+          height: 17px;
+          align-items: flex-start;
+          gap: 24px;
+          color: rgb(255 255 255 / 0.72);
+          font-size: 12px;
+          line-height: 1.4;
+          white-space: nowrap;
+        }
+
+        .site-footer-back-to-top {
+          display: none;
+        }
+
+        @media (min-width: 768px) {
+          .site-footer {
+            height: 761px;
+          }
+
+          .site-footer-main {
+            height: 689px;
+            gap: 72px;
+            overflow: hidden;
+            padding: 88px 40px 72px;
+          }
+
+          .site-footer-next {
+            width: 944px;
+            height: 113px;
+            gap: 32px;
+          }
+
+          .site-footer-next-link {
+            height: 64px;
+            gap: 12px;
+            font-size: 64px;
+            line-height: 1;
+          }
+
+          .site-footer-next-icon {
+            width: 64px;
+            height: 64px;
+            padding: 12px;
+          }
+
+          .site-footer-next-icon img {
+            inset: 12px !important;
+            width: 40px !important;
+            height: 40px !important;
+          }
+
+          .site-footer-spacer {
+            display: none;
+          }
+
+          .site-footer-info-grid {
+            display: grid;
+            width: 944px;
+            height: 344px;
+            grid-template-columns: 456px 456px;
+            gap: 32px;
+          }
+
+          .site-footer-contact {
+            width: 456px;
+            height: 134px;
+          }
+
+          .site-footer-contact h2,
+          .site-footer-info h2 {
+            font-size: 14px;
+          }
+
+          .site-footer-contact-copy,
+          .site-footer-info {
+            font-size: 16px;
+          }
+
+          .site-footer-info-group {
+            width: 456px;
+            height: 344px;
+            gap: 24px;
+          }
+
+          .site-footer-info-column,
+          .site-footer-info-column--second {
+            width: 456px;
+            height: auto;
+            gap: 24px;
+          }
+
+          .site-footer-info--business,
+          .site-footer-info--hours {
+            height: 84px;
+          }
+
+          .site-footer-info--positions,
+          .site-footer-info--korea {
+            height: 52px;
+          }
+
+          .site-footer-info--business {
+            width: 295px;
+          }
+
+          .site-footer-info--positions {
+            width: 130px;
+          }
+
+          .site-footer-info--hours {
+            width: 226px;
+          }
+
+          .site-footer-info--korea {
+            width: 438px;
+          }
+
+          .site-footer-utility {
+            height: 72px;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0;
+            padding: 24px 40px;
+          }
+
+          .site-footer-socials {
+            width: 295px;
+          }
+
+          .site-footer-back-to-top {
+            display: block;
+            width: auto;
+            color: rgb(255 255 255 / 0.72);
+            font-size: 12px;
+            line-height: 1.4;
+            text-align: right;
+          }
+        }
+
+        @media (min-width: 1440px) {
+          .site-footer {
+            height: 684px;
+          }
+
+          .site-footer-main {
+            height: 612px;
+            gap: 0;
+            overflow: visible;
+            padding: 96px 64px;
+          }
+
+          .site-footer-next {
+            width: auto;
+            height: 166px;
+            gap: 24px;
+          }
+
+          .site-footer-next-label {
+            height: 22px;
+            font-size: 16px;
+          }
+
+          .site-footer-next-link {
+            height: 120px;
+            gap: 24px;
+            font-size: 120px;
+            font-weight: 400;
+          }
+
+          .site-footer-spacer {
+            display: block;
+            height: 90px;
+          }
+
+          .site-footer-info-grid {
+            display: grid;
+            width: 100%;
+            height: 164px;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 32px;
+          }
+
+          .site-footer-contact {
+            width: 100%;
+            height: 141px;
+          }
+
+          .site-footer-contact h2,
+          .site-footer-info h2 {
+            font-size: 16px;
+          }
+
+          .site-footer-info-group {
+            display: grid;
+            width: 100%;
+            height: 164px;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 32px;
+          }
+
+          .site-footer-info-column,
+          .site-footer-info-column--second {
+            width: 100%;
+            height: 164px;
+            gap: 24px;
+          }
+
+          .site-footer-info--business,
+          .site-footer-info--hours {
+            width: 100%;
+            height: 86px;
+          }
+
+          .site-footer-info--positions,
+          .site-footer-info--korea {
+            width: 100%;
+            height: 54px;
+          }
+
+          .site-footer-utility {
+            padding: 24px 64px;
+          }
+
+          .site-footer-socials {
+            width: 332px;
+            height: 20px;
+            font-size: 14px;
+          }
+
+          .site-footer-back-to-top {
+            height: 20px;
+            font-size: 14px;
+          }
+        }
+      `}</style>
     </footer>
   );
 }

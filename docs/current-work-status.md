@@ -25,25 +25,36 @@ Korean pages are intentionally removed from the active scope for now. The Englis
 
 ## Main Page
 
-Main page section heights and top positions have been measured against the Figma desktop, tablet, and mobile frames.
+Main page section heights, top positions, and internal still-cut geometry have been measured against the current English Figma desktop, tablet, and mobile frames.
 
 Current section sync state:
 
-- Hero: matched by section height
-- Intro: matched by section height
-- Experience: matched by section height
-- PlayReel: matched by section height
-- How we work: matched by section height
-- Clients: matched by section height
-- Story: matched by section height
-- Footer: matched by section height
+- Hero: matched; current desktop height is 2418px
+- Intro: matched
+- Experience: matched card positions and responsive composition
+- PlayReel: matched background treatment and Figma play-button artwork
+- How we work: matched typography, service grid, icons, and CTA positions
+- Clients: matched 28-logo matrix, responsive copy, cell sizes, and logo scales
+- Story: matched responsive card rows, typography, and the three Figma source images
+- Footer: matched against the main Footer component variants, not page-instance overrides
 
-Motion was adjusted so:
+Current comparison mode:
 
-- Intro content is hidden before the hero section completes.
-- Experience content is hidden while Intro is active.
-- Intro remains visually separated from Hero during the scroll transition.
-- Portfolio cards keep their staggered reveal behavior.
+- All page motion and transitions are disabled for still-cut comparison.
+- Browser audit reports zero running animations and zero elements with active animation/transition duration.
+- Smooth scrolling is disabled (`scroll-behavior: auto`).
+
+Current main page section start positions:
+
+- Mobile: `0 / 890 / 1420 / 4038 / 4458 / 5411 / 6653 / 8354`
+- Tablet: `0 / 1823 / 2497 / 4446 / 5086 / 5890 / 6866 / 8108`
+- Desktop: `0 / 2418 / 3301 / 6493 / 7773 / 8927 / 10036 / 11021`
+
+Footer main-component heights:
+
+- Mobile: `876.9565px`
+- Tablet: `761px`
+- Desktop: `684px`
 
 ## Detail Pages
 
@@ -85,16 +96,9 @@ No matches were found in `src/app` or `src/components` for those search patterns
 
 ## Remaining Work
 
-The overall goal is not fully complete yet.
-
-Remaining items:
-
-- Continue section by section comparison against Figma for all subpages.
-- Recheck internal element positions, not only section heights.
-- Confirm motion end states still match Figma static positions.
-- Continue tablet and mobile visual QA.
-- Remove or organize temporary audit artifacts if they are no longer needed.
-- Final full browser screenshot comparison after all subpages are closed.
+- External still-cut review/acceptance of the completed English home page.
+- Restore and refine motion only after the still-cut review is approved.
+- Continue subpage comparison as a separate pass.
 
 ## Notes
 

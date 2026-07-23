@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Footer } from "@/components/Footer";
 import { SubpageHero } from "@/components/SubpageHero";
 import { Tag } from "@/components/ui/Tag";
@@ -21,7 +21,7 @@ const contactDetails: ReadonlyArray<{ label: string; value: string; detail: stri
 ] as const;
 
 export default function ContactPage() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = true;
   const [formData, setFormData] = useState({ companyName: "", name: "", phone: "", email: "", budget: "$5,000 - $10,000", description: "", file: null as File | null });
   const [selectedCategories, setSelectedCategories] = useState<string[]>(["Website"]);
 

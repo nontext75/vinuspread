@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export type ServiceCardProps = {
@@ -45,7 +45,7 @@ export function ServiceCard({
   index = 0,
   mode = "default",
 }: ServiceCardProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = true;
   const arrow = href ? (
     <ArrowUpRight
       aria-hidden="true"

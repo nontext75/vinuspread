@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { CategoryBadge } from "@/components/CategoryBadge";
 
 export type PortfolioListItemProps = {
@@ -15,7 +15,7 @@ export type PortfolioListItemProps = {
 };
 
 export function PortfolioListItem({ title, subtitle, category, image, href, index = 0 }: PortfolioListItemProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = true;
 
   return (
     <motion.a

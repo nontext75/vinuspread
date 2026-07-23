@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { X } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { ClientLogoGrid } from "@/components/ClientLogoGrid";
@@ -68,7 +68,7 @@ const projects: Project[] = [
   },
   {
     title: "Budongsan114 Mediate BIZsolution",
-    subtitle: "Product Strategy · UX/UI · Web",
+    subtitle: "Enterprise B2B Product Strategy",
     category: "Web",
     src: "/vinus/dummy-photo/work-05.jpg",
     slug: "budongsan114-mediate-bizsolution",
@@ -89,10 +89,10 @@ const projects: Project[] = [
 ];
 
 const services = [
-  { title: "Product Strategy", details: ["Discovery", "Roadmap", "AI Opportunity"] },
-  { title: "Experience Design", details: ["UX/UI", "Web", "App", "Interaction"] },
-  { title: "Brand Systems", details: ["Identity", "Visual Direction", "Content"] },
-  { title: "Launch & Operation", details: ["CMS", "SEO", "Analytics", "Improvement"] },
+  { title: "Product Strategy", details: ["Discovery", "Roadmap", "AI Opportunity"], icon: "/vinus/icons/service-strategy.svg" },
+  { title: "Experience Design", details: ["UX/UI", "Web", "App"], icon: "/vinus/icons/service-experience.svg" },
+  { title: "Brand Systems", details: ["Identity", "Visual Direction", "Content"], icon: "/vinus/icons/service-brand.svg" },
+  { title: "Launch & Operation", details: ["CMS", "SEO", "Analytics"], icon: "/vinus/icons/service-launch.svg" },
 ];
 
 const homeStoryContent = [
@@ -100,24 +100,27 @@ const homeStoryContent = [
     title: "Why You Shouldn't Choose Brand Colors by Instinct",
     excerpt:
       "Color is not just a matter of taste; it determines the perception and emotions of your brand. Even a small change can affect the entire way people perceive your brand.",
+    image: "/vinus/stories/home-story-01.png",
   },
   {
-    title: "What Happens When You Don't Have Design Principles",
+    title: "Why You Shouldn't Choose Brand Colors by Instinct",
     excerpt:
-      "Without clear principles, design sways with every piece of feedback and personal preference. Consistent standards keep all decisions moving in one direction.",
+      "Color is not just a matter of taste; it determines the perception and emotions of your brand. Even a small change can affect the entire way people perceive your brand.",
+    image: "/vinus/stories/home-story-02.png",
   },
   {
-    title: "UX Writing: How to Start with a Single Button",
+    title: "Why You Shouldn't Choose Brand Colors by Instinct",
     excerpt:
-      "We design starting from the shortest sentences users encounter most frequently. Even the wording of a single button shapes the direction of the experience and the next action.",
+      "Color is not just a matter of taste; it determines the perception and emotions of your brand. Even a small change can affect the entire way people perceive your brand.",
+    image: "/vinus/stories/home-story-03.jpg",
   },
 ] as const;
 
 const stories = storyEntries.slice(0, 3).map((story, index) => ({
   title: homeStoryContent[index]?.title ?? story.title,
   excerpt: homeStoryContent[index]?.excerpt ?? story.excerpt,
-  date: story.date,
-  image: story.image,
+  date: "2026.04.20",
+  image: homeStoryContent[index]?.image ?? story.image,
   href: `/news/${story.slug}`,
 }));
 
@@ -147,7 +150,7 @@ export default function Home() {
   const playReelTriggerRef = useRef<HTMLButtonElement>(null);
   const playReelDialogRef = useRef<HTMLDivElement>(null);
   const playReelCloseRef = useRef<HTMLButtonElement>(null);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = true;
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPlayReelPresent, setIsPlayReelPresent] = useState(false);
   const { scrollYProgress: reelProgress } = useScroll({
@@ -237,10 +240,8 @@ export default function Home() {
             priority
             loading="eager"
             sizes="100vw"
-            className="object-cover will-change-transform"
-            data-hero-image
+            className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-black/20" />
         </div>
 
         <div className="home-hero-content relative flex flex-col items-start gap-[var(--space-section)]">
@@ -250,7 +251,7 @@ export default function Home() {
               className="home-hero-lead body-xl w-full max-w-[860px] text-white"
             >
               We work with brands from the first idea
-              <br />
+              <br className="hidden md:block" />
               to the last detail, shaping direction, experience, and improvement together.
             </p>
 
@@ -263,14 +264,14 @@ export default function Home() {
             </h1>
           </div>
 
-          <p data-hero-reveal className="body-xl max-w-[1500px] font-normal text-white/70 min-[2200px]:w-[1500px]">
+          <p data-hero-reveal className="home-hero-summary body-xl max-w-[1500px] font-normal text-white md:font-medium min-[2200px]:w-[1500px]">
             From first idea to final detail, we work with you to find direction,
-            <br />
+            <br className="home-hero-summary-break" />
             build better experiences, and keep improving what comes next.
           </p>
 
           <div data-hero-reveal>
-            <ArrowLink href="/contact" inverse>Download Brochure</ArrowLink>
+            <ArrowLink href="/contact" inverse className="[&>span]:border-0">Download Brochure</ArrowLink>
           </div>
         </div>
       </section>
@@ -289,7 +290,7 @@ export default function Home() {
             </span>
           </p>
           <div data-intro-link>
-            <ArrowLink href="/studio">The Studio</ArrowLink>
+            <ArrowLink href="/studio" className="[&>span]:border-0">The Studio</ArrowLink>
           </div>
         </div>
       </section>
@@ -306,7 +307,7 @@ export default function Home() {
             </p>
           </div>
           <div className="home-portfolio-cta" data-reveal>
-            <ArrowLink href="/work">Browse all work</ArrowLink>
+            <ArrowLink href="/work" className="[&>span]:border-0">Browse all work</ArrowLink>
           </div>
           <div className="home-portfolio-divider" aria-hidden="true" />
         </div>
@@ -351,9 +352,25 @@ export default function Home() {
             whileHover={reduceMotion ? undefined : { scale: 1.06 }}
             whileTap={{ scale: 0.97 }}
             transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
-            className="playreel-button flex items-center justify-center rounded-full border border-white/16 bg-white/55 text-white"
+            className="playreel-button relative block rounded-full"
           >
-            <Image src="/vinus/icons/playreel-play.svg" alt="" width={36} height={36} aria-hidden="true" />
+            <span className="absolute -inset-[29.76%]" aria-hidden="true">
+              <Image src="/vinus/icons/play-button-shadow.svg" alt="" fill sizes="268px" />
+            </span>
+            <span className="absolute inset-[10.71%]" aria-hidden="true">
+              <Image src="/vinus/icons/play-button-outer.svg" alt="" fill sizes="132px" />
+            </span>
+            <span className="absolute inset-[22.62%]" aria-hidden="true">
+              <span className="absolute -top-[10.87%] -right-[30.43%] -bottom-[50%] -left-[30.43%]">
+                <Image src="/vinus/icons/play-button-inner.svg" alt="" fill sizes="148px" />
+              </span>
+            </span>
+            <span className="absolute inset-[17.86%]" aria-hidden="true">
+              <Image src="/vinus/icons/play-button-ring.svg" alt="" fill sizes="108px" />
+            </span>
+            <span className="absolute top-[39.88%] right-[38.1%] bottom-[39.88%] left-[41.67%]" aria-hidden="true">
+              <Image src="/vinus/icons/play-button-icon.svg" alt="" fill sizes="34px" />
+            </span>
           </motion.button>
         </div>
       </section>
@@ -365,10 +382,15 @@ export default function Home() {
 
             <div className="home-studio-intro grid w-full gap-[var(--space-studio-intro)] md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
               <p data-reveal className="home-studio-lead heading-lead w-full font-medium">
-                Always there, from first<br className="hidden md:block" /> idea to final detail.
+                <span className="min-[2200px]:block">Always there, from first idea </span>
+                <span className="min-[2200px]:block">to final detail.</span>
               </p>
               <p data-reveal className="home-studio-body body-lg w-full">
-                Vinuspread works with teams from early direction to launch and beyond. We use AI as a working method to plan, design, and improve experiences with over 20 years of practice in UI/UX, branding, and product design.
+                Vinuspread works with teams from early direction to launch and beyond.
+                <br className="home-studio-tablet-break" />
+                {" "}We use AI as a working method to plan, design, and improve experiences with
+                <br className="home-studio-tablet-break" />
+                {" "}over 20 years of practice in UI/UX, branding, and product design.
               </p>
             </div>
           </div>
@@ -384,7 +406,7 @@ export default function Home() {
                   title={service.title}
                   details={service.details}
                   variant="icon"
-                  icon={<Image src="/vinus/icons/service-card.svg" alt="" width={28} height={28} aria-hidden="true" />}
+                    icon={<Image src={service.icon} alt="" width={24} height={24} aria-hidden="true" />}
                   mode="homeProcess"
                   className={`home-service-card border-vinus-ink/10 ${
                     index < services.length - 1 ? "lg:border-r" : ""
@@ -398,8 +420,8 @@ export default function Home() {
           </div>
 
           <nav aria-label="Studio links" className="home-studio-links flex w-full max-w-[520px] flex-wrap justify-start gap-[var(--space-studio-links)] xl:self-center" data-reveal>
-            <ArrowLink href="/studio">Explore our services</ArrowLink>
-            <ArrowLink href="/work">See our work</ArrowLink>
+            <ArrowLink href="/studio" className="[&>span]:border-0">Explore our services</ArrowLink>
+            <ArrowLink href="/work" className="[&>span]:border-0">See our work</ArrowLink>
           </nav>
         </div>
       </section>
@@ -415,31 +437,33 @@ export default function Home() {
             <br />
             partnered with.
           </h2>
-          <p data-reveal className="home-clients-copy body-lg w-full font-normal text-white">
+          <p data-reveal className="home-clients-copy home-clients-copy--wide body-lg w-full font-normal text-white">
             <span className="block">We work with teams across industries, building long-term value through strategy,</span>
             <span className="block">design, and continuous improvement.</span>
           </p>
+          <p data-reveal className="home-clients-copy home-clients-copy--mobile body-lg w-full font-normal text-white">
+            Selected work shaped through strategy, interface design,
+            <br />
+            and brand systems built to keep improving.
+          </p>
         </div>
-        <ClientLogoGrid tone="dark" mobileLimit={20} />
+        <ClientLogoGrid tone="dark" />
       </section>
 
       <section id="news" className="home-story bg-white px-[var(--space-edge)]">
         <div className="home-story-grid grid gap-[var(--space-section)] lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-[var(--grid-gutter)]">
-          <div>
-            <div data-reveal className="home-story-heading flex flex-col items-start gap-[var(--space-content)]">
-              <h2 className="display-section font-normal">
-                <span className="block">Ideas &amp;</span>
-                {" "}
-                <span className="block">Insights</span>
-              </h2>
-              <div className="hidden lg:block">
-                <ArrowLink href="/news">View all stories</ArrowLink>
-              </div>
-              <p className="body-lg lg:hidden">Ideas and insights for building meaningful experiences.</p>
-            </div>
+          <div data-reveal className="home-story-heading flex flex-col items-start">
+            <h2 className="display-section font-normal">
+              <span>Ideas&amp;</span>
+              <br className="home-story-title-break" />
+              <span className="home-story-title-second">Insights</span>
+            </h2>
+            <ArrowLink href="/news" className="home-story-cta [&>span]:border-0">
+              View all stories
+            </ArrowLink>
           </div>
 
-          <div className="home-story-list shadow-[inset_0_1px_0_rgba(13,13,13,0.1)]">
+          <div className="home-story-list">
             {stories.map((story, index) => (
               <StoryListItem
                 key={story.title}
@@ -449,9 +473,6 @@ export default function Home() {
                 index={index}
               />
             ))}
-          </div>
-          <div className="home-story-link lg:hidden">
-            <ArrowLink href="/news">View all stories</ArrowLink>
           </div>
         </div>
       </section>
@@ -495,13 +516,19 @@ export default function Home() {
         .home-hero {
           min-height: 980px;
           height: auto;
-          padding: 96px 20px 64px;
+          padding: 0 20px;
+          background: #08090d;
         }
 
         .home-hero-content {
           height: auto;
           max-width: 1800px;
           gap: 48px;
+          margin-top: 254px;
+        }
+
+        .home-hero-summary-break {
+          display: block;
         }
 
         .home-page {
@@ -533,12 +560,22 @@ export default function Home() {
           padding-bottom: 0;
         }
 
+        .home-portfolio-title-block {
+          width: 100%;
+          max-width: none;
+          gap: 32px;
+        }
+
         .home-portfolio-title {
           overflow: visible;
+          --type-display-giant-size: 44px;
+          --type-display-giant-line: 1;
         }
 
         .home-portfolio-copy {
-          --type-body-xl-line: 1.3;
+          width: 100%;
+          --type-body-xl-size: 16px;
+          --type-body-xl-line: 1.4;
         }
 
         .home-portfolio-divider {
@@ -549,9 +586,10 @@ export default function Home() {
         }
 
         .home-portfolio-canvas {
-          display: flex;
-          flex-direction: column;
-          gap: 24px;
+          display: grid;
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-rows: 311px 329px 329px 311px 360px 329px;
+          gap: 48px;
           margin-top: 32px;
         }
 
@@ -563,27 +601,144 @@ export default function Home() {
           margin-top: 0;
         }
 
+        .home-portfolio .home-project {
+          width: 100%;
+          margin-left: 0;
+          align-self: start;
+          --type-heading-card-large-size: 24px;
+          --type-heading-card-large-line: 1.2;
+          --type-body-md-size: 14px;
+          --type-body-md-line: 1.5;
+        }
+
+        .home-portfolio .project-card__link {
+          gap: 24px;
+        }
+
+        .home-portfolio .project-card__copy {
+          gap: 8px;
+        }
+
         .home-reel {
           height: 420px;
           min-height: 420px;
         }
 
         .home-studio {
-          height: auto;
-          min-height: 1028px;
-          padding: 64px 20px 0;
+          height: 953px;
+          min-height: 0;
+          padding: 64px 20px;
+        }
+
+        .home-studio-tablet-break {
+          display: none;
         }
 
         .home-clients {
+          --type-display-section-size: 44px;
+          --type-display-section-line: 1;
           min-height: 1242px;
           padding-top: 64px;
           padding-bottom: 80px;
         }
 
+        .home-clients-title-block {
+          gap: 32px;
+        }
+
+        .home-clients-copy {
+          --type-body-lg-size: 16px;
+          --type-body-lg-line: 1.4;
+        }
+
+        .home-clients-copy--wide {
+          display: none;
+        }
+
+        .home-clients-copy--mobile {
+          display: block;
+        }
+
+        .home-clients .client-logo-grid {
+          border-width: 0;
+          grid-template-rows: repeat(14, 64px);
+          box-shadow:
+            inset 1px 0 rgb(71 71 71 / 0.65),
+            inset 0 1px rgb(71 71 71 / 0.65);
+        }
+
+        .home-clients .client-logo-cell {
+          height: 64px;
+          min-height: 64px;
+          border-width: 0;
+          box-shadow:
+            inset -1px 0 rgb(71 71 71 / 0.65),
+            inset 0 -1px rgb(71 71 71 / 0.65);
+        }
+
+        .home-clients .client-logo {
+          opacity: 0.68;
+          transform: scale(0.6);
+          transform-origin: center;
+        }
+
         .home-story {
-          min-height: 1806px;
-          padding-top: 64px;
-          padding-bottom: 80px;
+          --type-display-section-size: 44px;
+          --type-display-section-line: 1;
+          height: 1701px;
+          min-height: 0;
+          padding: 64px 20px;
+        }
+
+        .home-story-grid {
+          display: flex;
+          width: 350px;
+          height: 1573px;
+          flex-direction: column;
+          gap: 32px;
+        }
+
+        .home-story-heading {
+          width: 350px;
+          height: 116px;
+          gap: 32px;
+        }
+
+        .home-story-title-break {
+          display: none;
+        }
+
+        .home-story-heading h2 {
+          width: 100%;
+        }
+
+        .home-story-title-second::before {
+          content: " ";
+        }
+
+        .home-story-cta {
+          height: 40px;
+          font-size: 12.52px;
+          font-weight: 500;
+          line-height: 1.4;
+        }
+
+        .home-story-list {
+          display: flex;
+          width: 350px;
+          height: 1425px;
+          flex-direction: column;
+        }
+
+        .home-story-row {
+          height: 475px;
+          min-height: 475px;
+          border-width: 0;
+          box-shadow: inset 0 1px #e7e7e7;
+        }
+
+        .home-story-item-title {
+          line-height: 1.2;
         }
 
         @media (min-width: 768px) and (max-width: 2199px) {
@@ -594,7 +749,7 @@ export default function Home() {
 
           .home-hero {
             min-height: 1823px;
-            padding: 120px 40px 96px;
+            padding: 0 40px;
           }
 
           .home-intro {
@@ -603,6 +758,7 @@ export default function Home() {
             align-items: flex-start;
             justify-content: center;
             padding: 160px 40px 0;
+            border-top: 1px solid rgb(8 9 13 / 0.1);
           }
 
           .home-hero-content,
@@ -610,14 +766,24 @@ export default function Home() {
             gap: 120px;
           }
 
+          .home-hero-content {
+            margin-top: 430px;
+          }
+
+          .home-hero-summary-break {
+            display: none;
+          }
+
           .home-intro-content {
             width: min(944px, 100%);
             gap: 48px;
+            align-items: center;
           }
 
           .home-intro-copy {
             width: min(944px, 100%);
             gap: 0;
+            text-align: center;
           }
 
           [data-intro-link] {
@@ -629,8 +795,8 @@ export default function Home() {
           }
 
           .home-portfolio {
-            height: 1977px;
-            padding: 96px 40px 0;
+            height: 1949px;
+            padding: 96px 40px;
           }
 
           .home-portfolio-heading {
@@ -640,12 +806,17 @@ export default function Home() {
 
           .home-portfolio-title-block {
             width: min(944px, 100%);
-            gap: 16px;
+            gap: 32px;
+          }
+
+          .home-portfolio-title {
+            --type-display-giant-size: 72px;
+            --type-display-giant-line: 1;
           }
 
           .home-portfolio-copy {
             --type-body-xl-size: 20px;
-            --type-body-xl-line: 1.3;
+            --type-body-xl-line: 1.4;
           }
 
           .home-portfolio {
@@ -659,8 +830,9 @@ export default function Home() {
           .home-portfolio-canvas {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-rows: 432px 432px 474px;
             align-items: start;
-            gap: 32px var(--space-edge);
+            gap: 48px 24px;
             margin-top: 40px;
           }
 
@@ -673,6 +845,22 @@ export default function Home() {
             margin-left: 0;
           }
 
+          .home-portfolio .home-project {
+            --type-heading-card-large-size: 28px;
+            --type-heading-card-large-line: 1.2;
+            --type-body-md-size: 16px;
+            --type-body-md-line: 1.5;
+            --type-label-badge-size: 12px;
+          }
+
+          .home-portfolio .project-card__media {
+            aspect-ratio: 4 / 3;
+          }
+
+          .home-portfolio-cta > a {
+            width: 253px;
+          }
+
           .home-project--mongdang {
             grid-column: 1;
             grid-row: 1;
@@ -681,14 +869,11 @@ export default function Home() {
           .home-project--shinhan {
             grid-column: 2;
             grid-row: 1;
-            width: 68%;
-            justify-self: end;
           }
 
           .home-project--crowd {
             grid-column: 1;
             grid-row: 2;
-            width: 68%;
           }
 
           .home-project--macadamia {
@@ -699,14 +884,11 @@ export default function Home() {
           .home-project--budongsan {
             grid-column: 1;
             grid-row: 3;
-            width: 82%;
           }
 
           .home-project--donga {
             grid-column: 2;
             grid-row: 3;
-            width: 82%;
-            justify-self: end;
           }
 
           .home-project--mobile-only {
@@ -719,12 +901,9 @@ export default function Home() {
           }
 
           .home-studio {
-            height: 849px;
+            height: 804px;
             min-height: 0;
-            padding: 96px 40px 0;
-            padding-bottom: 0;
-            padding-left: 40px;
-            padding-right: 40px;
+            padding: 96px 40px;
             align-items: flex-start;
             justify-content: flex-start;
           }
@@ -739,9 +918,26 @@ export default function Home() {
             gap: 48px;
           }
 
+          .home-studio-title {
+            --type-display-section-size: 72px;
+            --type-display-section-line: 1;
+          }
+
+          .home-studio-intro {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+          }
+
+          .home-studio-tablet-break {
+            display: inline;
+          }
+
           .home-studio-lead {
-            --type-heading-lead-size: 40px;
-            --type-heading-lead-line: 1.1;
+            --type-heading-lead-size: 36px;
+            --type-heading-lead-line: 1.12;
+            font-size: 36px;
+            line-height: 1.12;
           }
 
           .home-studio-body {
@@ -750,24 +946,78 @@ export default function Home() {
           }
 
           [data-service-grid] {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 24px;
             width: 944px;
             max-width: 944px;
-            height: 211px;
+            height: 206px;
+            padding: 0;
+            border: 0;
+            align-items: start;
           }
 
           .home-studio-links {
+            width: 554px;
+            max-width: none;
             height: 42px;
+            flex-wrap: nowrap;
+            gap: 48px;
+          }
+
+          .home-studio-links > a {
+            width: 253px;
+            justify-content: space-between;
+          }
+
+          .home-studio {
+            --type-body-link-size: 20px;
+            --type-body-link-line: 1.3;
+          }
+
+          .home-studio .home-service-card {
+            height: 206px;
+            border: 0;
+          }
+
+          .home-studio .service-card--home-process .service-card__inner,
+          .home-studio .service-card__copy {
+            height: auto;
+            gap: 20px;
+          }
+
+          .home-studio .service-card--home-process .service-card__icon {
+            display: flex;
+            width: 60px;
+            height: 60px;
+          }
+
+          .home-studio .service-card__title {
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 1.3;
+          }
+
+          .home-studio .service-card__details {
+            gap: 4px;
+            font-size: 16px;
+            line-height: 1.5;
+          }
+
+          .home-studio .service-card__icon img {
+            width: 24px;
+            height: 24px;
           }
 
           .home-clients {
-            --type-display-section-size: 80px;
+            --type-display-section-size: 72px;
             height: 976px;
             min-height: 0;
             padding: 96px 40px;
           }
 
           .home-clients-title-block {
-            gap: 20px;
+            gap: 32px;
           }
 
           .home-clients {
@@ -776,16 +1026,34 @@ export default function Home() {
 
           .home-clients-copy {
             --type-body-lg-size: 20px;
-            --type-body-lg-line: 1.3;
+            --type-body-lg-line: 1.4;
+          }
+
+          .home-clients-copy--wide {
+            display: block;
+          }
+
+          .home-clients-copy--mobile {
+            display: none;
           }
 
           .home-clients .client-logo-grid {
             height: 504px;
+            grid-template-rows: repeat(7, 72px);
+          }
+
+          .home-clients .client-logo-cell {
+            height: 72px;
+            min-height: 72px;
+          }
+
+          .home-clients .client-logo {
+            transform: scale(0.75);
           }
 
           .home-story {
-            --type-display-section-size: 80px;
-            height: 1330px;
+            --type-display-section-size: 72px;
+            height: 1242px;
             min-height: 0;
             padding: 96px 40px;
           }
@@ -795,12 +1063,17 @@ export default function Home() {
             flex-direction: column;
             gap: 40px;
             width: 944px;
-            height: auto;
+            height: 1050px;
           }
 
           .home-story-heading {
             width: 944px;
+            height: 152px;
             gap: 40px;
+          }
+
+          .home-story-cta {
+            font-size: 14.56px;
           }
 
           .home-story-list {
@@ -810,25 +1083,27 @@ export default function Home() {
 
           .home-story-row {
             height: 286px;
+            min-height: 286px;
           }
 
-          .home-page > footer {
-            height: 785px;
-            min-height: 0;
-          }
         }
 
         @media (min-width: 2200px) {
           .home-hero {
-            height: 2508px;
+            height: 2418px;
             min-height: 0;
-            padding: 120px 64px 0;
+            padding: 0 64px;
           }
 
           .home-hero-content {
             width: 1800px;
             height: auto;
             gap: 120px;
+            margin-top: 666px;
+          }
+
+          .home-hero-summary-break {
+            display: block;
           }
 
           .home-hero-content > div:first-child {
@@ -883,7 +1158,7 @@ export default function Home() {
           }
 
           .home-portfolio {
-            height: 3226px;
+            height: 3192px;
             display: flex;
             flex-direction: column;
             margin: 0;
@@ -903,10 +1178,18 @@ export default function Home() {
 
           .home-portfolio-title {
             max-width: 1320px;
+            --type-display-giant-size: 120px;
+            --type-display-giant-line: 1;
+          }
+
+          .home-portfolio-title-block {
+            width: 100%;
+            max-width: none;
           }
 
           .home-portfolio-copy {
-            --type-body-xl-line: 1.1667;
+            --type-body-xl-size: 24px;
+            --type-body-xl-line: 1.4;
           }
 
           .home-portfolio-canvas--mobile {
@@ -929,37 +1212,45 @@ export default function Home() {
             margin: 0;
           }
 
-          .home-project--mongdang {
+          .home-portfolio .home-project {
+            --type-heading-card-large-size: 36px;
+            --type-heading-card-large-line: 1.2;
+            --type-body-md-size: 16px;
+            --type-body-md-line: 1.5;
+            --type-label-badge-size: 14px;
+          }
+
+          .home-portfolio .home-project--mongdang {
             left: calc(var(--home-work-col) + 48px);
             top: 0;
             width: calc(var(--home-work-col) * 4 + 144px);
           }
 
-          .home-project--shinhan {
+          .home-portfolio .home-project--shinhan {
             left: calc(var(--home-work-col) * 6 + 288px);
             top: 96px;
             width: calc(var(--home-work-col) * 3 + 96px);
           }
 
-          .home-project--crowd {
+          .home-portfolio .home-project--crowd {
             left: calc(var(--home-work-col) * 3 + 144px);
             top: 720px;
             width: calc(var(--home-work-col) * 3 + 96px);
           }
 
-          .home-project--macadamia {
+          .home-portfolio .home-project--macadamia {
             left: calc(var(--home-work-col) * 7 + 336px);
             top: 792px;
             width: calc(var(--home-work-col) * 4 + 144px);
           }
 
-          .home-project--budongsan {
+          .home-portfolio .home-project--budongsan {
             left: calc(var(--home-work-col) + 48px);
             top: 1570px;
             width: calc(var(--home-work-col) * 3 + 96px);
           }
 
-          .home-project--donga {
+          .home-portfolio .home-project--donga {
             left: calc(var(--home-work-col) * 5 + 240px);
             top: 1680px;
             width: calc(var(--home-work-col) * 3 + 96px);
@@ -989,61 +1280,182 @@ export default function Home() {
             gap: 96px;
           }
 
+          .home-studio-heading-block {
+            height: 304px;
+            gap: 48px;
+          }
+
+          .home-studio-title {
+            --type-display-section-size: 120px;
+            --type-display-section-line: 1;
+          }
+
           .home-studio-intro {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 96px;
+            align-items: start;
             width: 100%;
             max-width: none;
           }
 
+          .home-studio-tablet-break {
+            display: none;
+          }
+
+          .home-studio-lead {
+            --type-heading-lead-size: 48px;
+            --type-heading-lead-line: 1.12;
+            font-size: 48px;
+            line-height: 1.12;
+          }
+
+          .home-studio-body {
+            --type-body-lg-size: 24px;
+            --type-body-lg-line: 1.4;
+          }
+
           [data-service-grid] {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 48px;
             width: 1440px !important;
             max-width: 1440px !important;
-            height: 360px;
-            align-items: stretch;
+            height: 355px;
+            padding: 64px 0;
+            border-top: 1px solid #e7e7e7;
+            border-bottom: 1px solid #e7e7e7;
+            align-items: start;
           }
 
           .home-service-card {
             border-right-width: 0;
           }
 
+          .home-studio .service-card__inner,
+          .home-studio .service-card__copy {
+            gap: 24px;
+          }
+
+          .home-studio .service-card__title {
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 1.3;
+          }
+
+          .home-studio .service-card__details {
+            gap: 8px;
+            font-size: 16px;
+            line-height: 1.5;
+          }
+
+          .home-studio-links {
+            width: 482px;
+            max-width: 482px;
+            flex-wrap: nowrap;
+            gap: 48px;
+          }
+
+          .home-studio-links > a {
+            width: auto;
+          }
+
+          .home-studio {
+            --type-body-link-size: 24px;
+            --type-body-link-line: 1.3;
+          }
+
           .home-clients {
+            --type-display-section-size: 120px;
             height: 1109px;
             min-height: 0;
             padding: 160px 64px 160px;
           }
 
+          .home-clients-title-block {
+            height: 340px;
+          }
+
+          .home-clients-copy {
+            --type-body-lg-size: 24px;
+            --type-body-lg-line: 1.4;
+          }
+
+          .home-clients-copy--wide {
+            display: block;
+          }
+
+          .home-clients-copy--mobile {
+            display: none;
+          }
+
+          .home-clients .client-logo-grid {
+            grid-template-rows: repeat(4, 88.25px);
+          }
+
+          .home-clients .client-logo-cell {
+            height: 88.25px;
+            min-height: 88.25px;
+          }
+
+          .home-clients .client-logo {
+            transform: none;
+          }
+
           .home-story {
+            --type-display-section-size: 120px;
             height: 985px;
             min-height: 0;
             padding: 128px 64px 0;
           }
 
           .home-story-grid {
-            height: 720px;
+            display: grid;
+            width: 2432px;
+            height: 729px;
             grid-template-columns: 1168px 1168px;
             column-gap: 96px;
           }
 
           .home-story-heading {
+            width: 1168px;
+            height: 376px;
             gap: 96px;
           }
 
+          .home-story-list {
+            width: 1168px;
+            height: 729px;
+          }
+
+          .home-story-title-break {
+            display: initial;
+          }
+
+          .home-story-title-second::before {
+            content: none;
+          }
+
+          .home-story-cta {
+            font-size: 16.74px;
+          }
+
           .home-story-row {
-            height: 240px;
+            height: 243px;
+            min-height: 243px;
           }
 
           .home-story-row--last {
-            height: 240px;
+            height: 243px;
           }
 
-          .home-page > footer {
-            height: 714px;
-          }
         }
 
         @media (max-width: 767px) {
           .home-hero {
-            min-height: 1047px;
-            padding: 64px 20px 64px;
+            height: 890px;
+            min-height: 890px;
+            padding: 0 20px;
             --type-display-hero-size: 60px;
             --type-display-hero-line: 1;
           }
@@ -1055,7 +1467,19 @@ export default function Home() {
 
           .home-hero-content > div:first-child > span {
             height: 4px;
-            width: 64px;
+            width: 80px;
+          }
+
+          .home-intro {
+            border-top: 1px solid rgb(8 9 13 / 0.1);
+          }
+
+          .home-intro-content {
+            align-items: center;
+          }
+
+          .home-intro-copy {
+            text-align: center;
           }
 
           .home-hero-title {
@@ -1073,8 +1497,12 @@ export default function Home() {
           }
 
           .home-portfolio {
-            height: 2684px;
+            height: 2618px;
             min-height: 0;
+          }
+
+          .home-portfolio-title-block {
+            height: 142px;
           }
 
           .home-intro-content {
@@ -1107,19 +1535,32 @@ export default function Home() {
           }
 
           .home-studio-heading-block {
-            gap: 24px;
+            gap: 32px;
+          }
+
+          .home-studio-title {
+            --type-display-section-size: 44px;
+            --type-display-section-line: 1;
           }
 
           .home-studio-intro {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 24px;
+            display: flex;
+            height: 183px;
+            flex-direction: column;
+            gap: 16px;
             width: 350px;
           }
 
+          .home-studio-lead {
+            --type-heading-lead-size: 28px;
+            --type-heading-lead-line: 1.12;
+            font-size: 28px;
+            line-height: 1.12;
+          }
+
           .home-studio-body {
-            --type-body-lg-size: 16px;
-            --type-body-lg-line: 1.4;
+            --type-body-lg-size: 14px;
+            --type-body-lg-line: 1.5;
           }
 
           .home-studio-links {
@@ -1130,13 +1571,74 @@ export default function Home() {
           }
 
           [data-service-grid] {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(2, 167px);
+            grid-template-rows: repeat(2, 185px);
             width: 350px;
             max-width: 350px;
-            height: 446px;
-            flex-direction: column;
-            gap: 24px;
+            height: 402px;
+            gap: 32px 16px;
+            padding: 0;
             border: 0;
+          }
+
+          .home-studio .home-service-card {
+            width: 167px;
+            height: 185px;
+            border: 0;
+          }
+
+          .home-studio .service-card--home-process .service-card__inner,
+          .home-studio .service-card__copy {
+            height: auto;
+            gap: 16px;
+          }
+
+          .home-studio .service-card--home-process .service-card__inner {
+            justify-content: flex-start;
+          }
+
+          .home-studio .service-card--home-process .service-card__icon {
+            display: flex;
+          }
+
+          .home-studio .service-card--home-process .service-card__body,
+          .home-studio .service-card--home-process .service-card__copy {
+            align-items: flex-start;
+          }
+
+          .home-studio .service-card__title {
+            width: 100%;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.4;
+          }
+
+          .home-studio .service-card__details {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            gap: 4px;
+            font-size: 14px;
+            line-height: 1.5;
+          }
+
+          .home-studio .service-card__details span {
+            display: block;
+          }
+
+          .home-studio .service-card__details span:not(:last-child)::after {
+            content: none;
+          }
+
+          .home-studio .service-card__icon img {
+            width: 24px;
+            height: 24px;
+          }
+
+          .home-studio {
+            --type-body-link-size: 20px;
+            --type-body-link-line: 1.3;
           }
 
           .home-project {
@@ -1149,54 +1651,12 @@ export default function Home() {
           }
 
           .home-clients-copy {
-            --type-body-lg-size: 14px;
-            --type-body-lg-line: 1.4;
+            --type-body-lg-size: 16px;
+            --type-body-lg-line: 1.375;
           }
 
           .home-clients .client-logo-grid {
             height: 896px;
-          }
-
-          .home-story-grid {
-            display: flex;
-            height: auto;
-            flex-direction: column;
-            gap: 32px;
-          }
-
-          .home-story-heading {
-            height: 142px;
-            gap: 24px;
-          }
-
-          .home-story-grid > div:nth-child(2) {
-            display: flex;
-            height: 1425px;
-            flex-direction: column;
-            gap: 64px;
-            border-top: 0;
-          }
-
-          .home-story-link {
-            order: 2;
-            height: 24px;
-          }
-
-          .home-story-list {
-            order: 3;
-            height: 1425px;
-            margin-top: 16px;
-          }
-
-          .home-story h3 {
-            text-wrap: balance;
-          }
-
-          .home-story {
-            height: 1799px;
-            min-height: 0;
-            padding-left: 20px;
-            padding-right: 20px;
           }
 
           .home-clients {
@@ -1207,10 +1667,6 @@ export default function Home() {
             padding-bottom: 64px;
           }
 
-          .home-page > footer {
-            height: 945px;
-            min-height: 0;
-          }
         }
 
         @media (min-width: 768px) and (max-width: 2199px) {

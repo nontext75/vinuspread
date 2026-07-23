@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const heroHeightClasses = {
@@ -36,7 +36,7 @@ export function SubpageHero({
   size = "compact",
   className,
 }: SubpageHeroProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = true;
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
 

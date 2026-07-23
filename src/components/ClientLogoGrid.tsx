@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { clients, type ClientLogo as ClientLogoData } from "@/lib/clients";
 
 type ClientLogoGridProps = {
@@ -60,17 +59,14 @@ export function ClientLogoGrid({ tone = "dark", dividers = "matrix", mobileLimit
       aria-label="Selected clients"
     >
       {clients.map((client, index) => (
-        <motion.div
+        <div
           key={client.name}
-          initial={false}
-          whileHover={{ scale: 1.025 }}
-          transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
           className={`client-logo-cell reveal-motion ${
             mobileLimit !== undefined && index >= mobileLimit ? "hidden xl:flex" : "flex"
           }`}
         >
           <ClientLogo client={client} />
-        </motion.div>
+        </div>
       ))}
     </div>
   );

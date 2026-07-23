@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 type CaptionedMediaProps = {
@@ -16,7 +16,7 @@ type CaptionedMediaProps = {
 };
 
 export function CaptionedMedia({ src, alt, title, meta, sizes = "100vw", ratio = "landscape", className }: CaptionedMediaProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = true;
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const imageY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);

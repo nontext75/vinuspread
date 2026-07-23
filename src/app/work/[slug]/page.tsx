@@ -4,7 +4,7 @@ import { use, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 import { Footer } from "@/components/Footer";
 import { ProjectMetaGrid } from "@/components/project/ProjectMetaGrid";
@@ -75,7 +75,7 @@ const portfolioData: Record<string, PortfolioProject> = {
 const projectSlugs = Object.keys(portfolioData);
 
 export default function PortfolioDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = true;
   const { slug } = use(params);
   const project = portfolioData[slug];
   const heroRef = useRef<HTMLElement>(null);
