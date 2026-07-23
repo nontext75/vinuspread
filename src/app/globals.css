@@ -1026,22 +1026,163 @@ nextjs-portal {
 .project-detail-meta { min-height: 284px; height: auto; }
 .project-detail-overview {
   min-height: 273px;
-  height: auto;
-  padding-top: 52px !important;
-  padding-bottom: 52px !important;
+  height: 273px;
+  padding: 0 !important;
+}
+.project-detail-overview-inner {
+  display: flex;
+  width: 350px;
+  height: 100%;
+  margin-inline: auto;
+  flex-direction: column;
+  gap: 16px;
+  padding-block: 32px;
 }
 .project-detail-content { min-height: 2318px; height: auto; }
+.project-detail-overlay { background: rgb(0 0 0 / 20%); }
+.project-detail-back {
+  top: 112px;
+  left: 20px;
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 500;
+}
+.project-detail-hero .display-project-title {
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+.budongsan-detail-content {
+  height: 2318px;
+  min-height: 2318px;
+  gap: 48px;
+  padding: 32px 20px;
+}
+.budongsan-content-block {
+  display: flex;
+  width: 350px;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.budongsan-content-block--first { height: 925px; }
+.budongsan-content-block--second { height: 1281px; }
+.budongsan-content-copy {
+  display: flex;
+  width: 100%;
+  height: 226px;
+  flex-direction: column;
+  gap: 8px;
+}
+.budongsan-content-copy h2 {
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+.budongsan-content-copy p {
+  white-space: pre-line;
+  color: var(--color-vinus-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 400;
+}
+.budongsan-content-media {
+  position: relative;
+  width: 100%;
+  flex: none;
+  overflow: hidden;
+}
+.budongsan-content-media--dashboard-first { height: 329px; }
+.budongsan-content-media--dashboard-second { height: 338px; }
+.budongsan-content-media--architecture { height: 219px; }
+.budongsan-content-media--websites { height: 804px; }
+.budongsan-content-media--dashboard-first img {
+  inset: auto 0 !important;
+  top: -115.87% !important;
+  width: 100% !important;
+  height: 332.82% !important;
+}
+.budongsan-content-media--dashboard-second img {
+  inset: auto 0 !important;
+  top: -210.48% !important;
+  width: 100% !important;
+  height: 323.19% !important;
+}
+.budongsan-content-media--architecture img { object-fit: cover; }
+.budongsan-content-media--websites img {
+  inset: auto 0 !important;
+  top: -5.29% !important;
+  width: 100% !important;
+  height: 110.62% !important;
+}
 .story-detail-article { padding-top: 65px; }
-.story-detail-header { min-height: 349px; height: auto; }
+.story-detail-header {
+  width: 100%;
+  height: 393px;
+  min-height: 393px;
+  gap: 48px;
+  padding: 96px 20px;
+}
+.story-detail-title-group { gap: 28px; }
+.story-detail-meta {
+  color: var(--color-vinus-secondary);
+  font-size: 12px;
+  line-height: 1.4;
+}
 .story-detail-title {
-  font-size: var(--type-heading-feature-size);
-  line-height: var(--type-heading-feature-line);
+  max-width: 100%;
+  font-size: 32px;
+  line-height: 1;
 }
 .story-detail-body {
   min-height: 1110px;
-  height: auto;
-  --type-body-lg-size: 16px;
-  --type-body-lg-line: 1.5;
+  height: 1110px;
+  padding: 32px 20px;
+}
+.story-detail-content {
+  width: 350px;
+  height: 1046px;
+  margin-inline: auto;
+  gap: 72px;
+}
+.story-detail-intro {
+  height: 232px;
+  font-size: 24px;
+  line-height: 1.2;
+}
+.story-detail-divider {
+  height: 0 !important;
+  flex: none;
+  position: relative;
+  border: 0;
+  background: transparent;
+}
+.story-detail-divider::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: var(--color-vinus-line);
+  content: "";
+}
+.story-detail-section {
+  flex: none;
+  gap: 24px;
+}
+.story-detail-section:nth-of-type(1) { height: 209px; }
+.story-detail-section:nth-of-type(2) { height: 284px; }
+.story-detail-section-title {
+  font-size: 28px;
+  line-height: 1.1;
+}
+.story-detail-paragraphs { gap: 20px; }
+.story-detail-paragraph {
+  color: var(--color-vinus-ink);
+  font-size: 16px;
+  line-height: 1.4;
+}
+.story-detail-tags {
+  height: 33px;
+  gap: 12px;
 }
 
 @media (min-width: 768px) {
@@ -1175,19 +1316,73 @@ nextjs-portal {
   .project-detail-overview {
     min-height: 249px;
     height: 249px;
-    padding-top: 32px !important;
-    padding-bottom: 32px !important;
+    padding: 0 !important;
+  }
+  .project-detail-overview-inner {
+    width: 944px;
+    gap: 24px;
+    padding-block: 48px;
   }
   .project-detail-content { min-height: 5075px; height: auto; }
+  .project-detail-back {
+    top: 136px;
+    left: 40px;
+  }
+  .project-detail-hero .display-project-title {
+    font-size: 40px;
+    line-height: 1.1;
+    font-weight: 500;
+  }
+  .budongsan-detail-content {
+    height: 5075px;
+    min-height: 5075px;
+    gap: 64px;
+    padding: 40px;
+  }
+  .budongsan-content-block {
+    width: 944px;
+    gap: 24px;
+  }
+  .budongsan-content-block--first { height: 1985px; }
+  .budongsan-content-block--second { height: 2946px; }
+  .budongsan-content-copy {
+    height: 138px;
+    gap: 8px;
+  }
+  .budongsan-content-copy h2 {
+    font-size: 28px;
+    line-height: 1.2;
+  }
+  .budongsan-content-copy p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .budongsan-content-media--dashboard-first { height: 886px; }
+  .budongsan-content-media--dashboard-second { height: 913px; }
+  .budongsan-content-media--architecture { height: 590px; }
+  .budongsan-content-media--websites { height: 2170px; }
   .story-detail-article { padding-top: 68px; }
-  .story-detail-header { min-height: 361px; height: auto; }
-  .story-detail-title { font-size: var(--type-heading-page-size); line-height: var(--type-heading-page-line); }
+  .story-detail-header {
+    height: 449px;
+    min-height: 449px;
+    gap: 48px;
+    padding: 96px 40px;
+  }
+  .story-detail-title {
+    font-size: 72px;
+    line-height: 1;
+  }
   .story-detail-body {
     min-height: 917px;
-    height: auto;
-    --type-body-lg-size: 20px;
-    --type-body-lg-line: 1.4;
+    height: 917px;
+    padding: 64px 40px;
   }
+  .story-detail-content { width: 944px; height: 789px; }
+  .story-detail-intro { height: 136px; font-size: 28px; line-height: 1.2; }
+  .story-detail-section:nth-of-type(1) { height: 152px; }
+  .story-detail-section:nth-of-type(2) { height: 180px; }
+  .story-detail-section-title { font-size: 40px; line-height: 1.1; }
+  .story-detail-paragraph { font-size: 20px; line-height: 1.4; }
   .contact-inquiry-title {
     font-size: var(--type-heading-contact-size);
     line-height: var(--type-heading-contact-line);
@@ -1352,27 +1547,75 @@ nextjs-portal {
   .project-detail-meta { min-height: 258px; height: auto; }
   .project-detail-overview {
     min-height: 396px;
-    height: auto;
-    padding-top: 96px !important;
-    padding-bottom: 96px !important;
+    height: 396px;
+    padding: 0 !important;
+  }
+  .project-detail-overview-inner {
+    width: 1440px;
+    gap: 48px;
+    padding-block: 96px;
   }
   .project-detail-content { min-height: 12602px; height: auto; }
+  .project-detail-back {
+    top: 192px;
+    left: 64px;
+    font-size: 16px;
+  }
+  .project-detail-hero .display-project-title {
+    font-size: 160px;
+    line-height: 1;
+    font-weight: 400;
+  }
+  .budongsan-detail-content {
+    height: 12602.4355px;
+    min-height: 12602.4355px;
+    gap: 128px;
+    padding: 128px 64px;
+  }
+  .budongsan-content-block {
+    width: 2433px;
+    gap: 48px;
+  }
+  .budongsan-content-block--first { height: 4871px; }
+  .budongsan-content-block--second { height: 7347.4355px; }
+  .budongsan-content-copy {
+    width: 1440px;
+    height: 139px;
+    gap: 24px;
+  }
+  .budongsan-content-copy h2 {
+    font-size: 36px;
+    line-height: 1.2;
+  }
+  .budongsan-content-copy p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .budongsan-content-media--dashboard-first { height: 2284px; }
+  .budongsan-content-media--dashboard-second { height: 2352px; }
+  .budongsan-content-media--architecture { height: 1520.4355px; }
+  .budongsan-content-media--websites { height: 5592px; }
   .story-detail-article { padding-top: 86px; }
   .story-detail-header {
     height: 550px;
     min-height: 550px;
-    gap: 48px !important;
-    padding-top: 96px !important;
-    padding-bottom: 96px !important;
+    gap: 48px;
+    padding: 96px 64px;
   }
+  .story-detail-meta { font-size: 14px; line-height: 1.4; }
+  .story-detail-title { font-size: 120px; line-height: 1; }
   .story-detail-body {
     min-height: 1210px;
-    height: auto;
-    --type-body-lg-size: 24px;
-    --type-body-lg-line: 1.4;
-    padding-top: 128px !important;
-    padding-bottom: 128px !important;
+    height: 1210px;
+    padding: 128px 80px;
   }
+  .story-detail-content { width: 1440px; height: 863px; }
+  .story-detail-intro { height: 129px; font-size: 36px; line-height: 1.2; }
+  .story-detail-section:nth-of-type(1) { height: 188px; }
+  .story-detail-section:nth-of-type(2) { height: 222px; }
+  .story-detail-section-title { font-size: 56px; line-height: 1.1; }
+  .story-detail-paragraph { font-size: 24px; line-height: 1.4; }
+  .story-detail-tags { height: 36px; }
   .contact-inquiry-title {
     font-size: var(--type-display-section-size);
     line-height: var(--type-display-section-line);

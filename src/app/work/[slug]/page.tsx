@@ -73,6 +73,39 @@ const portfolioData: Record<string, PortfolioProject> = {
 };
 
 const projectSlugs = Object.keys(portfolioData);
+const budongsanDetailCopy = "Budongsan114 has long operated as a data driven real estate platform. Mediate BIZsolution extends that platform into the broker’s daily workflow, combining listing management, client management, market analysis, and operational tools in one place.\nThe goal was not to create another information website. It was to design a working desk for real estate professionals, where data, action, and decision making could happen in a clear sequence.";
+
+function BudongsanDetailContent() {
+  return (
+    <>
+      <article className="budongsan-content-block budongsan-content-block--first">
+        <div className="budongsan-content-copy">
+          <h2>A platform for brokers</h2>
+          <p>{budongsanDetailCopy}</p>
+        </div>
+        <div className="budongsan-content-media budongsan-content-media--dashboard-first">
+          <Image src="/vinus/project/budongsan-dashboard.png" alt="Budongsan114 broker dashboard overview" fill sizes="100vw" loading="eager" unoptimized />
+        </div>
+        <div className="budongsan-content-media budongsan-content-media--dashboard-second">
+          <Image src="/vinus/project/budongsan-dashboard.png" alt="Budongsan114 listing management dashboard" fill sizes="100vw" loading="eager" unoptimized />
+        </div>
+      </article>
+
+      <article className="budongsan-content-block budongsan-content-block--second">
+        <div className="budongsan-content-copy">
+          <h2>A platform for brokers</h2>
+          <p>{budongsanDetailCopy}</p>
+        </div>
+        <div className="budongsan-content-media budongsan-content-media--architecture">
+          <Image src="/vinus/project/budongsan-architecture.png" alt="Architecture representing a durable digital foundation" fill sizes="100vw" loading="eager" unoptimized />
+        </div>
+        <div className="budongsan-content-media budongsan-content-media--websites">
+          <Image src="/vinus/project/budongsan-websites.png" alt="Budongsan114 connected website experiences" fill sizes="100vw" loading="eager" unoptimized />
+        </div>
+      </article>
+    </>
+  );
+}
 
 export default function PortfolioDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const reduceMotion = true;
@@ -106,7 +139,11 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
         <motion.div className="absolute inset-0 scale-[1.12] will-change-transform" style={{ y: reduceMotion ? 0 : heroImageY }}>
           <Image src={project.image} alt={project.title} fill priority sizes="100vw" className="object-cover" />
         </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-black/30" />
+        <div className="project-detail-overlay absolute inset-0" />
+        <Link href="/work" className="project-detail-back absolute z-10 inline-flex items-center gap-3 text-white">
+          <ArrowLeft aria-hidden="true" className="size-5 stroke-[1.25]" />
+          <span>Back to Experience</span>
+        </Link>
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 36 }}
           animate={{ opacity: 1, y: 0 }}
@@ -119,8 +156,12 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
             aria-label={project.title}
             className="display-project-title max-w-full font-normal md:max-w-[1680px]"
           >
-            <span aria-hidden="true" className="md:hidden">{project.title}</span>
-            {slug === "the-frame-artstore-catalogue" ? (
+            {slug !== "budongsan114-mediate-bizsolution" && (
+              <span aria-hidden="true" className="md:hidden">{project.title}</span>
+            )}
+            {slug === "budongsan114-mediate-bizsolution" ? (
+              <span aria-hidden="true"><span className="block">Budongsan114</span><span className="block">Mediate Bizsolution</span></span>
+            ) : slug === "the-frame-artstore-catalogue" ? (
               <span aria-hidden="true" className="hidden md:block"><span className="block">The Frame</span><span className="block">Artstore Catalogue</span></span>
             ) : (
               <span aria-hidden="true" className="hidden md:block">{project.title}</span>
@@ -141,25 +182,27 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
         />
       </section>
 
-      <section className="project-detail-overview grid w-full grid-cols-1 gap-6 overflow-visible border-b border-vinus-ink/10 px-[var(--space-edge)] py-16 md:grid-cols-[minmax(220px,584px)_minmax(0,840px)] md:gap-8 md:py-8 min-[2200px]:items-center min-[2200px]:py-24">
-        <span className="label-sm font-medium text-vinus-ink/45">Overview</span>
-        <p
-          className="body-md whitespace-pre-line font-normal text-vinus-ink"
-        >
-          {project.overview}
-        </p>
+      <section className="project-detail-overview w-full overflow-visible border-b border-vinus-ink/10">
+        <div className="project-detail-overview-inner">
+          <span className="label-sm font-medium text-vinus-ink/45">Overview</span>
+          <p className="body-md whitespace-pre-line font-normal text-vinus-ink">{project.overview}</p>
+        </div>
       </section>
 
-      <section className="project-detail-content flex w-full flex-col justify-between gap-16 overflow-visible px-[var(--space-edge)] py-16 md:gap-[var(--space-major)] md:py-[var(--space-section)] min-[2200px]:gap-[192px] min-[2200px]:py-[128px]">
-        {contentBlocks.map((block, index) => (
-          <ProjectContentBlock
-            key={block.heading}
-            heading={block.heading}
-            body={block.body}
-            image={block.image ?? project.image}
-            index={index}
-          />
-        ))}
+      <section className={`project-detail-content flex w-full flex-col overflow-visible ${slug === "budongsan114-mediate-bizsolution" ? "budongsan-detail-content" : "justify-between gap-16 px-[var(--space-edge)] py-16 md:gap-[var(--space-major)] md:py-[var(--space-section)] min-[2200px]:gap-[192px] min-[2200px]:py-[128px]"}`}>
+        {slug === "budongsan114-mediate-bizsolution" ? (
+          <BudongsanDetailContent />
+        ) : (
+          contentBlocks.map((block, index) => (
+            <ProjectContentBlock
+              key={block.heading}
+              heading={block.heading}
+              body={block.body}
+              image={block.image ?? project.image}
+              index={index}
+            />
+          ))
+        )}
       </section>
 
       <NextProjectLink href={`/work/${nextSlug}`} title={nextProject.title} />

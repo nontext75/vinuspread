@@ -25,20 +25,19 @@ export const stories: readonly Story[] = [
     category: "Insight",
     image: "/vinus/dummy-photo/story-01.jpg",
     intro:
-      "Color is one of the fastest ways people recognize a brand, but recognition alone does not make a color system useful. A strong palette starts with the role the brand needs to play.",
+      "Color is one of the fastest ways people recognize a brand.\nBut being noticeable is not enough. A strong color system begins by defining the impression a brand should leave and the role each color needs to play.",
     sections: [
       {
         heading: "Begin with meaning",
         paragraphs: [
-          "Before choosing a hue, define the impression the brand should leave and the situations in which the color must work. This gives every later decision a clear reason.",
-          "A color that feels attractive in isolation may behave very differently across products, interfaces, campaigns, and physical environments.",
+          "Before choosing colors, clarify the impression the brand should create and the situations where the colors will be used. That gives every choice a clear reason. A color that looks attractive on its own can feel completely different across products, interfaces, campaigns, and physical spaces.",
         ],
       },
       {
         heading: "Build a system, not a swatch",
         paragraphs: [
-          "Primary colors create recognition. Supporting colors establish hierarchy, states, contrast, and accessibility. Together they should operate as one practical system.",
-          "Testing the palette in real layouts reveals more than comparing samples on a mood board. Context shows whether the brand remains clear, flexible, and consistent.",
+          "Primary colors build recognition, while supporting colors shape hierarchy, status, contrast, and accessibility. Each color should work as part of a practical system, not as an isolated sample.",
+          "Colors tested inside real layouts reveal more than colors selected on a moodboard. They show whether the brand can stay clear, flexible, and consistent in context.",
         ],
       },
     ],

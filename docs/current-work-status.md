@@ -87,18 +87,23 @@ Static QA screenshots are stored under `output/playwright/subpage-*-static.png`.
 
 ## Detail Pages
 
-Experience detail and Story detail pages were checked across desktop, tablet, and mobile.
+The current English Experience detail and Story detail reference pages were checked against the latest Figma frames at desktop, tablet, and mobile widths.
 
-Measured result:
+Measured page heights with the existing main Footer component:
 
-- Experience detail: desktop, tablet, mobile section heights match the current Figma reference.
-- Story detail: desktop, tablet, mobile section heights match the current Figma reference.
+- Experience detail: mobile `4320px`, tablet `6995px`, desktop `15534px`
+- Story detail: mobile `2793px`, tablet `2779px`, desktop `3882px`
 
 Key adjustments:
 
-- Story detail body text now uses scoped responsive body variables.
-- Project detail overview was adjusted on mobile to match the target section height.
-- Detail page structure avoids duplicated mobile overview content.
+- The Budongsan114 detail hero, metadata, overview, two content groups, four image crops, and responsive spacing now follow the current Figma reference.
+- The duplicated mobile project title was removed.
+- Large detail media are loaded directly so below-the-fold still-cut captures do not omit images.
+- Story detail title, cover, article copy, dividers, sections, tags, and responsive section positions now follow the current Figma reference.
+- The mobile Story title is fitted inside the real 390px viewport while the Figma header instance still carries its known fixed-width component override.
+- Shared Header, detail navigation, and Footer source files were not changed because their component update is being handled separately.
+
+Static QA screenshots are stored under `output/playwright/detail-*-static.png`.
 
 ## QA Performed
 
@@ -123,7 +128,7 @@ Search checks were also run for obvious style contamination:
 
 No matches were found in `src/app` or `src/components` for those search patterns at the time of this status note.
 
-Subpage browser measurements were performed at `390px`, `1024px`, and `2560px`. Experience, Studio, Story, and Contact report zero Web Animations, zero active CSS transitions, and zero CSS animations.
+Subpage and detail-page browser measurements were performed at `390px`, `1024px`, and `2560px`. The checked English pages report zero Web Animations, zero active CSS transitions, and zero CSS animations.
 
 ## Remaining Work
 

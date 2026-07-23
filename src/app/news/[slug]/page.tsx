@@ -39,22 +39,22 @@ export default async function StoryDetailPage({ params }: StoryPageProps) {
   return (
     <main className="bg-white text-vinus-ink selection:bg-vinus-ink selection:text-white">
       <article className="story-detail-article">
-        <header className="story-detail-header flex min-h-[340px] flex-col gap-8 overflow-visible px-6 pt-14 pb-14 md:gap-8 md:px-16 md:pt-14 md:pb-14">
+        <header className="story-detail-header flex flex-col overflow-hidden">
           <Link
             href="/news"
-            className="label-sm inline-flex w-fit items-center gap-3 font-medium transition-opacity duration-200 hover:opacity-55"
+            className="story-detail-back label-sm inline-flex w-fit items-center gap-3 font-medium transition-opacity duration-200 hover:opacity-55"
           >
             <ArrowLeft aria-hidden="true" className="size-5 stroke-[1.25]" />
             Back to Story
           </Link>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-8">
-            <div className="flex flex-col gap-6 md:col-span-10 md:gap-12">
-              <p className="body-md font-medium">
-                {story.category} · {story.date}
-              </p>
-              <h1 className="story-detail-title heading-page max-w-[1900px] font-normal">{story.title}</h1>
-            </div>
+          <div className="story-detail-title-group flex flex-col">
+            <p className="story-detail-meta font-medium">{story.category} · {story.date}</p>
+            <h1 className="story-detail-title font-normal">
+              {story.slug === "brand-colors-by-instinct" ? (
+                <>Why You Shouldn&apos;t Choose Brand Colors <br />by Instinct</>
+              ) : story.title}
+            </h1>
           </div>
         </header>
 
@@ -69,28 +69,29 @@ export default async function StoryDetailPage({ params }: StoryPageProps) {
           />
         </figure>
 
-        <div className="story-detail-body grid grid-cols-1 gap-4 overflow-visible px-6 py-4 md:grid-cols-12 md:gap-8 md:px-16 md:py-6">
-          <aside className="flex flex-wrap content-start gap-2 md:col-span-2 md:flex-col md:gap-3">
-            {story.tags.map((tag) => (
-              <CategoryBadge key={tag}>{tag}</CategoryBadge>
-            ))}
-          </aside>
-
-          <div className="flex flex-col gap-6 md:col-start-3 md:col-span-9 md:gap-16">
-            <p className="heading-editorial font-normal">{story.intro}</p>
+        <div className="story-detail-body overflow-hidden">
+          <div className="story-detail-content flex flex-col">
+            <p className="story-detail-intro whitespace-pre-line font-medium">{story.intro}</p>
+            <div className="story-detail-divider h-px w-full bg-vinus-ink/10" />
 
             {story.sections.map((section) => (
-              <section key={section.heading} className="flex flex-col gap-4 md:gap-6">
-                <h2 className="heading-editorial font-medium">{section.heading}</h2>
-                <div className="flex flex-col gap-4">
+              <section key={section.heading} className="story-detail-section flex flex-col">
+                <h2 className="story-detail-section-title font-medium">{section.heading}</h2>
+                <div className="story-detail-paragraphs flex flex-col">
                   {section.paragraphs.map((paragraph) => (
-                    <p key={paragraph} className="body-lg max-w-[900px] font-normal text-vinus-ink/65">
+                    <p key={paragraph} className="story-detail-paragraph font-normal">
                       {paragraph}
                     </p>
                   ))}
                 </div>
               </section>
             ))}
+
+            <div className="story-detail-tags flex flex-wrap">
+              {story.tags.map((tag) => (
+                <CategoryBadge key={tag}>{tag}</CategoryBadge>
+              ))}
+            </div>
           </div>
         </div>
 
