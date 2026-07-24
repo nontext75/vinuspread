@@ -2089,4 +2089,36 @@ nextjs-portal {
   }
 }
 
+/* Figma parity pass: subpage hero rhythm. */
+@media (min-width: 768px) and (max-width: 2199px) {
+  :root {
+    --type-heading-page-size: clamp(88px, 8.333vw, 120px);
+    --type-heading-page-line: 0.92;
+  }
+
+  .subpage-header {
+    padding-top: 144px !important;
+  }
+
+  .experience-page-hero,
+  .studio-page-hero,
+  .contact-page-hero {
+    height: 820px !important;
+    min-height: 820px !important;
+  }
+
+  .subpage-copy-stack {
+    gap: 40px;
+  }
+}
+
+@media (min-width: 2200px) {
+  .experience-page-hero,
+  .studio-page-hero,
+  .contact-page-hero {
+    height: 892px !important;
+    min-height: 892px !important;
+  }
+}
+
 
