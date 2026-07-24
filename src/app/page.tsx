@@ -728,17 +728,21 @@ export default function Home() {
           }
 
           .home-hero {
-            height: 1823px;
-            min-height: 1823px;
-            padding: 0 40px;
+            height: clamp(1823px, calc(50.595vw + 1304.91px), 2418px);
+            min-height: clamp(1823px, calc(50.595vw + 1304.91px), 2418px);
+            padding-inline: clamp(40px, calc(2.041vw + 19.1px), 64px);
           }
 
           .home-intro {
-            min-height: 674px;
+            height: clamp(674px, calc(17.772vw + 492.01px), 883px);
+            min-height: clamp(674px, calc(17.772vw + 492.01px), 883px);
             display: flex;
             align-items: flex-start;
             justify-content: center;
-            padding: 160px 40px 0;
+            padding:
+              clamp(160px, calc(3.401vw + 125.17px), 200px)
+              clamp(40px, calc(2.041vw + 19.1px), 64px)
+              0;
             border-top: 1px solid rgb(8 9 13 / 0.1);
           }
 
@@ -748,7 +752,7 @@ export default function Home() {
           }
 
           .home-hero-content {
-            margin-top: 430px;
+            margin-top: clamp(430px, calc(20.068vw + 224.1px), 666px);
           }
 
           .home-hero-summary-break {
@@ -756,13 +760,13 @@ export default function Home() {
           }
 
           .home-intro-content {
-            width: min(944px, 100%);
+            width: min(clamp(944px, calc(42.177vw + 512.03px), 1440px), 100%);
             gap: 48px;
             align-items: center;
           }
 
           .home-intro-copy {
-            width: min(944px, 100%);
+            width: min(clamp(944px, calc(42.177vw + 512.03px), 1440px), 100%);
             gap: 0;
             text-align: center;
           }
@@ -776,7 +780,8 @@ export default function Home() {
           }
 
           .home-portfolio {
-            height: 1949px;
+            height: auto;
+            min-height: 1949px;
             padding: 96px 40px;
           }
 
@@ -811,7 +816,7 @@ export default function Home() {
           .home-portfolio-canvas {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            grid-template-rows: 432px 432px 474px;
+            grid-template-rows: repeat(3, auto);
             align-items: start;
             gap: 48px 24px;
             margin-top: 40px;
@@ -877,21 +882,23 @@ export default function Home() {
           }
 
           .home-reel {
-            height: 640px;
-            min-height: 640px;
+            height: clamp(640px, calc(54.422vw + 82.72px), 1280px);
+            min-height: clamp(640px, calc(54.422vw + 82.72px), 1280px);
           }
 
           .home-studio {
-            height: 804px;
+            height: clamp(804px, calc(29.762vw + 499.24px), 1154px);
             min-height: 0;
-            padding: 96px 40px;
+            padding:
+              clamp(96px, calc(2.721vw + 68.14px), 128px)
+              clamp(40px, calc(2.041vw + 19.1px), 64px);
             align-items: flex-start;
             justify-content: flex-start;
           }
 
           .home-studio-content {
             width: 100%;
-            max-width: 944px;
+            max-width: clamp(944px, calc(42.177vw + 512.03px), 1440px);
             gap: 48px;
           }
 
@@ -931,7 +938,7 @@ export default function Home() {
             grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 24px;
             width: 100%;
-            max-width: 944px;
+            max-width: clamp(944px, calc(42.177vw + 512.03px), 1440px);
             height: 206px;
             padding: 0;
             border: 0;
@@ -992,9 +999,11 @@ export default function Home() {
 
           .home-clients {
             --type-display-section-size: 72px;
-            height: 976px;
+            height: clamp(976px, calc(11.31vw + 860.19px), 1109px);
             min-height: 0;
-            padding: 96px 40px;
+            padding:
+              clamp(96px, calc(5.442vw + 40.27px), 160px)
+              clamp(40px, calc(2.041vw + 19.1px), 64px);
           }
 
           .home-clients-title-block {
@@ -1044,13 +1053,13 @@ export default function Home() {
             flex-direction: column;
             gap: 40px;
             width: 100%;
-            max-width: 944px;
+            max-width: clamp(944px, calc(42.177vw + 512.03px), 1440px);
             height: 1050px;
           }
 
           .home-story-heading {
             width: 100%;
-            max-width: 944px;
+            max-width: clamp(944px, calc(42.177vw + 512.03px), 1440px);
             height: 152px;
             gap: 40px;
           }

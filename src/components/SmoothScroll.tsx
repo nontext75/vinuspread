@@ -35,7 +35,8 @@ export function SmoothScroll() {
       touchMultiplier: 1.25,
     });
 
-    lenis.on("scroll", ScrollTrigger.update);
+    const syncScrollTrigger = () => ScrollTrigger.update();
+    lenis.on("scroll", syncScrollTrigger);
 
     const updateTicker = (time: number) => {
       lenis.raf(time * 1000);
@@ -49,6 +50,7 @@ export function SmoothScroll() {
     return () => {
       cancelAnimationFrame(refreshFrame);
       gsap.ticker.remove(updateTicker);
+      lenis.off("scroll", syncScrollTrigger);
       lenis.destroy();
     };
   }, []);

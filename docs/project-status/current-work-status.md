@@ -40,8 +40,9 @@ Current section sync state:
 
 Current motion mode:
 
-- The approved still layout is locked and motion has been restored without changing section geometry.
-- Desktop fine-pointer devices use Lenis inertia synchronized with GSAP ScrollTrigger.
+- The approved mobile, tablet, and desktop reference geometry remains locked while
+  intermediate viewport widths interpolate fluidly.
+- Desktop fine-pointer devices use one shared Lenis instance synchronized with GSAP ScrollTrigger.
 - Mobile and touch devices keep native scrolling.
 - Home hero copy enters in a paced hierarchy; hero, project media, and PlayReel media respond to scroll progress.
 - Subpage heroes, portfolio cards, story rows, Studio cards, contact rows, and project-detail content use restrained staggered entrances.
@@ -52,6 +53,10 @@ Current main page section start positions:
 - Mobile: `0 / 890 / 1420 / 4038 / 4458 / 5411 / 6653 / 8354`
 - Tablet: `0 / 1823 / 2497 / 4446 / 5086 / 5890 / 6866 / 8108`
 - Desktop: `0 / 2418 / 3301 / 6493 / 7773 / 8927 / 10036 / 11021`
+
+The three reference frames above remain exact checkpoints. Between tablet and desktop,
+section heights and spacing now interpolate fluidly. The two-column portfolio rows use
+their real content height so wider laptop viewports do not overflow into later sections.
 
 Footer main-component heights:
 
@@ -141,6 +146,11 @@ Motion QA also confirmed:
 - Mobile uses native scrolling and keeps the same approved layout.
 - Reduced-motion mode creates no Lenis instance and leaves hero text at `opacity: 1`, `transform: none`, and `clip-path: none`.
 - No page runtime errors remain in the checked routes.
+- Home smooth scrolling has a single Lenis owner; page-level ScrollTriggers no longer
+  create a competing scroll instance.
+- Laptop motion and layout were checked at `1280`, `1366`, `1440`, `1536`, `1728`,
+  `1920`, and `2048px`, plus `2560px`. Additional in-between widths and both sides of
+  the `2199/2200px` structural breakpoint were checked without card or section overlap.
 
 ## Remaining Work
 

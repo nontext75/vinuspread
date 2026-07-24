@@ -60,7 +60,10 @@ export function StoryListItem({
             variant === "home" ? "home-story-image size-36" : "size-24 md:size-[120px]",
           )}
         >
-          <motion.div className="absolute inset-0 will-change-transform" style={{ y: reduceMotion ? 0 : imageY, scale: reduceMotion ? 1 : 1.14 }}>
+          <motion.div
+            className="story-list-item__motion-image absolute inset-0 will-change-transform"
+            style={{ y: imageY, scale: 1.14 }}
+          >
             <Image
               src={image}
               alt=""

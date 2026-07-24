@@ -3,7 +3,6 @@
 import { RefObject, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -172,16 +171,6 @@ export function useHomeMotion({
     });
 
     media.add("(min-width: 768px) and (pointer: fine)", () => {
-      const lenis = new Lenis({
-        autoRaf: false,
-        smoothWheel: true,
-      });
-      const syncScrollTrigger = () => ScrollTrigger.update();
-      const tickLenis = (time: number) => lenis.raf(time * 1000);
-
-      lenis.on("scroll", syncScrollTrigger);
-      gsap.ticker.add(tickLenis);
-
       const desktopContext = gsap.context(() => {
         gsap.fromTo(
           "[data-hero-image]",
@@ -224,9 +213,6 @@ export function useHomeMotion({
       }, rootRef);
 
       return () => {
-        gsap.ticker.remove(tickLenis);
-        lenis.off("scroll", syncScrollTrigger);
-        lenis.destroy();
         desktopContext.revert();
       };
     });
