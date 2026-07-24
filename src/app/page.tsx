@@ -1296,9 +1296,9 @@ export default function Home() {
             --home-work-col: calc((100% - 528px) / 12);
             position: relative;
             display: block;
-            width: calc(100% - 128px);
+            width: min(calc(100% - 128px), 2432px);
             height: 2380px;
-            margin: 96px 64px 0;
+            margin: 96px auto 0;
             padding: 0;
           }
 

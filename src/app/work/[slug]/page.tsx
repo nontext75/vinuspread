@@ -7,7 +7,6 @@ import { ArrowLeft } from "lucide-react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 
 import { Footer } from "@/components/Footer";
-import { ProjectMetaGrid } from "@/components/project/ProjectMetaGrid";
 import { ProjectContentBlock } from "@/components/project/ProjectContentBlock";
 import { NextProjectLink } from "@/components/project/NextProjectLink";
 
@@ -179,17 +178,6 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
         </motion.div>
       </section>
 
-
-      <section className="project-detail-meta flex w-full flex-col justify-center overflow-visible border-b border-vinus-ink/10 px-[var(--space-edge)] py-0 md:py-20 min-[2200px]:py-24">
-        <ProjectMetaGrid
-          items={[
-            ["Client", project.client],
-            ["Period", project.period],
-            ["Category", project.category],
-            ["Subtitle", project.subtitle],
-          ].map(([label, value]) => ({ label, value }))}
-        />
-      </section>
 
       <section className="project-detail-overview w-full overflow-visible border-b border-vinus-ink/10">
         <div className="project-detail-overview-inner">

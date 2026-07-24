@@ -54,9 +54,14 @@ Current main page section start positions:
 - Tablet: `0 / 1823 / 2497 / 4446 / 5086 / 5890 / 6866 / 8108`
 - Desktop: `0 / 2418 / 3301 / 6493 / 7773 / 8927 / 10036 / 11021`
 
-The three reference frames above remain exact checkpoints. Between tablet and desktop,
-section heights and spacing now interpolate fluidly. The two-column portfolio rows use
-their real content height so wider laptop viewports do not overflow into later sections.
+The three reference frames above remain exact checkpoints. The previous note for
+commit `8d8ff01` claiming a validated fluid transition at `2199/2200px` was inaccurate:
+that commit corrected scroll synchronization and reduced-motion behavior, but still
+used a hard layout switch. The current layout pass is the actual fluid implementation.
+From the 1024px Tablet anchor to the 2560px Desktop anchor, section heights, edge
+spacing, content widths, typography, and the desktop portfolio composition now scale
+continuously with `clamp()`-based values. The tablet composition ends at 1024px; the
+PC composition starts at 1025px and scales to the 2560px Figma anchor.
 
 Footer main-component heights:
 
@@ -104,7 +109,7 @@ Measured page heights with the existing main Footer component:
 
 Key adjustments:
 
-- The Budongsan114 detail hero, metadata, overview, two content groups, four image crops, and responsive spacing now follow the current Figma reference.
+- The Budongsan114 detail hero, overview, two content groups, and four responsive image crops follow the current Figma reference; the standalone metadata strip was removed after review.
 - The duplicated mobile project title was removed.
 - Large detail media are loaded directly so below-the-fold still-cut captures do not omit images.
 - Story detail title, cover, article copy, dividers, sections, tags, and responsive section positions now follow the current Figma reference.
@@ -148,9 +153,10 @@ Motion QA also confirmed:
 - No page runtime errors remain in the checked routes.
 - Home smooth scrolling has a single Lenis owner; page-level ScrollTriggers no longer
   create a competing scroll instance.
-- Laptop motion and layout were checked at `1280`, `1366`, `1440`, `1536`, `1728`,
-  `1920`, and `2048px`, plus `2560px`. Additional in-between widths and both sides of
-  the `2199/2200px` structural breakpoint were checked without card or section overlap.
+- The fluid layout was checked at `768`, `900`, `1024`, `1280`, `1366`, `1440`,
+  `1536`, `1728`, `1920`, `2048`, `2200`, `2560`, and `2800px`. The tablet/PC
+  composition changes at `1024/1025px`; sizing within the PC range remains continuous,
+  and viewports wider than the 2560px reference keep that composition centered.
 
 ## Remaining Work
 

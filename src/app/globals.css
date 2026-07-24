@@ -757,7 +757,7 @@ nextjs-portal {
   }
 }
 
-@media (min-width: 2200px) {
+@media (min-width: 2560px) {
   .client-logo-grid {
     width: 2368px;
     height: 353px;
@@ -797,7 +797,7 @@ nextjs-portal {
   }
 }
 
-@media (min-width: 2200px) {
+@media (min-width: 2560px) {
   :root {
     --type-display-studio-keyword-size: 120px;
     --type-display-studio-vision-size: 364px;
@@ -1382,7 +1382,7 @@ nextjs-portal {
   }
 }
 
-@media (min-width: 2200px) {
+@media (min-width: 2560px) {
   .home-studio-lead {
     font-size: var(--type-heading-lead-size);
     line-height: var(--type-heading-lead-line);
@@ -1662,7 +1662,7 @@ nextjs-portal {
   }
 }
 
-@media (min-width: 2200px) {
+@media (min-width: 2560px) {
   .story-page-hero {
     height: 868px !important;
     min-height: 868px !important;
@@ -1799,7 +1799,7 @@ nextjs-portal {
   }
 }
 
-@media (min-width: 2200px) {
+@media (min-width: 2560px) {
   .subpage-header {
     margin-top: 86px;
   }
@@ -1917,7 +1917,7 @@ nextjs-portal {
   }
 }
 
-@media (min-width: 768px) and (max-width: 2199px) {
+@media (min-width: 768px) and (max-width: 2559px) {
   .studio-principles {
     min-height: 0 !important;
     padding-block: 112px !important;
@@ -1972,7 +1972,7 @@ nextjs-portal {
   }
 }
 
-@media (min-width: 2200px) {
+@media (min-width: 2560px) {
   .studio-principles {
     min-height: 0 !important;
     padding-block: 144px !important;
@@ -2074,7 +2074,7 @@ nextjs-portal {
   }
 }
 
-@media (min-width: 1280px) and (max-width: 2199px) {
+@media (min-width: 1280px) and (max-width: 2559px) {
   .experience-page-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     column-gap: 32px !important;
@@ -2082,7 +2082,7 @@ nextjs-portal {
   }
 }
 
-@media (min-width: 2200px) {
+@media (min-width: 2560px) {
   .experience-page-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
     column-gap: 48px !important;
@@ -2096,7 +2096,7 @@ nextjs-portal {
 }
 
 /* Figma parity pass: subpage hero rhythm. */
-@media (min-width: 768px) and (max-width: 2199px) {
+@media (min-width: 768px) and (max-width: 2559px) {
   :root {
     --type-heading-page-size: clamp(88px, 8.333vw, 120px);
     --type-heading-page-line: 0.92;
@@ -2118,7 +2118,7 @@ nextjs-portal {
   }
 }
 
-@media (min-width: 2200px) {
+@media (min-width: 2560px) {
   .experience-page-hero,
   .studio-page-hero,
   .contact-page-hero {
@@ -2127,7 +2127,7 @@ nextjs-portal {
   }
 }
 
-/* Responsive type smoothing: remove visible jumps at 768, 1280, and 2200. */
+/* Responsive type smoothing: smooth values across the mobile, tablet, and 2560px desktop anchors. */
 @media (max-width: 767px) {
   :root {
     --type-heading-page-size: clamp(56px, 10.95vw, 84px);
@@ -2162,7 +2162,7 @@ nextjs-portal {
   }
 }
 
-@media (min-width: 2200px) {
+@media (min-width: 2560px) {
   :root {
     --type-heading-page-size: 120px;
     --type-heading-page-line: 0.92;
@@ -2214,7 +2214,7 @@ nextjs-portal {
   }
 }
 
-@media (min-width: 2200px) {
+@media (min-width: 2560px) {
   .experience-page-grid {
     column-gap: 48px !important;
     row-gap: 120px !important;
@@ -2236,7 +2236,7 @@ nextjs-portal {
   }
 }
 
-@media (min-width: 2200px) {
+@media (min-width: 2560px) {
   .project-detail-hero {
     height: 100svh !important;
     min-height: 860px !important;
@@ -2325,7 +2325,7 @@ nextjs-portal {
   }
 }
 
-@media (min-width: 2200px) {
+@media (min-width: 2560px) {
   .project-detail-hero-copy {
     bottom: 96px;
   }
@@ -2333,6 +2333,27 @@ nextjs-portal {
   .project-detail-hero .display-project-title {
     font-size: clamp(128px, 6.25vw, 160px);
   }
+}
+
+/* Project stills scale with their containers instead of retaining oversized export bounds. */
+.budongsan-content-media img {
+  inset: 0 !important;
+  top: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
+
+.budongsan-content-media--dashboard-first img {
+  object-position: center 42%;
+}
+
+.budongsan-content-media--dashboard-second img {
+  object-position: center 72%;
+}
+
+.budongsan-content-media--websites img {
+  object-position: center top;
 }
 
 
