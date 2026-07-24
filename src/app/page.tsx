@@ -739,7 +739,9 @@ export default function Home() {
           }
 
           .home-hero {
-            min-height: 1823px;
+            height: 100svh;
+            min-height: 900px;
+            max-height: 1180px;
             padding: 0 40px;
           }
 
@@ -754,11 +756,11 @@ export default function Home() {
 
           .home-hero-content,
           .home-hero-content > div:first-child {
-            gap: 120px;
+            gap: 72px;
           }
 
           .home-hero-content {
-            margin-top: 430px;
+            margin-top: clamp(180px, 19svh, 260px);
           }
 
           .home-hero-summary-break {
@@ -1080,17 +1082,22 @@ export default function Home() {
         }
 
         @media (min-width: 2200px) {
+          .home-page {
+            --type-display-hero-line: 1;
+          }
+
           .home-hero {
-            height: 2418px;
-            min-height: 0;
+            height: 100svh;
+            min-height: 980px;
+            max-height: 1440px;
             padding: 0 64px;
           }
 
           .home-hero-content {
             width: 1800px;
             height: auto;
-            gap: 120px;
-            margin-top: 666px;
+            gap: 56px;
+            margin-top: clamp(120px, 10svh, 180px);
           }
 
           .home-hero-summary-break {
@@ -1098,7 +1105,7 @@ export default function Home() {
           }
 
           .home-hero-content > div:first-child {
-            gap: 120px;
+            gap: 56px;
           }
 
           .home-hero-content > div:first-child > span {
