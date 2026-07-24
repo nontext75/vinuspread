@@ -1127,7 +1127,7 @@ export default function Home() {
           }
 
           .home-intro {
-            height: 883px;
+            height: 985px;
             display: flex;
             align-items: flex-start;
             justify-content: center;
