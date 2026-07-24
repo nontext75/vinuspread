@@ -1782,8 +1782,8 @@ nextjs-portal {
 @media (min-width: 768px) {
   .subpage-lead {
     max-width: 1258px;
-    font-size: var(--type-heading-md-size);
-    line-height: var(--type-heading-md-line);
+    font-size: var(--type-body-lg-size);
+    line-height: var(--type-body-lg-line);
   }
 }
 @media (min-width: 768px) {
