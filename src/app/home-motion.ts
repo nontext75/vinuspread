@@ -98,47 +98,6 @@ export function useHomeMotion({
         });
       });
 
-      const introContent = root.querySelector<HTMLElement>(".home-intro-content");
-      const portfolioSection = root.querySelector<HTMLElement>(".home-portfolio");
-      if (portfolioSection) {
-        const syncPortfolioVisibility = (visible: boolean) => {
-          portfolioSection.style.visibility = visible ? "" : "hidden";
-        };
-        const syncIntroVisibility = (visible: boolean) => {
-          if (introContent) introContent.style.visibility = visible ? "" : "hidden";
-        };
-
-        syncIntroVisibility(false);
-        syncPortfolioVisibility(false);
-
-        ScrollTrigger.create({
-          trigger: ".home-intro",
-          start: "top 1px",
-          end: "bottom top",
-          onEnter: () => {
-            syncIntroVisibility(true);
-            syncPortfolioVisibility(false);
-          },
-          onEnterBack: () => {
-            syncIntroVisibility(true);
-            syncPortfolioVisibility(false);
-          },
-          onLeave: () => {
-            syncIntroVisibility(false);
-            syncPortfolioVisibility(true);
-          },
-          onLeaveBack: () => {
-            syncIntroVisibility(false);
-            syncPortfolioVisibility(true);
-          },
-          onRefresh: (self) => {
-            const isActiveIntro = self.isActive && window.scrollY >= self.start;
-            syncIntroVisibility(window.scrollY >= self.start && window.scrollY < self.end);
-            syncPortfolioVisibility(!isActiveIntro);
-          },
-        });
-      }
-
       gsap.utils.toArray<HTMLElement>("[data-service-card]").forEach((card, index) => {
         gsap.from(card, {
           y: 48,
@@ -175,26 +134,6 @@ export function useHomeMotion({
             },
           },
         );
-
-        ScrollTrigger.create({
-          trigger: ".home-intro",
-          start: "top top",
-          end: "bottom top",
-          pin: ".home-intro-content",
-          pinSpacing: false,
-          anticipatePin: 1,
-        });
-
-        gsap.to(".home-intro-content", {
-          y: -360,
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".home-intro",
-            start: "70% top",
-            end: "bottom top",
-            scrub: 0.8,
-          },
-        });
 
         gsap.utils.toArray<HTMLElement>(".home-portfolio-canvas--mobile [data-project-card]").forEach((card, index) => {
           gsap.from(card, {
@@ -270,26 +209,6 @@ export function useHomeMotion({
             },
           );
         }
-
-        ScrollTrigger.create({
-          trigger: ".home-intro",
-          start: "top top",
-          end: "bottom top",
-          pin: ".home-intro-content",
-          pinSpacing: false,
-          anticipatePin: 1,
-        });
-
-        gsap.to(".home-intro-content", {
-          y: -760,
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".home-intro",
-            start: "70% top",
-            end: "bottom top",
-            scrub: 0.8,
-          },
-        });
 
         gsap.utils.toArray<HTMLElement>(".home-portfolio-canvas--desktop [data-project-card]").forEach((card, index) => {
           gsap.from(card, {
