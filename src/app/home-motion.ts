@@ -98,47 +98,6 @@ export function useHomeMotion({
         });
       });
 
-      const introContent = root.querySelector<HTMLElement>(".home-intro-content");
-      const portfolioSection = root.querySelector<HTMLElement>(".home-portfolio");
-      if (portfolioSection) {
-        const syncPortfolioVisibility = (visible: boolean) => {
-          portfolioSection.style.visibility = visible ? "" : "hidden";
-        };
-        const syncIntroVisibility = (visible: boolean) => {
-          if (introContent) introContent.style.visibility = visible ? "" : "hidden";
-        };
-
-        syncIntroVisibility(false);
-        syncPortfolioVisibility(false);
-
-        ScrollTrigger.create({
-          trigger: ".home-intro",
-          start: "top 1px",
-          end: "bottom top",
-          onEnter: () => {
-            syncIntroVisibility(true);
-            syncPortfolioVisibility(false);
-          },
-          onEnterBack: () => {
-            syncIntroVisibility(true);
-            syncPortfolioVisibility(false);
-          },
-          onLeave: () => {
-            syncIntroVisibility(false);
-            syncPortfolioVisibility(true);
-          },
-          onLeaveBack: () => {
-            syncIntroVisibility(false);
-            syncPortfolioVisibility(true);
-          },
-          onRefresh: (self) => {
-            const isActiveIntro = self.isActive && window.scrollY >= self.start;
-            syncIntroVisibility(window.scrollY >= self.start && window.scrollY < self.end);
-            syncPortfolioVisibility(!isActiveIntro);
-          },
-        });
-      }
-
       gsap.utils.toArray<HTMLElement>("[data-service-card]").forEach((card, index) => {
         gsap.from(card, {
           y: 48,
@@ -251,7 +210,7 @@ export function useHomeMotion({
         });
 
         heroTimeline
-          .fromTo("[data-hero-image]", { scale: 1.08, yPercent: -4 }, { scale: 1.03, yPercent: 8 }, 0);
+          .fromTo("[data-hero-image]", { scale: 1, yPercent: 0 }, { scale: 1.03, yPercent: 3 }, 0);
 
         if (window.matchMedia("(max-width: 2199px)").matches) {
           gsap.fromTo(

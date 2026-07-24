@@ -37,12 +37,15 @@ export function ClientLogo({ client }: { client: ClientLogoData }) {
     );
   }
 
+  const logoHeight = Math.min(client.height, 32);
+  const logoWidth = Math.round((client.width * logoHeight) / client.height);
+
   return (
     <Image
       src={`/vinus/clients/${client.slug}.svg`}
       alt={client.name}
-      width={client.width}
-      height={client.height}
+      width={logoWidth}
+      height={logoHeight}
       className="client-logo h-auto max-w-full object-contain"
     />
   );

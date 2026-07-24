@@ -30,7 +30,7 @@ const projects: Project[] = [
     title: "Mongdang",
     subtitle: "Brand Experience & Storytelling",
     category: "Character",
-    src: "/vinus/dummy-photo/work-01.jpg",
+    src: "/vinus/home/figma-mongdang.png",
     slug: "mongdang",
     layout: "home-project--mongdang",
     mobileLayout: "w-full",
@@ -40,7 +40,7 @@ const projects: Project[] = [
     title: "Shinhan Easy",
     subtitle: "Digital Experience & Mobile Web",
     category: "Web",
-    src: "/vinus/dummy-photo/work-02.jpg",
+    src: "/vinus/home/figma-shinhan.png",
     slug: "shinhan-easy",
     layout: "home-project--shinhan",
     mobileLayout: "ml-[14%] w-[86%]",
@@ -50,7 +50,7 @@ const projects: Project[] = [
     title: "Crowd OH!",
     subtitle: "Crowdsourcing Platform Design",
     category: "Web",
-    src: "/vinus/dummy-photo/work-03.jpg",
+    src: "/vinus/home/figma-crowd.png",
     slug: "crowdsourcing-platform-crowd-oh",
     layout: "home-project--crowd",
     mobileLayout: "w-[92%]",
@@ -60,7 +60,7 @@ const projects: Project[] = [
     title: "macadamia",
     subtitle: "Product Strategy & UX/UI Design",
     category: "Web",
-    src: "/vinus/dummy-photo/work-04.jpg",
+    src: "/vinus/home/figma-macadamia.png",
     slug: "macadamia-website",
     layout: "home-project--macadamia",
     mobileLayout: "ml-[8%] w-[92%]",
@@ -70,7 +70,7 @@ const projects: Project[] = [
     title: "Budongsan114 Mediate BIZsolution",
     subtitle: "Enterprise B2B Product Strategy",
     category: "Web",
-    src: "/vinus/dummy-photo/work-05.jpg",
+    src: "/vinus/home/figma-budongsan.png",
     slug: "budongsan114-mediate-bizsolution",
     layout: "home-project--budongsan",
     mobileLayout: "ml-[20%] w-[80%]",
@@ -80,7 +80,7 @@ const projects: Project[] = [
     title: "DongA On book",
     subtitle: "Branding · Digital Design · Web",
     category: "Web",
-    src: "/vinus/dummy-photo/work-06.jpg",
+    src: "/vinus/home/figma-donga.png",
     slug: "donga-on-book",
     layout: "home-project--donga",
     mobileLayout: "ml-[7%] w-[93%]",
@@ -909,7 +909,7 @@ export default function Home() {
           }
 
           .home-studio-content {
-            width: 944px;
+            width: 100%;
             max-width: 944px;
             gap: 48px;
           }
@@ -949,7 +949,7 @@ export default function Home() {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 24px;
-            width: 944px;
+            width: 100%;
             max-width: 944px;
             height: 206px;
             padding: 0;
@@ -1062,12 +1062,14 @@ export default function Home() {
             display: flex;
             flex-direction: column;
             gap: 40px;
-            width: 944px;
+            width: 100%;
+            max-width: 944px;
             height: 1050px;
           }
 
           .home-story-heading {
-            width: 944px;
+            width: 100%;
+            max-width: 944px;
             height: 152px;
             gap: 40px;
           }
@@ -1077,7 +1079,8 @@ export default function Home() {
           }
 
           .home-story-list {
-            width: 944px;
+            width: 100%;
+            max-width: 944px;
             height: 858px;
           }
 

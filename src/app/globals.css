@@ -1306,7 +1306,8 @@ nextjs-portal {
     padding: 0 !important;
   }
   .project-detail-overview-inner {
-    width: 944px;
+    width: 100%;
+    max-width: 944px;
     gap: 24px;
     padding-block: 48px;
   }
@@ -1327,7 +1328,8 @@ nextjs-portal {
     padding: 40px;
   }
   .budongsan-content-block {
-    width: 944px;
+    width: 100%;
+    max-width: 944px;
     gap: 24px;
   }
   .budongsan-content-block--first { height: 1985px; }
@@ -1364,7 +1366,7 @@ nextjs-portal {
     height: 917px;
     padding: 64px 40px;
   }
-  .story-detail-content { width: 944px; height: 789px; }
+  .story-detail-content { width: 100%; max-width: 944px; height: 789px; }
   .story-detail-intro { height: 136px; font-size: 28px; line-height: 1.2; }
   .story-detail-section:nth-of-type(1) { height: 152px; }
   .story-detail-section:nth-of-type(2) { height: 180px; }

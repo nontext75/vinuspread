@@ -367,7 +367,8 @@ export function Footer() {
           }
 
           .site-footer-next {
-            width: 944px;
+            width: 100%;
+            max-width: 944px;
             height: 113px;
             gap: 32px;
           }
@@ -397,14 +398,15 @@ export function Footer() {
 
           .site-footer-info-grid {
             display: grid;
-            width: 944px;
+            width: 100%;
+            max-width: 944px;
             height: 344px;
-            grid-template-columns: 456px 456px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 32px;
           }
 
           .site-footer-contact {
-            width: 456px;
+            width: 100%;
             height: 134px;
           }
 
@@ -419,14 +421,14 @@ export function Footer() {
           }
 
           .site-footer-info-group {
-            width: 456px;
+            width: 100%;
             height: 344px;
             gap: 24px;
           }
 
           .site-footer-info-column,
           .site-footer-info-column--second {
-            width: 456px;
+            width: 100%;
             height: auto;
             gap: 24px;
           }
@@ -442,19 +444,20 @@ export function Footer() {
           }
 
           .site-footer-info--business {
-            width: 295px;
+            width: min(295px, 100%);
           }
 
           .site-footer-info--positions {
-            width: 130px;
+            width: min(130px, 100%);
           }
 
           .site-footer-info--hours {
-            width: 226px;
+            width: min(226px, 100%);
           }
 
           .site-footer-info--korea {
-            width: 438px;
+            width: 100%;
+            max-width: 438px;
           }
 
           .site-footer-utility {
