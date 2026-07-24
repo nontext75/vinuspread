@@ -2121,4 +2121,125 @@ nextjs-portal {
   }
 }
 
+/* Responsive type smoothing: remove visible jumps at 768, 1280, and 2200. */
+@media (max-width: 767px) {
+  :root {
+    --type-heading-page-size: clamp(56px, 10.95vw, 84px);
+    --type-heading-page-line: 0.92;
+    --type-display-studio-keyword-size: clamp(40px, 8vw, 56px);
+    --type-display-studio-keyword-line: 1.08;
+    --type-heading-studio-business-size: clamp(24px, 6.2vw, 44px);
+    --type-heading-studio-business-line: 1.16;
+  }
+
+  .studio-business-heading > h2,
+  .studio-clients-heading > h2 {
+    font-size: var(--type-heading-studio-business-size) !important;
+    line-height: var(--type-heading-studio-business-line) !important;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --type-heading-page-size: clamp(88px, 8.333vw, 120px);
+    --type-heading-page-line: 0.92;
+    --type-display-studio-keyword-size: clamp(56px, 6.667vw, 120px);
+    --type-display-studio-keyword-line: 1;
+    --type-heading-studio-business-size: clamp(48px, 5vw, 120px);
+    --type-heading-studio-business-line: 1;
+  }
+
+  .studio-business-heading > h2,
+  .studio-clients-heading > h2 {
+    font-size: var(--type-heading-studio-business-size) !important;
+    line-height: var(--type-heading-studio-business-line) !important;
+  }
+}
+
+@media (min-width: 2200px) {
+  :root {
+    --type-heading-page-size: 120px;
+    --type-heading-page-line: 0.92;
+  }
+}
+
+/* Work page QA: restore a clean portfolio grid and keep the filter control floating clear of the footer. */
+@media (min-width: 768px) {
+  .experience-page-list {
+    padding-bottom: 144px !important;
+  }
+
+  .experience-page-grid {
+    grid-auto-rows: auto !important;
+    align-items: start !important;
+  }
+
+  .experience-page-grid > * {
+    margin-top: 0 !important;
+  }
+
+  .experience-page-controls {
+    position: relative !important;
+    z-index: 30;
+    bottom: auto !important;
+    left: auto !important;
+    display: flex !important;
+    width: max-content !important;
+    max-width: calc(100vw - 48px);
+    margin: 96px auto 0;
+    transform: none !important;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .experience-page-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 32px !important;
+    row-gap: 80px !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .experience-page-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    column-gap: 40px !important;
+    row-gap: 96px !important;
+  }
+}
+
+@media (min-width: 2200px) {
+  .experience-page-grid {
+    column-gap: 48px !important;
+    row-gap: 120px !important;
+  }
+}
+
+/* Portfolio detail QA: keep the hero image within the first viewport on desktop. */
+@media (min-width: 1280px) {
+  .project-detail-hero {
+    height: 100svh !important;
+    min-height: 760px !important;
+    max-height: 980px !important;
+    aspect-ratio: auto !important;
+  }
+
+  .project-detail-hero .display-project-title {
+    font-size: clamp(88px, 7vw, 144px) !important;
+    line-height: 0.96 !important;
+  }
+}
+
+@media (min-width: 2200px) {
+  .project-detail-hero {
+    height: 100svh !important;
+    min-height: 860px !important;
+    max-height: 1080px !important;
+  }
+
+  .project-detail-hero .display-project-title {
+    font-size: clamp(128px, 6.25vw, 160px) !important;
+  }
+}
+
 
