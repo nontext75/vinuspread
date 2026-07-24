@@ -161,7 +161,7 @@ export function useHomeMotion({
           },
         );
 
-        const projectCanvas = window.matchMedia("(max-width: 2199px)").matches
+        const projectCanvas = window.matchMedia("(max-width: 1024px)").matches
           ? ".home-portfolio-canvas--mobile"
           : ".home-portfolio-canvas--desktop";
         animateProjects(`${projectCanvas} [data-project-card]`, 2.5, 1.06, 0.9);
@@ -188,7 +188,7 @@ export function useHomeMotion({
           },
         );
 
-        if (window.matchMedia("(max-width: 2199px)").matches) {
+        if (window.matchMedia("(max-width: 1024px)").matches) {
           gsap.fromTo(
             "[data-intro-line], [data-intro-link]",
             { y: 144 },
@@ -206,7 +206,7 @@ export function useHomeMotion({
           );
         }
 
-        const projectCanvas = window.matchMedia("(max-width: 2199px)").matches
+        const projectCanvas = window.matchMedia("(max-width: 1024px)").matches
           ? ".home-portfolio-canvas--mobile"
           : ".home-portfolio-canvas--desktop";
         animateProjects(`${projectCanvas} [data-project-card]`, 3.5, 1.08, 1.1);

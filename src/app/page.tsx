@@ -129,7 +129,7 @@ function ProjectCard({ project }: { project: Project }) {
       size="feature"
       mediaRatio={isWideCard ? "wide" : "landscape"}
       layoutClassName={`home-project ${project.layout} ${project.mobileLayout} ${project.mobileOnly ? "home-project--mobile-only" : ""}`}
-      imageSizes="(max-width: 767px) 92vw, (max-width: 2199px) 50vw, 1368px"
+      imageSizes="(max-width: 767px) 92vw, (max-width: 1024px) 50vw, 1368px"
     />
   );
 }
@@ -249,7 +249,7 @@ export default function Home() {
             </h1>
           </div>
 
-          <p data-hero-reveal data-motion="hero-summary" className="home-hero-summary body-xl max-w-[1500px] font-normal text-white md:font-medium min-[2200px]:w-[1500px]">
+          <p data-hero-reveal data-motion="hero-summary" className="home-hero-summary body-xl max-w-[1500px] font-normal text-white md:font-medium min-[1025px]:w-[1500px]">
             From first idea to final detail, we work with you to find direction,
             <br className="home-hero-summary-break" />
             build better experiences, and keep improving what comes next.
@@ -363,8 +363,8 @@ export default function Home() {
 
             <div className="home-studio-intro grid w-full gap-[var(--space-studio-intro)] md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
               <p data-reveal className="home-studio-lead heading-lead w-full font-medium">
-                <span className="min-[2200px]:block">Always there, from first idea </span>
-                <span className="min-[2200px]:block">to final detail.</span>
+                <span className="min-[1025px]:block">Always there, from first idea </span>
+                <span className="min-[1025px]:block">to final detail.</span>
               </p>
               <p data-reveal className="home-studio-body body-lg w-full">
                 Vinuspread works with teams from early direction to launch and beyond.
@@ -721,27 +721,27 @@ export default function Home() {
           line-height: 1.2;
         }
 
-        @media (min-width: 768px) and (max-width: 2199px) {
+        @media (min-width: 768px) and (max-width: 2559px) {
           .home-page {
             --type-display-hero-size: 160px;
             --type-display-hero-line: 1;
           }
 
           .home-hero {
-            height: clamp(1823px, calc(50.595vw + 1304.91px), 2418px);
-            min-height: clamp(1823px, calc(50.595vw + 1304.91px), 2418px);
-            padding-inline: clamp(40px, calc(2.041vw + 19.1px), 64px);
+            height: clamp(1823px, calc(38.737vw + 1426.33px), 2418px);
+            min-height: clamp(1823px, calc(38.737vw + 1426.33px), 2418px);
+            padding-inline: clamp(40px, calc(1.5625vw + 24px), 64px);
           }
 
           .home-intro {
-            height: clamp(674px, calc(17.772vw + 492.01px), 883px);
-            min-height: clamp(674px, calc(17.772vw + 492.01px), 883px);
+            height: clamp(674px, calc(13.607vw + 534.67px), 883px);
+            min-height: clamp(674px, calc(13.607vw + 534.67px), 883px);
             display: flex;
             align-items: flex-start;
             justify-content: center;
             padding:
-              clamp(160px, calc(3.401vw + 125.17px), 200px)
-              clamp(40px, calc(2.041vw + 19.1px), 64px)
+              clamp(160px, calc(2.604vw + 133.33px), 200px)
+              clamp(40px, calc(1.5625vw + 24px), 64px)
               0;
             border-top: 1px solid rgb(8 9 13 / 0.1);
           }
@@ -752,7 +752,7 @@ export default function Home() {
           }
 
           .home-hero-content {
-            margin-top: clamp(430px, calc(20.068vw + 224.1px), 666px);
+            margin-top: clamp(430px, calc(15.365vw + 272.67px), 666px);
           }
 
           .home-hero-summary-break {
@@ -760,13 +760,13 @@ export default function Home() {
           }
 
           .home-intro-content {
-            width: min(clamp(944px, calc(42.177vw + 512.03px), 1440px), 100%);
+            width: min(clamp(944px, calc(32.292vw + 613.33px), 1440px), 100%);
             gap: 48px;
             align-items: center;
           }
 
           .home-intro-copy {
-            width: min(clamp(944px, calc(42.177vw + 512.03px), 1440px), 100%);
+            width: min(clamp(944px, calc(32.292vw + 613.33px), 1440px), 100%);
             gap: 0;
             text-align: center;
           }
@@ -780,9 +780,10 @@ export default function Home() {
           }
 
           .home-portfolio {
-            height: auto;
-            min-height: 1949px;
-            padding: 96px 40px;
+            height: clamp(1949px, calc(80.924vw + 1120.33px), 3192px);
+            min-height: 0;
+            padding: clamp(96px, calc(2.083vw + 74.67px), 128px)
+              clamp(40px, calc(1.5625vw + 24px), 64px);
           }
 
           .home-portfolio-heading {
@@ -882,24 +883,25 @@ export default function Home() {
           }
 
           .home-reel {
-            height: clamp(640px, calc(54.422vw + 82.72px), 1280px);
-            min-height: clamp(640px, calc(54.422vw + 82.72px), 1280px);
+            height: clamp(640px, calc(41.667vw + 213.33px), 1280px);
+            min-height: clamp(640px, calc(41.667vw + 213.33px), 1280px);
           }
 
           .home-studio {
-            height: clamp(804px, calc(29.762vw + 499.24px), 1154px);
+            height: clamp(804px, calc(22.786vw + 570.67px), 1154px);
             min-height: 0;
             padding:
-              clamp(96px, calc(2.721vw + 68.14px), 128px)
-              clamp(40px, calc(2.041vw + 19.1px), 64px);
-            align-items: flex-start;
-            justify-content: flex-start;
+              clamp(96px, calc(2.083vw + 74.67px), 128px)
+              clamp(40px, calc(1.5625vw + 24px), 64px);
+            align-items: center;
+            justify-content: center;
           }
 
           .home-studio-content {
             width: 100%;
-            max-width: clamp(944px, calc(42.177vw + 512.03px), 1440px);
+            max-width: clamp(944px, calc(32.292vw + 613.33px), 1440px);
             gap: 48px;
+            margin-inline: auto;
           }
 
           .home-studio-heading-block {
@@ -938,7 +940,7 @@ export default function Home() {
             grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 24px;
             width: 100%;
-            max-width: clamp(944px, calc(42.177vw + 512.03px), 1440px);
+            max-width: clamp(944px, calc(32.292vw + 613.33px), 1440px);
             height: 206px;
             padding: 0;
             border: 0;
@@ -999,11 +1001,11 @@ export default function Home() {
 
           .home-clients {
             --type-display-section-size: 72px;
-            height: clamp(976px, calc(11.31vw + 860.19px), 1109px);
+            height: clamp(976px, calc(8.659vw + 887.33px), 1109px);
             min-height: 0;
             padding:
-              clamp(96px, calc(5.442vw + 40.27px), 160px)
-              clamp(40px, calc(2.041vw + 19.1px), 64px);
+              clamp(96px, calc(4.167vw + 53.33px), 160px)
+              clamp(40px, calc(1.5625vw + 24px), 64px);
           }
 
           .home-clients-title-block {
@@ -1030,6 +1032,7 @@ export default function Home() {
           .home-clients .client-logo-grid {
             height: 504px;
             grid-template-rows: repeat(7, 72px);
+            margin-bottom: 0;
           }
 
           .home-clients .client-logo-cell {
@@ -1053,13 +1056,13 @@ export default function Home() {
             flex-direction: column;
             gap: 40px;
             width: 100%;
-            max-width: clamp(944px, calc(42.177vw + 512.03px), 1440px);
+            max-width: clamp(944px, calc(32.292vw + 613.33px), 1440px);
             height: 1050px;
           }
 
           .home-story-heading {
             width: 100%;
-            max-width: clamp(944px, calc(42.177vw + 512.03px), 1440px);
+            max-width: clamp(944px, calc(32.292vw + 613.33px), 1440px);
             height: 152px;
             gap: 40px;
           }
@@ -1081,7 +1084,107 @@ export default function Home() {
 
         }
 
-        @media (min-width: 2200px) {
+        @media (min-width: 1025px) and (max-width: 2559px) {
+          .home-portfolio-title,
+          .home-studio-title,
+          .home-clients {
+            --type-display-giant-size: clamp(72px, calc(3.125vw + 40px), 120px);
+            --type-display-section-size: clamp(72px, calc(3.125vw + 40px), 120px);
+          }
+
+          .home-portfolio-canvas--mobile {
+            display: none;
+          }
+
+          .home-portfolio-canvas--desktop {
+            --home-work-col: calc((100% - 528px) / 12);
+            position: relative;
+            display: block;
+            width: calc(100% - (2 * clamp(40px, calc(1.5625vw + 24px), 64px)));
+            height: calc(100% - 440px);
+            margin: clamp(48px, calc(3.125vw + 8px), 88px) auto 0;
+          }
+
+          .home-portfolio-canvas--desktop .home-project {
+            position: absolute;
+            width: auto;
+            margin: 0;
+          }
+
+          .home-portfolio .home-project {
+            --type-heading-card-large-size: clamp(28px, calc(0.521vw + 22.67px), 36px);
+          }
+
+          .home-portfolio .home-project--mongdang {
+            left: calc(var(--home-work-col) + 48px);
+            top: 0;
+            width: calc(var(--home-work-col) * 4 + 144px);
+          }
+
+          .home-portfolio .home-project--shinhan {
+            left: calc(var(--home-work-col) * 6 + 288px);
+            top: clamp(48px, calc(3.125vw + 8px), 96px);
+            width: calc(var(--home-work-col) * 3 + 96px);
+          }
+
+          .home-portfolio .home-project--crowd {
+            left: calc(var(--home-work-col) * 3 + 144px);
+            top: clamp(360px, calc(23.438vw + 60px), 720px);
+            width: calc(var(--home-work-col) * 3 + 96px);
+          }
+
+          .home-portfolio .home-project--macadamia {
+            left: calc(var(--home-work-col) * 7 + 336px);
+            top: clamp(396px, calc(25.781vw + 66px), 792px);
+            width: calc(var(--home-work-col) * 4 + 144px);
+          }
+
+          .home-portfolio .home-project--budongsan {
+            left: calc(var(--home-work-col) + 48px);
+            top: clamp(785px, calc(51.107vw + 130.67px), 1570px);
+            width: calc(var(--home-work-col) * 3 + 96px);
+          }
+
+          .home-portfolio .home-project--donga {
+            left: calc(var(--home-work-col) * 5 + 240px);
+            top: clamp(840px, calc(54.688vw + 140px), 1680px);
+            width: calc(var(--home-work-col) * 3 + 96px);
+          }
+
+          .home-studio-content {
+            gap: clamp(48px, calc(3.125vw + 16px), 96px);
+          }
+
+          .home-studio-intro {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: clamp(48px, calc(3.125vw + 16px), 96px);
+          }
+
+          .home-studio-lead {
+            font-size: clamp(36px, calc(0.781vw + 28px), 48px);
+          }
+
+          .home-studio-body {
+            --type-body-lg-size: clamp(20px, calc(0.26vw + 17.33px), 24px);
+          }
+
+          .home-clients .client-logo-grid {
+            grid-template-rows: repeat(4, clamp(72px, calc(1.058vw + 61.17px), 88.25px));
+            height: calc(4 * clamp(72px, calc(1.058vw + 61.17px), 88.25px));
+          }
+
+          .home-clients .client-logo-cell {
+            height: clamp(72px, calc(1.058vw + 61.17px), 88.25px);
+            min-height: clamp(72px, calc(1.058vw + 61.17px), 88.25px);
+          }
+
+          .home-story {
+            height: clamp(985px, calc(1413.33px - 16.732vw), 1242px);
+          }
+        }
+
+        @media (min-width: 2560px) {
           .home-hero {
             height: 2418px;
             min-height: 0;
@@ -1271,6 +1374,7 @@ export default function Home() {
             width: 1440px !important;
             max-width: 1440px !important;
             gap: 96px;
+            margin-inline: auto;
           }
 
           .home-studio-heading-block {
@@ -1384,6 +1488,7 @@ export default function Home() {
 
           .home-clients .client-logo-grid {
             grid-template-rows: repeat(4, 88.25px);
+            margin-bottom: 0;
           }
 
           .home-clients .client-logo-cell {
@@ -1662,7 +1767,7 @@ export default function Home() {
 
         }
 
-        @media (min-width: 768px) and (max-width: 2199px) {
+        @media (min-width: 768px) and (max-width: 2559px) {
           .home-story-row {
             min-height: 0;
             height: 286px;
