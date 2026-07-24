@@ -734,7 +734,7 @@ export default function Home() {
 
         @media (min-width: 768px) and (max-width: 2199px) {
           .home-page {
-            --type-display-hero-size: 160px;
+            --type-display-hero-size: clamp(160px, 14.0625vw, 288px);
             --type-display-hero-line: 1;
           }
 
@@ -756,11 +756,11 @@ export default function Home() {
 
           .home-hero-content,
           .home-hero-content > div:first-child {
-            gap: 72px;
+            gap: clamp(48px, 3.125vw, 72px);
           }
 
           .home-hero-content {
-            margin-top: clamp(180px, 19svh, 260px);
+            margin-top: clamp(120px, 12svh, 220px);
           }
 
           .home-hero-summary-break {
