@@ -97,29 +97,20 @@ const services = [
 
 const homeStoryContent = [
   {
-    title: "Why You Shouldn't Choose Brand Colors by Instinct",
-    excerpt:
-      "Color is not just a matter of taste; it determines the perception and emotions of your brand. Even a small change can affect the entire way people perceive your brand.",
     image: "/vinus/stories/home-story-01.png",
   },
   {
-    title: "Why You Shouldn't Choose Brand Colors by Instinct",
-    excerpt:
-      "Color is not just a matter of taste; it determines the perception and emotions of your brand. Even a small change can affect the entire way people perceive your brand.",
     image: "/vinus/stories/home-story-02.png",
   },
   {
-    title: "Why You Shouldn't Choose Brand Colors by Instinct",
-    excerpt:
-      "Color is not just a matter of taste; it determines the perception and emotions of your brand. Even a small change can affect the entire way people perceive your brand.",
     image: "/vinus/stories/home-story-03.jpg",
   },
 ] as const;
 
 const stories = storyEntries.slice(0, 3).map((story, index) => ({
-  title: homeStoryContent[index]?.title ?? story.title,
-  excerpt: homeStoryContent[index]?.excerpt ?? story.excerpt,
-  date: "2026.04.20",
+  title: story.title,
+  excerpt: story.excerpt,
+  date: story.date,
   image: homeStoryContent[index]?.image ?? story.image,
   href: `/news/${story.slug}`,
 }));

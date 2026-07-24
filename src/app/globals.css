@@ -1857,4 +1857,236 @@ nextjs-portal {
   }
 }
 
+/* Visual QA pass: convert exported fixed-canvas Studio sizing into web-flow sizing. */
+.studio-principles,
+.studio-vision,
+.studio-business,
+.studio-clients {
+  height: auto !important;
+}
+
+.studio-vision {
+  min-height: 0 !important;
+}
+
+.studio-vision-title-block {
+  display: flex !important;
+}
+
+.studio-wide-media {
+  min-height: 360px;
+}
+
+@media (max-width: 767px) {
+  .studio-principles {
+    min-height: 0 !important;
+    padding-block: 64px !important;
+  }
+
+  .studio-principles-grid {
+    grid-template-rows: none !important;
+    gap: 72px !important;
+  }
+
+  .studio-principles-grid > * {
+    height: auto !important;
+  }
+
+  .studio-vision {
+    padding-block: 72px !important;
+  }
+
+  .studio-business,
+  .studio-clients {
+    min-height: 0 !important;
+    padding-block: 72px !important;
+  }
+
+  .studio-business-grid {
+    grid-template-rows: none !important;
+  }
+
+  .studio-business-grid > * {
+    height: auto !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 2199px) {
+  .studio-principles {
+    min-height: 0 !important;
+    padding-block: 112px !important;
+  }
+
+  .studio-principles-grid {
+    align-items: start;
+    grid-template-rows: none !important;
+    gap: 48px !important;
+  }
+
+  .studio-principles-grid > * {
+    height: auto !important;
+  }
+
+  .studio-vision {
+    min-height: 0 !important;
+    gap: 56px !important;
+    padding-block: 112px !important;
+  }
+
+  .studio-vision-title {
+    max-width: 1120px;
+    margin-inline: auto;
+  }
+
+  .studio-wide-media {
+    aspect-ratio: 2.55 / 1;
+    min-height: 420px;
+  }
+
+  .studio-business {
+    min-height: 0 !important;
+    padding-block: 112px !important;
+  }
+
+  .studio-business-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-template-rows: none !important;
+    gap: 32px !important;
+    padding-top: 72px !important;
+  }
+
+  .studio-business-grid > * {
+    height: auto !important;
+  }
+
+  .studio-clients {
+    min-height: 0 !important;
+    gap: 72px !important;
+    padding-block: 112px !important;
+  }
+}
+
+@media (min-width: 2200px) {
+  .studio-principles {
+    min-height: 0 !important;
+    padding-block: 144px !important;
+  }
+
+  .studio-principles-grid {
+    height: 1700px !important;
+  }
+
+  .studio-principles-grid > :nth-child(1) {
+    width: 760px !important;
+    height: auto !important;
+  }
+
+  .studio-principles-grid > :nth-child(2) {
+    left: 1380px !important;
+    width: 780px !important;
+    height: auto !important;
+  }
+
+  .studio-principles-grid > :nth-child(3) {
+    top: 1120px !important;
+    left: 640px !important;
+    width: 760px !important;
+    height: auto !important;
+  }
+
+  .studio-vision {
+    min-height: 0 !important;
+    gap: 80px !important;
+    padding-block: 144px !important;
+  }
+
+  .studio-vision-title-block {
+    min-height: 0 !important;
+  }
+
+  .studio-vision-title {
+    width: min(1452px, 100%);
+    margin-top: 32px;
+  }
+
+  .studio-wide-media {
+    aspect-ratio: 2.7 / 1;
+    min-height: 640px;
+  }
+
+  .studio-business {
+    min-height: 0 !important;
+    padding-block: 144px !important;
+  }
+
+  .studio-business-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-template-rows: none !important;
+    gap: 40px !important;
+    padding-top: 96px !important;
+  }
+
+  .studio-business-grid > * {
+    height: auto !important;
+  }
+
+  .studio-clients {
+    min-height: 0 !important;
+    gap: 96px !important;
+    padding-block: 144px !important;
+  }
+}
+
+/* Visual QA pass: loosen the Experience grid so portfolio cards feel less mechanical. */
+@media (min-width: 768px) {
+  .experience-page-list {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .experience-page-grid {
+    grid-auto-rows: auto !important;
+    align-items: start;
+  }
+
+  .experience-page-grid .project-card__link {
+    gap: 20px;
+  }
+
+  .experience-page-grid .project-card__media {
+    aspect-ratio: 1.22 / 1;
+  }
+
+  .experience-page-grid > :nth-child(2),
+  .experience-page-grid > :nth-child(5) {
+    margin-top: 96px;
+  }
+
+  .experience-page-grid > :nth-child(3),
+  .experience-page-grid > :nth-child(7) {
+    margin-top: 32px;
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 2199px) {
+  .experience-page-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    column-gap: 32px !important;
+    row-gap: 120px !important;
+  }
+}
+
+@media (min-width: 2200px) {
+  .experience-page-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    column-gap: 48px !important;
+    row-gap: 144px !important;
+  }
+
+  .experience-page-grid > :nth-child(2),
+  .experience-page-grid > :nth-child(5) {
+    margin-top: 128px;
+  }
+}
+
 
