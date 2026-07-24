@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X } from "lucide-react";
@@ -11,6 +11,7 @@ import { PortfolioCard } from "@/components/PortfolioCard";
 import { ServiceCard } from "@/components/ServiceCard";
 import { StoryListItem } from "@/components/StoryListItem";
 import { stories as storyEntries } from "@/lib/stories";
+import { useHomeMotion } from "./home-motion";
 
 type Project = {
   title: string;
@@ -20,6 +21,7 @@ type Project = {
   slug: string;
   layout: string;
   mobileLayout: string;
+  speed: number;
   mobileOnly?: boolean;
 };
 
@@ -32,6 +34,7 @@ const projects: Project[] = [
     slug: "mongdang",
     layout: "home-project--mongdang",
     mobileLayout: "w-full",
+    speed: -8,
   },
   {
     title: "Shinhan Easy",
@@ -41,6 +44,7 @@ const projects: Project[] = [
     slug: "shinhan-easy",
     layout: "home-project--shinhan",
     mobileLayout: "ml-[14%] w-[86%]",
+    speed: 10,
   },
   {
     title: "Crowd OH!",
@@ -50,6 +54,7 @@ const projects: Project[] = [
     slug: "crowdsourcing-platform-crowd-oh",
     layout: "home-project--crowd",
     mobileLayout: "w-[92%]",
+    speed: -7,
   },
   {
     title: "macadamia",
@@ -59,6 +64,7 @@ const projects: Project[] = [
     slug: "macadamia-website",
     layout: "home-project--macadamia",
     mobileLayout: "ml-[8%] w-[92%]",
+    speed: 8,
   },
   {
     title: "Budongsan114 Mediate BIZsolution",
@@ -68,6 +74,7 @@ const projects: Project[] = [
     slug: "budongsan114-mediate-bizsolution",
     layout: "home-project--budongsan",
     mobileLayout: "ml-[20%] w-[80%]",
+    speed: -10,
   },
   {
     title: "DongA On book",
@@ -77,6 +84,7 @@ const projects: Project[] = [
     slug: "donga-on-book",
     layout: "home-project--donga",
     mobileLayout: "ml-[7%] w-[93%]",
+    speed: 7,
   },
 ];
 
@@ -127,12 +135,15 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 export default function Home() {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
   const playReelTriggerRef = useRef<HTMLButtonElement>(null);
   const playReelDialogRef = useRef<HTMLDivElement>(null);
   const playReelCloseRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPlayReelPresent, setIsPlayReelPresent] = useState(false);
+  const projectSpeeds = useMemo(() => projects.map((project) => project.speed), []);
 
   useEffect(() => {
     if (!isPlayReelPresent) return;
@@ -191,9 +202,17 @@ export default function Home() {
     };
   }, [isPlayReelPresent]);
 
+  useHomeMotion({
+    rootRef,
+    heroRef,
+    reduceMotion: Boolean(reduceMotion),
+    projectSpeeds,
+  });
+
   return (
-    <div className="home-page relative bg-white text-vinus-ink">
+    <div ref={rootRef} className="home-page relative bg-white text-vinus-ink">
       <section
+        ref={heroRef}
         data-header-theme="dark"
         className="home-hero relative overflow-hidden bg-vinus-ink text-white"
       >
@@ -263,7 +282,7 @@ export default function Home() {
 
       <section id="work" className="home-portfolio relative bg-white">
         <div className="home-portfolio-heading">
-          <div className="home-portfolio-title-block flex max-w-[1680px] flex-col items-start gap-[var(--space-content)]">
+          <div data-reveal className="home-portfolio-title-block flex max-w-[1680px] flex-col items-start gap-[var(--space-content)]">
             <h2 className="home-portfolio-title display-giant font-normal" aria-label="Experience">
               <span className="home-portfolio-title-line block">Experience</span>
             </h2>
