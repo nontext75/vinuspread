@@ -135,26 +135,6 @@ export function useHomeMotion({
           },
         );
 
-        ScrollTrigger.create({
-          trigger: ".home-intro",
-          start: "top top",
-          end: "bottom top",
-          pin: ".home-intro-content",
-          pinSpacing: false,
-          anticipatePin: 1,
-        });
-
-        gsap.to(".home-intro-content", {
-          y: -360,
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".home-intro",
-            start: "70% top",
-            end: "bottom top",
-            scrub: 0.8,
-          },
-        });
-
         gsap.utils.toArray<HTMLElement>(".home-portfolio-canvas--mobile [data-project-card]").forEach((card, index) => {
           gsap.from(card, {
             y: 88,
@@ -229,26 +209,6 @@ export function useHomeMotion({
             },
           );
         }
-
-        ScrollTrigger.create({
-          trigger: ".home-intro",
-          start: "top top",
-          end: "bottom top",
-          pin: ".home-intro-content",
-          pinSpacing: false,
-          anticipatePin: 1,
-        });
-
-        gsap.to(".home-intro-content", {
-          y: -760,
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".home-intro",
-            start: "70% top",
-            end: "bottom top",
-            scrub: 0.8,
-          },
-        });
 
         gsap.utils.toArray<HTMLElement>(".home-portfolio-canvas--desktop [data-project-card]").forEach((card, index) => {
           gsap.from(card, {

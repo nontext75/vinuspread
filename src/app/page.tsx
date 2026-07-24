@@ -97,29 +97,20 @@ const services = [
 
 const homeStoryContent = [
   {
-    title: "Why You Shouldn't Choose Brand Colors by Instinct",
-    excerpt:
-      "Color is not just a matter of taste; it determines the perception and emotions of your brand. Even a small change can affect the entire way people perceive your brand.",
     image: "/vinus/stories/home-story-01.png",
   },
   {
-    title: "Why You Shouldn't Choose Brand Colors by Instinct",
-    excerpt:
-      "Color is not just a matter of taste; it determines the perception and emotions of your brand. Even a small change can affect the entire way people perceive your brand.",
     image: "/vinus/stories/home-story-02.png",
   },
   {
-    title: "Why You Shouldn't Choose Brand Colors by Instinct",
-    excerpt:
-      "Color is not just a matter of taste; it determines the perception and emotions of your brand. Even a small change can affect the entire way people perceive your brand.",
     image: "/vinus/stories/home-story-03.jpg",
   },
 ] as const;
 
 const stories = storyEntries.slice(0, 3).map((story, index) => ({
-  title: homeStoryContent[index]?.title ?? story.title,
-  excerpt: homeStoryContent[index]?.excerpt ?? story.excerpt,
-  date: "2026.04.20",
+  title: story.title,
+  excerpt: story.excerpt,
+  date: story.date,
   image: homeStoryContent[index]?.image ?? story.image,
   href: `/news/${story.slug}`,
 }));
@@ -514,8 +505,8 @@ export default function Home() {
 
       <style>{`
         .home-hero {
-          min-height: 980px;
-          height: auto;
+          height: 867px;
+          min-height: 867px;
           padding: 0 20px;
           background: #08090d;
         }
@@ -524,7 +515,7 @@ export default function Home() {
           height: auto;
           max-width: 1800px;
           gap: 48px;
-          margin-top: 254px;
+          margin-top: 249px;
         }
 
         .home-hero-summary-break {
@@ -744,11 +735,12 @@ export default function Home() {
         @media (min-width: 768px) and (max-width: 2199px) {
           .home-page {
             --type-display-hero-size: 160px;
-            --type-display-hero-line: 1;
+            --type-display-hero-line: 0.9;
           }
 
           .home-hero {
-            min-height: 1823px;
+            height: 1714px;
+            min-height: 1714px;
             padding: 0 40px;
           }
 
@@ -767,11 +759,15 @@ export default function Home() {
           }
 
           .home-hero-content {
-            margin-top: 430px;
+            margin-top: 428px;
           }
 
           .home-hero-summary-break {
             display: none;
+          }
+
+          .home-hero-lead {
+            max-width: 944px;
           }
 
           .home-intro-content {
@@ -1092,6 +1088,10 @@ export default function Home() {
         }
 
         @media (min-width: 2200px) {
+          .home-page {
+            --type-display-hero-line: 0.9;
+          }
+
           .home-hero {
             height: 2418px;
             min-height: 0;
@@ -1102,7 +1102,7 @@ export default function Home() {
             width: 1800px;
             height: auto;
             gap: 120px;
-            margin-top: 666px;
+            margin-top: 496px;
           }
 
           .home-hero-summary-break {
@@ -1130,7 +1130,7 @@ export default function Home() {
           }
 
           .home-intro {
-            height: 883px;
+            height: 985px;
             display: flex;
             align-items: flex-start;
             justify-content: center;
@@ -1456,11 +1456,11 @@ export default function Home() {
 
         @media (max-width: 767px) {
           .home-hero {
-            height: 890px;
-            min-height: 890px;
+            height: 867px;
+            min-height: 867px;
             padding: 0 20px;
             --type-display-hero-size: 60px;
-            --type-display-hero-line: 1;
+            --type-display-hero-line: 0.9;
           }
 
           .home-hero-content,

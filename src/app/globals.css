@@ -1784,8 +1784,8 @@ nextjs-portal {
 @media (min-width: 768px) {
   .subpage-lead {
     max-width: 1258px;
-    font-size: var(--type-heading-md-size);
-    line-height: var(--type-heading-md-line);
+    font-size: var(--type-body-lg-size);
+    line-height: var(--type-body-lg-line);
   }
 }
 @media (min-width: 768px) {
@@ -1856,6 +1856,391 @@ nextjs-portal {
 
   .studio-clients {
     gap: 64px;
+  }
+}
+
+/* Visual QA pass: convert exported fixed-canvas Studio sizing into web-flow sizing. */
+.studio-principles,
+.studio-vision,
+.studio-business,
+.studio-clients {
+  height: auto !important;
+}
+
+.studio-vision {
+  min-height: 0 !important;
+}
+
+.studio-vision-title-block {
+  display: flex !important;
+}
+
+.studio-wide-media {
+  min-height: 360px;
+}
+
+@media (max-width: 767px) {
+  .studio-principles {
+    min-height: 0 !important;
+    padding-block: 64px !important;
+  }
+
+  .studio-principles-grid {
+    grid-template-rows: none !important;
+    gap: 72px !important;
+  }
+
+  .studio-principles-grid > * {
+    height: auto !important;
+  }
+
+  .studio-vision {
+    padding-block: 72px !important;
+  }
+
+  .studio-business,
+  .studio-clients {
+    min-height: 0 !important;
+    padding-block: 72px !important;
+  }
+
+  .studio-business-grid {
+    grid-template-rows: none !important;
+  }
+
+  .studio-business-grid > * {
+    height: auto !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 2199px) {
+  .studio-principles {
+    min-height: 0 !important;
+    padding-block: 112px !important;
+  }
+
+  .studio-principles-grid {
+    align-items: start;
+    grid-template-rows: none !important;
+    gap: 48px !important;
+  }
+
+  .studio-principles-grid > * {
+    height: auto !important;
+  }
+
+  .studio-vision {
+    min-height: 0 !important;
+    gap: 56px !important;
+    padding-block: 112px !important;
+  }
+
+  .studio-vision-title {
+    max-width: 1120px;
+    margin-inline: auto;
+  }
+
+  .studio-wide-media {
+    aspect-ratio: 2.55 / 1;
+    min-height: 420px;
+  }
+
+  .studio-business {
+    min-height: 0 !important;
+    padding-block: 112px !important;
+  }
+
+  .studio-business-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-template-rows: none !important;
+    gap: 32px !important;
+    padding-top: 72px !important;
+  }
+
+  .studio-business-grid > * {
+    height: auto !important;
+  }
+
+  .studio-clients {
+    min-height: 0 !important;
+    gap: 72px !important;
+    padding-block: 112px !important;
+  }
+}
+
+@media (min-width: 2200px) {
+  .studio-principles {
+    min-height: 0 !important;
+    padding-block: 144px !important;
+  }
+
+  .studio-principles-grid {
+    height: 1700px !important;
+  }
+
+  .studio-principles-grid > :nth-child(1) {
+    width: 760px !important;
+    height: auto !important;
+  }
+
+  .studio-principles-grid > :nth-child(2) {
+    left: 1380px !important;
+    width: 780px !important;
+    height: auto !important;
+  }
+
+  .studio-principles-grid > :nth-child(3) {
+    top: 1120px !important;
+    left: 640px !important;
+    width: 760px !important;
+    height: auto !important;
+  }
+
+  .studio-vision {
+    min-height: 0 !important;
+    gap: 80px !important;
+    padding-block: 144px !important;
+  }
+
+  .studio-vision-title-block {
+    min-height: 0 !important;
+  }
+
+  .studio-vision-title {
+    width: min(1452px, 100%);
+    margin-top: 32px;
+  }
+
+  .studio-wide-media {
+    aspect-ratio: 2.7 / 1;
+    min-height: 640px;
+  }
+
+  .studio-business {
+    min-height: 0 !important;
+    padding-block: 144px !important;
+  }
+
+  .studio-business-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-template-rows: none !important;
+    gap: 40px !important;
+    padding-top: 96px !important;
+  }
+
+  .studio-business-grid > * {
+    height: auto !important;
+  }
+
+  .studio-clients {
+    min-height: 0 !important;
+    gap: 96px !important;
+    padding-block: 144px !important;
+  }
+}
+
+/* Visual QA pass: loosen the Experience grid so portfolio cards feel less mechanical. */
+@media (min-width: 768px) {
+  .experience-page-list {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .experience-page-grid {
+    grid-auto-rows: auto !important;
+    align-items: start;
+  }
+
+  .experience-page-grid .project-card__link {
+    gap: 20px;
+  }
+
+  .experience-page-grid .project-card__media {
+    aspect-ratio: 1.22 / 1;
+  }
+
+  .experience-page-grid > :nth-child(2),
+  .experience-page-grid > :nth-child(5) {
+    margin-top: 96px;
+  }
+
+  .experience-page-grid > :nth-child(3),
+  .experience-page-grid > :nth-child(7) {
+    margin-top: 32px;
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 2199px) {
+  .experience-page-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    column-gap: 32px !important;
+    row-gap: 120px !important;
+  }
+}
+
+@media (min-width: 2200px) {
+  .experience-page-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    column-gap: 48px !important;
+    row-gap: 144px !important;
+  }
+
+  .experience-page-grid > :nth-child(2),
+  .experience-page-grid > :nth-child(5) {
+    margin-top: 128px;
+  }
+}
+
+/* Figma parity pass: subpage hero rhythm. */
+@media (min-width: 768px) and (max-width: 2199px) {
+  :root {
+    --type-heading-page-size: clamp(88px, 8.333vw, 120px);
+    --type-heading-page-line: 0.92;
+  }
+
+  .subpage-header {
+    padding-top: 144px !important;
+  }
+
+  .experience-page-hero,
+  .studio-page-hero,
+  .contact-page-hero {
+    height: 820px !important;
+    min-height: 820px !important;
+  }
+
+  .subpage-copy-stack {
+    gap: 40px;
+  }
+}
+
+@media (min-width: 2200px) {
+  .experience-page-hero,
+  .studio-page-hero,
+  .contact-page-hero {
+    height: 892px !important;
+    min-height: 892px !important;
+  }
+}
+
+/* Responsive type smoothing: remove visible jumps at 768, 1280, and 2200. */
+@media (max-width: 767px) {
+  :root {
+    --type-heading-page-size: clamp(56px, 10.95vw, 84px);
+    --type-heading-page-line: 0.92;
+    --type-display-studio-keyword-size: clamp(40px, 8vw, 56px);
+    --type-display-studio-keyword-line: 1.08;
+    --type-heading-studio-business-size: clamp(24px, 6.2vw, 44px);
+    --type-heading-studio-business-line: 1.16;
+  }
+
+  .studio-business-heading > h2,
+  .studio-clients-heading > h2 {
+    font-size: var(--type-heading-studio-business-size) !important;
+    line-height: var(--type-heading-studio-business-line) !important;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --type-heading-page-size: clamp(88px, 8.333vw, 120px);
+    --type-heading-page-line: 0.92;
+    --type-display-studio-keyword-size: clamp(56px, 6.667vw, 120px);
+    --type-display-studio-keyword-line: 1;
+    --type-heading-studio-business-size: clamp(48px, 5vw, 120px);
+    --type-heading-studio-business-line: 1;
+  }
+
+  .studio-business-heading > h2,
+  .studio-clients-heading > h2 {
+    font-size: var(--type-heading-studio-business-size) !important;
+    line-height: var(--type-heading-studio-business-line) !important;
+  }
+}
+
+@media (min-width: 2200px) {
+  :root {
+    --type-heading-page-size: 120px;
+    --type-heading-page-line: 0.92;
+  }
+}
+
+/* Work page QA: restore a clean portfolio grid and keep the filter control floating clear of the footer. */
+@media (min-width: 768px) {
+  .experience-page-list {
+    padding-bottom: 144px !important;
+  }
+
+  .experience-page-grid {
+    grid-auto-rows: auto !important;
+    align-items: start !important;
+  }
+
+  .experience-page-grid > * {
+    margin-top: 0 !important;
+  }
+
+  .experience-page-controls {
+    position: relative !important;
+    z-index: 30;
+    bottom: auto !important;
+    left: auto !important;
+    display: flex !important;
+    width: max-content !important;
+    max-width: calc(100vw - 48px);
+    margin: 96px auto 0;
+    transform: none !important;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .experience-page-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 32px !important;
+    row-gap: 80px !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .experience-page-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    column-gap: 40px !important;
+    row-gap: 96px !important;
+  }
+}
+
+@media (min-width: 2200px) {
+  .experience-page-grid {
+    column-gap: 48px !important;
+    row-gap: 120px !important;
+  }
+}
+
+/* Portfolio detail QA: keep the hero image within the first viewport on desktop. */
+@media (min-width: 1280px) {
+  .project-detail-hero {
+    height: 100svh !important;
+    min-height: 760px !important;
+    max-height: 980px !important;
+    aspect-ratio: auto !important;
+  }
+
+  .project-detail-hero .display-project-title {
+    font-size: clamp(88px, 7vw, 144px) !important;
+    line-height: 0.96 !important;
+  }
+}
+
+@media (min-width: 2200px) {
+  .project-detail-hero {
+    height: 100svh !important;
+    min-height: 860px !important;
+    max-height: 1080px !important;
+  }
+
+  .project-detail-hero .display-project-title {
+    font-size: clamp(128px, 6.25vw, 160px) !important;
   }
 }
 
