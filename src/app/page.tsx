@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { ClientLogoGrid } from "@/components/ClientLogoGrid";
@@ -11,7 +11,6 @@ import { PortfolioCard } from "@/components/PortfolioCard";
 import { ServiceCard } from "@/components/ServiceCard";
 import { StoryListItem } from "@/components/StoryListItem";
 import { stories as storyEntries } from "@/lib/stories";
-import { useHomeMotion } from "./home-motion";
 
 type Project = {
   title: string;
@@ -21,7 +20,6 @@ type Project = {
   slug: string;
   layout: string;
   mobileLayout: string;
-  speed: number;
   mobileOnly?: boolean;
 };
 
@@ -34,7 +32,6 @@ const projects: Project[] = [
     slug: "mongdang",
     layout: "home-project--mongdang",
     mobileLayout: "w-full",
-    speed: -8,
   },
   {
     title: "Shinhan Easy",
@@ -44,7 +41,6 @@ const projects: Project[] = [
     slug: "shinhan-easy",
     layout: "home-project--shinhan",
     mobileLayout: "ml-[14%] w-[86%]",
-    speed: 10,
   },
   {
     title: "Crowd OH!",
@@ -54,7 +50,6 @@ const projects: Project[] = [
     slug: "crowdsourcing-platform-crowd-oh",
     layout: "home-project--crowd",
     mobileLayout: "w-[92%]",
-    speed: -7,
   },
   {
     title: "macadamia",
@@ -64,7 +59,6 @@ const projects: Project[] = [
     slug: "macadamia-website",
     layout: "home-project--macadamia",
     mobileLayout: "ml-[8%] w-[92%]",
-    speed: 8,
   },
   {
     title: "Budongsan114 Mediate BIZsolution",
@@ -74,7 +68,6 @@ const projects: Project[] = [
     slug: "budongsan114-mediate-bizsolution",
     layout: "home-project--budongsan",
     mobileLayout: "ml-[20%] w-[80%]",
-    speed: -10,
   },
   {
     title: "DongA On book",
@@ -84,7 +77,6 @@ const projects: Project[] = [
     slug: "donga-on-book",
     layout: "home-project--donga",
     mobileLayout: "ml-[7%] w-[93%]",
-    speed: 7,
   },
 ];
 
@@ -135,22 +127,12 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 export default function Home() {
-  const rootRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLElement>(null);
-  const reelRef = useRef<HTMLElement>(null);
   const playReelTriggerRef = useRef<HTMLButtonElement>(null);
   const playReelDialogRef = useRef<HTMLDivElement>(null);
   const playReelCloseRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPlayReelPresent, setIsPlayReelPresent] = useState(false);
-  const { scrollYProgress: reelProgress } = useScroll({
-    target: reelRef,
-    offset: ["start end", "end start"],
-  });
-  const reelImageY = useTransform(reelProgress, [0, 1], ["-12%", "12%"]);
-  const reelImageScale = useTransform(reelProgress, [0, 0.5, 1], [1.14, 1.04, 1.1]);
-  const projectSpeeds = useMemo(() => projects.map((project) => project.speed), []);
 
   useEffect(() => {
     if (!isPlayReelPresent) return;
@@ -209,17 +191,9 @@ export default function Home() {
     };
   }, [isPlayReelPresent]);
 
-  useHomeMotion({
-    rootRef,
-    heroRef,
-    reduceMotion: Boolean(reduceMotion),
-    projectSpeeds,
-  });
-
   return (
-    <div ref={rootRef} className="home-page relative bg-white text-vinus-ink">
+    <div className="home-page relative bg-white text-vinus-ink">
       <section
-        ref={heroRef}
         data-header-theme="dark"
         className="home-hero relative overflow-hidden bg-vinus-ink text-white"
       >
@@ -314,11 +288,10 @@ export default function Home() {
 
       </section>
 
-      <section ref={reelRef} data-header-theme="dark" className="home-reel relative overflow-hidden bg-vinus-black text-white">
-        <motion.div
+      <section data-header-theme="dark" className="home-reel relative overflow-hidden bg-vinus-black text-white">
+        <div
           className="absolute inset-0"
           data-reel-image
-          style={{ y: reduceMotion ? 0 : reelImageY, scale: reduceMotion ? 1 : reelImageScale }}
         >
           <Image
             src="/vinus/dummy-photo/hero.jpg"
@@ -329,9 +302,9 @@ export default function Home() {
             className="object-cover opacity-70"
           />
           <div className="absolute inset-0 bg-vinus-black/25" />
-        </motion.div>
+        </div>
         <div className="absolute inset-0 flex items-center justify-center">
-          <motion.button
+          <button
             ref={playReelTriggerRef}
             type="button"
             aria-label="Play Vinuspread reel"
@@ -341,9 +314,6 @@ export default function Home() {
               setIsPlayReelPresent(true);
               setIsPlaying(true);
             }}
-            whileHover={reduceMotion ? undefined : { scale: 1.06 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
             className="playreel-button relative block rounded-full"
           >
             <span className="absolute -inset-[29.76%]" aria-hidden="true">
@@ -363,7 +333,7 @@ export default function Home() {
             <span className="absolute top-[39.88%] right-[38.1%] bottom-[39.88%] left-[41.67%]" aria-hidden="true">
               <Image src="/vinus/icons/play-button-icon.svg" alt="" fill sizes="34px" />
             </span>
-          </motion.button>
+          </button>
         </div>
       </section>
 
@@ -505,8 +475,8 @@ export default function Home() {
 
       <style>{`
         .home-hero {
-          height: 867px;
-          min-height: 867px;
+          min-height: 980px;
+          height: auto;
           padding: 0 20px;
           background: #08090d;
         }
@@ -515,7 +485,7 @@ export default function Home() {
           height: auto;
           max-width: 1800px;
           gap: 48px;
-          margin-top: 249px;
+          margin-top: 254px;
         }
 
         .home-hero-summary-break {
@@ -735,12 +705,12 @@ export default function Home() {
         @media (min-width: 768px) and (max-width: 2199px) {
           .home-page {
             --type-display-hero-size: 160px;
-            --type-display-hero-line: 0.9;
+            --type-display-hero-line: 1;
           }
 
           .home-hero {
-            height: 1714px;
-            min-height: 1714px;
+            height: 1823px;
+            min-height: 1823px;
             padding: 0 40px;
           }
 
@@ -759,15 +729,11 @@ export default function Home() {
           }
 
           .home-hero-content {
-            margin-top: 428px;
+            margin-top: 430px;
           }
 
           .home-hero-summary-break {
             display: none;
-          }
-
-          .home-hero-lead {
-            max-width: 944px;
           }
 
           .home-intro-content {
@@ -1088,10 +1054,6 @@ export default function Home() {
         }
 
         @media (min-width: 2200px) {
-          .home-page {
-            --type-display-hero-line: 0.9;
-          }
-
           .home-hero {
             height: 2418px;
             min-height: 0;
@@ -1102,7 +1064,7 @@ export default function Home() {
             width: 1800px;
             height: auto;
             gap: 120px;
-            margin-top: 496px;
+            margin-top: 666px;
           }
 
           .home-hero-summary-break {
@@ -1130,7 +1092,7 @@ export default function Home() {
           }
 
           .home-intro {
-            height: 985px;
+            height: 883px;
             display: flex;
             align-items: flex-start;
             justify-content: center;
@@ -1456,11 +1418,11 @@ export default function Home() {
 
         @media (max-width: 767px) {
           .home-hero {
-            height: 867px;
-            min-height: 867px;
+            height: 890px;
+            min-height: 890px;
             padding: 0 20px;
             --type-display-hero-size: 60px;
-            --type-display-hero-line: 0.9;
+            --type-display-hero-line: 1;
           }
 
           .home-hero-content,
