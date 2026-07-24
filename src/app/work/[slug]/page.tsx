@@ -157,11 +157,8 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
           <span>Back to Experience</span>
         </Link>
         <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 36 }}
-          animate={{ opacity: 1, y: 0 }}
           style={{ y: reduceMotion ? 0 : heroTextY, opacity: reduceMotion ? 1 : heroOpacity }}
-          transition={{ duration: reduceMotion ? 0.01 : 0.75, delay: reduceMotion ? 0 : 0.12, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute inset-x-0 bottom-10 flex flex-col items-start gap-3 px-[var(--space-edge)] text-white sm:bottom-14 md:bottom-0 md:gap-3 md:pb-[var(--space-section)]"
+          className="project-detail-hero-copy absolute inset-x-0 flex flex-col items-start px-[var(--space-edge)] text-white"
         >
           <p className="label-sm font-medium text-white/70">{project.category}</p>
           <h1
@@ -172,7 +169,7 @@ export default function PortfolioDetailPage({ params }: { params: Promise<{ slug
               <span aria-hidden="true" className="md:hidden">{project.title}</span>
             )}
             {slug === "budongsan114-mediate-bizsolution" ? (
-              <span aria-hidden="true"><span className="block">Budongsan114</span><span className="block">Mediate Bizsolution</span></span>
+              <span aria-hidden="true" className="project-detail-title-line block">Budongsan114</span>
             ) : slug === "the-frame-artstore-catalogue" ? (
               <span aria-hidden="true" className="hidden md:block"><span className="block">The Frame</span><span className="block">Artstore Catalogue</span></span>
             ) : (
